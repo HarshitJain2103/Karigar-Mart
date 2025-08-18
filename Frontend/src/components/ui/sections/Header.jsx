@@ -5,13 +5,26 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
+import {
+  DropdownMenu, DropdownMenuTrigger, DropdownMenuContent,
+  DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator,
+} from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
+import { Link } from 'react-router-dom';
 
 export default function Header({
   cartCount, query, setQuery, setLang, startVoiceSearch
 }) {
+  const navItems = [
+    { name: "Home", path: "/" },
+    { name: "Categories", path: "/categories" },
+    { name: "Artisans", path: "/artisans" },
+    { name: "Stories", path: "/stories" },
+    { name: "Contact", path: "/contact" },
+    { name: "Build your store", path: "/build-store" },
+  ];
+
   return (
     <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur">
       <div className="mx-auto max-w-7xl px-4">
@@ -26,12 +39,10 @@ export default function Header({
               </SheetTrigger>
               <SheetContent side="left" className="w-72">
                 <nav className="mt-8 grid gap-4 text-lg">
-                  {[
-                    "Home", "Categories", "Artisans", "Stories", "Contact", "Build your store",
-                  ].map((item) => (
-                    <a key={item} href="#" className="hover:underline">
-                      {item}
-                    </a>
+                  {navItems.map((item) => (
+                    <Link key={item.name} to={item.path} className="hover:underline">
+                      {item.name}
+                    </Link>
                   ))}
                 </nav>
               </SheetContent>
@@ -39,10 +50,10 @@ export default function Header({
           </div>
 
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <Store className="h-6 w-6" />
             <span className="font-semibold">Karigar Mart</span>
-          </a>
+          </Link>
 
           {/* Search Bar */}
           <div className="hidden flex-1 items-center justify-center lg:flex">
@@ -86,7 +97,7 @@ export default function Header({
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>
-                  <div className="flex items-center gap-2"><Languages className="h-4 w-4"/> Language</div>
+                  <div className="flex items-center gap-2"><Languages className="h-4 w-4" /> Language</div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {["English", "हिन्दी", "বাংলা", "தமிழ்", "తెలుగు", "मराठी", "ਪੰਜਾਬੀ", "ગુજરાતી", "ଓଡ଼ିଆ", "ಕನ್ನಡ", "اردو"].map((l) => (
@@ -96,19 +107,23 @@ export default function Header({
             </DropdownMenu>
 
             <div className="hidden md:block">
-              <Button className="ml-2 rounded-full">Build your store</Button>
+              <Link to="/build-store">
+                <Button className="ml-2 rounded-full">Build your store</Button>
+              </Link>
             </div>
           </div>
         </div>
 
         {/* Secondary nav (desktop) */}
         <nav className="hidden items-center justify-center gap-6 pb-3 text-sm lg:flex">
-          {[
-            "Home", "Categories", "Artisans", "Stories", "Contact",
-          ].map((item) => (
-            <a key={item} href="#" className="text-muted-foreground hover:text-foreground">
-              {item}
-            </a>
+          {navItems.filter(item => item.name !== "Build your store").map((item) => (
+            <Link
+              key={item.name}
+              to={item.path}
+              className="text-muted-foreground hover:text-foreground"
+            >
+              {item.name}
+            </Link>
           ))}
         </nav>
 
