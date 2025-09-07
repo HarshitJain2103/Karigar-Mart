@@ -1,12 +1,10 @@
 import { create } from 'zustand';
 
-// Use (set, get) to allow the new function to read the current state
 const useAuthStore = create((set, get) => ({
   token: localStorage.getItem('token') || null,
   user: null,
 
   login: (authData) => {
-    // authData is the object { token, user } from our backend
     localStorage.setItem('token', authData.token);
     set({ token: authData.token, user: authData.user });
   },
@@ -16,7 +14,6 @@ const useAuthStore = create((set, get) => ({
     set({ token: null, user: null });
   },
   
-  // It fetches the user's profile if a token exists in localStorage
   fetchUserProfile: async () => {
     const token = get().token; 
     if (!token) {
