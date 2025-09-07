@@ -5,8 +5,6 @@ import Header from "./components/ui/sections/Header";
 import useVoiceSearch from "./hooks/useVoiceSearch";
 import BuildYourStoreFull from "./pages/BuildYourStore";
 import Home from "./pages/Home";
-
-// --- Global State for Authentication ---
 import useAuthStore from "./stores/authStore";
 
 export default function App() {
