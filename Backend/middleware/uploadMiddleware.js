@@ -6,9 +6,11 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: (req, file) => {
-      // We create a dynamic folder name based on the logged-in user's ID.
-      const userId = req.user.id; 
-      return `karigar-mart/artisans/${userId}`;
+      const userId = req.user.id;
+      const uploadType = req.body.upload_type || 'products';
+
+      // Return a dynamic folder path
+      return `karigar-mart/artisans/${userId}/${uploadType}`;
     },
     allowed_formats: ['jpg', 'png', 'jpeg'],
   },
