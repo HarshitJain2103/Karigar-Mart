@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../stores/authStore";
+import { uploadImage } from "../lib/uploadService"; 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -14,6 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const STORAGE_KEY = "karigar.store.v1";
+
 const defaultDraft = {
   storeName: "",
   tagline: "",
@@ -21,7 +23,7 @@ const defaultDraft = {
   state: "",
   craft: "",
   story: "",
-  media: { heroImageURL: null, galleryImageURLs: [] },
+  media: { heroImageURL: "", galleryImageURLs: [] },
   theme: { preset: "modern", color: "#0f172a" },
   seo: { metaDescription: "", keywords: [] },
   products: [],
@@ -30,16 +32,60 @@ const defaultDraft = {
 
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 
-function ImageUploader({ images = [], onChange, max = 6, single = false }) {
-  const input = useRef(null);
+function ImageUploader({ images = [], onChange, max = 6, single = false, uploadType }) {
+  const inputRef = useRef(null);
+  const token = useAuthStore((state) => state.token);
+  const [isUploading, setIsUploading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleFileChange = async (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+
+    setIsUploading(true);
+    setError('');
+    try {
+      if (single) {
+        const url = await uploadImage(files[0], token, uploadType);
+        onChange([url]);
+      } else {
+        let currentImages = [...images];
+        for (const file of files) {
+          if (currentImages.length < max) {
+            const url = await uploadImage(file, token, uploadType);
+            currentImages.push(url);
+          }
+        }
+        onChange(currentImages);
+      }
+    } catch (err) {
+      console.error(err);
+      setError(err.message);
+    } finally {
+      setIsUploading(false);
+      if (inputRef.current) inputRef.current.value = null;
+    }
+  };
+
   return (
     <div className="space-y-2">
-      <input ref={input} id={`file-${uid()}`} type="file" accept="image/*" multiple={!single} onChange={() => {}} className="hidden" />
+      <input ref={inputRef} type="file" accept="image/*,.png,.jpg,.jpeg" multiple={!single} onChange={handleFileChange} className="hidden" />
       <div className="flex items-center gap-3">
-        <Button variant="outline" type="button" onClick={() => input.current?.click()}>Upload {single ? "image" : "images"}</Button>
+        <Button variant="outline" type="button" onClick={() => inputRef.current?.click()} disabled={isUploading}>
+          {isUploading ? "Uploading..." : `Upload ${single ? "Image" : "Images"}`}
+        </Button>
         <div className="text-sm text-muted-foreground">{images.length}/{max}</div>
       </div>
-      <div className="text-xs text-muted-foreground p-2 border rounded">Image uploads will be connected to Cloudinary later.</div>
+      {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
+      <div className="grid grid-cols-3 gap-2 mt-2 min-h-[6rem]">
+        {images.length === 0 && <div className="col-span-3 text-sm text-muted-foreground p-4 border-2 border-dashed rounded-lg text-center">No images uploaded.</div>}
+        {images.map((url, i) => (
+          <div key={i} className="relative rounded overflow-hidden border">
+            <img src={url} alt={`upload-${i}`} className="w-full h-24 object-cover" />
+            <button type="button" aria-label="remove" className="absolute top-1 right-1 bg-white/80 rounded-full p-1 text-xs" onClick={() => onChange(images.filter((_, idx) => idx !== i))}>✕</button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -48,7 +94,7 @@ function ProductCard({ product, onEdit, onRemove }) {
   return (
     <div className="border rounded-lg p-3 bg-white flex gap-3 items-start">
       <div className="w-20 h-20 bg-gray-100 rounded overflow-hidden flex-shrink-0">
-        <div className="w-full h-full flex items-center justify-center text-xs text-gray-400">No Image</div>
+        {product.imageURLs?.[0] ? <img src={product.imageURLs[0]} alt={product.title} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-xs text-gray-400">No Image</div>}
       </div>
       <div className="flex-1">
         <div className="flex justify-between items-start">
@@ -74,11 +120,15 @@ export default function BuildYourStoreFull() {
   const navigate = useNavigate();
   const token = useAuthStore((state) => state.token);
 
-  const saved = (() => {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "null") || null; } catch { return null; }
-  })();
+  const [draft, setDraft] = useState(() => {
+    try {
+      const savedDraft = localStorage.getItem(STORAGE_KEY);
+      return savedDraft ? JSON.parse(savedDraft) : defaultDraft;
+    } catch {
+      return defaultDraft;
+    }
+  });
 
-  const [draft, setDraft] = useState(saved || defaultDraft);
   const [step, setStep] = useState("identity");
   const [showProductDialog, setShowProductDialog] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
@@ -105,19 +155,21 @@ export default function BuildYourStoreFull() {
   }, [token]);
 
   useEffect(() => {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(draft)); } catch (e) { console.warn(e); }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
   }, [draft]);
 
   const update = (k, v) => setDraft((p) => ({ ...p, [k]: v }));
   const updateNested = (path, val) => setDraft((p) => {
-    const out = { ...p };
+    const out = JSON.parse(JSON.stringify(p)); // Deep copy to prevent mutation issues
     let cur = out;
-    for (let i = 0; i < path.length - 1; i++) { cur = cur[path[i]] = { ...cur[path[i]] }; }
+    for (let i = 0; i < path.length - 1; i++) {
+      cur = cur[path[i]] = { ...cur[path[i]] };
+    }
     cur[path[path.length - 1]] = val;
     return out;
   });
 
-  const openNewProduct = () => { setEditingProduct({ id: uid(), title: "", description: "", price: "", inventory: "", categoryId: "", images: [] }); setShowProductDialog(true); };
+  const openNewProduct = () => { setEditingProduct({ id: uid(), title: "", description: "", price: "", inventory: "", categoryId: "", imageURLs: [] }); setShowProductDialog(true); };
   const openEditProduct = (p) => { setEditingProduct(p); setShowProductDialog(true); };
   const saveProduct = (prod) => {
     setDraft((prev) => {
@@ -137,6 +189,7 @@ export default function BuildYourStoreFull() {
     if (draft.storeName) score += 20;
     if (draft.city && draft.state) score += 10;
     if (draft.products?.length > 0) score += 30;
+    if (draft.media?.heroImageURL) score += 20;
     if (draft.story) score += 20;
     return Math.min(100, score);
   };
@@ -154,15 +207,18 @@ export default function BuildYourStoreFull() {
       const profileData = {
         storeName: draft.storeName,
         tagline: draft.tagline,
-        city: draft.city,
-        state: draft.state,
         story: draft.story,
         theme: draft.theme,
-        seo: { metaDescription: draft.seo.meta, keywords: draft.seo.keywords },
+        seo: draft.seo,
         media: {
-          heroImageURL: 'https://placehold.co/1200x400?text=Hero+Image',
-          galleryImageURLs: [],
-        }
+          heroImageURL: draft.media.heroImageURL,
+          galleryImageURLs: draft.media.galleryImageURLs,
+        },
+
+        address: {
+          city: draft.city,
+          state: draft.state,
+        },
       };
 
       const profileResponse = await fetch('http://localhost:8000/api/artisans', {
@@ -186,7 +242,7 @@ export default function BuildYourStoreFull() {
           description: product.description,
           price: parseFloat(product.price),
           inventory: parseInt(product.inventory, 10),
-          imageURLs: ['https://placehold.co/600x400?text=Product+Image'],
+          imageURLs: product.imageURLs,
         };
 
         const productResponse = await fetch('http://localhost:8000/api/products', {
@@ -226,7 +282,7 @@ export default function BuildYourStoreFull() {
           </div>
           <div className="flex items-center gap-3">
             <Button variant="ghost" onClick={() => { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(draft)); alert('Draft saved locally'); } catch { alert('Save failed'); } }}>Save</Button>
-            <Button variant="ghost" onClick={() => { alert('Open help (AI assistant)') }}>Help</Button>
+            <Button variant="ghost" onClick={() => alert('Open help (AI assistant)')}>Help</Button>
             <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-semibold">U</div>
           </div>
         </div>
@@ -273,15 +329,20 @@ export default function BuildYourStoreFull() {
                 <div className="flex-1">
                   <TabsContent value="identity">
                     <Card>
-                      <CardHeader><CardTitle>Identity Setup</CardTitle><CardDescription>Store name, tagline and basic location</CardDescription></CardHeader>
-                      <CardContent className="space-y-4">
-                        <div className="space-y-1"><Label htmlFor="storeName">Store name</Label><Input id="storeName" value={draft.storeName} onChange={(e) => update('storeName', e.target.value)} placeholder="e.g., Kutch Weavers" /></div>
-                        <div className="space-y-1"><Label htmlFor="tagline">Tagline</Label><Input id="tagline" value={draft.tagline} onChange={(e) => update('tagline', e.target.value)} placeholder="e.g., Authentic handmade textiles" /></div>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="space-y-1"><Label htmlFor="city">City</Label><Input id="city" value={draft.city} onChange={(e) => update('city', e.target.value)} placeholder="e.g., Bhuj" /></div>
-                          <div className="space-y-1"><Label htmlFor="state">State</Label><Input id="state" value={draft.state} onChange={(e) => update('state', e.target.value)} placeholder="e.g., Gujarat" /></div>
+                      <CardHeader>
+                        <CardTitle>Identity Setup</CardTitle>
+                        <CardDescription>Store name, tagline and basic location</CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-3">
+                        <Input value={draft.storeName} onChange={(e)=>update('storeName', e.target.value)} placeholder="Store name" />
+                        <Input value={draft.tagline} onChange={(e)=>update('tagline', e.target.value)} placeholder="Tagline (AI suggest)" />
+                        <div className="flex gap-2">
+                          <Input value={draft.city} onChange={(e)=>update('city', e.target.value)} placeholder="City" />
+                          <Input value={draft.state} onChange={(e)=>update('state', e.target.value)} placeholder="State" />
                         </div>
-                        <div className="flex justify-end pt-2"><Button onClick={() => setStep('story')}>Next</Button></div>
+                        <div className="flex gap-2 justify-end">
+                          <Button onClick={()=>setStep('story')}>Next</Button>
+                        </div>
                       </CardContent>
                     </Card>
                   </TabsContent>
@@ -318,17 +379,32 @@ export default function BuildYourStoreFull() {
 
                   <TabsContent value="media">
                     <Card>
-                      <CardHeader><CardTitle>Media & Branding</CardTitle><CardDescription>Upload a hero image for your store page and a few gallery images.</CardDescription></CardHeader>
+                      <CardHeader>
+                        <CardTitle>Media & Branding</CardTitle>
+                        <CardDescription>Upload a hero image for your store page and a few gallery images.</CardDescription>
+                      </CardHeader>
                       <CardContent className="space-y-4">
                         <div>
                           <Label className="text-base font-medium">Hero Image (Store Banner)</Label>
-                          <ImageUploader images={draft.media?.heroImageURL ? [draft.media.heroImageURL] : []} onChange={(imgs)=>updateNested(['media','heroImageURL'], imgs[0]||null)} single={true} max={1} />
+                          <ImageUploader 
+                            images={draft.media.heroImageURL ? [draft.media.heroImageURL] : []}
+                            onChange={(urls) => updateNested(['media', 'heroImageURL'], urls[0] || "")}
+                            uploadType="profile/hero" 
+                            single={true}
+                          />
                         </div>
                         <div>
                           <Label className="text-base font-medium">Gallery Images</Label>
-                          <ImageUploader images={draft.media?.galleryImageURLs||[]} onChange={(imgs)=>updateNested(['media','galleryImageURLs'], imgs)} max={8} />
+                          <ImageUploader 
+                            images={draft.media.galleryImageURLs || []}
+                            onChange={(urls) => updateNested(['media', 'galleryImageURLs'], urls)}
+                            uploadType="profile/gallery" 
+                            max={8}
+                          />
                         </div>
-                        <div className="flex justify-end pt-2"><Button onClick={() => setStep('theme')}>Next</Button></div>
+                        <div className="flex justify-end pt-2">
+                          <Button onClick={() => setStep('theme')}>Next</Button>
+                        </div>
                       </CardContent>
                     </Card>
                   </TabsContent>
@@ -410,7 +486,7 @@ export default function BuildYourStoreFull() {
               </div>
               <div className={`border-2 rounded-lg bg-white mx-auto transition-all duration-300 ${previewMode==='mobile' ? 'w-[375px] h-[667px]' : 'w-full h-[400px]' }`}>
                 <div className="w-full h-1/3 bg-gray-200 flex items-center justify-center text-muted-foreground">
-                  Hero Image Preview
+                  {draft.media.heroImageURL ? <img src={draft.media.heroImageURL} alt="Hero Preview" className="w-full h-full object-cover" /> : 'Hero Image Preview'}
                 </div>
                 <div className="p-4">
                   <h3 className="text-xl font-bold">{draft.storeName || 'Your Store Name'}</h3>
@@ -419,7 +495,9 @@ export default function BuildYourStoreFull() {
                   <div className="space-y-2">
                     {(draft.products || []).slice(0, 2).map(p => (
                       <div key={p.id} className="border rounded p-2 flex items-center gap-2">
-                        <div className="w-10 h-10 bg-gray-100 rounded"></div>
+                        <div className="w-10 h-10 bg-gray-100 rounded">
+                           {p.imageURLs?.[0] ? <img src={p.imageURLs[0]} alt={p.title} className="w-full h-full object-cover rounded" /> : null}
+                        </div>
                         <div className="flex-1"><div className="text-sm font-medium">{p.title}</div></div>
                         <div className="text-sm font-semibold">{p.price ? `₹${p.price}` : ''}</div>
                       </div>
@@ -487,7 +565,12 @@ export default function BuildYourStoreFull() {
             </div>
             <div>
               <div className="text-sm font-medium mb-2">Images</div>
-              <ImageUploader images={editingProduct?.images||[]} onChange={(imgs)=>setEditingProduct(prev=>({...prev, images: imgs}))} max={6} />
+              <ImageUploader 
+                images={editingProduct?.imageURLs || []}
+                onChange={(urls) => setEditingProduct(prev => ({...prev, imageURLs: urls}))}
+                uploadType="products"
+                max={6}
+              />
             </div>
             <div className="flex gap-2 justify-end pt-2">
               <Button variant="ghost" type="button" onClick={()=>{ setShowProductDialog(false); setEditingProduct(null); }}>Cancel</Button>

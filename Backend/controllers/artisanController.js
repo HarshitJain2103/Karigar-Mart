@@ -13,27 +13,23 @@ const createArtisanProfile = async (req, res) => {
     const {
       storeName,
       tagline,
-      city,
-      state,
+      address, 
       story,
       theme, 
-      seo,   
+      seo,
+      media    
     } = req.body;
 
     const profile = new ArtisanProfile({
       userId,
       storeName,
       tagline,
-      address: { city, state }, 
+      address, 
       story,
       theme,
       seo,
+      media,   
       status: 'PUBLISHED', 
-
-      media: {
-        heroImageURL: 'https://placehold.co/1200x400?text=Hero+Image',
-        galleryImageURLs: [],
-      }
     });
 
     const createdProfile = await profile.save();
@@ -44,6 +40,9 @@ const createArtisanProfile = async (req, res) => {
 
   } catch (error) {
     console.error('Error creating artisan profile:', error);
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({ message: error.message });
+    }
     res.status(500).json({ message: "Server Error" });
   }
 };

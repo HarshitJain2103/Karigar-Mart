@@ -6,7 +6,9 @@ import userRoutes from "./routes/userRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import artisanRoutes from "./routes/artisanRoutes.js";
-import uploadRoutes from "./routes/uploadRoutes.js"
+import uploadRoutes from "./routes/uploadRoutes.js";
+import cron from 'node-cron';
+import { runCloudinaryCleanup } from './utils/cleanupCloudinary.js';
 
 dotenv.config();
 connectDB();
@@ -24,6 +26,14 @@ app.use("/api/products", productRoutes);
 app.use("/api/categories" , categoryRoutes);
 app.use("/api/artisans" , artisanRoutes);
 app.use('/api/upload', uploadRoutes);
+
+cron.schedule('* * * * *', () => {
+  console.log('-------------------------------------');
+  console.log('Running daily Cloudinary cleanup job...');
+  runCloudinaryCleanup();
+  console.log('-------------------------------------');
+});
+
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
