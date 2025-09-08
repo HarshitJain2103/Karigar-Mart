@@ -15,7 +15,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const STORAGE_KEY = "karigar.store.v1";
-
 const defaultDraft = {
   storeName: "",
   tagline: "",
@@ -32,7 +31,7 @@ const defaultDraft = {
 
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 
-function ImageUploader({ images = [], onChange, max = 6, single = false, uploadType }) {
+function ImageUploader({ images = [], onChange, max = 8, single = false, uploadType }) { 
   const inputRef = useRef(null);
   const token = useAuthStore((state) => state.token);
   const [isUploading, setIsUploading] = useState(false);
@@ -41,6 +40,13 @@ function ImageUploader({ images = [], onChange, max = 6, single = false, uploadT
   const handleFileChange = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
+
+    const availableSlots = max - images.length;
+    if (files.length > availableSlots) {
+      alert(`You can only upload ${availableSlots} more image(s). Please select fewer files.`);
+      if (inputRef.current) inputRef.current.value = null;
+      return;
+    }
 
     setIsUploading(true);
     setError('');
@@ -51,10 +57,8 @@ function ImageUploader({ images = [], onChange, max = 6, single = false, uploadT
       } else {
         let currentImages = [...images];
         for (const file of files) {
-          if (currentImages.length < max) {
-            const url = await uploadImage(file, token, uploadType);
-            currentImages.push(url);
-          }
+          const url = await uploadImage(file, token, uploadType);
+          currentImages.push(url);
         }
         onChange(currentImages);
       }
@@ -71,13 +75,19 @@ function ImageUploader({ images = [], onChange, max = 6, single = false, uploadT
     <div className="space-y-2">
       <input ref={inputRef} type="file" accept="image/*,.png,.jpg,.jpeg" multiple={!single} onChange={handleFileChange} className="hidden" />
       <div className="flex items-center gap-3">
-        <Button variant="outline" type="button" onClick={() => inputRef.current?.click()} disabled={isUploading}>
+        {/* DISABLE BUTTON WHEN LIMIT IS REACHED --- */}
+        <Button
+          variant="outline"
+          type="button"
+          onClick={() => inputRef.current?.click()}
+          disabled={isUploading || images.length >= max}
+        >
           {isUploading ? "Uploading..." : `Upload ${single ? "Image" : "Images"}`}
         </Button>
         <div className="text-sm text-muted-foreground">{images.length}/{max}</div>
       </div>
       {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
-      <div className="grid grid-cols-3 gap-2 mt-2 min-h-[6rem]">
+      <div className="grid grid-cols-3 gap-2 mt-2 p-2 border rounded-lg bg-slate-50 max-h-48 overflow-y-auto min-h-[6rem]">
         {images.length === 0 && <div className="col-span-3 text-sm text-muted-foreground p-4 border-2 border-dashed rounded-lg text-center">No images uploaded.</div>}
         {images.map((url, i) => (
           <div key={i} className="relative rounded overflow-hidden border">
@@ -391,6 +401,7 @@ export default function BuildYourStoreFull() {
                             onChange={(urls) => updateNested(['media', 'heroImageURL'], urls[0] || "")}
                             uploadType="profile/hero" 
                             single={true}
+                            max={1}
                           />
                         </div>
                         <div>
@@ -569,7 +580,7 @@ export default function BuildYourStoreFull() {
                 images={editingProduct?.imageURLs || []}
                 onChange={(urls) => setEditingProduct(prev => ({...prev, imageURLs: urls}))}
                 uploadType="products"
-                max={6}
+                max={8}
               />
             </div>
             <div className="flex gap-2 justify-end pt-2">

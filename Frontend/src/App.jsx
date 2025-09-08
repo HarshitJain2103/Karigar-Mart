@@ -6,6 +6,8 @@ import useVoiceSearch from "./hooks/useVoiceSearch";
 import BuildYourStoreFull from "./pages/BuildYourStore";
 import Home from "./pages/Home";
 import useAuthStore from "./stores/authStore";
+import PrivateRoute from './components/ui/auth/PrivateRoute'; 
+import Dashboard from "@/pages/Dashboard";
 
 export default function App() {
   const [cartCount, setCartCount] = useState(0);
@@ -35,6 +37,9 @@ export default function App() {
             element={<Home onAddToCart={() => setCartCount((c) => c + 1)} />}
           />
           <Route path="/build-store" element={<BuildYourStoreFull />} />
+          <Route element={<PrivateRoute allowedRoles={['ARTISAN']} />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
         </Routes>
       </main>
 

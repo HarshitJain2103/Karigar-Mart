@@ -27,7 +27,13 @@ const artisanProfileSchema = new mongoose.Schema({
 
   media: {
     heroImageURL: { type: String, required: true },
-    galleryImageURLs: { type: [String], default: [] },
+    galleryImageURLs: { 
+      type: [String], 
+      default: [],
+      validate: [
+        (val) => val.length <= 8,
+      ]
+    },
   },
 
   theme: {

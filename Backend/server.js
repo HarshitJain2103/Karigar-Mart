@@ -27,7 +27,7 @@ app.use("/api/categories" , categoryRoutes);
 app.use("/api/artisans" , artisanRoutes);
 app.use('/api/upload', uploadRoutes);
 
-cron.schedule('* * * * *', () => {
+cron.schedule('*/5 * * * *', () => {
   console.log('-------------------------------------');
   console.log('Running daily Cloudinary cleanup job...');
   runCloudinaryCleanup();

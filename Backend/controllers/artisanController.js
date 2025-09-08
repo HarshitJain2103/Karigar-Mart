@@ -1,5 +1,6 @@
 import ArtisanProfile from '../models/artisanProfile.model.js';
 import User from '../models/User.js';
+import Product from '../models/product.model.js';
 
 const createArtisanProfile = async (req, res) => {
   try {
@@ -47,4 +48,24 @@ const createArtisanProfile = async (req, res) => {
   }
 };
 
-export { createArtisanProfile };
+const getArtisanDashboard = async (req, res) => {
+  try {
+    const profile = await ArtisanProfile.findOne({ userId: req.user.id });
+
+    if (!profile) {
+      return res.status(404).json({ message: 'Artisan profile not found.' });
+    }
+
+    const products = await Product.find({ artisanId: profile._id });
+
+    res.status(200).json({
+      profile,
+      products,
+    });
+  } catch (error) {
+    console.error('Error fetching artisan dashboard:', error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
+export { createArtisanProfile  , getArtisanDashboard};
