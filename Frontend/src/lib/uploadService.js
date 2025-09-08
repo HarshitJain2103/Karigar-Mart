@@ -1,6 +1,6 @@
 export const uploadImage = async (file, token, uploadType = 'products') => {
   const formData = new FormData();
-  // Ensure the text field 'upload_type' is appended before the file
+  
   formData.append('upload_type', uploadType);
   formData.append('image', file);
 
