@@ -106,7 +106,7 @@ export default function Dashboard() {
                     <p className="text-muted-foreground text-center md:text-left">Here's your store's overview.</p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
-                    <Button variant="outline" onClick={() => navigate('/store-preview')}>View Public Store</Button>
+                    <Button variant="outline" onClick={() => navigate(`/store/${profile._id}`)}>View Public Store</Button>
                     <Button onClick={handleAddNewProduct}>+ Add New Product</Button>
                 </div>
             </div>

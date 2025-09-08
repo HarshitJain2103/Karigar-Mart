@@ -1,10 +1,8 @@
-// src/components/sections/ProductGrid.jsx
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Heart } from "lucide-react";
-import Rating from '../ui-elements/Rating.jsx';
 
 export default function ProductGrid({ title, subtitle, link, products, onAddToCart }) {
   return (
@@ -19,9 +17,9 @@ export default function ProductGrid({ title, subtitle, link, products, onAddToCa
       </div>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {products.map((p) => (
-          <Card key={p.id} className="overflow-hidden rounded-2xl">
+          <Card key={p._id} className="overflow-hidden rounded-2xl">
             <div className="relative">
-              <img src={p.img} alt={p.title} className="h-40 w-full object-cover" />
+              <img src={p.imageURLs[0]} alt={p.title} className="h-40 w-full object-cover" />
               <Button
                 variant="secondary"
                 className="absolute right-2 top-2 h-8 w-8 rounded-full p-0"
@@ -32,10 +30,8 @@ export default function ProductGrid({ title, subtitle, link, products, onAddToCa
             </div>
             <CardContent className="space-y-2 p-3">
               <a href="#" className="line-clamp-1 font-medium hover:underline">{p.title}</a>
-              <a href="#" className="block text-xs text-muted-foreground hover:underline">{p.artisan}</a>
               <div className="flex items-center justify-between">
                 <span className="font-semibold">₹{p.price}</span>
-                <Rating value={p.rating} />
               </div>
               <div className="flex gap-2 pt-1">
                 <Button className="flex-1 rounded-full" onClick={onAddToCart}>Add to Cart</Button>
@@ -46,12 +42,11 @@ export default function ProductGrid({ title, subtitle, link, products, onAddToCa
                   <DialogContent className="sm:max-w-[540px]">
                     <DialogHeader>
                       <DialogTitle>{p.title}</DialogTitle>
-                      <DialogDescription>by {p.artisan}</DialogDescription>
+                      <DialogDescription>{/* by {p.artisan.storeName} */}</DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-4 md:grid-cols-2">
-                      <img src={p.img} alt={p.title} className="h-48 w-full rounded-xl object-cover" />
+                      <img src={p.imageURLs[0]} alt={p.title} className="h-48 w-full rounded-xl object-cover" />
                       <div className="space-y-2">
-                        <Rating value={p.rating} />
                         <p className="text-sm text-muted-foreground">{p.description}</p>
                         <div className="flex items-center justify-between">
                           <span className="text-lg font-semibold">₹{p.price}</span>
