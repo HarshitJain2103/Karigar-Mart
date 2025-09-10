@@ -67,13 +67,20 @@ export default function Home({ onAddToCart }) {
   }, []); 
 
   const stories = useMemo(() => {
-      return artisans.slice(0, 3).map(a => ({
-          id: a._id,
-          title: `A Story from ${a.storeName}`,
-          img: a.media.heroImageURL, 
-          excerpt: a.story.slice(0, 120) + '...'
-      }));
+    return artisans.slice(0, 3).map(artisanProfile => ({
+      _id: artisanProfile._id, // Use the profile ID as a temporary unique key
+      title: `A Story from ${artisanProfile.storeName}`,
+      imageURL: artisanProfile.media.heroImageURL,
+      excerpt: artisanProfile.story.slice(0, 120) + '...',
+      // This is the crucial fix: we create the nested object the other component expects
+      artisanId: { 
+        _id: artisanProfile._id,
+        storeName: artisanProfile.storeName,
+        // Add other details if needed
+      } 
+    }));
   }, [artisans]);
+
   if (loading) {
     return <div className="flex justify-center items-center h-screen">Loading amazing crafts...</div>;
   }
