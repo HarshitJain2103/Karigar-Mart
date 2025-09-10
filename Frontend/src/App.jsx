@@ -9,6 +9,8 @@ import useAuthStore from "./stores/authStore";
 import PrivateRoute from './components/ui/auth/PrivateRoute'; 
 import Dashboard from "@/pages/Dashboard";
 import ArtisanStorePage from "./pages/ArtisanStorePage";
+import AllArtisansPage from "./pages/AllArtisansPage";
+
 export default function App() {
   const [cartCount, setCartCount] = useState(0);
   const { query, setQuery, lang, setLang, startVoiceSearch } = useVoiceSearch();
@@ -41,6 +43,7 @@ export default function App() {
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>
           <Route path="/store/:artisanId" element={<ArtisanStorePage />} />
+          <Route path="/artisans" element={<AllArtisansPage />} />
         </Routes>
       </main>
 
