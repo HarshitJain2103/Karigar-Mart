@@ -4,25 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { MapPin, Share2 } from 'lucide-react';
-
-function StoreProductCard({ product }) {
-    return (
-        <Card className="overflow-hidden group">
-            <Link to={`/products/${product._id}`}>
-                <div className="aspect-square w-full overflow-hidden">
-                    <img src={product.imageURLs[0]} alt={product.title} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
-                </div>
-                <CardContent className="p-4 space-y-2">
-                    <h3 className="font-semibold text-lg truncate">{product.title}</h3>
-                    <div className="flex justify-between items-center">
-                        <span className="font-bold text-xl">₹{product.price}</span>
-                    </div>
-                    <Button className="w-full mt-2">View Product</Button>
-                </CardContent>
-            </Link>
-        </Card>
-    );
-}
+import ProductCard from '../components/ui/products/ProductCard';
 
 export default function ArtisanStorePage() {
   const { artisanId } = useParams(); 
@@ -126,7 +108,7 @@ export default function ArtisanStorePage() {
             <h2 className="text-3xl font-bold mb-6 text-center">Our Collection</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {products.map(product => (
-                    <StoreProductCard key={product._id} product={product} />
+                    <ProductCard key={product._id} product={product} />
                 ))}
             </div>
              {products.length === 0 && <div className="text-center text-muted-foreground py-10">This artisan hasn't added any products yet.</div>}
