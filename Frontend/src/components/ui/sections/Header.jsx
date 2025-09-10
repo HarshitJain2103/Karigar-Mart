@@ -23,6 +23,7 @@ export default function Header({ cartCount, query, setQuery, setLang, startVoice
 
   const navItems = [
     { name: "Home", path: "/" },
+    { name: "Shop", path: "/shop" },
     { name: "Categories", path: "/categories" },
     { name: "Artisans", path: "/artisans" },
     { name: "Stories", path: "/stories" },

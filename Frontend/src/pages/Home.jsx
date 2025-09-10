@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import useAutoCarousel from "@/hooks/useAutoCarousel"; 
+import useAutoCarousel from "@/hooks/useAutoCarousel";
 import HeroSection from "@/components/ui/sections/HeroSection";
 import CategoryList from "@/components/ui/sections/CategoryList";
 import ProductGrid from "@/components/ui/sections/ProductGrid";
@@ -7,7 +7,6 @@ import ArtisanSpotlight from "@/components/ui/sections/ArtisanSpotlight";
 import StoryHighlights from "@/components/ui/sections/StoryHighlights";
 import Newsletter from "@/components/ui/sections/Newsletter";
 
-// We can define the static hero slides here, or fetch them if they become dynamic later
 const HERO_SLIDES = [
   {
     title: "Meet the Masters: Featured Artisans",
@@ -23,12 +22,12 @@ const HERO_SLIDES = [
 
 
 export default function Home({ onAddToCart }) {
-  
   const [categories, setCategories] = useState([]);
-  const [products, setProducts] = useState([]);
+  const [productsData, setProductsData] = useState({ products: [] });
   const [artisans, setArtisans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
   const { index, setIndex } = useAutoCarousel(HERO_SLIDES.length, 6000);
 
   useEffect(() => {
@@ -48,11 +47,11 @@ export default function Home({ onAddToCart }) {
         }
 
         const categoriesData = await categoriesRes.json();
-        const productsData = await productsRes.json();
+        const productsDataFromApi = await productsRes.json(); // Renamed to avoid conflict
         const artisansData = await artisansRes.json();
 
         setCategories(categoriesData);
-        setProducts(productsData);
+        setProductsData(productsDataFromApi);
         setArtisans(artisansData);
 
       } catch (err) {
@@ -64,26 +63,29 @@ export default function Home({ onAddToCart }) {
     };
 
     fetchHomepageData();
-  }, []); 
+  }, []);
 
   const stories = useMemo(() => {
+
     return artisans.slice(0, 3).map(artisanProfile => ({
-      _id: artisanProfile._id, // Use the profile ID as a temporary unique key
+
+      _id: artisanProfile._id, 
       title: `A Story from ${artisanProfile.storeName}`,
       imageURL: artisanProfile.media.heroImageURL,
       excerpt: artisanProfile.story.slice(0, 120) + '...',
-      // This is the crucial fix: we create the nested object the other component expects
       artisanId: { 
         _id: artisanProfile._id,
         storeName: artisanProfile.storeName,
-        // Add other details if needed
       } 
     }));
+
   }, [artisans]);
+
 
   if (loading) {
     return <div className="flex justify-center items-center h-screen">Loading amazing crafts...</div>;
   }
+
   if (error) {
     return <div className="flex justify-center items-center h-screen text-red-500">{error}</div>;
   }
@@ -94,7 +96,7 @@ export default function Home({ onAddToCart }) {
       <CategoryList categories={categories} />
       <ProductGrid
         title="Featured Products"
-        products={products.slice(0, 8)} 
+        products={productsData.products.slice(0, 8)}
         onAddToCart={onAddToCart}
       />
       <ArtisanSpotlight artisans={artisans.slice(0, 2)} /> 

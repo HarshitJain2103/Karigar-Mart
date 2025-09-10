@@ -10,6 +10,7 @@ import PrivateRoute from './components/ui/auth/PrivateRoute';
 import Dashboard from "@/pages/Dashboard";
 import ArtisanStorePage from "./pages/ArtisanStorePage";
 import AllArtisansPage from "./pages/AllArtisansPage";
+import ShopPage from "./pages/ShopPage";
 
 export default function App() {
   const [cartCount, setCartCount] = useState(0);
@@ -44,6 +45,7 @@ export default function App() {
           </Route>
           <Route path="/store/:artisanId" element={<ArtisanStorePage />} />
           <Route path="/artisans" element={<AllArtisansPage />} />
+          <Route path="/shop" element={<ShopPage />} />
         </Routes>
       </main>
 

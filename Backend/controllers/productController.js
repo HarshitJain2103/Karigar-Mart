@@ -2,18 +2,26 @@ import Product from '../models/product.model.js';
 import ArtisanProfile from '../models/artisanProfile.model.js';
 import asyncHandler from 'express-async-handler';
 
-const getProducts = async (req, res) => {
-  try {
-    const products = await Product.find({})
-      .populate('artisanId', 'storeName')
-      .populate('categoryId', 'name');
-      
-    res.status(200).json(products);
-  } catch (error) {
-    console.error(`Error fetching products: ${error.message}`);
-    res.status(500).json({ message: 'Server Error' });
-  }
-};
+const getProducts = asyncHandler(async (req, res) => {
+  const pageSize = 8; 
+  const page = Number(req.query.pageNumber) || 1;
+  
+  const keyword = req.query.keyword ? {
+    title: {
+      $regex: req.query.keyword,
+      $options: 'i', 
+    },
+  } : {};
+  
+  const category = req.query.category ? { categoryId: req.query.category } : {};
+  const count = await Product.countDocuments({ ...keyword, ...category });
+  const products = await Product.find({ ...keyword, ...category })
+    .populate('artisanId', 'storeName')
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+
+  res.json({ products, page, pages: Math.ceil(count / pageSize) });
+});
 
 const createProduct = async (req, res) => {
   try {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ArtisanCard from '../components/ui/sections/ArtisanCard'; // Import our new card
+import ArtisanCard from '../components/ui/sections/ArtisanCard'; 
 
 export default function AllArtisansPage() {
   const [artisans, setArtisans] = useState([]);
