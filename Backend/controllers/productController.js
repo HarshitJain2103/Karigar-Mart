@@ -23,6 +23,26 @@ const getProducts = asyncHandler(async (req, res) => {
   res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
+const getProductById = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id)
+    .populate({
+      path: 'artisanId',
+      select: 'storeName userId',
+      populate: {
+        path: 'userId',
+        select: 'firstName lastName'
+      }
+    })
+    .populate('categoryId', 'name');
+
+  if (product) {
+    res.json(product);
+  } else {
+    res.status(404);
+    throw new Error('Product not found');
+  }
+});
+
 const createProduct = async (req, res) => {
   try {
     const artisanProfile = await ArtisanProfile.findOne({ userId: req.user.id });
@@ -117,4 +137,4 @@ const getProductsByArtisan = async (req, res) => {
   }
 };
 
-export { getProducts, createProduct , updateProduct , deleteProduct , getProductsByArtisan};
+export { getProducts, createProduct , updateProduct , deleteProduct , getProductsByArtisan , getProductById};
