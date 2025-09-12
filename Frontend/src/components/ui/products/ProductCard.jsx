@@ -22,6 +22,7 @@ export default function ProductCard({ product, onAddToCart }) {
       <Link to={`/products/${product._id}`}>
         <div className="relative">
           <div className="aspect-square w-full overflow-hidden bg-gray-100">
+            
             <img 
               src={product.imageURLs[0]} 
               alt={product.title} 

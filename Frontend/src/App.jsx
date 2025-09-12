@@ -11,6 +11,7 @@ import Dashboard from "@/pages/Dashboard";
 import ArtisanStorePage from "./pages/ArtisanStorePage";
 import AllArtisansPage from "./pages/AllArtisansPage";
 import ShopPage from "./pages/ShopPage";
+import ProductDetailPage from '@/pages/ProductDetailPage';
 
 export default function App() {
   const [cartCount, setCartCount] = useState(0);
@@ -46,6 +47,7 @@ export default function App() {
           <Route path="/store/:artisanId" element={<ArtisanStorePage />} />
           <Route path="/artisans" element={<AllArtisansPage />} />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/products/:productId" element={<ProductDetailPage />} />
         </Routes>
       </main>
 
