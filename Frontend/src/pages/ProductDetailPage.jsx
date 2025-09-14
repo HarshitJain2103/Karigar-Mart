@@ -420,7 +420,7 @@ export default function ProductDetailsPage() {
                 className="w-full sm:flex-1 py-4"
                 onClick={handleBuyNow}
               >
-                Buy Now
+                {canAddToCart ? 'Buy Now' : 'Out of Stock'}
               </Button>
             </div>
 
@@ -501,7 +501,7 @@ export default function ProductDetailsPage() {
             <ShoppingCart className="mr-2 h-5 w-5" /> {canAddToCart ? 'Add to Cart' : 'Out of Stock'}
           </Button>
           <Button size="lg" variant="outline" onClick={handleBuyNow}>
-            Buy Now
+            {canAddToCart ? 'Buy Now' : 'Out of Stock'}
           </Button>
         </div>
       </div>

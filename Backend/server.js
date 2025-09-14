@@ -7,6 +7,7 @@ import productRoutes from "./routes/productRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import artisanRoutes from "./routes/artisanRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
+import orderRoutes from './routes/orderRoutes.js';
 import cron from 'node-cron';
 import { runCloudinaryCleanup } from './utils/cleanupCloudinary.js';
 
@@ -26,6 +27,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/categories" , categoryRoutes);
 app.use("/api/artisans" , artisanRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/orders', orderRoutes);
 
 cron.schedule('*/5 * * * *', () => {
   console.log('-------------------------------------');
