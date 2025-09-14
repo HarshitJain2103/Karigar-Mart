@@ -19,6 +19,8 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import RelatedProducts from '@/components/ui/products/RelatedProducts';
+import useAuthStore from '@/stores/authStore';
+import useCartStore from '@/stores/cartStore';
 
 function StaticRating({ rating, reviews = 0 }) {
   const displayRating = rating !== undefined ? rating : 0;
@@ -104,7 +106,28 @@ export default function ProductDetailsPage() {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [sharing, setSharing] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [wishlist, setWishlist] = useState(false);
+
+  const token = useAuthStore((state) => state.token);
+  const wishlist = useAuthStore((state) => state.wishlist);
+  const toggleWishlist = useAuthStore((state) => state.toggleWishlist);
+  const addToCart = useCartStore((state) => state.addToCart);
+
+  // Check if the current product is in the global wishlist
+  const isWishlisted = useMemo(() => 
+    wishlist.some(item => item._id === productId), 
+    [wishlist, productId]
+  );
+
+  const handleToggleWishlist = () => {
+    if (!token) return alert('Please log in to manage your wishlist.');
+    toggleWishlist(productId);
+  };
+
+  const handleAddToCart = () => {
+    if (!token) return alert('Please log in to add items to your cart.');
+    if (!product) return;
+    addToCart(product, quantity);
+  };
 
   const canDecrease = quantity > 1;
   const canIncrease = useMemo(
@@ -252,10 +275,10 @@ export default function ProductDetailsPage() {
                     size="icon"
                     variant="secondary"
                     className="absolute top-4 right-4 rounded-full h-10 w-10 opacity-0 group-hover:opacity-100 transition-opacity"
-                    onClick={() => setWishlist(w => !w)}
+                    onClick={handleToggleWishlist}
                     aria-label="Add to Wishlist"
                   >
-                    <Heart className={`h-5 w-5 transition-colors ${wishlist ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} />
+                    <Heart className={`h-5 w-5 transition-colors ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} />
                   </Button>
                   {showThumbs && (
                     <>
@@ -411,6 +434,7 @@ export default function ProductDetailsPage() {
                 className="w-full sm:flex-1 py-4"
                 disabled={!canAddToCart}
                 aria-disabled={!canAddToCart}
+                onClick={handleAddToCart}
               >
                 <ShoppingCart className="mr-2 h-5 w-5" /> {canAddToCart ? 'Add to Cart' : 'Out of Stock'}
               </Button>

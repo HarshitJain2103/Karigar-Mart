@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Routes, Route } from "react-router-dom";
 import Footer from "./components/ui/sections/Footer";
 import Header from "./components/ui/sections/Header";
@@ -14,21 +14,38 @@ import ShopPage from "./pages/ShopPage";
 import ProductDetailPage from '@/pages/ProductDetailPage';
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderConfirmationPage from './pages/OrderConfirmationPage';
+import useCartStore from "./stores/cartStore";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function App() {
-  const [cartCount, setCartCount] = useState(0);
   const { query, setQuery, lang, setLang, startVoiceSearch } = useVoiceSearch();
   const recognitionRef = useRef(null); 
+  const token = useAuthStore((state) => state.token);
   const fetchUserProfile = useAuthStore((state) => state.fetchUserProfile);
+  const setWishlist = useAuthStore((state) => state.setWishlist);
+  const setCart = useCartStore((state) => state.setCart);
 
   useEffect(() => {
-    fetchUserProfile();
-  }, [fetchUserProfile]);
+    const fetchInitialData = async () => {
+      await fetchUserProfile();
+      const headers = { Authorization: `Bearer ${token}` };
+      const wishlistPromise = fetch('http://localhost:8000/api/users/profile/wishlist', { headers }).then(res => res.json());
+      const cartPromise = fetch('http://localhost:8000/api/users/profile/cart', { headers }).then(res => res.json());
+      
+      const [wishlistData, cartData] = await Promise.all([wishlistPromise, cartPromise]);
+      
+      if (wishlistData) setWishlist(wishlistData);
+      if (cartData) setCart(cartData);
+    };
+
+    if (token) {
+      fetchInitialData();
+    }
+  }, [token, fetchUserProfile, setWishlist, setCart]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Header
-        cartCount={cartCount}
         query={query}
         setQuery={setQuery}
         lang={lang}
@@ -40,7 +57,7 @@ export default function App() {
         <Routes>
           <Route
             path="/"
-            element={<Home onAddToCart={() => setCartCount((c) => c + 1)} />}
+            element={<Home />}
           />
           <Route path="/build-store" element={<BuildYourStoreFull />} />
           <Route element={<PrivateRoute allowedRoles={['ARTISAN']} />}>
@@ -56,6 +73,7 @@ export default function App() {
       </main>
 
       <Footer />
+      <Toaster />
     </div>
   );
 }

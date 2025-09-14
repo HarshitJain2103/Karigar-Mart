@@ -9,13 +9,15 @@ import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import AuthDialog from '@/components/ui/auth/AuthDialog';
+import useCartStore from '@/stores/cartStore';
 
-
-export default function Header({ cartCount, query, setQuery, setLang, startVoiceSearch }) {
+export default function Header({query, setQuery, setLang, startVoiceSearch }) {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  
+  const cartItems = useCartStore((state) => state.items);
+  const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
   const handleLogout = () => {
     logout();
     navigate('/');
@@ -24,7 +26,6 @@ export default function Header({ cartCount, query, setQuery, setLang, startVoice
   const navItems = [
     { name: "Home", path: "/" },
     { name: "Shop", path: "/shop" },
-    { name: "Categories", path: "/categories" },
     { name: "Artisans", path: "/artisans" },
     { name: "Stories", path: "/stories" },
     { name: "Contact", path: "/contact" },
