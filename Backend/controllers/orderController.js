@@ -59,7 +59,7 @@ const verifyPaymentAndCreateOrder = asyncHandler(async (req, res) => {
     razorpay_order_id,
     razorpay_payment_id,
     razorpay_signature,
-    orderItems, 
+    orderItems,
     shippingAddress,
     totalPrice,
   } = req.body;
@@ -74,9 +74,26 @@ const verifyPaymentAndCreateOrder = asyncHandler(async (req, res) => {
   const isAuthentic = expectedSignature === razorpay_signature;
 
   if (isAuthentic) {
-    
+
+    for (const item of orderItems) {
+      const product = await Product.findById(item.product);
+
+      if (!product) {
+        res.status(404);
+        throw new Error(`Product not found: ${item.name}`);
+      }
+
+      if (product.stockQuantity < item.qty) {
+        res.status(400);
+        throw new Error(`Sorry, ${product.title} is out of stock. A refund will be processed.`);
+      }
+
+      product.stockQuantity -= item.qty;
+      await product.save({ validateBeforeSave: true }); 
+    }
+
     const order = new Order({
-      user: req.user._id, 
+      user: req.user._id,
       orderItems,
       shippingAddress,
       totalPrice,
@@ -92,8 +109,9 @@ const verifyPaymentAndCreateOrder = asyncHandler(async (req, res) => {
     });
 
     const createdOrder = await order.save();
-
+    
     res.status(201).json({ success: true, orderId: createdOrder._id });
+
   } else {
     res.status(400).json({ success: false, message: 'Payment verification failed' });
   }

@@ -3,6 +3,14 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs"; 
 import jwt from "jsonwebtoken";
 import { protect } from "../middleware/authMiddleware.js"; 
+import {
+  getUserWishlist,
+  addToWishlist,
+  removeFromWishlist,
+  getUserCart,
+  addToCart,
+  removeFromCart,
+} from '../controllers/userController.js';
 
 const router = express.Router();
 
@@ -101,5 +109,18 @@ router.get("/profile", protect, async (req, res) => {
   }
 });
 
+//Wishlist Routes
+router
+  .route('/profile/wishlist')
+  .get(protect, getUserWishlist)
+  .post(protect, addToWishlist);
+router.route('/profile/wishlist/:productId').delete(protect, removeFromWishlist);
+
+// Cart Routes
+router
+  .route('/profile/cart')
+  .get(protect, getUserCart)
+  .post(protect, addToCart);
+router.route('/profile/cart/:productId').delete(protect, removeFromCart);
 
 export default router;

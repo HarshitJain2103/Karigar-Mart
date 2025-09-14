@@ -25,12 +25,32 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // Added the 'role' field as discussed
+    
     role: {
       type: String,
       enum: ['CUSTOMER', 'ARTISAN'], // Restricts the role to only these two values
       default: 'CUSTOMER', // New users will be customers by default
     },
+    wishlist: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+      },
+    ],
+    cart: [
+      {
+        product: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Product',
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+          default: 1,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );
