@@ -18,6 +18,7 @@ import useCartStore from "./stores/cartStore";
 import { Toaster } from "@/components/ui/toaster";
 import WishlistPage from './pages/WishlistPage';
 import CartPage from './pages/CartPage';
+import MyOrdersPage from './pages/MyOrdersPage';
 
 export default function App() {
   const { query, setQuery, lang, setLang, startVoiceSearch } = useVoiceSearch();
@@ -73,6 +74,7 @@ export default function App() {
           <Route path="/order-confirmation/:orderId" element={<OrderConfirmationPage />} />
           <Route path="/wishlist" element={<WishlistPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/orders" element={<MyOrdersPage />} />
         </Routes>
       </main>
 
