@@ -1,12 +1,13 @@
 import React, { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useCartStore from '@/stores/cartStore';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { X, Plus, Minus, Truck, Shield, RefreshCw, Tag } from 'lucide-react';
+import { X, Plus, Minus, Truck, Shield, RefreshCw, Tag, AlertTriangle } from 'lucide-react';
 
 export default function CartPage() {
+  const navigate = useNavigate();
   const { items, removeFromCart, subtotal, updateItemQuantity, clearCart } = useCartStore();
   const [note, setNote] = useState('');
   const totalItems = useMemo(() => (items || []).reduce((n, { quantity }) => n + (quantity || 0), 0), [items]);
@@ -14,6 +15,17 @@ export default function CartPage() {
   const freeShipThreshold = 999; 
   const freeShipRemaining = Math.max(0, freeShipThreshold - sub);
   const freeShipProgress = Math.min(100, Math.round((sub / freeShipThreshold) * 100));
+
+  const isCartValid = useMemo(() => {
+    if (!items || items.length === 0) return false;
+    // The cart is invalid if even one item's quantity is greater than its available stock.
+    return !items.some(({ product, quantity }) => quantity > product.stockQuantity);
+  }, [items]);
+
+  const checkoutSubtotal = useMemo(() => {
+    const validItems = items.filter(({ product, quantity }) => quantity <= product.stockQuantity);
+    return validItems.reduce((acc, { product, quantity }) => acc + product.price * quantity, 0);
+  }, [items]);
 
   function handleDecrease(productId, quantity) {
     if (typeof updateItemQuantity !== 'function') return;
@@ -52,6 +64,15 @@ export default function CartPage() {
         <p className="text-sm text-muted-foreground mt-1">{totalItems} item{totalItems !== 1 ? 's' : ''}</p>
       </div>
 
+      {!isCartValid && (
+        <div className="mb-6 flex items-center gap-3 rounded-lg border border-destructive bg-destructive/10 p-3 text-destructive">
+          <AlertTriangle className="h-5 w-5" />
+          <p className="text-sm font-semibold">
+            Some items in your cart are out of stock. Please remove them to proceed.
+          </p>
+        </div>
+      )}
+
       {/* Free shipping banner */}
       <div className="mb-8 rounded-lg border p-4 bg-gradient-to-r from-primary/5 to-transparent">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -84,9 +105,11 @@ export default function CartPage() {
             const canInc = typeof updateItemQuantity === 'function'
               ? (typeof product?.stockQuantity === 'number' ? quantity < product.stockQuantity : true)
               : false;
+            const isItemInStock = product.stockQuantity > 0;
+            const isQuantityAvailable = quantity <= product.stockQuantity;
 
             return (
-              <Card key={product?._id} className="flex items-center p-4">
+              <Card key={product?._id} className={`flex items-center p-4 transition-colors ${!isQuantityAvailable ? 'border-destructive bg-destructive/5' : ''}`}>
                 <div className="relative w-24 h-24 rounded-md overflow-hidden bg-gray-100 border">
                   {image ? (
                     <img src={image} alt={product?.title} className="w-full h-full object-cover" />
@@ -100,12 +123,14 @@ export default function CartPage() {
                 <div className="ml-4 flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <h3 className="font-semibold line-clamp-2">{product?.title}</h3>
-                      <div className="text-sm text-muted-foreground mt-1">
-                        {typeof product?.stockQuantity === 'number'
-                          ? `${product.stockQuantity} in stock`
-                          : 'In stock'}
-                      </div>
+                        <h3 className="font-semibold line-clamp-2">{product?.title}</h3>
+                        
+                        {!isQuantityAvailable && isItemInStock && (
+                            <p className="text-sm text-destructive mt-1 font-medium">Only {product.stockQuantity} left in stock</p>
+                        )}
+                        {!isItemInStock && (
+                            <p className="text-sm text-destructive mt-1 font-medium">Out of stock</p>
+                        )}
                     </div>
                     <div className="text-right shrink-0">
                       <div className="font-semibold">₹{Number(product?.price || 0).toFixed(2)}</div>
@@ -186,16 +211,16 @@ export default function CartPage() {
 
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Subtotal</span>
-                <span className="font-semibold">₹{sub.toFixed(2)}</span>
+                <span className="font-semibold">₹{checkoutSubtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Shipping</span>
-                <span>{sub >= freeShipThreshold ? 'Free' : 'Calculated at next step'}</span>
+                <span>{checkoutSubtotal >= freeShipThreshold ? 'Free' : 'Calculated at next step'}</span>
               </div>
               <Separator />
               <div className="flex justify-between font-bold text-lg">
                 <span>Total</span>
-                <span>₹{sub.toFixed(2)}</span>
+                <span>₹{checkoutSubtotal.toFixed(2)}</span>
               </div>
 
               {/* Optional note to seller */}
@@ -214,9 +239,14 @@ export default function CartPage() {
               </div>
             </CardContent>
             <CardFooter className="flex flex-col gap-2">
-              <Link to="/checkout" className="w-full">
-                <Button size="lg" className="w-full">Proceed to Checkout</Button>
-              </Link>
+                <Button
+                    size="lg"
+                    className="w-full"
+                    disabled={!isCartValid}
+                    onClick={() => navigate('/checkout-cart')}
+                    >
+                    Proceed to Checkout
+                </Button>
               <div className="grid grid-cols-3 gap-2 w-full text-xs text-muted-foreground">
                 <div className="flex items-center gap-2 border rounded-md p-2">
                   <Truck className="h-4 w-4 text-primary" />

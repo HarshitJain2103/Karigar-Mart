@@ -134,7 +134,7 @@ export default function ProductDetailsPage() {
     () => (product?.stockQuantity ? quantity < product.stockQuantity : true),
     [product?.stockQuantity, quantity]
   );
-  const canAddToCart = (product?.stockQuantity ?? 0) > 0;
+  const canBuyNow = (product?.stockQuantity ?? 0) > 0;
 
   const productUrl = useMemo(() => {
     if (typeof window === 'undefined') return '';
@@ -432,19 +432,18 @@ export default function ProductDetailsPage() {
               <Button
                 size="lg"
                 className="w-full sm:flex-1 py-4"
-                disabled={!canAddToCart}
-                aria-disabled={!canAddToCart}
                 onClick={handleAddToCart}
               >
-                <ShoppingCart className="mr-2 h-5 w-5" /> {canAddToCart ? 'Add to Cart' : 'Out of Stock'}
+                <ShoppingCart className="mr-2 h-5 w-5" /> Add to Cart
               </Button>
               <Button
                 size="lg"
                 variant="outline"
                 className="w-full sm:flex-1 py-4"
                 onClick={handleBuyNow}
+                disabled={!canBuyNow}
               >
-                {canAddToCart ? 'Buy Now' : 'Out of Stock'}
+                {canBuyNow ? 'Buy Now' : 'Out of Stock'}
               </Button>
             </div>
 
@@ -521,11 +520,11 @@ export default function ProductDetailsPage() {
 
       <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/90 backdrop-blur border-t p-3 sm:hidden">
         <div className="max-w-7xl mx-auto flex items-center gap-2">
-          <Button size="lg" className="flex-1" disabled={!canAddToCart}>
-            <ShoppingCart className="mr-2 h-5 w-5" /> {canAddToCart ? 'Add to Cart' : 'Out of Stock'}
+          <Button size="lg" className="flex-1" onClick={handleAddToCart}>
+            <ShoppingCart className="mr-2 h-5 w-5" /> Add to Cart
           </Button>
           <Button size="lg" variant="outline" onClick={handleBuyNow}>
-            {canAddToCart ? 'Buy Now' : 'Out of Stock'}
+            {canBuyNow ? 'Buy Now' : 'Out of Stock'}
           </Button>
         </div>
       </div>
