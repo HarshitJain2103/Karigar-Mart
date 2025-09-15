@@ -20,6 +20,7 @@ import WishlistPage from './pages/WishlistPage';
 import CartPage from './pages/CartPage';
 import MyOrdersPage from './pages/MyOrdersPage';
 import ContactPage from "./pages/ContactPage";
+import AuthCallbackPage from './pages/AuthCallbackPage';
 
 export default function App() {
   const { query, setQuery, lang, setLang, startVoiceSearch } = useVoiceSearch();
@@ -77,6 +78,7 @@ export default function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/orders" element={<MyOrdersPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/auth/callback" element={<AuthCallbackPage />} />
         </Routes>
       </main>
 

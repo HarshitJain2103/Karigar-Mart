@@ -11,6 +11,10 @@ import orderRoutes from './routes/orderRoutes.js';
 import cron from 'node-cron';
 import { runCloudinaryCleanup } from './utils/cleanupCloudinary.js';
 import contactRoutes from './routes/contactRoutes.js';
+import session from 'express-session';
+import passport from 'passport';
+import './config/passport-setup.js';
+import authRoutes from './routes/authRoutes.js';
 
 dotenv.config();
 connectDB();
@@ -19,10 +23,21 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
+app.use('/api/auth', authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/categories" , categoryRoutes);
