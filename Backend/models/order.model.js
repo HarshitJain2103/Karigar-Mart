@@ -18,6 +18,11 @@ const orderSchema = new mongoose.Schema(
           required: true,
           ref: 'Product',
         },
+        artisan: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+          ref: 'ArtisanProfile',
+        },
       },
     ],
     shippingAddress: {

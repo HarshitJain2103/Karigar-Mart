@@ -1,6 +1,8 @@
 import ArtisanProfile from '../models/artisanProfile.model.js';
 import User from '../models/User.js';
 import Product from '../models/product.model.js';
+import Order from '../models/order.model.js';
+import mongoose from 'mongoose';
 
 const createArtisanProfile = async (req, res) => {
   try {
@@ -57,10 +59,28 @@ const getArtisanDashboard = async (req, res) => {
     }
 
     const products = await Product.find({ artisanId: profile._id });
+    
+    const stats = await Order.aggregate([
+      { $match: { isPaid: true } },
+      { $unwind: '$orderItems' },
+      { $match: { 'orderItems.artisan': new mongoose.Types.ObjectId(profile._id) } },
+      {
+        $group: {
+          _id: null, 
+          totalRevenue: { $sum: { $multiply: ['$orderItems.price', '$orderItems.qty'] } },
+          totalOrdersSet: { $addToSet: '$_id' }, 
+        },
+      },
+    ]);
+
+    const totalRevenue = stats[0]?.totalRevenue || 0;
+    const totalOrders = stats[0]?.totalOrdersSet?.length || 0;
 
     res.status(200).json({
       profile,
       products,
+      totalRevenue, 
+      totalOrders,  
     });
   } catch (error) {
     console.error('Error fetching artisan dashboard:', error);

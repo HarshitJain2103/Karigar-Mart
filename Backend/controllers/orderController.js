@@ -82,7 +82,7 @@ const verifyPaymentAndCreateOrder = asyncHandler(async (req, res) => {
         res.status(404);
         throw new Error(`Product not found: ${item.name}`);
       }
-
+      item.artisan = product.artisanId;
       if (product.stockQuantity < item.qty) {
         res.status(400);
         throw new Error(`Sorry, ${product.title} is out of stock. A refund will be processed.`);
