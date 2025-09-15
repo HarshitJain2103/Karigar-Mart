@@ -16,6 +16,8 @@ import CheckoutPage from "./pages/CheckoutPage";
 import OrderConfirmationPage from './pages/OrderConfirmationPage';
 import useCartStore from "./stores/cartStore";
 import { Toaster } from "@/components/ui/toaster";
+import WishlistPage from './pages/WishlistPage';
+import CartPage from './pages/CartPage';
 
 export default function App() {
   const { query, setQuery, lang, setLang, startVoiceSearch } = useVoiceSearch();
@@ -69,6 +71,8 @@ export default function App() {
           <Route path="/products/:productId" element={<ProductDetailPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/order-confirmation/:orderId" element={<OrderConfirmationPage />} />
+          <Route path="/wishlist" element={<WishlistPage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Routes>
       </main>
 

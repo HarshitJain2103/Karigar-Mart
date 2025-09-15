@@ -10,6 +10,7 @@ import {
   getUserCart,
   addToCart,
   removeFromCart,
+  clearUserCart,
 } from '../controllers/userController.js';
 
 const router = express.Router();
@@ -120,7 +121,8 @@ router.route('/profile/wishlist/:productId').delete(protect, removeFromWishlist)
 router
   .route('/profile/cart')
   .get(protect, getUserCart)
-  .post(protect, addToCart);
+  .post(protect, addToCart)
+  .delete(protect, clearUserCart);
 router.route('/profile/cart/:productId').delete(protect, removeFromCart);
 
 export default router;

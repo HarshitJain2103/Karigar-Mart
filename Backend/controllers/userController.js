@@ -60,6 +60,14 @@ const removeFromCart = asyncHandler(async (req, res) => {
     res.json(user.cart);
 });
 
+const clearUserCart = asyncHandler(async (req, res) => {
+    const user = await User.findByIdAndUpdate(
+        req.user._id,
+        { $set: { cart: [] } }, 
+        { new: true }
+    );
+    res.json(user.cart);
+});
 
 export {
   getUserWishlist,
@@ -68,4 +76,5 @@ export {
   getUserCart,
   addToCart,
   removeFromCart,
+  clearUserCart,
 };

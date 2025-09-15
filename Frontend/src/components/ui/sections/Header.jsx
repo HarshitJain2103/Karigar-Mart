@@ -71,11 +71,18 @@ export default function Header({query, setQuery, setLang, startVoiceSearch }) {
           </div>
           
           <div className="ml-auto flex items-center gap-1">
-            <Button variant="ghost" size="icon" aria-label="Wishlist"><Heart className="h-5 w-5" /></Button>
-            <Button variant="ghost" size="icon" aria-label="Cart" className="relative">
-              <ShoppingCart className="h-5 w-5" />
-              {cartCount > 0 && <Badge className="absolute -right-1 -top-1 rounded-full px-1.5 text-[10px]">{cartCount}</Badge>}
-            </Button>
+            <Link to="/wishlist">
+              <Button variant="ghost" size="icon" aria-label="Wishlist">
+                <Heart className="h-5 w-5" />
+              </Button>
+            </Link>
+            
+            <Link to="/cart">
+              <Button variant="ghost" size="icon" aria-label="Cart" className="relative">
+                <ShoppingCart className="h-5 w-5" />
+                {cartCount > 0 && <Badge className="absolute -right-1 -top-1 rounded-full px-1.5 text-[10px]">{cartCount}</Badge>}
+              </Button>
+            </Link>
 
             {/* Conditional Auth Button */}
             {user ? (
