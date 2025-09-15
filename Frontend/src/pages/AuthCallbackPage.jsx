@@ -16,7 +16,9 @@ export default function AuthCallbackPage() {
       try {
         const user = JSON.parse(decodeURIComponent(userString));
         login({ token, user });
-        navigate(user.role === 'ARTISAN' ? '/dashboard' : '/');
+        setTimeout(() => {
+            navigate(user.role === 'ARTISAN' ? '/dashboard' : '/');
+        }, 500);
       } catch (error) {
         console.error("Failed to process auth callback:", error);
         navigate('/'); 

@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import useAuthStore from '@/stores/authStore';
+import { useToast } from "@/hooks/use-toast";
 
 // Helper component for the Google G logo SVG
 function GoogleIcon(props) {
@@ -43,6 +44,7 @@ function GoogleIcon(props) {
 }
 
 export default function AuthDialog({ setOpen }) {
+  const { toast } = useToast();
   const [error, setError] = useState(null);
   const login = useAuthStore((state) => state.login);
   const [loginEmail, setLoginEmail] = useState('');
@@ -67,6 +69,10 @@ export default function AuthDialog({ setOpen }) {
       if (!response.ok) throw new Error(data.message || 'Login failed');
 
       login(data); 
+      toast({ 
+        title: "Login Successful!",
+        description: `Welcome back, ${data.user.firstName}.`,
+      });
       setOpen(false); 
     } catch (err) {
       setError(err.message);
@@ -93,6 +99,10 @@ export default function AuthDialog({ setOpen }) {
       if (!response.ok) throw new Error(data.message || 'Signup failed');
 
       login(data); 
+      toast({ 
+        title: "Account Created!",
+        description: `Welcome to Karigar Mart, ${data.user.firstName}.`,
+      });
       setOpen(false); 
     } catch (err) {
       setError(err.message);

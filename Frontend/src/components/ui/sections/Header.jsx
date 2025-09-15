@@ -10,8 +10,10 @@ import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import AuthDialog from '@/components/ui/auth/AuthDialog';
 import useCartStore from '@/stores/cartStore';
+import { useToast } from '@/hooks/use-toast';
 
 export default function Header({query, setQuery, setLang, startVoiceSearch }) {
+  const { toast } = useToast();
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -20,7 +22,13 @@ export default function Header({query, setQuery, setLang, startVoiceSearch }) {
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    toast({
+      title: "Logged Out",
+      description: "You have been successfully logged out!",
+    });
+    setTimeout(() => {
+      window.location.href = '/';
+    }, 500);
   };
 
   const navItems = [
@@ -76,7 +84,7 @@ export default function Header({query, setQuery, setLang, startVoiceSearch }) {
                 <Heart className="h-5 w-5" />
               </Button>
             </Link>
-            
+
             <Link to="/cart">
               <Button variant="ghost" size="icon" aria-label="Cart" className="relative">
                 <ShoppingCart className="h-5 w-5" />
