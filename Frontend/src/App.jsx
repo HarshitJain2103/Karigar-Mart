@@ -19,6 +19,7 @@ import { Toaster } from "@/components/ui/toaster";
 import WishlistPage from './pages/WishlistPage';
 import CartPage from './pages/CartPage';
 import MyOrdersPage from './pages/MyOrdersPage';
+import ContactPage from "./pages/ContactPage";
 
 export default function App() {
   const { query, setQuery, lang, setLang, startVoiceSearch } = useVoiceSearch();
@@ -75,6 +76,7 @@ export default function App() {
           <Route path="/wishlist" element={<WishlistPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/orders" element={<MyOrdersPage />} />
+          <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </main>
 

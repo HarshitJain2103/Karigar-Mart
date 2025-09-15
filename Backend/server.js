@@ -10,6 +10,7 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 import orderRoutes from './routes/orderRoutes.js';
 import cron from 'node-cron';
 import { runCloudinaryCleanup } from './utils/cleanupCloudinary.js';
+import contactRoutes from './routes/contactRoutes.js';
 
 dotenv.config();
 connectDB();
@@ -28,6 +29,7 @@ app.use("/api/categories" , categoryRoutes);
 app.use("/api/artisans" , artisanRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/contact', contactRoutes);
 
 cron.schedule('*/5 * * * *', () => {
   console.log('-------------------------------------');
