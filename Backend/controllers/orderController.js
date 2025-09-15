@@ -117,4 +117,9 @@ const verifyPaymentAndCreateOrder = asyncHandler(async (req, res) => {
   }
 });
 
-export { createRazorpayOrder, verifyPaymentAndCreateOrder, getOrderById };
+const getMyOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({ user: req.user._id }).sort({ createdAt: -1 });
+  res.json(orders);
+});
+
+export { createRazorpayOrder, verifyPaymentAndCreateOrder, getOrderById, getMyOrders };
