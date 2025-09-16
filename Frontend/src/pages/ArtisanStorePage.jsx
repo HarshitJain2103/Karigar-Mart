@@ -66,10 +66,10 @@ export default function ArtisanStorePage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             
             {/* Left Column: Story */}
-            <div id="story" className="lg:col-span-8">
-                <h2 className="text-3xl font-bold mb-4 border-b pb-2">Our Story</h2>
+            <div id="about" className="lg:col-span-8">
+                <h2 className="text-3xl font-bold mb-4 border-b pb-2">About our store</h2>
                 <div className="prose max-w-none text-gray-700 leading-relaxed">
-                    {profile.story.split('\n').map((paragraph, index) => (
+                    {profile.about.split('\n').map((paragraph, index) => (
                         <p key={index}>{paragraph}</p>
                     ))}
                 </div>

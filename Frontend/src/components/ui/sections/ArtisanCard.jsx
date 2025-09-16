@@ -31,7 +31,7 @@ export default function ArtisanCard({ artisan }) {
           </p>
         </div>
         <p className="text-sm text-gray-600 line-clamp-3 mb-4 h-16">
-          {artisan.story.slice(0, 100)}...
+          {artisan.about.slice(0, 100)}...
         </p>
         <div className="flex gap-2">
             <Link to={`/store/${artisan._id}`} className="flex-1">

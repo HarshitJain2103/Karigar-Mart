@@ -20,7 +20,7 @@ const artisanProfileSchema = new mongoose.Schema({
     city: { type: String, required: true },
     state: { type: String, required: true },
   },
-  story: {
+  about: {
     type: String,
     required: true,
   },

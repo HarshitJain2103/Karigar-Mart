@@ -17,7 +17,7 @@ const createArtisanProfile = async (req, res) => {
       storeName,
       tagline,
       address, 
-      story,
+      about,
       theme, 
       seo,
       media    
@@ -28,7 +28,7 @@ const createArtisanProfile = async (req, res) => {
       storeName,
       tagline,
       address, 
-      story,
+      about,
       theme,
       seo,
       media,   

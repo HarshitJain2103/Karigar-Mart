@@ -21,7 +21,7 @@ const defaultDraft = {
   city: "",
   state: "",
   craft: "",
-  story: "",
+  about: "",
   media: { heroImageURL: "", galleryImageURLs: [] },
   theme: { preset: "modern", color: "#0f172a" },
   seo: { metaDescription: "", keywords: [] },
@@ -200,7 +200,7 @@ export default function BuildYourStoreFull() {
     if (draft.city && draft.state) score += 10;
     if (draft.products?.length > 0) score += 30;
     if (draft.media?.heroImageURL) score += 20;
-    if (draft.story) score += 20;
+    if (draft.about) score += 20;
     return Math.min(100, score);
   };
 
@@ -217,7 +217,7 @@ export default function BuildYourStoreFull() {
       const profileData = {
         storeName: draft.storeName,
         tagline: draft.tagline,
-        story: draft.story,
+        about: draft.about,
         theme: draft.theme,
         seo: draft.seo,
         media: {
@@ -324,7 +324,7 @@ export default function BuildYourStoreFull() {
                     <div className="text-sm font-semibold mb-3">Steps</div>
                     <div className="flex flex-col gap-1">
                       <button className={`text-left w-full px-3 py-2 rounded text-sm ${step === 'identity' ? 'bg-slate-100 font-semibold text-slate-800' : 'text-slate-600'}`} onClick={() => setStep('identity')}>1. Identity</button>
-                      <button className={`text-left w-full px-3 py-2 rounded text-sm ${step === 'story' ? 'bg-slate-100 font-semibold text-slate-800' : 'text-slate-600'}`} onClick={() => setStep('story')}>2. Story</button>
+                      <button className={`text-left w-full px-3 py-2 rounded text-sm ${step === 'about' ? 'bg-slate-100 font-semibold text-slate-800' : 'text-slate-600'}`} onClick={() => setStep('about')}>2. About</button>
                       <button className={`text-left w-full px-3 py-2 rounded text-sm ${step === 'products' ? 'bg-slate-100 font-semibold text-slate-800' : 'text-slate-600'}`} onClick={() => setStep('products')}>3. Products</button>
                       <button className={`text-left w-full px-3 py-2 rounded text-sm ${step === 'media' ? 'bg-slate-100 font-semibold text-slate-800' : 'text-slate-600'}`} onClick={() => setStep('media')}>4. Media</button>
                       <button className={`text-left w-full px-3 py-2 rounded text-sm ${step === 'theme' ? 'bg-slate-100 font-semibold text-slate-800' : 'text-slate-600'}`} onClick={() => setStep('theme')}>5. Theme</button>
@@ -351,17 +351,17 @@ export default function BuildYourStoreFull() {
                           <Input value={draft.state} onChange={(e)=>update('state', e.target.value)} placeholder="State" />
                         </div>
                         <div className="flex gap-2 justify-end">
-                          <Button onClick={()=>setStep('story')}>Next</Button>
+                          <Button onClick={()=>setStep('about')}>Next</Button>
                         </div>
                       </CardContent>
                     </Card>
                   </TabsContent>
                   
-                  <TabsContent value="story">
+                  <TabsContent value="about">
                     <Card>
-                      <CardHeader><CardTitle>Storytelling & About</CardTitle><CardDescription>Tell your craft story — AI will help refine it.</CardDescription></CardHeader>
+                      <CardHeader><CardTitle>About your store</CardTitle><CardDescription>Tell about your store — AI will help refine it.</CardDescription></CardHeader>
                       <CardContent>
-                        <Textarea value={draft.story} onChange={(e) => update('story', e.target.value)} placeholder="Write your story here..." className="min-h-[200px]" />
+                        <Textarea value={draft.about} onChange={(e) => update('about', e.target.value)} placeholder="Write about your store here..." className="min-h-[200px]" />
                         <div className="flex gap-2 justify-end mt-4">
                             <Button variant="outline" onClick={()=>{ alert('AI feature stub'); }}>Suggest with AI</Button>
                             <Button onClick={()=>setStep('products')}>Next</Button>
@@ -468,7 +468,7 @@ export default function BuildYourStoreFull() {
                                 <li className="flex items-center gap-2">{draft.storeName ? '✅' : '❌'} Store Name</li>
                                 <li className="flex items-center gap-2">{draft.city && draft.state ? '✅' : '❌'} Location</li>
                                 <li className="flex items-center gap-2">{(draft.products || []).length > 0 ? '✅' : '❌'} At least one product</li>
-                                <li className="flex items-center gap-2">{draft.story ? '✅' : '❌'} Your Story</li>
+                                <li className="flex items-center gap-2">{draft.about ? '✅' : '❌'} About your store</li>
                             </ul>
                             <Progress value={healthScore()} className="mt-4 h-2" />
                         </div>

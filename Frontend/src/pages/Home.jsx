@@ -65,14 +65,14 @@ export default function Home({ onAddToCart }) {
     fetchHomepageData();
   }, []);
 
-  const stories = useMemo(() => {
+  const about = useMemo(() => {
 
     return artisans.slice(0, 3).map(artisanProfile => ({
 
       _id: artisanProfile._id, 
-      title: `A Story from ${artisanProfile.storeName}`,
+      title: `About ${artisanProfile.storeName}`,
       imageURL: artisanProfile.media.heroImageURL,
-      excerpt: artisanProfile.story.slice(0, 120) + '...',
+      excerpt: artisanProfile.about.slice(0, 120) + '...',
       artisanId: { 
         _id: artisanProfile._id,
         storeName: artisanProfile.storeName,
@@ -100,7 +100,7 @@ export default function Home({ onAddToCart }) {
         onAddToCart={onAddToCart}
       />
       <ArtisanSpotlight artisans={artisans.slice(0, 2)} /> 
-      <StoryHighlights stories={stories} />
+      <StoryHighlights stories={about} />
       <Newsletter />
     </>
   );
