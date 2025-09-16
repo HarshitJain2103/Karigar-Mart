@@ -21,6 +21,10 @@ import CartPage from './pages/CartPage';
 import MyOrdersPage from './pages/MyOrdersPage';
 import ContactPage from "./pages/ContactPage";
 import AuthCallbackPage from './pages/AuthCallbackPage';
+import StoriesPage from './pages/StoriesPage';
+import StoryDetailPage from './pages/StoryDetailPage';
+import ArtisanStoryManager from './pages/ArtisanStoryManager';
+import StoryEditor from './pages/StoryEditor';
 
 export default function App() {
   const { query, setQuery, lang, setLang, startVoiceSearch } = useVoiceSearch();
@@ -60,14 +64,9 @@ export default function App() {
 
       <main>
         <Routes>
-          <Route
-            path="/"
-            element={<Home />}
-          />
+          {/* --- PUBLIC ROUTES --- */}
+          <Route path="/" element={<Home />} />
           <Route path="/build-store" element={<BuildYourStoreFull />} />
-          <Route element={<PrivateRoute allowedRoles={['ARTISAN']} />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Route>
           <Route path="/store/:artisanId" element={<ArtisanStorePage />} />
           <Route path="/artisans" element={<AllArtisansPage />} />
           <Route path="/shop" element={<ShopPage />} />
@@ -76,9 +75,23 @@ export default function App() {
           <Route path="/order-confirmation/:orderId" element={<OrderConfirmationPage />} />
           <Route path="/wishlist" element={<WishlistPage />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/orders" element={<MyOrdersPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/auth/callback" element={<AuthCallbackPage />} />
+          <Route path="/stories" element={<StoriesPage />} />
+          <Route path="/stories/:storyId" element={<StoryDetailPage />} />
+
+          {/* --- CUSTOMER & ARTISAN PROTECTED ROUTES --- */}
+          <Route element={<PrivateRoute allowedRoles={['CUSTOMER', 'ARTISAN']} />}>
+             <Route path="/orders" element={<MyOrdersPage />} />
+          </Route>
+
+          {/* --- ARTISAN ONLY PROTECTED ROUTES (All in one place) --- */}
+          <Route element={<PrivateRoute allowedRoles={['ARTISAN']} />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/stories" element={<ArtisanStoryManager />} />
+            <Route path="/dashboard/stories/new" element={<StoryEditor />} />
+            <Route path="/dashboard/stories/edit/:storyId" element={<StoryEditor />} />
+          </Route>
         </Routes>
       </main>
 

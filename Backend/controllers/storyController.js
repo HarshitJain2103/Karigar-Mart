@@ -47,4 +47,63 @@ const createStory = asyncHandler(async (req, res) => {
     res.status(201).json(createdStory);
 });
 
-export { getPublicStories, getStoryById, getMyStories, createStory };
+const deleteStory = asyncHandler(async (req, res) => {
+  const story = await Story.findById(req.params.id);
+  const artisanProfile = await ArtisanProfile.findOne({ userId: req.user._id });
+
+  if (!story) {
+    res.status(404);
+    throw new Error('Story not found');
+  }
+
+  if (story.artisanId.toString() !== artisanProfile._id.toString()) {
+    res.status(403); 
+    throw new Error('User not authorized to delete this story');
+  }
+  
+  await story.deleteOne();
+  res.json({ message: 'Story removed' });
+});
+
+const getMyStoryById = asyncHandler(async (req, res) => {
+  const story = await Story.findById(req.params.id);
+  const artisanProfile = await ArtisanProfile.findOne({ userId: req.user._id });
+
+  if (!story) {
+    res.status(404);
+    throw new Error('Story not found');
+  }
+
+  if (story.artisanId.toString() !== artisanProfile._id.toString()) {
+    res.status(403); 
+    throw new Error('User not authorized to view this story');
+  }
+
+  res.json(story);
+});
+
+const updateStory = asyncHandler(async (req, res) => {
+  const { title, content, coverImageURL, status } = req.body;
+  const story = await Story.findById(req.params.id);
+  const artisanProfile = await ArtisanProfile.findOne({ userId: req.user._id });
+
+  if (!story) {
+    res.status(404);
+    throw new Error('Story not found');
+  }
+
+  if (story.artisanId.toString() !== artisanProfile._id.toString()) {
+    res.status(403); 
+    throw new Error('User not authorized to update this story');
+  }
+
+  story.title = title || story.title;
+  story.content = content || story.content;
+  story.coverImageURL = coverImageURL || story.coverImageURL;
+  story.status = status || story.status;
+
+  const updatedStory = await story.save();
+  res.json(updatedStory);
+});
+
+export { getPublicStories, getStoryById, getMyStories, createStory, deleteStory, getMyStoryById, updateStory };

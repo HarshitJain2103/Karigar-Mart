@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import ProductDialog from '../components/ui/products/ProductDialog'; 
-import { DollarSign, Package, ShoppingCart } from 'lucide-react';
+import { DollarSign, Package, ShoppingCart, BookOpen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
@@ -117,6 +117,22 @@ export default function Dashboard() {
                 <Card><CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"><CardTitle className="text-sm font-medium">Total Orders</CardTitle><ShoppingCart className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{dashboardData.totalOrders || 0}</div><p className="text-xs text-muted-foreground">New orders will appear here</p></CardContent></Card>
                 <Card><CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"><CardTitle className="text-sm font-medium">Products Listed</CardTitle><Package className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{products.length}</div><p className="text-xs text-muted-foreground">Total products in your store</p></CardContent></Card>
             </div>
+
+            {/* ++ ADD THIS NEW CARD FOR STORIES ++ */}
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <BookOpen className="h-5 w-5" />
+            My Stories
+          </CardTitle>
+          <CardDescription>
+            Share the narrative behind your craft, announce new collections, or write about your process to connect with customers.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button onClick={() => navigate('/dashboard/stories')}>Manage Stories</Button>
+        </CardContent>
+      </Card>
 
             {/* Products Table */}
             <Card>

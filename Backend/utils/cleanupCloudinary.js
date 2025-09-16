@@ -1,8 +1,8 @@
 import cloudinary from '../config/cloudinary.js';
 import ArtisanProfile from '../models/artisanProfile.model.js';
 import Product from '../models/product.model.js';
+import Story from '../models/story.model.js';
 
-// This function will get all image URLs currently stored in your database
 async function getDatabaseImageUrls() {
   const urls = new Set();
 
@@ -25,27 +25,29 @@ async function getDatabaseImageUrls() {
     }
   }
 
+  const stories = await Story.find({}, 'coverImageURL');
+  for (const story of stories) {
+    if (story.coverImageURL) {
+        urls.add(story.coverImageURL);
+    }
+  }
+
   return urls;
 }
 
-// This function gets the public_id from a full Cloudinary URL
 function getPublicIdFromUrl(url) {
-    // Example URL: https://res.cloudinary.com/daysorzbe/image/upload/v1757240969/karigar-mart/artisans/USER_ID/products/FILENAME.jpg
-    // We want to extract: karigar-mart/artisans/USER_ID/products/FILENAME
     const parts = url.split('/upload/');
     if (parts.length < 2) return null;
 
     const versionAndPath = parts[1];
     const pathParts = versionAndPath.split('/');
-    pathParts.shift(); // Remove the version (e.g., v1757240969)
+    pathParts.shift(); 
     const publicIdWithExtension = pathParts.join('/');
     
-    // Remove the file extension (.jpg, .png, etc.)
     return publicIdWithExtension.substring(0, publicIdWithExtension.lastIndexOf('.'));
 }
 
 
-// The main cleanup function
 export const runCloudinaryCleanup = async () => {
   console.log('Starting Cloudinary cleanup...');
   try {
@@ -58,7 +60,7 @@ export const runCloudinaryCleanup = async () => {
     do {
       const result = await cloudinary.api.resources({
         type: 'upload',
-        prefix: 'karigar-mart/artisans', // Only search in our main folder
+        prefix: 'karigar-mart/artisans', 
         max_results: 500,
         next_cursor: next_cursor,
       });
@@ -69,7 +71,6 @@ export const runCloudinaryCleanup = async () => {
       next_cursor = result.next_cursor;
     } while (next_cursor);
     
-    // Compare the lists to find orphans
     const orphansToDelete = [];
     for (const cloudinaryId of cloudinaryPublicIds) {
       if (!dbPublicIds.has(cloudinaryId)) {
