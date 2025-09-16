@@ -22,4 +22,13 @@ const protect = async (req, res, next) => {
   }
 };
 
-export { protect };
+const isArtisan = (req, res, next) => {
+    if (req.user && req.user.role === 'ARTISAN') {
+        next();
+    } else {
+        res.status(403); 
+        throw new Error('Not authorized as an artisan');
+    }
+};
+
+export { protect, isArtisan };
