@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import asyncHandler from 'express-async-handler';
 import Product from '../models/product.model.js';
 import Order from '../models/order.model.js';
+import User from '../models/User.js'; 
 
 const getOrderById = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id).populate(
@@ -122,4 +123,41 @@ const getMyOrders = asyncHandler(async (req, res) => {
   res.json(orders);
 });
 
-export { createRazorpayOrder, verifyPaymentAndCreateOrder, getOrderById, getMyOrders };
+const createCartRazorpayOrder = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id).populate('cart.product');
+  if (!user || !user.cart || user.cart.length === 0) {
+    res.status(400);
+    throw new Error('No items in cart');
+  }
+
+  let totalPrice = 0;
+  for (const item of user.cart) {
+    if (item.product.stockQuantity < item.quantity) {
+       res.status(400);
+       throw new Error(`Sorry, "${item.product.title}" is out of stock.`);
+    }
+    totalPrice += item.product.price * item.quantity;
+  }
+
+  const instance = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET,
+  });
+
+  const options = {
+    amount: totalPrice * 100, // Amount in paise
+    currency: 'INR',
+    receipt: `receipt_cart_order_${new Date().getTime()}`,
+  };
+  
+  const order = await instance.orders.create(options);
+
+  if (!order) {
+    res.status(500);
+    throw new Error('Something went wrong with Razorpay');
+  }
+
+  res.status(200).json(order);
+});
+
+export { createRazorpayOrder, createCartRazorpayOrder, verifyPaymentAndCreateOrder, getOrderById, getMyOrders };
