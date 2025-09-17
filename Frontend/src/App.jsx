@@ -25,6 +25,7 @@ import StoriesPage from './pages/StoriesPage';
 import StoryDetailPage from './pages/StoryDetailPage';
 import ArtisanStoryManager from './pages/ArtisanStoryManager';
 import StoryEditor from './pages/StoryEditor';
+import CheckoutCartPage from './pages/CheckoutCartPage';
 
 export default function App() {
   const { query, setQuery, lang, setLang, startVoiceSearch } = useVoiceSearch();
@@ -83,6 +84,7 @@ export default function App() {
           {/* --- CUSTOMER & ARTISAN PROTECTED ROUTES --- */}
           <Route element={<PrivateRoute allowedRoles={['CUSTOMER', 'ARTISAN']} />}>
              <Route path="/orders" element={<MyOrdersPage />} />
+             <Route path="/checkout-cart" element={<CheckoutCartPage />} />
           </Route>
 
           {/* --- ARTISAN ONLY PROTECTED ROUTES (All in one place) --- */}
