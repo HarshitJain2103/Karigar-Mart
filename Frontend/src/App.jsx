@@ -28,7 +28,7 @@ import StoryEditor from './pages/StoryEditor';
 import CheckoutCartPage from './pages/CheckoutCartPage';
 
 export default function App() {
-  const { query, setQuery, lang, setLang, startVoiceSearch } = useVoiceSearch();
+  const { query, setQuery, lang, setLang, startVoiceSearch, isListening } = useVoiceSearch();
   const recognitionRef = useRef(null); 
   const token = useAuthStore((state) => state.token);
   const fetchUserProfile = useAuthStore((state) => state.fetchUserProfile);
@@ -61,6 +61,7 @@ export default function App() {
         lang={lang}
         setLang={setLang}
         startVoiceSearch={startVoiceSearch}
+        isListening={isListening}
       />
 
       <main>

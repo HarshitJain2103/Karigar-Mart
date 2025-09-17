@@ -12,7 +12,7 @@ import AuthDialog from '@/components/ui/auth/AuthDialog';
 import useCartStore from '@/stores/cartStore';
 import { useToast } from '@/hooks/use-toast';
 
-export default function Header({query, setQuery, setLang, startVoiceSearch }) {
+export default function Header({query, setQuery, setLang, startVoiceSearch, isListening }) {
   const { toast } = useToast();
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
@@ -31,6 +31,18 @@ export default function Header({query, setQuery, setLang, startVoiceSearch }) {
     }, 500);
   };
 
+  const handleSearchSubmit = (e) => {
+    e.preventDefault(); // This stops the page from doing a full reload
+    if (query.trim()) {
+      // Navigate to the shop page with the search term as a query parameter
+      // We use 'keyword' to match the name your backend API is expecting
+      navigate(`/shop?keyword=${query}`);
+    } else {
+      // If the search is empty, just go to the main shop page
+      navigate('/shop');
+    }
+  };
+
   const navItems = [
     { name: "Home", path: "/" },
     { name: "Shop", path: "/shop" },
@@ -38,6 +50,12 @@ export default function Header({query, setQuery, setLang, startVoiceSearch }) {
     { name: "Stories", path: "/stories" },
     { name: "Contact", path: "/contact" },
   ];
+
+  const handleVoiceSearchSubmit = (searchQuery) => {
+    if (searchQuery.trim()) {
+      navigate(`/shop?keyword=${searchQuery}`);
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur">
@@ -71,11 +89,20 @@ export default function Header({query, setQuery, setLang, startVoiceSearch }) {
 
           {/* Search Bar */}
           <div className="hidden flex-1 items-center justify-center lg:flex px-8">
-            <div className="flex w-full max-w-2xl items-center gap-2 rounded-full border px-3 py-1.5 shadow-sm">
-              <Search className="h-4 w-4 text-muted-foreground" />
-              <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search products, crafts, or artisans" className="border-0 focus-visible:ring-0" />
-              <Button variant="ghost" size="icon" onClick={startVoiceSearch} aria-label="Voice search"><Mic className="h-4 w-4" /></Button>
-            </div>
+            <form onSubmit={handleSearchSubmit} className="w-full max-w-2xl">
+              <div className="flex w-full items-center gap-2 rounded-full border px-3 py-1.5 shadow-sm">
+                <Search className="h-4 w-4 text-muted-foreground" />
+                <Input 
+                  value={query} 
+                  onChange={(e) => setQuery(e.target.value)} 
+                  placeholder="Search products..." // Updated placeholder
+                  className="border-0 focus-visible:ring-0" 
+                />
+                <Button type="button" variant="ghost" size="icon" onClick={() => startVoiceSearch(handleVoiceSearchSubmit)} aria-label="Voice search">
+                    <Mic className={`h-4 w-4 transition-colors ${isListening ? 'text-red-500 animate-pulse' : 'text-muted-foreground'}`} />
+                </Button>
+              </div>
+            </form>
           </div>
           
           <div className="ml-auto flex items-center gap-1">

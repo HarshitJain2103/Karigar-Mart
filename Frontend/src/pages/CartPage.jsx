@@ -110,20 +110,22 @@ export default function CartPage() {
 
             return (
               <Card key={product?._id} className={`flex items-center p-4 transition-colors ${!isQuantityAvailable ? 'border-destructive bg-destructive/5' : ''}`}>
-                <div className="relative w-24 h-24 rounded-md overflow-hidden bg-gray-100 border">
-                  {image ? (
-                    <img src={image} alt={product?.title} className="w-full h-full object-cover" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-xs text-muted-foreground">
-                      No image
-                    </div>
-                  )}
-                </div>
+                <Link to={`/products/${product._id}`} className="shrink-0">
+                  <div className="relative w-24 h-24 rounded-md overflow-hidden bg-gray-100 border">
+                      {image ? (
+                          <img src={image} alt={product?.title} className="w-full h-full object-cover" />
+                      ) : (
+                          <div className="w-full h-full flex items-center justify-center text-xs text-muted-foreground">No image</div>
+                      )}
+                  </div>
+                </Link>
 
                 <div className="ml-4 flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
+                      <Link to={`/products/${product._id}`} className="shrink-0">
                         <h3 className="font-semibold line-clamp-2">{product?.title}</h3>
+                      </Link>
                         
                         {!isQuantityAvailable && isItemInStock && (
                             <p className="text-sm text-destructive mt-1 font-medium">Only {product.stockQuantity} left in stock</p>

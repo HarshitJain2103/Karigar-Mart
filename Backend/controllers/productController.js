@@ -3,15 +3,17 @@ import ArtisanProfile from '../models/artisanProfile.model.js';
 import asyncHandler from 'express-async-handler';
 
 const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = 8; 
+  const pageSize = 8;
   const page = Number(req.query.pageNumber) || 1;
   
-  const keyword = req.query.keyword ? {
-    title: {
-      $regex: req.query.keyword,
-      $options: 'i', 
-    },
-  } : {};
+  const keyword = req.query.keyword
+    ? {
+        $or: [
+          { title: { $regex: req.query.keyword, $options: 'i' } },
+          { description: { $regex: req.query.keyword, $options: 'i' } },
+        ],
+      }
+    : {};
   
   const category = req.query.category ? { categoryId: req.query.category } : {};
   const count = await Product.countDocuments({ ...keyword, ...category });
