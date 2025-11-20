@@ -26,6 +26,7 @@ import StoryDetailPage from './pages/StoryDetailPage';
 import ArtisanStoryManager from './pages/ArtisanStoryManager';
 import StoryEditor from './pages/StoryEditor';
 import CheckoutCartPage from './pages/CheckoutCartPage';
+import ProfilePage from "./pages/ProfilePage";
 
 export default function App() {
   const { query, setQuery, lang, setLang, startVoiceSearch, isListening } = useVoiceSearch();
@@ -68,6 +69,7 @@ export default function App() {
         <Routes>
           {/* --- PUBLIC ROUTES --- */}
           <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/build-store" element={<BuildYourStoreFull />} />
           <Route path="/store/:artisanId" element={<ArtisanStorePage />} />
           <Route path="/artisans" element={<AllArtisansPage />} />
@@ -81,6 +83,7 @@ export default function App() {
           <Route path="/auth/callback" element={<AuthCallbackPage />} />
           <Route path="/stories" element={<StoriesPage />} />
           <Route path="/stories/:storyId" element={<StoryDetailPage />} />
+          <Route path="/profile" element={<ProfilePage/>} />
 
           {/* --- CUSTOMER & ARTISAN PROTECTED ROUTES --- */}
           <Route element={<PrivateRoute allowedRoles={['CUSTOMER', 'ARTISAN']} />}>

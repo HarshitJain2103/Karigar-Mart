@@ -2,6 +2,7 @@ import cloudinary from '../config/cloudinary.js';
 import ArtisanProfile from '../models/artisanProfile.model.js';
 import Product from '../models/product.model.js';
 import Story from '../models/story.model.js';
+import User from '../models/User.js';
 
 async function getDatabaseImageUrls() {
   const urls = new Set();
@@ -29,6 +30,13 @@ async function getDatabaseImageUrls() {
   for (const story of stories) {
     if (story.coverImageURL) {
         urls.add(story.coverImageURL);
+    }
+  }
+
+  const users = await User.find({}, 'avatar');
+  for (const user of users) {
+    if (user.avatar) {
+      urls.add(user.avatar);
     }
   }
 
@@ -60,7 +68,7 @@ export const runCloudinaryCleanup = async () => {
     do {
       const result = await cloudinary.api.resources({
         type: 'upload',
-        prefix: 'karigar-mart/artisans', 
+        prefix: 'karigar-mart', 
         max_results: 500,
         next_cursor: next_cursor,
       });

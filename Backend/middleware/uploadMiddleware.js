@@ -4,15 +4,23 @@ import cloudinary from '../config/cloudinary.js';
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  params: {
-    folder: (req, file) => {
-      const userId = req.user.id;
-      const uploadType = req.body.upload_type || 'products';
+  params: async (req, file) => {
+    const allowed_formats = ['jpg', 'png', 'jpeg', 'webp'];
 
-      // Return a dynamic folder path
-      return `karigar-mart/artisans/${userId}/${uploadType}`;
-    },
-    allowed_formats: ['jpg', 'png', 'jpeg'],
+    if (req.cloudinaryFolder) {
+      return {
+        folder: req.cloudinaryFolder,
+        allowed_formats,
+      };
+    }
+
+    const userId = req.user?.id || 'anonymous';
+    const uploadType = req.body?.upload_type || 'products';
+
+    return {
+      folder: `karigar-mart/artisans/${userId}/${uploadType}`,
+      allowed_formats,
+    };
   },
 });
 

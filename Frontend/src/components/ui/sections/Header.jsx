@@ -26,9 +26,7 @@ export default function Header({query, setQuery, setLang, startVoiceSearch, isLi
       title: "Logged Out",
       description: "You have been successfully logged out!",
     });
-    setTimeout(() => {
-      window.location.href = '/';
-    }, 500);
+    navigate('/home', { replace: true });
   };
 
   const handleSearchSubmit = (e) => {

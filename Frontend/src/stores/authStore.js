@@ -14,6 +14,7 @@ const useAuthStore = create((set, get) => ({
     localStorage.removeItem('token');
     set({ token: null, user: null });
   },
+  setUser: (userData) => set({ user: userData }),
   
   fetchUserProfile: async () => {
     const token = get().token; 

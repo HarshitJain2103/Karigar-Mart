@@ -31,6 +31,17 @@ const userSchema = new mongoose.Schema(
     avatar: { 
       type: String,
     },
+    phoneNumber: {
+      type: String,
+      trim: true,
+    },
+    address: {
+      street: { type: String, trim: true },
+      city: { type: String, trim: true },
+      state: { type: String, trim: true },
+      postalCode: { type: String, trim: true },
+      country: { type: String, trim: true, default: 'India' },
+    },
     role: {
       type: String,
       enum: ['CUSTOMER', 'ARTISAN'], 

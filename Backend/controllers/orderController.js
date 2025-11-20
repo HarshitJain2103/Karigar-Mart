@@ -111,6 +111,25 @@ const verifyPaymentAndCreateOrder = asyncHandler(async (req, res) => {
 
     const createdOrder = await order.save();
     
+    // Update user profile with shipping address and phone number
+    if (shippingAddress) {
+      const user = await User.findById(req.user._id);
+      if (user) {
+        user.address = {
+          street: shippingAddress.street,
+          city: shippingAddress.city,
+          state: shippingAddress.state,
+          postalCode: shippingAddress.postalCode,
+          country: shippingAddress.country || 'India',
+        };
+        // Update phone number if provided in shipping address
+        if (shippingAddress.phoneNumber) {
+          user.phoneNumber = shippingAddress.phoneNumber;
+        }
+        await user.save();
+      }
+    }
+    
     res.status(201).json({ success: true, orderId: createdOrder._id });
 
   } else {

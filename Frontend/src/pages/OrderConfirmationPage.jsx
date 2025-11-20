@@ -9,6 +9,7 @@ import { Loader2, AlertTriangle, CheckCircle } from 'lucide-react';
 export default function OrderConfirmationPage() {
   const { orderId } = useParams();
   const token = useAuthStore((state) => state.token);
+  const fetchUserProfile = useAuthStore((state) => state.fetchUserProfile);
   
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -26,6 +27,11 @@ export default function OrderConfirmationPage() {
         if (!res.ok) throw new Error('Could not fetch order details.');
         const data = await res.json();
         setOrder(data);
+        
+        // Refresh user profile to get updated address
+        if (token) {
+          await fetchUserProfile();
+        }
       } catch (err) {
         setError(err.message);
       } finally {
@@ -35,7 +41,7 @@ export default function OrderConfirmationPage() {
     if (orderId && token) {
       fetchOrder();
     }
-  }, [orderId, token]);
+  }, [orderId, token, fetchUserProfile]);
 
   if (loading) return <div className="flex justify-center items-center h-screen"><Loader2 className="h-8 w-8 animate-spin" /></div>;
   if (error) return (
