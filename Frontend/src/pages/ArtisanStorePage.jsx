@@ -3,7 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { MapPin, Share2 } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { MapPin, Share2, Calendar } from 'lucide-react';
 import ProductCard from '../components/ui/products/ProductCard';
 
 export default function ArtisanStorePage() {
@@ -38,6 +39,13 @@ export default function ArtisanStorePage() {
 
   const { profile, products } = storeData;
 
+  // Format member since date
+  const formatMemberSince = (date) => {
+    if (!date) return 'Creator';
+    const joinDate = new Date(date);
+    return joinDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  };
+
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="relative h-64 md:h-80 w-full">
@@ -70,7 +78,7 @@ export default function ArtisanStorePage() {
                 <h2 className="text-3xl font-bold mb-4 border-b pb-2">About our store</h2>
                 <div className="prose max-w-none text-gray-700 leading-relaxed">
                     {profile.about.split('\n').map((paragraph, index) => (
-                        <p key={index}>{paragraph}</p>
+                        <p key={index} className="mb-4">{paragraph}</p>
                     ))}
                 </div>
             </div>  
@@ -83,19 +91,40 @@ export default function ArtisanStorePage() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div className="flex items-center gap-3">
-                            <div className="w-16 h-16 rounded-full bg-gray-200 overflow-hidden">
-                                <img src={`https://ui-avatars.com/api/?name=${profile.userId.firstName}+${profile.userId.lastName}&background=random`} alt="Artisan" />
-                            </div>
+                            <Avatar className="w-16 h-16 border-2 border-slate-200">
+                                {profile.userId?.avatar ? (
+                                    <AvatarImage 
+                                        src={profile.userId.avatar} 
+                                        alt={`${profile.userId.firstName} ${profile.userId.lastName}`}
+                                    />
+                                ) : null}
+                                <AvatarFallback className="text-lg font-bold bg-gradient-to-br from-slate-700 to-slate-900 text-white">
+                                    {profile.userId?.firstName?.[0]}{profile.userId?.lastName?.[0]}
+                                </AvatarFallback>
+                            </Avatar>
                             <div>
-                                <div className="font-semibold">{profile.userId.firstName} {profile.userId.lastName}</div>
-                                <div className="text-sm text-muted-foreground">{profile.craft || 'Creator'}</div>
+                                <div className="font-semibold text-gray-900">
+                                    {profile.userId?.firstName} {profile.userId?.lastName}
+                                </div>
+                                <div className="text-sm text-muted-foreground">
+                                    {profile.craft || 'Creator'}
+                                </div>
                             </div>
                         </div>
                         <Separator />
                         <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                            <MapPin className="h-4 w-4" />
+                            <MapPin className="h-4 w-4 flex-shrink-0" />
                             <span>Based in {profile.address.city}, {profile.address.state}</span>
                         </div>
+                        {profile.userId?.createdAt && (
+                            <>
+                                <Separator />
+                                <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                                    <Calendar className="h-4 w-4 flex-shrink-0" />
+                                    <span>Member since {formatMemberSince(profile.userId.createdAt)}</span>
+                                </div>
+                            </>
+                        )}
                     </CardContent>
                 </Card>
             </div>
@@ -111,7 +140,11 @@ export default function ArtisanStorePage() {
                     <ProductCard key={product._id} product={product} />
                 ))}
             </div>
-             {products.length === 0 && <div className="text-center text-muted-foreground py-10">This artisan hasn't added any products yet.</div>}
+             {products.length === 0 && (
+                <div className="text-center text-muted-foreground py-10">
+                    This artisan hasn't added any products yet.
+                </div>
+             )}
         </div>
       </div>
     </div>

@@ -91,7 +91,7 @@ const getArtisanDashboard = async (req, res) => {
 const getArtisans = async (req, res) => {
   try {
     const profiles = await ArtisanProfile.find({ status: 'PUBLISHED' })
-      .populate('userId', 'firstName lastName'); 
+      .populate('userId', 'firstName lastName avatar'); 
 
     res.json(profiles);
   } catch (error) {
@@ -103,7 +103,9 @@ const getArtisans = async (req, res) => {
 const getPublicArtisanStore = async (req, res) => {
   try {
     const profileId = req.params.id;
-    const profile = await ArtisanProfile.findOne({ _id: profileId, status: 'PUBLISHED' });
+    // Populate userId with avatar, firstName, lastName, and createdAt
+    const profile = await ArtisanProfile.findOne({ _id: profileId, status: 'PUBLISHED' })
+      .populate('userId', 'firstName lastName avatar createdAt');
 
     if (!profile) {
       return res.status(404).json({ message: 'Artisan store not found or is not published.' });
@@ -117,4 +119,4 @@ const getPublicArtisanStore = async (req, res) => {
   }
 };
 
-export { createArtisanProfile  , getArtisanDashboard , getArtisans , getPublicArtisanStore};
+export { createArtisanProfile, getArtisanDashboard, getArtisans, getPublicArtisanStore };

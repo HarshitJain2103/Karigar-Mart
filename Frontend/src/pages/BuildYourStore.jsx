@@ -495,7 +495,7 @@ export default function BuildYourStoreFull() {
                 <Button size="sm" variant={previewMode==='desktop'? 'secondary':'outline'} onClick={()=>setPreviewMode('desktop')}>Desktop</Button>
                 <Button size="sm" variant={previewMode==='mobile'? 'secondary':'outline'} onClick={()=>setPreviewMode('mobile')}>Mobile</Button>
               </div>
-              <div className={`border-2 rounded-lg bg-white mx-auto transition-all duration-300 ${previewMode==='mobile' ? 'w-[375px] h-[667px]' : 'w-full h-[400px]' }`}>
+              <div className={`border-2 rounded-lg bg-white mx-auto transition-all duration-300 ${previewMode==='mobile' ? 'w-full w-max[355px] h-[667px]' : 'w-full h-[400px]' }`}>
                 <div className="w-full h-1/3 bg-gray-200 flex items-center justify-center text-muted-foreground">
                   {draft.media.heroImageURL ? <img src={draft.media.heroImageURL} alt="Hero Preview" className="w-full h-full object-cover" /> : 'Hero Image Preview'}
                 </div>
