@@ -8,9 +8,11 @@ function Footer() {
           <div className="text-center sm:text-left">
             <h4 className="mb-3 font-semibold">Quick Links</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              {["Home", "Categories", "Artisans", "Stories", "Contact"].map((i) => (
-                <li key={i}><a href="#" className="hover:underline">{i}</a></li>
-              ))}
+              <li><a href="/home" className="hover:underline">Home</a></li>
+              <li><a href="/shop" className="hover:underline">Shop</a></li>
+              <li><a href="/artisans" className="hover:underline">Artisans</a></li>
+              <li><a href="/stories" className="hover:underline">Stories</a></li>
+              <li><a href="/contact" className="hover:underline">Contact</a></li>
             </ul>
           </div>
           <div className="text-center sm:text-left">

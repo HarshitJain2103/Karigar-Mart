@@ -11,6 +11,8 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import AuthDialog from '@/components/ui/auth/AuthDialog';
 import useCartStore from '@/stores/cartStore';
 import { useToast } from '@/hooks/use-toast';
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 export default function Header({query, setQuery, setLang, startVoiceSearch, isListening }) {
   const { toast } = useToast();
@@ -19,6 +21,7 @@ export default function Header({query, setQuery, setLang, startVoiceSearch, isLi
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const cartItems = useCartStore((state) => state.items);
   const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -61,15 +64,41 @@ export default function Header({query, setQuery, setLang, startVoiceSearch, isLi
         <div className="flex items-center gap-3 py-3">
           {/* Mobile menu */}
           <div className="lg:hidden">
-            <Sheet>
+            <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" aria-label="Open menu"><Menu className="h-5 w-5" /></Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-72">
+                <VisuallyHidden>
+                  <DialogTitle>Mobile Navigation Menu</DialogTitle>
+                  <DialogDescription>Open navigation links and dashboard options</DialogDescription>
+                </VisuallyHidden>
                 <nav className="mt-8 grid gap-4 text-lg">
-                  {[...navItems, { name: user?.role === 'ARTISAN' ? "My Dashboard" : "Build your store", path: user?.role === 'ARTISAN' ? "/dashboard" : "/build-store" }].map((item) => (
-                    <Link key={item.name} to={item.path} className="hover:underline">{item.name}</Link>
+                  {navItems.map((item) => (
+                    <Link 
+                      key={item.name} 
+                      to={item.path} 
+                      className="hover:underline"
+                      onClick={() => setIsSheetOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
                   ))}
+
+                  {/* Build Store / Dashboard Logic for Mobile */}
+                  {!user ? (
+                    <Button className="opacity-50 cursor-not-allowed" disabled>
+                      Build your store
+                    </Button>
+                  ) : user.role === "ARTISAN" ? (
+                    <Link to="/dashboard" className="hover:underline" onClick={() => setIsSheetOpen(false)}>
+                      <Button className="w-full">My Dashboard</Button>
+                    </Link>
+                  ) : (
+                    <Link to="/build-store" className="hover:underline" onClick={() => setIsSheetOpen(false)}>
+                      <Button className="w-full">Build your store</Button>
+                    </Link>
+                  )}
                 </nav>
               </SheetContent>
             </Sheet>
@@ -154,7 +183,11 @@ export default function Header({query, setQuery, setLang, startVoiceSearch, isLi
             </DropdownMenu>
 
             <div className="hidden md:block">
-              {user && user.role === 'ARTISAN' ? (
+              {!user ? (
+                <Button className="ml-2 opacity-50 cursor-not-allowed" disabled>
+                  Build your store
+                </Button>
+              ) : user.role === "ARTISAN" ? (
                 <Link to="/dashboard">
                   <Button className="ml-2">My Dashboard</Button>
                 </Link>

@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import useAuthStore from "@/stores/authStore";
 import { useToast } from "@/hooks/use-toast";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export default function ProfilePage() {
     const navigate = useNavigate();
@@ -37,6 +38,7 @@ export default function ProfilePage() {
         lastName: user?.lastName || "",
         phoneNumber: user?.phoneNumber || "",
     });
+    const [showAvatarPreview, setShowAvatarPreview] = useState(false);
 
     // Fetch user profile on mount
     useEffect(() => {
@@ -266,14 +268,30 @@ export default function ProfilePage() {
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <div className="flex items-center gap-4">
                             <div className="relative">
-                                <Avatar className="h-16 w-16 sm:h-20 sm:w-20">
-                                    {user?.avatar && (
-                                        <AvatarImage src={user.avatar} alt={`${user.firstName} ${user.lastName}`} />
+                                <Avatar onClick={() => setShowAvatarPreview(true)} className="cursor-pointer w-20 h-20">
+                                    {user?.avatar ? (
+                                        <AvatarImage src={user.avatar} />
+                                    ) : (
+                                        <AvatarFallback>{user?.firstName?.[0]?.toUpperCase() ?? "U"}</AvatarFallback>
                                     )}
-                                    <AvatarFallback className="text-xl sm:text-2xl font-bold bg-gradient-to-br from-slate-700 to-slate-900 text-white">
-                                        {user?.firstName?.[0]}{user?.lastName?.[0]}
-                                    </AvatarFallback>
                                 </Avatar>
+                                <Dialog open={showAvatarPreview} onOpenChange={setShowAvatarPreview}>
+                                    <DialogContent className="max-w-lg p-0 bg-transparent border-none shadow-none">
+                                        <VisuallyHidden>
+                                            <DialogHeader>
+                                                <DialogTitle>Profile Picture Preview</DialogTitle>
+                                                <DialogDescription>Enlarged profile avatar preview</DialogDescription>
+                                            </DialogHeader>
+                                        </VisuallyHidden>
+                                        <div className="w-full h-full flex items-center justify-center">
+                                            <img
+                                                src={user?.avatar}
+                                                alt="Profile"
+                                                className="max-w-[90vw] max-h-[90vh] rounded-full object-cover shadow-2xl"
+                                            />
+                                        </div>
+                                    </DialogContent>
+                                </Dialog>
                                 {avatarUploading && (
                                     <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/50">
                                         <Loader2 className="w-5 h-5 text-white animate-spin" />
@@ -766,7 +784,7 @@ function SecuritySection({ user, token }) {
     const [showCurrentPassword, setShowCurrentPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    
+
     // Delete account states
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [deletePassword, setDeletePassword] = useState("");
@@ -986,8 +1004,8 @@ function SecuritySection({ user, token }) {
                     <p className="text-sm text-gray-600 mb-4">
                         Once you delete your account, there is no going back. Please be certain.
                     </p>
-                    <AlertDialog 
-                        open={isDeleteDialogOpen} 
+                    <AlertDialog
+                        open={isDeleteDialogOpen}
                         onOpenChange={(open) => {
                             setIsDeleteDialogOpen(open);
                             if (!open) {
@@ -1065,7 +1083,7 @@ function SecuritySection({ user, token }) {
                                 <AlertDialogAction
                                     onClick={async (e) => {
                                         e.preventDefault();
-                                        
+
                                         if (!token) {
                                             setDeleteError("You must be logged in to delete your account.");
                                             return;
