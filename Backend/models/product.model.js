@@ -36,6 +36,18 @@ const productSchema = new mongoose.Schema({
       (val) => val.length <= 8,
     ]
   },
+  marketingVideo: {
+    url: { type: String, default: null },
+    prompt: { type: String, default: null },
+    generatedAt: { type: Date, default: null },
+    duration: { type: Number, default: 8 },
+    aspectRatio: { type: String, default: '9:16' }
+  },
+  videoStatus: {
+    type: String,
+    enum: ['not_generated', 'generating', 'completed', 'failed'],
+    default: 'not_generated'
+  }
 }, {
   timestamps: true,
 });

@@ -84,67 +84,70 @@ export default function WishlistPage() {
   }
 
   return (
-    <div className="container mx-auto py-12 px-4">
-      <div className="mb-6 text-center">
-        <h1 className="text-3xl font-bold tracking-tight">My Wishlist</h1>
-        <p className="text-muted-foreground">Your collection of saved treasures.</p>
-      </div>
+    <div className="py-12">
+      <div className="max-w-6xl mx-auto px-4">
 
-      {/* Toolbar */}
-      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-3">
-          <span className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm">
-            <span className="h-2 w-2 rounded-full bg-rose-500" />
-            {totalItems} item{totalItems !== 1 ? 's' : ''}
-          </span>
-          <div className="hidden sm:block text-sm text-muted-foreground">
-            {filter === 'all' && 'Showing all saved items'}
-            {filter === 'in_stock' && 'Showing in-stock only'}
-            {filter === 'out_of_stock' && 'Showing out-of-stock only'}
+        <div className="mb-6 text-center">
+          <h1 className="text-3xl font-bold tracking-tight">My Wishlist</h1>
+          <p className="text-muted-foreground">Your collection of saved treasures.</p>
+        </div>
+
+        {/* Toolbar */}
+        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3">
+            <span className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm">
+              <span className="h-2 w-2 rounded-full bg-rose-500" />
+              {totalItems} item{totalItems !== 1 ? 's' : ''}
+            </span>
+            <div className="hidden sm:block text-sm text-muted-foreground">
+              {filter === 'all' && 'Showing all saved items'}
+              {filter === 'in_stock' && 'Showing in-stock only'}
+              {filter === 'out_of_stock' && 'Showing out-of-stock only'}
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            {/* Filter */}
+            <div className="flex items-center gap-2 rounded-md border bg-background px-2 py-1.5">
+              <Filter className="h-4 w-4 text-muted-foreground" />
+              <select
+                aria-label="Filter wishlist"
+                className="bg-transparent text-sm outline-none"
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+              >
+                <option value="all">All</option>
+                <option value="in_stock">In stock</option>
+                <option value="out_of_stock">Out of stock</option>
+              </select>
+            </div>
+
+            {/* Sort */}
+            <div className="flex items-center gap-2 rounded-md border bg-background px-2 py-1.5">
+              <ArrowUpDown className="h-4 w-4 text-muted-foreground" />
+              <select
+                aria-label="Sort wishlist"
+                className="bg-transparent text-sm outline-none"
+                value={sort}
+                onChange={(e) => setSort(e.target.value)}
+              >
+                <option value="featured">Featured</option>
+                <option value="price_low">Price: Low to High</option>
+                <option value="price_high">Price: High to Low</option>
+                <option value="rating_high">Rating: High to Low</option>
+                <option value="newest">Newest</option>
+              </select>
+            </div>
+
+            <Button variant="outline" className="gap-2" onClick={handleShare}>
+              {navigator.share ? <Share2 className="h-4 w-4" /> : copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+              {navigator.share ? 'Share' : copied ? 'Copied' : 'Copy link'}
+            </Button>
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
-          {/* Filter */}
-          <div className="flex items-center gap-2 rounded-md border bg-background px-2 py-1.5">
-            <Filter className="h-4 w-4 text-muted-foreground" />
-            <select
-              aria-label="Filter wishlist"
-              className="bg-transparent text-sm outline-none"
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-            >
-              <option value="all">All</option>
-              <option value="in_stock">In stock</option>
-              <option value="out_of_stock">Out of stock</option>
-            </select>
-          </div>
-
-          {/* Sort */}
-          <div className="flex items-center gap-2 rounded-md border bg-background px-2 py-1.5">
-            <ArrowUpDown className="h-4 w-4 text-muted-foreground" />
-            <select
-              aria-label="Sort wishlist"
-              className="bg-transparent text-sm outline-none"
-              value={sort}
-              onChange={(e) => setSort(e.target.value)}
-            >
-              <option value="featured">Featured</option>
-              <option value="price_low">Price: Low to High</option>
-              <option value="price_high">Price: High to Low</option>
-              <option value="rating_high">Rating: High to Low</option>
-              <option value="newest">Newest</option>
-            </select>
-          </div>
-
-          <Button variant="outline" className="gap-2" onClick={handleShare}>
-            {navigator.share ? <Share2 className="h-4 w-4" /> : copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-            {navigator.share ? 'Share' : copied ? 'Copied' : 'Copy link'}
-          </Button>
-        </div>
+        <ProductGrid products={processedItems} />
       </div>
-
-      <ProductGrid products={processedItems} />
     </div>
   );
 }

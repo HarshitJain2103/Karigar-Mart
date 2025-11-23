@@ -1,6 +1,8 @@
 import Product from '../models/product.model.js';
 import ArtisanProfile from '../models/artisanProfile.model.js';
+import Category from '../models/category.model.js';
 import asyncHandler from 'express-async-handler';
+import veoVideoService from '../services/veoVideoService.js';
 
 const getProducts = asyncHandler(async (req, res) => {
   const pageSize = 8;
@@ -50,26 +52,166 @@ const createProduct = async (req, res) => {
     const artisanProfile = await ArtisanProfile.findOne({ userId: req.user.id });
 
     if (!artisanProfile) {
-      return res.status(404).json({ message: 'Artisan profile not found. An artisan profile is required to create a product.' });
+      return res.status(404).json({ 
+        message: 'Artisan profile not found. An artisan profile is required to create a product.' 
+      });
     }
 
-    const { title, description, price, inventory, categoryId, imageURLs } = req.body;
+    const { 
+      title, 
+      description, 
+      price, 
+      inventory, 
+      categoryId, 
+      imageURLs,
+      generateVideo = true,
+      generateDescription = false
+    } = req.body;
 
+    // Validate
+    if (!title || !price || !categoryId || !imageURLs || imageURLs.length === 0) {
+      return res.status(400).json({ 
+        message: 'Title, price, category, and at least one image are required.' 
+      });
+    }
+
+    // ✅ NEW: Generate AI description if requested
+    let finalDescription = description;
+    if ((generateDescription || !description) && imageURLs.length > 0) {
+      try {
+        const category = await Category.findById(categoryId);
+        finalDescription = await veoVideoService.generateProductDescription(
+          title,
+          category?.name || 'product'
+        );
+        console.log('[AI] Generated description:', finalDescription);
+      } catch (error) {
+        console.error('[AI] Description failed:', error);
+        finalDescription = description || '';
+      }
+    }
+
+    // Create product
     const product = new Product({
-      artisanId: artisanProfile._id, 
+      artisanId: artisanProfile._id,
       title,
-      description,
+      description: finalDescription,
       price,
-      stockQuantity : inventory,
+      stockQuantity: inventory || 1,
       categoryId,
-      imageURLs: imageURLs || [], 
+      imageURLs: imageURLs || [],
+      videoStatus: generateVideo ? 'generating' : 'not_generated'
     });
 
     const createdProduct = await product.save();
-    res.status(201).json(createdProduct);
+
+    // ✅ NEW: Start video generation in background
+    if (generateVideo && imageURLs.length > 0) {
+      generateVideoInBackground(createdProduct, imageURLs[0], artisanProfile._id);
+    }
+
+    res.status(201).json({
+      success: true,
+      message: generateVideo 
+        ? 'Product created! Video is generating (2-5 minutes).'
+        : 'Product created successfully!',
+      product: createdProduct
+    });
+
   } catch (error) {
     console.error(`Error creating product: ${error.message}`);
-    res.status(500).json({ message: 'Server Error' });
+    res.status(500).json({ message: 'Server Error', error: error.message });
+  }
+};
+
+// ✅ NEW: Background video generation
+async function generateVideoInBackground(product, imageUrl, artisanId) {
+  try {
+    console.log(`[VIDEO] Starting for product: ${product._id}`);
+
+    // Populate category for better prompts
+    await product.populate('categoryId', 'name');
+
+    const videoResult = await veoVideoService.generateMarketingVideo(
+      {
+        _id: product._id,
+        title: product.title,
+        description: product.description,
+        categoryId: product.categoryId
+      },
+      imageUrl,
+      artisanId, 
+      {
+        aspectRatio: "9:16",
+        resolution: "720p",
+        durationSeconds: 8
+      }
+    );
+
+    if (videoResult.success) {
+      product.marketingVideo = {
+        url: videoResult.videoUrl,
+        prompt: videoResult.prompt,
+        generatedAt: new Date(),
+        duration: 8,
+        aspectRatio: "9:16"
+      };
+      product.videoStatus = 'completed';
+      console.log(`[VIDEO] ✅ Success: ${product._id}`);
+    } else {
+      console.error(`[VIDEO] ❌ Failed: ${product._id}`, videoResult.error);
+      product.videoStatus = 'failed';
+    }
+
+    await product.save();
+
+  } catch (error) {
+    console.error(`[VIDEO] ❌ Error for ${product._id}:`, error);
+    try {
+      product.videoStatus = 'failed';
+      await product.save();
+    } catch {}
+  }
+}
+
+const regenerateProductVideo = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const artisanProfile = await ArtisanProfile.findOne({ userId: req.user.id });
+
+    const product = await Product.findOne({
+      _id: id,
+      artisanId: artisanProfile._id
+    });
+
+    if (!product) {
+      return res.status(404).json({
+        message: 'Product not found or unauthorized'
+      });
+    }
+
+    if (!product.imageURLs || product.imageURLs.length === 0) {
+      return res.status(400).json({
+        message: 'Product needs at least one image'
+      });
+    }
+
+    product.videoStatus = 'generating';
+    await product.save();
+
+    generateVideoInBackground(product, product.imageURLs[0], artisanProfile._id);
+
+    res.json({
+      success: true,
+      message: 'Video regeneration started. Check back in 2-5 minutes!'
+    });
+
+  } catch (error) {
+    console.error('Regeneration error:', error);
+    res.status(500).json({
+      message: 'Failed to regenerate video',
+      error: error.message
+    });
   }
 };
 
@@ -139,4 +281,12 @@ const getProductsByArtisan = async (req, res) => {
   }
 };
 
-export { getProducts, createProduct , updateProduct , deleteProduct , getProductsByArtisan , getProductById};
+export { 
+  getProducts, 
+  createProduct, 
+  updateProduct, 
+  deleteProduct, 
+  getProductsByArtisan, 
+  getProductById,
+  regenerateProductVideo
+};
