@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { uploadImage } from '@/lib/uploadService'; 
-import useAuthStore from '@/stores/authStore'; 
+import { uploadImage } from '@/lib/uploadService';
+import useAuthStore from '@/stores/authStore';
 import ImageUploader from '../ui-elements/ImageUploader';
 import { Video, Sparkles, Wand2 } from 'lucide-react';
 
@@ -18,20 +18,20 @@ export default function ProductDialog({ open, onOpenChange, product, onSave }) {
     generateVideo: true,
     generateDescription: false
   });
-  
+
   const token = useAuthStore((state) => state.token);
 
   useEffect(() => {
-    setFormData(product || { 
-      title: '', 
-      description: '', 
-      price: '', 
-      inventory: '', 
-      categoryId: '', 
-      imageURLs: [] 
+    setFormData(product || {
+      title: '',
+      description: '',
+      price: '',
+      inventory: '',
+      categoryId: '',
+      imageURLs: []
     });
   }, [product]);
-  
+
   useEffect(() => {
     const fetchCategories = async () => {
       const response = await fetch('http://localhost:8000/api/categories');
@@ -44,7 +44,7 @@ export default function ProductDialog({ open, onOpenChange, product, onSave }) {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
-  
+
   const handleSelectChange = (value) => {
     setFormData({ ...formData, categoryId: value });
   };
@@ -57,7 +57,7 @@ export default function ProductDialog({ open, onOpenChange, product, onSave }) {
     try {
       const uploadPromises = files.map(file => uploadImage(file, token, 'products'));
       const uploadedUrls = await Promise.all(uploadPromises);
-      
+
       setFormData(prev => ({
         ...prev,
         imageURLs: [...(prev.imageURLs || []), ...uploadedUrls]
@@ -81,12 +81,12 @@ export default function ProductDialog({ open, onOpenChange, product, onSave }) {
     if (formData.imageURLs.length === 0) {
       return alert('Each product must have at least one image.');
     }
-  
+
     const productData = {
       ...formData,
-      ...videoOptions  
+      ...videoOptions
     };
-    
+
     onSave(productData);
   };
 
@@ -99,15 +99,20 @@ export default function ProductDialog({ open, onOpenChange, product, onSave }) {
           <DialogTitle>
             {formData?._id ? 'Edit Product' : 'Add New Product'}
           </DialogTitle>
+          <DialogDescription>
+            {formData?._id
+              ? "Modify the details of your product below."
+              : "Fill in product details to add it to your store."}
+          </DialogDescription>
         </DialogHeader>
-        
+
         <div className="space-y-4 pt-4">
           <div className="space-y-1">
             <Label htmlFor="title">Product title</Label>
-            <Input 
-              id="title" 
-              value={formData.title || ''} 
-              onChange={handleChange} 
+            <Input
+              id="title"
+              value={formData.title || ''}
+              onChange={handleChange}
               placeholder="e.g., Handwoven Cotton Scarf"
             />
           </div>
@@ -116,9 +121,9 @@ export default function ProductDialog({ open, onOpenChange, product, onSave }) {
               <Label htmlFor="description">Description</Label>
               <button
                 type="button"
-                onClick={() => setVideoOptions(prev => ({ 
-                  ...prev, 
-                  generateDescription: !prev.generateDescription 
+                onClick={() => setVideoOptions(prev => ({
+                  ...prev,
+                  generateDescription: !prev.generateDescription
                 }))}
                 className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700 transition-colors"
               >
@@ -126,12 +131,12 @@ export default function ProductDialog({ open, onOpenChange, product, onSave }) {
                 {videoOptions.generateDescription ? 'AI Enabled ✨' : 'Enable AI Description'}
               </button>
             </div>
-            <Textarea 
-              id="description" 
-              value={formData.description || ''} 
+            <Textarea
+              id="description"
+              value={formData.description || ''}
               onChange={handleChange}
-              placeholder={videoOptions.generateDescription 
-                ? "AI will generate a description (or write your own)" 
+              placeholder={videoOptions.generateDescription
+                ? "AI will generate a description (or write your own)"
                 : "Describe your product's features and craftsmanship"}
               rows={4}
             />
@@ -160,45 +165,45 @@ export default function ProductDialog({ open, onOpenChange, product, onSave }) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
               <Label htmlFor="price">Price (₹)</Label>
-              <Input 
-                id="price" 
-                type="number" 
-                value={formData.price || ''} 
+              <Input
+                id="price"
+                type="number"
+                value={formData.price || ''}
                 onChange={handleChange}
-                min="0" 
+                min="0"
               />
             </div>
             <div className="space-y-1">
               <Label htmlFor="inventory">Inventory</Label>
-              <Input 
-                id="inventory" 
-                type="number" 
-                value={formData.inventory || ''} 
+              <Input
+                id="inventory"
+                type="number"
+                value={formData.inventory || ''}
                 onChange={handleChange}
-                min="0" 
+                min="0"
               />
             </div>
           </div>
           <div>
             <Label className="text-base font-medium">Product Images</Label>
-            <ImageUploader 
+            <ImageUploader
               images={formData.imageURLs || []}
-              onChange={(urls) => setFormData(prev => ({...prev, imageURLs: urls}))}
+              onChange={(urls) => setFormData(prev => ({ ...prev, imageURLs: urls }))}
               uploadType="products"
               max={8}
             />
-            <input 
-              type="file" 
-              multiple 
-              accept="image/*" 
-              ref={inputRef} 
-              onChange={handleImageUpload} 
-              className="hidden" 
+            <input
+              type="file"
+              multiple
+              accept="image/*"
+              ref={inputRef}
+              onChange={handleImageUpload}
+              className="hidden"
             />
-            <Button 
-              variant="outline" 
-              type="button" 
-              onClick={() => inputRef.current?.click()} 
+            <Button
+              variant="outline"
+              type="button"
+              onClick={() => inputRef.current?.click()}
               disabled={isUploading}
               className="mt-2"
             >
@@ -211,15 +216,15 @@ export default function ProductDialog({ open, onOpenChange, product, onSave }) {
                 type="checkbox"
                 id="generateVideo"
                 checked={videoOptions.generateVideo}
-                onChange={(e) => setVideoOptions(prev => ({ 
-                  ...prev, 
-                  generateVideo: e.target.checked 
+                onChange={(e) => setVideoOptions(prev => ({
+                  ...prev,
+                  generateVideo: e.target.checked
                 }))}
                 className="mt-1 w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
               />
               <div className="flex-1">
-                <label 
-                  htmlFor="generateVideo" 
+                <label
+                  htmlFor="generateVideo"
                   className="flex items-center gap-2 font-medium text-gray-900 cursor-pointer"
                 >
                   <Video className="w-5 h-5 text-blue-600" />
@@ -229,8 +234,8 @@ export default function ProductDialog({ open, onOpenChange, product, onSave }) {
                   </span>
                 </label>
                 <p className="text-sm text-gray-700 mt-1.5 leading-relaxed">
-                  Automatically create a professional 8-second marketing reel 
-                  from your product image. Perfect for Instagram Reels & TikTok! 
+                  Automatically create a professional 8-second marketing reel
+                  from your product image. Perfect for Instagram Reels & TikTok!
                   <span className="text-blue-700 font-medium block mt-1">
                     ⏱️ Takes 2-5 minutes to generate
                   </span>
@@ -242,7 +247,7 @@ export default function ProductDialog({ open, onOpenChange, product, onSave }) {
             <Button variant="ghost" onClick={() => onOpenChange(false)}>
               Cancel
             </Button>
-            <Button 
+            <Button
               onClick={handleSave}
               disabled={isUploading || formData.imageURLs?.length === 0}
               className="bg-blue-600 hover:bg-blue-700"

@@ -6,7 +6,8 @@ import {
   deleteProduct, 
   getProductsByArtisan, 
   getProductById,
-  regenerateProductVideo  
+  regenerateProductVideo,
+  streamVideoStatus  
 } from '../controllers/productController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
@@ -21,5 +22,6 @@ router.route('/:id')
   .delete(protect, deleteProduct);
 
 router.post('/:id/regenerate-video', protect, regenerateProductVideo);
+router.get('/video-status/stream', streamVideoStatus);
 
 export default router;

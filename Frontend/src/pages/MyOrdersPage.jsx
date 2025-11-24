@@ -289,9 +289,10 @@ export default function MyOrdersPage() {
                         <div className="text-xs text-muted-foreground">Order ID</div>
                         <div className="font-mono break-all flex items-center gap-2">
                           <span>{order._id}</span>
-                          <button
-                            type="button"
-                            className="p-1 rounded hover:bg-muted/70"
+                          <span
+                            role="button"
+                            tabIndex={0}
+                            className="p-1 rounded hover:bg-muted/70 cursor-pointer"
                             onClick={(e) => {
                               e.preventDefault();
                               handleCopy(order._id);
@@ -300,7 +301,7 @@ export default function MyOrdersPage() {
                             title="Copy Order ID"
                           >
                             {copiedId === order._id ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                          </button>
+                          </span>
                         </div>
                       </div>
                       <div className="flex-1 min-w-[120px]">
