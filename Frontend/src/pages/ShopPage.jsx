@@ -4,6 +4,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import ProductCard from '../components/ui/products/ProductCard';
+import { useVideoSSE } from '../hooks/useVideoSSE';
+import { Wifi, WifiOff } from 'lucide-react';
 
 export default function ShopPage() {
   const [productsData, setProductsData] = useState({ products: [], page: 1, pages: 1 });
@@ -37,22 +39,49 @@ export default function ShopPage() {
     fetchProducts();
   }, [searchParams]);
 
+  const handleVideoStatusUpdate = (productId, statusData) => {
+    console.log(`[SHOP] Video update for ${productId}:`, statusData);
+
+    setProductsData(prev => ({
+      ...prev,
+      products: prev.products.map(product => {
+        if (product._id === productId) {
+          return {
+            ...product,
+            videoStatus: statusData.videoStatus,
+            marketingVideo: statusData.videoUrl ? {
+              ...product.marketingVideo,
+              url: statusData.videoUrl,
+              generatedAt: statusData.generatedAt
+            } : product.marketingVideo
+          };
+        }
+        return product;
+      })
+    }));
+  };
+
+  const { isConnected, generatingCount } = useVideoSSE(
+    productsData.products,
+    handleVideoStatusUpdate
+  );
+
   const handleFilterChange = (key, value) => {
     setSearchParams(prev => {
-        if (value === 'all' || !value) {
-            prev.delete(key);
-        } else {
-            prev.set(key, value);
-        }
-        prev.set('pageNumber', '1'); 
-        return prev;
+      if (value === 'all' || !value) {
+        prev.delete(key);
+      } else {
+        prev.set(key, value);
+      }
+      prev.set('pageNumber', '1');
+      return prev;
     });
   };
-  
+
   const handlePageChange = (newPage) => {
     setSearchParams(prev => {
-        prev.set('pageNumber', newPage.toString());
-        return prev;
+      prev.set('pageNumber', newPage.toString());
+      return prev;
     });
   };
 
@@ -66,14 +95,34 @@ export default function ShopPage() {
           </p>
         </div>
 
+        {generatingCount > 0 && (
+          <div className="mb-4 bg-blue-50 border border-blue-200 rounded-lg p-3 flex items-center gap-2">
+            {isConnected ? (
+              <>
+                <Wifi className="w-4 h-4 text-blue-600 animate-pulse" />
+                <span className="text-sm text-blue-800">
+                  <strong>Live updates active</strong> - {generatingCount} video{generatingCount > 1 ? 's' : ''} generating
+                </span>
+              </>
+            ) : (
+              <>
+                <WifiOff className="w-4 h-4 text-gray-500" />
+                <span className="text-sm text-gray-700">
+                  Connecting to real-time updates...
+                </span>
+              </>
+            )}
+          </div>
+        )}
+
         <div className="flex flex-col sm:flex-row gap-4 mb-8 p-4 bg-slate-50 rounded-lg border">
-            <Select onValueChange={(value) => handleFilterChange('category', value)} defaultValue={searchParams.get('category') || 'all'}>
-                <SelectTrigger className="w-full sm:w-[200px]"><SelectValue placeholder="Filter by Category" /></SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="all">All Categories</SelectItem>
-                    {categories.map(cat => <SelectItem key={cat._id} value={cat._id}>{cat.name}</SelectItem>)}
-                </SelectContent>
-            </Select>
+          <Select onValueChange={(value) => handleFilterChange('category', value)} defaultValue={searchParams.get('category') || 'all'}>
+            <SelectTrigger className="w-full sm:w-[200px]"><SelectValue placeholder="Filter by Category" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Categories</SelectItem>
+              {categories.map(cat => <SelectItem key={cat._id} value={cat._id}>{cat.name}</SelectItem>)}
+            </SelectContent>
+          </Select>
         </div>
 
         {loading ? (
@@ -85,23 +134,23 @@ export default function ShopPage() {
                 <ProductCard key={product._id} product={product} />
               ))}
             </div>
-            
+
             <div className="mt-12">
               <Pagination>
                 <PaginationContent>
-                    <PaginationItem>
-                        <PaginationPrevious href="#" onClick={(e) => { e.preventDefault(); if (productsData.page > 1) handlePageChange(productsData.page - 1); }} />
+                  <PaginationItem>
+                    <PaginationPrevious href="#" onClick={(e) => { e.preventDefault(); if (productsData.page > 1) handlePageChange(productsData.page - 1); }} />
+                  </PaginationItem>
+                  {[...Array(productsData.pages).keys()].map(p => (
+                    <PaginationItem key={p + 1}>
+                      <PaginationLink href="#" onClick={(e) => { e.preventDefault(); handlePageChange(p + 1); }} isActive={productsData.page === p + 1}>
+                        {p + 1}
+                      </PaginationLink>
                     </PaginationItem>
-                    {[...Array(productsData.pages).keys()].map(p => (
-                         <PaginationItem key={p + 1}>
-                             <PaginationLink href="#" onClick={(e) => { e.preventDefault(); handlePageChange(p + 1); }} isActive={productsData.page === p + 1}>
-                                 {p + 1}
-                             </PaginationLink>
-                         </PaginationItem>
-                    ))}
-                    <PaginationItem>
-                        <PaginationNext href="#" onClick={(e) => { e.preventDefault(); if (productsData.page < productsData.pages) handlePageChange(productsData.page + 1); }} />
-                    </PaginationItem>
+                  ))}
+                  <PaginationItem>
+                    <PaginationNext href="#" onClick={(e) => { e.preventDefault(); if (productsData.page < productsData.pages) handlePageChange(productsData.page + 1); }} />
+                  </PaginationItem>
                 </PaginationContent>
               </Pagination>
             </div>
