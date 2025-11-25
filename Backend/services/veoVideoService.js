@@ -10,28 +10,21 @@ const __dirname = path.dirname(__filename);
 
 class VeoVideoService {
     constructor() {
-        // Vertex AI configuration
         this.PROJECT_ID = process.env.PROJECT_ID;
         this.LOCATION_ID = process.env.LOCATION_ID || 'us-central1';
         this.MODEL_ID = process.env.MODEL_ID || 'veo-3.1-fast-generate-preview';
         this.API_ENDPOINT = process.env.API_ENDPOINT || 'us-central1-aiplatform.googleapis.com';
 
-        // ✅ GCS configuration (temporary storage only)
         this.GCS_BUCKET_NAME = process.env.GCS_BUCKET_NAME || 'karigar-mart';
 
-        // Decrypt and load service account
         const serviceAccount = this.decryptServiceAccount();
 
-        // Initialize Google Auth
         this.auth = new GoogleAuth({
             credentials: serviceAccount,
             scopes: ['https://www.googleapis.com/auth/cloud-platform'],
         });
     }
 
-    /**
-     * Decrypt service account file
-     */
     decryptServiceAccount() {
         try {
             const encPath = path.join(process.cwd(), "service-account.json.enc");
@@ -56,9 +49,6 @@ class VeoVideoService {
         }
     }
 
-    /**
-     * Get access token for Vertex AI
-     */
     async getAccessToken() {
         const client = await this.auth.getClient();
         const tokenResponse = await client.getAccessToken();
@@ -66,46 +56,67 @@ class VeoVideoService {
         return tokenResponse.token;
     }
 
-    /**
-     * Generate AI video prompt
-     */
-    async generateVideoPrompt(product) {
+    async generateVideoPrompt(product, imageUrl) {
         const { title, description, categoryId } = product;
         const categoryName = categoryId?.name || 'artisan craft';
 
-        const promptRequest = `Create a compelling 8-second video prompt for ${title}, a ${categoryName}.
+        try {
+            // Fetch product image
+            const imageResponse = await fetch(imageUrl);
+            const buffer = await imageResponse.arrayBuffer();
+            const base64Image = Buffer.from(buffer).toString("base64");
 
+            // Strong multimodal prompt
+            const finalPrompt = `
+You are an expert creative director.
+
+Analyze the product image and metadata to produce a cinematic 8-second marketing video prompt.
+
+Product Title: ${title}
+Category: ${categoryName}
 Description: ${description}
 
-Create a cinematic prompt that:
-- Shows the product in lifestyle context
-- Includes camera movement (dolly/pan/zoom)
-- Specifies lighting (golden hour/natural)
-- Emphasizes handcrafted quality
-- Perfect for Instagram Reels/TikTok
-- Under 150 words
+Your task:
+- Accurately describe the product based on the image
+- Mention material, textures, finish, colors, branding
+- Suggest perfect background setting (gym / home / table / nature / workspace / kitchen etc.)
+- Define camera moves (orbit, slow pan, hero shot, dolly, macro reveal)
+- Define lighting (soft studio, warm natural light, golden hour, reflective highlights)
+- Add subtle dynamic motions (light movement, rotating shadows, small scene actions)
+- Keep tone aspirational, premium, clean
+- Must be suitable for Instagram Reel style
+Limit to ~120–150 words.
+Return ONLY the final prompt text.
+        `;
 
-Return ONLY the prompt text.`;
-
-        try {
             const { GoogleGenAI } = await import("@google/genai");
             const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_GENAI_API_KEY });
 
             const response = await ai.models.generateContent({
                 model: "gemini-2.5-flash",
-                contents: promptRequest
+                contents: [
+                    {
+                        role: "user",
+                        parts: [
+                            { text: finalPrompt },
+                            {
+                                inline_data: {
+                                    mime_type: "image/jpeg",
+                                    data: base64Image
+                                }
+                            }
+                        ]
+                    }
+                ]
             });
 
-            return response.text || this.getDefaultPrompt(product);
+            return response.text;
         } catch (error) {
             console.error("[AI] Prompt generation failed:", error.message);
             return this.getDefaultPrompt(product);
         }
     }
 
-    /**
-     * Fallback prompt
-     */
     getDefaultPrompt(product) {
         const { title, categoryId } = product;
         const categoryName = categoryId?.name || 'artisan product';
@@ -113,9 +124,6 @@ Return ONLY the prompt text.`;
         return `A cinematic close-up of ${title}, a handcrafted ${categoryName}. Camera slowly orbits, revealing intricate details. Warm natural lighting, shallow depth of field, artisan workshop background. Golden hour ambiance, professional and aspirational.`;
     }
 
-    /**
-     * Generate AI description
-     */
     async generateProductDescription(productTitle, categoryName) {
         const prompt = `Write a 2-3 sentence product description for "${productTitle}" (${categoryName}). Highlight handcrafted quality, uniqueness, and craftsmanship. Warm tone.`;
 
@@ -135,12 +143,10 @@ Return ONLY the prompt text.`;
         }
     }
 
-    /**
-     * Generate marketing video with Veo via Vertex AI
-     * Flow: Image → Veo → GCS (temp) → Cloudinary (permanent) → Delete from GCS
-     */
+    //Flow: Image → Veo → GCS (temp) → Cloudinary (permanent) → Delete from GCS
+
     async generateMarketingVideo(product, imageUrl, artisanId, options = {}) {
-        let gcsUri = null; // Track for cleanup
+        let gcsUri = null;
 
         try {
             console.log(`[VEO] Starting video for product: ${product._id || product.title}`);
@@ -151,9 +157,6 @@ Return ONLY the prompt text.`;
                 durationSeconds = 8
             } = options;
 
-            // ✅ IMPORTANT: Use different folder than your friend's project
-            // Friend uses: video-outputs/
-            // You use: localartist-temp/
             const timestamp = Date.now();
             const GCS_OUTPUT_URI = `gs://${this.GCS_BUCKET_NAME}/localartist-temp/${timestamp}/`;
 
@@ -171,7 +174,7 @@ Return ONLY the prompt text.`;
             const imageBytes = Buffer.from(imageBuffer).toString('base64');
 
             // Step 2: Generate AI prompt
-            const videoPrompt = await this.generateVideoPrompt(product);
+            const videoPrompt = await this.generateVideoPrompt(product, imageUrl);
             console.log(`[VEO] Generated prompt (${videoPrompt.length} chars)`);
 
             // Step 3: Get access token
@@ -191,13 +194,13 @@ Return ONLY the prompt text.`;
                 parameters: {
                     aspectRatio: aspectRatio,
                     durationSeconds: parseInt(durationSeconds),
-                    generateAudio: true,           // ✅ From working project
-                    personGeneration: "allow_all", // ✅ From working project
+                    generateAudio: true,
+                    personGeneration: "allow_all",
                     resolution: resolution,
-                    enhancePrompt: true,           // ✅ From working project
+                    enhancePrompt: true,
                     sampleCount: 1,
-                    addWatermark: true,            // ✅ From working project
-                    storageUri: GCS_OUTPUT_URI     // ✅ CRITICAL: Tell Vertex where to save
+                    addWatermark: true,
+                    storageUri: GCS_OUTPUT_URI
                 }
             };
 
@@ -234,7 +237,8 @@ Return ONLY the prompt text.`;
                 gcsUrl,
                 product.title,
                 product._id,
-                artisanId
+                artisanId,
+                timestamp
             );
 
             console.log(`[VEO] ✅ Video stored in YOUR Cloudinary!`);
@@ -251,7 +255,7 @@ Return ONLY the prompt text.`;
 
             return {
                 success: true,
-                videoUrl: cloudinaryUrl,  // ✅ This goes to MongoDB
+                videoUrl: cloudinaryUrl,
                 prompt: videoPrompt
             };
 
@@ -265,7 +269,7 @@ Return ONLY the prompt text.`;
                     await this.deleteFromGCS(gcsUri, token);
                     console.log(`[VEO] Cleaned up failed video from GCS`);
                 } catch (cleanupError) {
-                    // Ignore cleanup errors
+                    // Ignore
                 }
             }
 
@@ -276,12 +280,9 @@ Return ONLY the prompt text.`;
         }
     }
 
-    /**
-     * Poll for video generation completion
-     */
     async pollForResult(operationName, token) {
         let attempts = 0;
-        const maxAttempts = 60; // 10 minutes max
+        const maxAttempts = 60;
 
         while (attempts < maxAttempts) {
             console.log(`[VEO] Polling... ${attempts + 1}/${maxAttempts} (checking every 10s)`);
@@ -320,15 +321,11 @@ Return ONLY the prompt text.`;
         throw new Error("Video generation timeout (exceeded 10 minutes)");
     }
 
-    /**
-     * Upload video from GCS to YOUR Cloudinary (permanent storage)
-     */
-    async uploadVideoToCloudinary(gcsUrl, productTitle, productId, artisanId) {
+    async uploadVideoToCloudinary(gcsUrl, productTitle, productId, artisanId, timestamp) {
         try {
             const folder = `karigar-mart/artisans/${artisanId}/product-videos`;
-            const publicId = `${productTitle.replace(/\s+/g, '-').toLowerCase()}-${productId}`;
+            const publicId = `${productTitle.replace(/\s+/g, '-').toLowerCase()}-${productId}-${timestamp}`;
 
-            // ✅ Cloudinary uploads directly from GCS public URL
             const result = await cloudinary.uploader.upload(gcsUrl, {
                 resource_type: "video",
                 folder: folder,
@@ -347,9 +344,6 @@ Return ONLY the prompt text.`;
         }
     }
 
-    /**
-     * Delete temporary video from GCS after uploading to Cloudinary
-     */
     async deleteFromGCS(gcsUri, token) {
         try {
             // Parse GCS URI: gs://bucket-name/path/to/file.mp4
@@ -359,8 +353,6 @@ Return ONLY the prompt text.`;
             }
 
             const [, bucket, objectPath] = match;
-
-            // Use Google Cloud Storage API to delete
             const deleteUrl = `https://storage.googleapis.com/storage/v1/b/${bucket}/o/${encodeURIComponent(objectPath)}`;
 
             const response = await fetch(deleteUrl, {
