@@ -123,7 +123,6 @@ const createProduct = async (req, res) => {
   }
 };
 
-// Background video generation
 async function generateVideoInBackground(product, imageUrl, artisanId) {
   try {
     console.log(`[VIDEO] Starting for product: ${product._id}`);
@@ -143,20 +142,31 @@ async function generateVideoInBackground(product, imageUrl, artisanId) {
       {
         aspectRatio: "9:16",
         resolution: "720p",
-        durationSeconds: 8
+        durationSeconds: 8,
+        includeAudio: true
       }
     );
 
     if (videoResult.success) {
+      const finalVideoUrl = videoResult.videoUrlWithAudio || videoResult.videoUrl;
+
+      // Save video + audio metadata
       product.marketingVideo = {
-        url: videoResult.videoUrl,
-        prompt: videoResult.prompt,
+        url: finalVideoUrl,  
+        baseVideoUrl: videoResult.videoUrl,  
+        prompt: videoResult.videoPrompt,
         generatedAt: new Date(),
         duration: 8,
-        aspectRatio: "9:16"
+        aspectRatio: "9:16",
+        audioUrl: videoResult.audioUrl || null,
+        audioScript: videoResult.audioScript || null,
+        hasAudio: !!videoResult.audioUrl
       };
       product.videoStatus = 'completed';
+
       console.log(`[VIDEO] ✅ Success: ${product._id}`);
+      console.log(`[VIDEO] Final URL: ${finalVideoUrl}`);
+      console.log(`[AUDIO] ${videoResult.audioUrl ? '✅ With audio' : '⚠️ No audio'}`);
     } else {
       console.error(`[VIDEO] ❌ Failed: ${product._id}`, videoResult.error);
       product.videoStatus = 'failed';
@@ -310,7 +320,7 @@ const streamVideoStatus = asyncHandler(async (req, res) => {
 
   let pollInterval;
   let pollCount = 0;
-  const maxPolls = 72; 
+  const maxPolls = 72;
 
   // Poll database every 10 seconds
   pollInterval = setInterval(async () => {
@@ -363,7 +373,7 @@ const streamVideoStatus = asyncHandler(async (req, res) => {
 
       res.end();
     }
-  }, 10000); 
+  }, 10000);
 
   // Clean up on client disconnect
   req.on('close', () => {

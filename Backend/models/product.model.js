@@ -37,11 +37,16 @@ const productSchema = new mongoose.Schema({
     ]
   },
   marketingVideo: {
-    url: { type: String, default: null },
+    url: { type: String, default: null },  
+    baseVideoUrl: { type: String, default: null },  
     prompt: { type: String, default: null },
     generatedAt: { type: Date, default: null },
     duration: { type: Number, default: 8 },
-    aspectRatio: { type: String, default: '9:16' }
+    aspectRatio: { type: String, default: '9:16' },
+    // ✅ Audio metadata
+    audioUrl: { type: String, default: null },
+    audioScript: { type: String, default: null },
+    hasAudio: { type: Boolean, default: false }
   },
   videoStatus: {
     type: String,
@@ -51,6 +56,8 @@ const productSchema = new mongoose.Schema({
 }, {
   timestamps: true,
 });
+productSchema.index({ artisanId: 1, videoStatus: 1 });
+productSchema.index({ categoryId: 1 });
 
 const Product = mongoose.model('Product', productSchema);
 
