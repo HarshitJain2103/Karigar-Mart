@@ -64,8 +64,17 @@ class VeoVideoService {
 
         try {
             const imageResponse = await fetch(imageUrl);
+            if (!imageResponse.ok) {
+                throw new Error(`Failed to fetch image: ${imageResponse.status}`);
+            }
+
             const buffer = await imageResponse.arrayBuffer();
             const base64Image = Buffer.from(buffer).toString("base64");
+            if (!base64Image || base64Image.length === 0) {
+                throw new Error("Image conversion to base64 failed - empty result");
+            }
+
+            console.log(`[AI] Base64 image length: ${base64Image.length} characters`);
 
             const finalPrompt = `
 You are an expert creative director.
@@ -87,7 +96,7 @@ Your task:
 - Must be suitable for Instagram Reel style
 Limit to ~120–150 words.
 Return ONLY the final prompt text.
-            `;
+        `;
 
             const { GoogleGenAI } = await import("@google/genai");
             const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_GENAI_API_KEY });
@@ -96,23 +105,22 @@ Return ONLY the final prompt text.
                 model: "gemini-2.5-flash",
                 contents: [
                     {
-                        role: "user",
-                        parts: [
-                            { text: finalPrompt },
-                            {
-                                inline_data: {
-                                    mime_type: "image/jpeg",
-                                    data: base64Image
-                                }
-                            }
-                        ]
-                    }
+                        inlineData: {  
+                            mimeType: "image/jpeg",  
+                            data: base64Image
+                        }
+                    },
+                    { text: finalPrompt }  
                 ]
             });
 
-            return response.text;
+            const generatedText = response.text;
+            console.log(`[AI] Generated prompt: ${generatedText.substring(0, 100)}...`);
+            return generatedText;
+
         } catch (error) {
             console.error("[AI] Prompt generation failed:", error.message);
+            console.error("[AI] Full error:", JSON.stringify(error, null, 2));
             return this.getDefaultPrompt(product);
         }
     }
@@ -149,26 +157,44 @@ Return ONLY the final prompt text.
 
         try {
             const imageResponse = await fetch(imageUrl);
+            if (!imageResponse.ok) {
+                throw new Error(`Failed to fetch image: ${imageResponse.status}`);
+            }
+
             const buffer = await imageResponse.arrayBuffer();
             const base64Image = Buffer.from(buffer).toString("base64");
 
-            const scriptPrompt = `
-You are writing a compelling 8-second voice-over script for a product marketing video.
+            // Verify base64 is not empty
+            if (!base64Image || base64Image.length === 0) {
+                throw new Error("Image conversion to base64 failed - empty result");
+            }
 
-Product Title: ${title}
+            console.log(`[AI] Base64 image length: ${base64Image.length} characters`);
+
+            const scriptPrompt = `
+You are creating a short, high-converting 8-second voice-over script for a handmade product crafted by a local artisan in India.
+
+Write a warm, simple, human script (20–22 words) that:
+- focuses mainly on the product’s beauty and usefulness
+- highlights the handmade detail in a subtle, natural way
+- feels authentic, emotional, and inviting
+- avoids corporate or fancy English
+- avoids saying “made by a local artisan”
+- creates a feeling of care, quality, and uniqueness
+- gently encourages the listener to bring the product home
+
+Tone:
+- warm, human, simple English
+- emotional but not dramatic
+- aspirational but grounded
+
+Product Info:
+Title: ${title}
 Category: ${categoryName}
 Description: ${description}
 
-Create a concise, engaging script that:
-- Opens with a hook (e.g., "Discover...", "Meet...", "Introducing...")
-- Highlights the key benefit or unique quality
-- Mentions craftsmanship or authenticity
-- Ends with a subtle call-to-action or aspirational note
-- Should be spoken naturally in 8 seconds (roughly 20-25 words)
-- Warm, premium, aspirational tone
-
-Return ONLY the script text, no quotes or extra formatting.
-            `;
+Return ONLY the final script text, no quotes, no extra formatting.
+`;
 
             const { GoogleGenAI } = await import("@google/genai");
             const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_GENAI_API_KEY });
@@ -177,23 +203,22 @@ Return ONLY the script text, no quotes or extra formatting.
                 model: "gemini-2.5-flash",
                 contents: [
                     {
-                        role: "user",
-                        parts: [
-                            { text: scriptPrompt },
-                            {
-                                inline_data: {
-                                    mime_type: "image/jpeg",
-                                    data: base64Image
-                                }
-                            }
-                        ]
-                    }
+                        inlineData: {  
+                            mimeType: "image/jpeg",
+                            data: base64Image
+                        }
+                    },
+                    { text: scriptPrompt }
                 ]
             });
 
-            return response.text.trim();
+            const generatedScript = response.text.trim();
+            console.log(`[AI] Generated script: ${generatedScript}`);
+            return generatedScript;
+
         } catch (error) {
             console.error("[AI] Audio script generation failed:", error.message);
+            console.error("[AI] Full error:", JSON.stringify(error, null, 2));
             return `Discover ${title}. Handcrafted with care, designed to inspire. Make it yours today.`;
         }
     }
