@@ -41,20 +41,30 @@ async function getDatabaseImageUrls() {
   return urls;
 }
 
-//Get all video URLs from database
- 
 async function getDatabaseVideoUrls() {
   const urls = new Set();
-
-  // Get product marketing videos
   const products = await Product.find(
-    { 'marketingVideo.url': { $exists: true, $ne: null } },
-    'marketingVideo.url'
+    { 
+      $or: [
+        { 'marketingVideo.url': { $exists: true, $ne: null } },
+        { 'marketingVideo.baseVideoUrl': { $exists: true, $ne: null } },
+        { 'marketingVideo.audioUrl': { $exists: true, $ne: null } }
+      ]
+    },
+    'marketingVideo'
   );
 
   for (const product of products) {
-    if (product.marketingVideo?.url) {
-      urls.add(product.marketingVideo.url);
+    const mv = product.marketingVideo;
+  
+    if (mv?.baseVideoUrl) {
+      urls.add(mv.baseVideoUrl);
+      console.log(`[DB] Found base video: ${mv.baseVideoUrl.substring(0, 80)}...`);
+    }
+
+    if (mv?.audioUrl) {
+      urls.add(mv.audioUrl);
+      console.log(`[DB] Found audio: ${mv.audioUrl.substring(0, 80)}...`);
     }
   }
 
@@ -164,17 +174,16 @@ async function deleteOrphanedResources(orphansMap) {
     }
   }
 
-  // Delete videos
   if (videoIds.length > 0) {
     try {
-      console.log(`Deleting ${videoIds.length} orphaned videos...`);
+      console.log(`Deleting ${videoIds.length} orphaned videos/audio...`);
       await cloudinary.api.delete_resources(videoIds, {
         resource_type: 'video',
         invalidate: true  // Clear CDN cache immediately
       });
-      console.log(`✅ Deleted ${videoIds.length} videos`);
+      console.log(`✅ Deleted ${videoIds.length} videos/audio`);
     } catch (error) {
-      console.error('❌ Video deletion error:', error.message);
+      console.error('❌ Video/audio deletion error:', error.message);
     }
   }
 }
@@ -189,9 +198,9 @@ export const runCloudinaryCleanup = async () => {
     const dbImageUrls = await getDatabaseImageUrls();
     const dbVideoUrls = await getDatabaseVideoUrls();
 
-    console.log(`📊 Database stats:`);
+    console.log(`\n📊 Database stats:`);
     console.log(`   - Images: ${dbImageUrls.size}`);
-    console.log(`   - Videos: ${dbVideoUrls.size}`);
+    console.log(`   - Videos + Audio: ${dbVideoUrls.size}`);
 
     // Step 2: Convert URLs to public IDs (URL-encoded)
     const dbPublicIds = new Set();
@@ -208,7 +217,7 @@ export const runCloudinaryCleanup = async () => {
     // Step 3: Get all resources from Cloudinary
     const cloudinaryResources = await getAllCloudinaryResources('karigar-mart');
 
-    console.log(`☁️  Cloudinary stats:`);
+    console.log(`\n☁️  Cloudinary stats:`);
     console.log(`   - Total resources: ${cloudinaryResources.size}`);
 
     // Step 4: Find orphans (in Cloudinary but not in DB)
@@ -224,16 +233,15 @@ export const runCloudinaryCleanup = async () => {
     if (orphansToDelete.size > 0) {
       console.log(`\n🗑️  Found ${orphansToDelete.size} orphaned resources:`);
 
-      // Show first 5 as examples
       let count = 0;
       for (const [publicId, resourceType] of orphansToDelete) {
-        if (count >= 5) break;
+        if (count >= 10) break;
         console.log(`   - [${resourceType}] ${publicId}`);
         count++;
       }
 
-      if (orphansToDelete.size > 5) {
-        console.log(`   ... and ${orphansToDelete.size - 5} more`);
+      if (orphansToDelete.size > 10) {
+        console.log(`   ... and ${orphansToDelete.size - 10} more`);
       }
 
       await deleteOrphanedResources(orphansToDelete);
@@ -251,32 +259,48 @@ export const runCloudinaryCleanup = async () => {
 };
 
 //Manual cleanup test function (for debugging)
-
 export const testCleanupDryRun = async () => {
   console.log('🧪 DRY RUN - No deletions will occur\n');
 
   const dbImageUrls = await getDatabaseImageUrls();
   const dbVideoUrls = await getDatabaseVideoUrls();
 
+  console.log('\n📸 Sample Image URLs from DB:');
   let indexImg = 1;
-  console.log('Sample Image URLs from DB:');
   for (const url of dbImageUrls) {
-    console.log(`${indexImg++}. ${url}`)
+    if (indexImg > 5) break; // Show only first 5
+    console.log(`${indexImg++}. ${url}`);
   }
+
+  console.log('\n🎬 Sample Video/Audio URLs from DB:');
   let indexVid = 1;
-  console.log("Sample video URLs from DB");
   for (const url of dbVideoUrls) {
-    console.log(`${indexVid++}. ${url}`)
+    if (indexVid > 10) break; // Show first 10
+    console.log(`${indexVid++}. ${url}`);
   }
 
-  console.log('\nExtracted public ID:');
-  const sampleUrl = [...dbVideoUrls][0];
-  const publicId = getPublicIdFromUrl(sampleUrl);
-  console.log(publicId);
+  console.log('\n🔍 Extracted public IDs:');
+  const sampleUrls = [...dbVideoUrls].slice(0, 3);
+  for (const sampleUrl of sampleUrls) {
+    const publicId = getPublicIdFromUrl(sampleUrl);
+    console.log(`   URL: ${sampleUrl.substring(0, 80)}...`);
+    console.log(`   Public ID: ${publicId}\n`);
+  }
 
-  console.log('\nCloudinary resources:');
+  console.log('\n☁️  Cloudinary resources:');
   const cloudinaryResources = await getAllCloudinaryResources('karigar-mart');
+  let count = 0;
   for (const [id, type] of cloudinaryResources) {
-    console.log(`[${type}] ${id}`);
+    if (count >= 20) {
+      console.log(`   ... and ${cloudinaryResources.size - 20} more`);
+      break;
+    }
+    console.log(`   [${type}] ${id}`);
+    count++;
   }
+  console.log('\n📊 Resource Type Breakdown:');
+  const images = [...cloudinaryResources.values()].filter(t => t === 'image').length;
+  const videos = [...cloudinaryResources.values()].filter(t => t === 'video').length;
+  console.log(`   - Images: ${images}`);
+  console.log(`   - Videos (includes .mp4 and .mp3): ${videos}`);
 };
