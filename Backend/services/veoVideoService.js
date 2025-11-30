@@ -57,8 +57,15 @@ class VeoVideoService {
         return tokenResponse.token;
     }
 
+    sanitizeForPublicId(text) {
+        return text
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')  // Replace non-alphanumeric with dash
+            .replace(/^-+|-+$/g, '')       // Remove leading/trailing dashes
+            .substring(0, 100);             // Limit length
+    }
+
     async generateVideoPrompt(product, imageUrl) {
-        console.log("Latest script testing 2!!!!!!!!!!");
         const { title, description, categoryId } = product;
         const categoryName = categoryId?.name || 'artisan craft';
 
@@ -84,6 +91,12 @@ Analyze the product image and metadata to produce a cinematic 8-second marketing
 Product Title: ${title}
 Category: ${categoryName}
 Description: ${description}
+
+CRITICAL RULES:
+- The product must remain COMPLETELY UNCHANGED throughout the video
+- DO NOT modify, animate, or transform the product itself
+- DO NOT change the product's position, pose and appearance
+- Focus on showcasing what's already in the image
 
 Your task:
 - Accurately describe the product based on the image
@@ -164,7 +177,6 @@ Return ONLY the final prompt text.
             const buffer = await imageResponse.arrayBuffer();
             const base64Image = Buffer.from(buffer).toString("base64");
 
-            // Verify base64 is not empty
             if (!base64Image || base64Image.length === 0) {
                 throw new Error("Image conversion to base64 failed - empty result");
             }
@@ -175,11 +187,11 @@ Return ONLY the final prompt text.
 You are creating a short, high-converting 8-second voice-over script for a handmade product crafted by a local artisan in India.
 
 Write a warm, simple, human script (20–22 words) that:
-- focuses mainly on the product’s beauty and usefulness
+- focuses mainly on the product's beauty and usefulness
 - highlights the handmade detail in a subtle, natural way
 - feels authentic, emotional, and inviting
 - avoids corporate or fancy English
-- avoids saying “made by a local artisan”
+- avoids saying "made by a local artisan"
 - creates a feeling of care, quality, and uniqueness
 - gently encourages the listener to bring the product home
 
@@ -291,7 +303,8 @@ Return ONLY the final script text, no quotes, no extra formatting.
     async uploadAudioToCloudinary(audioPath, productTitle, productId, artisanId, timestamp) {
         try {
             const folder = `karigar-mart/artisans/${artisanId}/product-audio`;
-            const publicId = `${productTitle.replace(/\s+/g, '-').toLowerCase()}-${productId}-${timestamp}`;
+            const sanitizedTitle = this.sanitizeForPublicId(productTitle);
+            const publicId = `${sanitizedTitle}-${productId}-${timestamp}`;
 
             const result = await cloudinary.uploader.upload(audioPath, {
                 resource_type: "video",
@@ -431,7 +444,8 @@ Return ONLY the final script text, no quotes, no extra formatting.
                     enhancePrompt: true,
                     sampleCount: 1,
                     addWatermark: true,
-                    storageUri: GCS_OUTPUT_URI
+                    storageUri: GCS_OUTPUT_URI,
+                    imageConditioningScale: 0.9
                 }
             };
 
@@ -584,7 +598,8 @@ Return ONLY the final script text, no quotes, no extra formatting.
     async uploadVideoToCloudinary(gcsUrl, productTitle, productId, artisanId, timestamp) {
         try {
             const folder = `karigar-mart/artisans/${artisanId}/product-videos`;
-            const publicId = `${productTitle.replace(/\s+/g, '-').toLowerCase()}-${productId}-${timestamp}`;
+            const sanitizedTitle = this.sanitizeForPublicId(productTitle);
+            const publicId = `${sanitizedTitle}-${productId}-${timestamp}`;
 
             const result = await cloudinary.uploader.upload(gcsUrl, {
                 resource_type: "video",
