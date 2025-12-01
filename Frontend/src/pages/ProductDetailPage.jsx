@@ -103,7 +103,7 @@ export default function ProductDetailsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [quantity, setQuantity] = useState(1);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [activeMediaIndex, setActiveMediaIndex] = useState(0);
   const [sharing, setSharing] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -112,22 +112,23 @@ export default function ProductDetailsPage() {
   const toggleWishlist = useAuthStore((state) => state.toggleWishlist);
   const addToCart = useCartStore((state) => state.addToCart);
 
-  // Check if the current product is in the global wishlist
-  const isWishlisted = useMemo(() => 
-    wishlist.some(item => item._id === productId), 
+  const isWishlisted = useMemo(() =>
+    wishlist.some(item => item._id === productId),
     [wishlist, productId]
   );
 
-  const handleToggleWishlist = () => {
-    if (!token) return alert('Please log in to manage your wishlist.');
-    toggleWishlist(productId);
-  };
-
-  const handleAddToCart = () => {
-    if (!token) return alert('Please log in to add items to your cart.');
-    if (!product) return;
-    addToCart(product, quantity);
-  };
+  const mediaItems = useMemo(() => {
+    const items = [];
+    if (product?.marketingVideo?.url) {
+      items.push({ type: 'video', url: product.marketingVideo.url });
+    }
+    if (product?.imageURLs?.length) {
+      product.imageURLs.forEach(url => {
+        items.push({ type: 'image', url });
+      });
+    }
+    return items;
+  }, [product?.marketingVideo?.url, product?.imageURLs]);
 
   const canDecrease = quantity > 1;
   const canIncrease = useMemo(
@@ -141,46 +142,33 @@ export default function ProductDetailsPage() {
     return `${window.location.origin}/product/${productId}`;
   }, [productId]);
 
-  const nextImage = useCallback(() => {
-    if (!product?.imageURLs?.length) return;
-    setActiveImageIndex((i) => (i + 1) % product.imageURLs.length);
-  }, [product?.imageURLs]);
+  const nextMedia = useCallback(() => {
+    if (!mediaItems.length) return;
+    setActiveMediaIndex((i) => (i + 1) % mediaItems.length);
+  }, [mediaItems.length]);
 
-  const prevImage = useCallback(() => {
-    if (!product?.imageURLs?.length) return;
-    setActiveImageIndex((i) => (i - 1 + product.imageURLs.length) % product.imageURLs.length);
-  }, [product?.imageURLs]);
+  const prevMedia = useCallback(() => {
+    if (!mediaItems.length) return;
+    setActiveMediaIndex((i) => (i - 1 + mediaItems.length) % mediaItems.length);
+  }, [mediaItems.length]);
 
-  useEffect(() => {
-    function onKey(e) {
-      if (e.key === 'ArrowRight') nextImage();
-      if (e.key === 'ArrowLeft') prevImage();
-    }
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [nextImage, prevImage]);
+  const handleToggleWishlist = useCallback(() => {
+    if (!token) return alert('Please log in to manage your wishlist.');
+    toggleWishlist(productId);
+  }, [token, toggleWishlist, productId]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    const fetchProductData = async () => {
-      try {
-        setLoading(true);
-        setError('');
-        const response = await fetch(`http://localhost:8000/api/products/${productId}`);
-        if (!response.ok) throw new Error('Product not found.');
-        const data = await response.json();
-        setProduct(data);
-        setActiveImageIndex(0);
-      } catch (err) {
-        setError(err.message || 'Failed to load product.');
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (productId) fetchProductData();
-  }, [productId]);
+  const handleAddToCart = useCallback(() => {
+    if (!token) return alert('Please log in to add items to your cart.');
+    if (!product) return;
+    addToCart(product, quantity);
+  }, [token, product, quantity, addToCart]);
 
-  const onShare = async () => {
+  const handleBuyNow = useCallback(() => {
+    if (!product) return;
+    navigate(`/checkout?productId=${product._id}&qty=${quantity}`);
+  }, [product, quantity, navigate]);
+
+  const onShare = useCallback(async () => {
     try {
       setSharing(true);
       if (navigator.share) {
@@ -198,21 +186,45 @@ export default function ProductDetailsPage() {
     } finally {
       setSharing(false);
     }
-  };
+  }, [product?.title, productUrl]);
 
-  const onCopy = async () => {
+  const onCopy = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(productUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch {
     }
-  };
+  }, [productUrl]);
 
-  const handleBuyNow = () => {
-    if (!product) return;
-    navigate(`/checkout?productId=${product._id}&qty=${quantity}`);
-  };
+  useEffect(() => {
+    function onKey(e) {
+      if (e.key === 'ArrowRight') nextMedia();
+      if (e.key === 'ArrowLeft') prevMedia();
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [nextMedia, prevMedia]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const fetchProductData = async () => {
+      try {
+        setLoading(true);
+        setError('');
+        const response = await fetch(`http://localhost:8000/api/products/${productId}`);
+        if (!response.ok) throw new Error('Product not found.');
+        const data = await response.json();
+        setProduct(data);
+        setActiveMediaIndex(0);
+      } catch (err) {
+        setError(err.message || 'Failed to load product.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (productId) fetchProductData();
+  }, [productId]);
 
   if (loading) return <ProductSkeleton />;
   if (error)
@@ -227,8 +239,8 @@ export default function ProductDetailsPage() {
     );
   if (!product) return <div className="text-center py-20">Product not found.</div>;
 
-  const images = product.imageURLs ?? [];
-  const showThumbs = images.length > 1;
+  const showNavigation = mediaItems.length > 1;
+  const currentMedia = mediaItems[activeMediaIndex];
 
   const categoryId = product.categoryId?._id;
   const categoryName = product.categoryId?.name ?? 'Category';
@@ -262,15 +274,29 @@ export default function ProductDetailsPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           <div className="space-y-4 lg:sticky top-24">
+            {/* Main media display */}
             <div className="aspect-square w-full bg-gray-100 rounded-xl overflow-hidden relative shadow-lg group">
-              {images[activeImageIndex] ? (
+              {currentMedia ? (
                 <>
-                  <img
-                    src={images[activeImageIndex]}
-                    alt={product.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03] will-change-transform"
-                    draggable={false}
-                  />
+                  {currentMedia.type === 'video' ? (
+                    <video
+                      src={currentMedia.url}
+                      controls
+                      autoPlay
+                      loop
+                      muted
+                      className="w-full h-full object-cover"
+                      style={{ maxHeight: "100%" }}
+                    />
+                  ) : (
+                    <img
+                      src={currentMedia.url}
+                      alt={product.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03] will-change-transform"
+                      draggable={false}
+                    />
+                  )}
+                  
                   <Button
                     size="icon"
                     variant="secondary"
@@ -280,65 +306,90 @@ export default function ProductDetailsPage() {
                   >
                     <Heart className={`h-5 w-5 transition-colors ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} />
                   </Button>
-                  {showThumbs && (
+                  
+                  {showNavigation && (
                     <>
                       <Button
-                        onClick={prevImage}
+                        onClick={prevMedia}
                         size="icon"
                         variant="secondary"
                         className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full shadow-md"
-                        aria-label="Previous image"
+                        aria-label="Previous media"
                       >
                         <ChevronLeft />
                       </Button>
                       <Button
-                        onClick={nextImage}
+                        onClick={nextMedia}
                         size="icon"
                         variant="secondary"
                         className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full shadow-md"
-                        aria-label="Next image"
+                        aria-label="Next media"
                       >
                         <ChevronRight />
                       </Button>
                     </>
                   )}
-                  {showThumbs && (
+                  
+                  {showNavigation && (
                     <div className="absolute bottom-3 right-3 rounded-full bg-black/60 text-white text-xs px-2 py-1">
-                      {activeImageIndex + 1} / {images.length}
+                      {activeMediaIndex + 1} / {mediaItems.length}
                     </div>
                   )}
                 </>
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                  No image
+                  No media
                 </div>
               )}
             </div>
 
-            {showThumbs && (
+            {/* Thumbnails */}
+            {showNavigation && (
               <>
                 <div className="grid grid-cols-5 gap-2 sm:hidden">
-                  {images.map((url, index) => (
+                  {mediaItems.map((media, index) => (
                     <button
                       key={index}
-                      onClick={() => setActiveImageIndex(index)}
-                      className={`aspect-square rounded-md overflow-hidden border-2 transition-all ${index === activeImageIndex ? 'border-primary' : 'border-transparent hover:border-gray-300'}`}
-                      aria-label={`View image ${index + 1}`}
+                      onClick={() => setActiveMediaIndex(index)}
+                      className={`aspect-square rounded-md overflow-hidden border-2 transition-all ${index === activeMediaIndex ? 'border-primary' : 'border-transparent hover:border-gray-300'}`}
+                      aria-label={`View ${media.type} ${index + 1}`}
                     >
-                      <img src={url} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
+                      {media.type === 'video' ? (
+                        <div className="w-full h-full bg-black flex items-center justify-center relative">
+                          <video src={media.url} className="w-full h-full object-cover" />
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                            <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M8 5v14l11-7z"/>
+                            </svg>
+                          </div>
+                        </div>
+                      ) : (
+                        <img src={media.url} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
+                      )}
                     </button>
                   ))}
                 </div>
 
                 <div className="hidden sm:grid grid-cols-6 gap-2">
-                  {images.map((url, index) => (
+                  {mediaItems.map((media, index) => (
                     <button
                       key={index}
-                      onClick={() => setActiveImageIndex(index)}
-                      className={`aspect-square rounded-md overflow-hidden border-2 transition-all ${index === activeImageIndex ? 'border-primary' : 'border-transparent hover:border-gray-300'}`}
-                      aria-label={`View image ${index + 1}`}
+                      onClick={() => setActiveMediaIndex(index)}
+                      className={`aspect-square rounded-md overflow-hidden border-2 transition-all ${index === activeMediaIndex ? 'border-primary' : 'border-transparent hover:border-gray-300'}`}
+                      aria-label={`View ${media.type} ${index + 1}`}
                     >
-                      <img src={url} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
+                      {media.type === 'video' ? (
+                        <div className="w-full h-full bg-black flex items-center justify-center relative">
+                          <video src={media.url} className="w-full h-full object-cover" />
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                            <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M8 5v14l11-7z"/>
+                            </svg>
+                          </div>
+                        </div>
+                      ) : (
+                        <img src={media.url} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
+                      )}
                     </button>
                   ))}
                 </div>
@@ -523,7 +574,7 @@ export default function ProductDetailsPage() {
           <Button size="lg" className="flex-1" onClick={handleAddToCart}>
             <ShoppingCart className="mr-2 h-5 w-5" /> Add to Cart
           </Button>
-          <Button size="lg" variant="outline" onClick={handleBuyNow}>
+          <Button size="lg" variant="outline" onClick={handleBuyNow} disabled={!canBuyNow}>
             {canBuyNow ? 'Buy Now' : 'Out of Stock'}
           </Button>
         </div>

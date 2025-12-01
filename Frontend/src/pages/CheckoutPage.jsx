@@ -28,6 +28,19 @@ export default function CheckoutPage() {
   const productId = searchParams.get('productId');
   const qty = Number(searchParams.get('qty'));
 
+  // Autofill shipping address from user data
+  useEffect(() => {
+    if (user) {
+      setShippingAddress({
+        street: user.address?.street || '',
+        city: user.address?.city || '',
+        state: user.address?.state || '',
+        postalCode: user.address?.postalCode || '',
+        phoneNumber: user.phoneNumber || ''
+      });
+    }
+  }, [user]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     const fetchProductDetails = async () => {
