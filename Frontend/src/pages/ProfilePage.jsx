@@ -124,8 +124,34 @@ export default function ProfilePage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeSection, token]);
 
+    const validatePhoneNumber = (phone) => {
+        if (!phone) return true; // Phone is optional
+        const phoneRegex = /^[6-9]\d{9}$/; // Indian phone number: starts with 6-9, 10 digits total
+        return phoneRegex.test(phone);
+    };
+
+    const validateName = (name) => {
+        const regex = /^[A-Za-z]+([ -][A-Za-z]+)*$/;
+        return regex.test(name);
+    }
+
     const handleSaveProfile = async () => {
         if (!token) return;
+        // Validation
+        if (!editForm.firstName?.trim() || !editForm.lastName?.trim()) {
+            setError("First name and last name are required");
+            return;
+        }
+
+        if (!validateName(editForm.firstName) || !validateName(editForm.lastName)) {
+            setError("Names must contain only letters and be in a proper format");
+            return;
+        }
+
+        if (editForm.phoneNumber && !validatePhoneNumber(editForm.phoneNumber)) {
+            setError("Please enter a valid 10-digit phone number starting with 6-9");
+            return;
+        }
         try {
             setSaving(true);
             setError("");
