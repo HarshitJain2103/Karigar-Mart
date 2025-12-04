@@ -28,9 +28,33 @@ class VeoVideoService {
 
     decryptServiceAccount() {
         try {
-            const encPath = path.join(process.cwd(), "service-account.json.enc");
-            const password = process.env.ENCRYPT_PASSWORD;
+            // CHANGED: Check for base64 env variable first (Vercel)
+            if (process.env.SERVICE_ACCOUNT_B64) {
+                console.log("[VEO] Loading service account from environment variable (Vercel)");
+                const encryptedBuffer = Buffer.from(process.env.SERVICE_ACCOUNT_B64, 'base64');
+                const iv = encryptedBuffer.slice(0, 16);
+                const ciphertext = encryptedBuffer.slice(16);
 
+                const password = process.env.ENCRYPT_PASSWORD;
+                if (!password) {
+                    throw new Error("ENCRYPT_PASSWORD not set in .env");
+                }
+
+                const key = crypto.scryptSync(password, "salt", 32);
+                const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
+                const decrypted = Buffer.concat([decipher.update(ciphertext), decipher.final()]);
+
+                return JSON.parse(decrypted.toString("utf-8"));
+            }
+
+            // FALLBACK: Check for file (local development)
+            const encPath = path.join(process.cwd(), "service-account.json.enc");
+            if (!fs.existsSync(encPath)) {
+                throw new Error(`Service account file not found at ${encPath} and SERVICE_ACCOUNT_B64 env var not set`);
+            }
+
+            console.log("[VEO] Loading service account from file (local development)");
+            const password = process.env.ENCRYPT_PASSWORD;
             if (!password) {
                 throw new Error("ENCRYPT_PASSWORD not set in .env");
             }
@@ -44,9 +68,10 @@ class VeoVideoService {
             const decrypted = Buffer.concat([decipher.update(ciphertext), decipher.final()]);
 
             return JSON.parse(decrypted.toString("utf-8"));
+
         } catch (error) {
             console.error("[VEO] Failed to decrypt service account:", error.message);
-            throw new Error("Service account decryption failed. Check ENCRYPT_PASSWORD and file path.");
+            throw new Error("Service account decryption failed. Check ENCRYPT_PASSWORD, SERVICE_ACCOUNT_B64, and file path.");
         }
     }
 
@@ -118,12 +143,12 @@ Return ONLY the final prompt text.
                 model: "gemini-2.5-flash",
                 contents: [
                     {
-                        inlineData: {  
-                            mimeType: "image/jpeg",  
+                        inlineData: {
+                            mimeType: "image/jpeg",
                             data: base64Image
                         }
                     },
-                    { text: finalPrompt }  
+                    { text: finalPrompt }
                 ]
             });
 
@@ -215,7 +240,7 @@ Return ONLY the final script text, no quotes, no extra formatting.
                 model: "gemini-2.5-flash",
                 contents: [
                     {
-                        inlineData: {  
+                        inlineData: {
                             mimeType: "image/jpeg",
                             data: base64Image
                         }
