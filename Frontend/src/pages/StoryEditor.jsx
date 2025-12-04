@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardFooter } from '@/components/ui/card'
 import { Loader2 } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import ImageUploader from '@/components/ui/ui-elements/ImageUploader';
+import { getApiUrl } from '@/lib/api';
 
 export default function StoryEditor() {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ export default function StoryEditor() {
       const fetchStoryData = async () => {
         setLoading(true);
         try {
-          const res = await fetch(`http://localhost:8000/api/stories/my-stories/${storyId}`, {
+          const res = await fetch(getApiUrl(`/api/stories/my-stories/${storyId}`), {
              headers: { 'Authorization': `Bearer ${token}` },
           });
           if (!res.ok) throw new Error('Failed to fetch story data.');
@@ -63,7 +64,7 @@ export default function StoryEditor() {
     setLoading(true);
     
     const storyData = { title, content, coverImageURL };
-    const endpoint = isEditMode ? `http://localhost:8000/api/stories/${storyId}` : 'http://localhost:8000/api/stories';
+    const endpoint = isEditMode ? getApiUrl(`/api/stories/${storyId}`) : getApiUrl('/api/stories');
     const method = isEditMode ? 'PUT' : 'POST';
 
     try {

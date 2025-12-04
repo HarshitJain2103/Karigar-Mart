@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProductCard from './ProductCard'; 
+import { getApiUrl } from '@/lib/api';
 
 export default function RelatedProducts({ categoryId, currentProductId }) {
   const [relatedProducts, setRelatedProducts] = useState([]);
@@ -8,7 +9,7 @@ export default function RelatedProducts({ categoryId, currentProductId }) {
     if (categoryId) {
       const fetchRelated = async () => {
         try {
-          const response = await fetch(`http://localhost:8000/api/products?category=${categoryId}`);
+          const response = await fetch(getApiUrl(`/api/products?category=${categoryId}`));
           const data = await response.json();
           
           const filteredProducts = data.products

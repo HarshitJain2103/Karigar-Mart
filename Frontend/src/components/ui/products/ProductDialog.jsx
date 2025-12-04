@@ -9,6 +9,7 @@ import { uploadImage } from '@/lib/uploadService';
 import useAuthStore from '@/stores/authStore';
 import ImageUploader from '../ui-elements/ImageUploader';
 import { Video, Sparkles, Wand2 } from 'lucide-react';
+import { getApiUrl } from '@/lib/api';
 
 export default function ProductDialog({ open, onOpenChange, product, onSave }) {
   const [formData, setFormData] = useState({});
@@ -34,7 +35,7 @@ export default function ProductDialog({ open, onOpenChange, product, onSave }) {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await fetch('http://localhost:8000/api/categories');
+      const response = await fetch(getApiUrl('/api/categories'));
       const data = await response.json();
       setCategories(data);
     };

@@ -16,8 +16,9 @@ import {
   CheckCircle2,
   AlertCircle,
 } from 'lucide-react';
+import { getApiUrl } from "@/lib/api";
 
-const API_CONTACT = 'http://localhost:8000/api/contact';
+const API_CONTACT = getApiUrl('/api/contact');
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });

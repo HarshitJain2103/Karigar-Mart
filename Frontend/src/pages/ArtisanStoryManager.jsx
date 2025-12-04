@@ -10,8 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Separator } from '@/components/ui/separator';
 import { Plus, Loader2, Edit, Trash2, ExternalLink, RefreshCw, Search, Filter, ArrowUpDown, ImageOff } from 'lucide-react';
+import { getApiUrl } from "@/lib/api";
 
-const API_BASE = 'http://localhost:8000';
 const formatDate = (dateString) =>
   new Date(dateString).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 
@@ -42,7 +42,7 @@ export default function ArtisanStoryManager() {
     try {
       setLoading(true);
       setFetchError('');
-      const res = await fetch(`${API_BASE}/api/stories/my-stories`, {
+      const res = await fetch(getApiUrl(`/api/stories/my-stories`), {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error('Failed to fetch stories.');
@@ -101,7 +101,7 @@ export default function ArtisanStoryManager() {
     if (!token || !storyId) return;
     try {
       setDeletingId(storyId);
-      const res = await fetch(`${API_BASE}/api/stories/${storyId}`, {
+      const res = await fetch(getApiUrl(`/api/stories/${storyId}`), {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });

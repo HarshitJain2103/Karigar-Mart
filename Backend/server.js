@@ -22,7 +22,27 @@ connectDB();
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:5173',
+  process.env.FRONTEND_URL || 'http://localhost:5173',
+];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
 
 app.use(
   session({
@@ -41,14 +61,14 @@ app.get("/", (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
-app.use("/api/categories" , categoryRoutes);
-app.use("/api/artisans" , artisanRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/artisans", artisanRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/stories', storyRoutes);
 
-cron.schedule('*/5 * * * *', () => {
+cron.schedule('30 2 * * *', () => {
   console.log('-------------------------------------');
   console.log('Running daily Cloudinary cleanup job...');
   runCloudinaryCleanup();

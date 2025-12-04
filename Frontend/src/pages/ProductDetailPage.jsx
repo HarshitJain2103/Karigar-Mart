@@ -21,6 +21,7 @@ import {
 import RelatedProducts from '@/components/ui/products/RelatedProducts';
 import useAuthStore from '@/stores/authStore';
 import useCartStore from '@/stores/cartStore';
+import { getApiUrl } from '@/lib/api';
 
 function StaticRating({ rating, reviews = 0 }) {
   const displayRating = rating !== undefined ? rating : 0;
@@ -212,7 +213,7 @@ export default function ProductDetailsPage() {
       try {
         setLoading(true);
         setError('');
-        const response = await fetch(`http://localhost:8000/api/products/${productId}`);
+        const response = await fetch(getApiUrl(`/api/products/${productId}`));
         if (!response.ok) throw new Error('Product not found.');
         const data = await response.json();
         setProduct(data);

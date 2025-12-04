@@ -6,6 +6,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 import ProductCard from '../components/ui/products/ProductCard';
 import { useVideoSSE } from '../hooks/useVideoSSE';
 import { Wifi, WifiOff } from 'lucide-react';
+import { getApiUrl } from '@/lib/api';
 
 export default function ShopPage() {
   const [productsData, setProductsData] = useState({ products: [], page: 1, pages: 1 });
@@ -15,7 +16,7 @@ export default function ShopPage() {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await fetch('http://localhost:8000/api/categories');
+      const response = await fetch(getApiUrl('/api/categories'));
       const data = await response.json();
       setCategories(data);
     };
@@ -27,7 +28,7 @@ export default function ShopPage() {
       setLoading(true);
       const params = new URLSearchParams(searchParams);
       try {
-        const response = await fetch(`http://localhost:8000/api/products?${params.toString()}`);
+        const response = await fetch(getApiUrl(`/api/products?${params.toString()}`));
         const data = await response.json();
         setProductsData(data);
       } catch (error) {

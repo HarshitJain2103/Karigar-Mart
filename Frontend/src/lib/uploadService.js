@@ -1,3 +1,5 @@
+import { getApiUrl } from '@/lib/api';
+ 
 export const uploadImage = async (file, token, uploadType = 'products') => {
   const formData = new FormData();
   
@@ -5,7 +7,7 @@ export const uploadImage = async (file, token, uploadType = 'products') => {
   formData.append('image', file);
 
   try {
-    const response = await fetch('http://localhost:8000/api/upload', {
+    const response = await fetch(getApiUrl('/api/upload'), {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,

@@ -18,6 +18,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import useAuthStore from '@/stores/authStore';
 import { useToast } from "@/hooks/use-toast";
+import { getApiUrl } from '@/lib/api';
 
 // Helper component for the Google G logo SVG
 function GoogleIcon(props) {
@@ -59,7 +60,7 @@ export default function AuthDialog({ setOpen }) {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:8000/api/users/login', {
+      const response = await fetch(getApiUrl('/api/users/login'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: loginEmail, password: loginPassword }),
@@ -84,7 +85,7 @@ export default function AuthDialog({ setOpen }) {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:8000/api/users/register', {
+      const response = await fetch(getApiUrl('/api/users/register'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -127,7 +128,7 @@ export default function AuthDialog({ setOpen }) {
           <Card>
             <CardHeader><CardTitle>Log In</CardTitle></CardHeader>
             <CardContent>
-              <a href="http://localhost:8000/api/auth/google">
+              <a href={getApiUrl('/api/auth/google')}>
                 <Button variant="outline" className="w-full">
                   <GoogleIcon className="mr-2 h-4 w-4" />
                   Sign in with Google
@@ -163,7 +164,7 @@ export default function AuthDialog({ setOpen }) {
           <Card>
             <CardHeader><CardTitle>Sign Up</CardTitle></CardHeader>
             <CardContent>
-              <a href="http://localhost:8000/api/auth/google">
+              <a href={getApiUrl('/api/auth/google')}>
                 <Button variant="outline" className="w-full">
                   <GoogleIcon className="mr-2 h-4 w-4" />
                   Sign up with Google

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useCallback } from 'react';
+import { getApiUrl } from '@/lib/api';
 
 /**
  * Real-time video status updates using Server-Sent Events (SSE)
@@ -36,7 +37,7 @@ export function useVideoSSE(products, onStatusUpdate) {
         console.log(`[SSE] 🔌 Connecting for ${generatingProducts.length} product(s)...`);
 
         
-        const url = `http://localhost:8000/api/products/video-status/stream?productIds=${generatingIds}`;
+        const url = getApiUrl(`/api/products/video-status/stream?productIds=${generatingIds}`);
         const eventSource = new EventSource(url);
 
         

@@ -6,6 +6,7 @@ import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { MapPin, Share2, Calendar } from 'lucide-react';
 import ProductCard from '../components/ui/products/ProductCard';
+import { getApiUrl } from '@/lib/api';
 
 export default function ArtisanStorePage() {
   const { artisanId } = useParams(); 
@@ -18,7 +19,7 @@ export default function ArtisanStorePage() {
     const fetchStoreData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:8000/api/artisans/${artisanId}/public`);
+        const response = await fetch(getApiUrl(`/api/artisans/${artisanId}/public`));
         if (!response.ok) throw new Error('Artisan store not found.');
         const data = await response.json();
         setStoreData(data);

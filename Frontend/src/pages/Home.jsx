@@ -6,6 +6,7 @@ import ProductGrid from "@/components/ui/sections/ProductGrid";
 import ArtisanSpotlight from "@/components/ui/sections/ArtisanSpotlight";
 import StoryHighlights from "@/components/ui/sections/StoryHighlights";
 import Newsletter from "@/components/ui/sections/Newsletter";
+import { getApiUrl } from '@/lib/api';
 
 const HERO_SLIDES = [
   {
@@ -37,9 +38,9 @@ export default function Home({ onAddToCart }) {
         setError("");
         
         const [categoriesRes, productsRes, artisansRes] = await Promise.all([
-          fetch('http://localhost:8000/api/categories'),
-          fetch('http://localhost:8000/api/products'),
-          fetch('http://localhost:8000/api/artisans')
+          fetch(getApiUrl('/api/categories')),
+          fetch(getApiUrl('/api/products')),
+          fetch(getApiUrl('/api/artisans'))
         ]);
 
         if (!categoriesRes.ok || !productsRes.ok || !artisansRes.ok) {

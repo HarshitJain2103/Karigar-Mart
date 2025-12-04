@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Loader2, AlertTriangle, PackageSearch, Search, Filter, ArrowUpDown, Copy, Check, Download, FileText } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import { getApiUrl } from '@/lib/api';
 
 const formatDate = (dateString) => {
   try {
@@ -50,7 +51,7 @@ export default function MyOrdersPage() {
       try {
         setLoading(true);
         setError('');
-        const response = await fetch('http://localhost:8000/api/orders/myorders', {
+        const response = await fetch(getApiUrl('/api/orders/myorders'), {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!response.ok) throw new Error('Failed to fetch orders.');

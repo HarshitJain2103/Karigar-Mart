@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { AlertTriangle, Loader2 } from 'lucide-react';
+import { getApiUrl } from "@/lib/api";
 
 export default function CheckoutPage() {
   const [searchParams] = useSearchParams();
@@ -50,7 +51,7 @@ export default function CheckoutPage() {
         return;
       }
       try {
-        const res = await fetch(`http://localhost:8000/api/products/${productId}`);
+        const res = await fetch(getApiUrl(`/api/products/${productId}`));
         if (!res.ok) throw new Error('Could not find the product.');
         const data = await res.json();
         setProduct(data);
@@ -94,7 +95,7 @@ export default function CheckoutPage() {
     setPaymentLoading(true);
 
     try {
-      const createOrderRes = await fetch('http://localhost:8000/api/orders/create-order', {
+      const createOrderRes = await fetch(getApiUrl('/api/orders/create-order'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -128,7 +129,7 @@ export default function CheckoutPage() {
             totalPrice: product.price * qty,
           };
 
-          const verifyRes = await fetch('http://localhost:8000/api/orders/verify-payment', {
+          const verifyRes = await fetch(getApiUrl('/api/orders/verify-payment'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, 
             body: JSON.stringify(dataToVerify),

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ArtisanCard from '../components/ui/sections/ArtisanCard'; 
+import { getApiUrl } from '@/lib/api';
 
 export default function AllArtisansPage() {
   const [artisans, setArtisans] = useState([]);
@@ -11,7 +12,7 @@ export default function AllArtisansPage() {
     const fetchArtisans = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:8000/api/artisans');
+        const response = await fetch(getApiUrl('/api/artisans'));
         if (!response.ok) throw new Error('Failed to fetch artisans.');
         const data = await response.json();
         setArtisans(data);

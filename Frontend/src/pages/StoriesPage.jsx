@@ -16,6 +16,8 @@ import {
   Globe,
   XCircle
 } from 'lucide-react';
+import { getApiUrl } from '@/lib/api';
+
 export default function StoriesPage() {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -39,7 +41,7 @@ export default function StoriesPage() {
       try {
         setLoading(true);
         setError('');
-        const res = await fetch('http://localhost:8000/api/stories');
+        const res = await fetch(getApiUrl('/api/stories'));
         if (!res.ok) throw new Error('Failed to fetch stories.');
         const data = await res.json();
         setStories(Array.isArray(data) ? data : []);

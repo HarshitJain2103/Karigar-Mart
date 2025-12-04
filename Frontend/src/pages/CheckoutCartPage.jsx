@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Loader2 } from 'lucide-react';
 import useCartStore from '@/stores/cartStore';
+import { getApiUrl } from '@/lib/api';
 
 export default function CheckoutCartPage() {
     const navigate = useNavigate();
@@ -53,7 +54,7 @@ export default function CheckoutCartPage() {
         setPaymentLoading(true);
 
         try {
-            const createOrderRes = await fetch('http://localhost:8000/api/orders/create-cart-order', {
+            const createOrderRes = await fetch(getApiUrl('/api/orders/create-cart-order'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -87,7 +88,7 @@ export default function CheckoutCartPage() {
                     totalPrice: subtotal(),
                 };
 
-            const verifyRes = await fetch('http://localhost:8000/api/orders/verify-payment', {
+            const verifyRes = await fetch(getApiUrl('/api/orders/verify-payment'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, 
                 body: JSON.stringify(dataToVerify),

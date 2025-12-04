@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { getApiUrl } from '@/lib/api';
 
 const STORAGE_KEY = "karigar.store.v1";
 const defaultDraft = {
@@ -152,7 +153,7 @@ export default function BuildYourStoreFull() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/categories');
+        const response = await fetch(getApiUrl('/api/categories'));
         if (!response.ok) throw new Error('Failed to fetch categories');
         const data = await response.json();
         setCategories(data);
@@ -233,7 +234,7 @@ export default function BuildYourStoreFull() {
         },
       };
 
-      const profileResponse = await fetch('http://localhost:8000/api/artisans', {
+      const profileResponse = await fetch(getApiUrl('/api/artisans'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(profileData),
@@ -257,7 +258,7 @@ export default function BuildYourStoreFull() {
           imageURLs: product.imageURLs,
         };
 
-        const productResponse = await fetch('http://localhost:8000/api/products', {
+        const productResponse = await fetch(getApiUrl('/api/products'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
           body: JSON.stringify(productData),

@@ -7,6 +7,7 @@ import Rating from '../ui-elements/Rating';
 import useAuthStore from '@/stores/authStore';
 import useCartStore from '@/stores/cartStore';
 import { useToast } from "@/hooks/use-toast";
+import { getApiUrl } from '@/lib/api';
 
 export default function ProductCard({ product }) {
   const { toast } = useToast();
@@ -67,7 +68,7 @@ export default function ProductCard({ product }) {
 
     setRegenerating(true);
     try {
-      const response = await fetch(`http://localhost:8000/api/products/${product._id}/regenerate-video`, {
+      const response = await fetch(getApiUrl(`/api/products/${product._id}/regenerate-video`), {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`

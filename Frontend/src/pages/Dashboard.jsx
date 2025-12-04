@@ -8,6 +8,7 @@ import ProductDialog from '../components/ui/products/ProductDialog';
 import { DollarSign, Package, ShoppingCart, BookOpen, Video, Loader, Wifi, WifiOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useVideoSSE } from '../hooks/useVideoSSE';
+import { getApiUrl } from "@/lib/api";
 
 export default function Dashboard() {
   const [dashboardData, setDashboardData] = useState(null);
@@ -23,7 +24,7 @@ export default function Dashboard() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8000/api/artisans/dashboard', {
+      const response = await fetch(getApiUrl('/api/artisans/dashboard'), {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       if (!response.ok) throw new Error('Failed to fetch dashboard data.');
@@ -87,7 +88,7 @@ export default function Dashboard() {
 
   const handleSaveProduct = async (productData) => {
     const isEditing = !!productData._id;
-    const url = isEditing ? `http://localhost:8000/api/products/${productData._id}` : 'http://localhost:8000/api/products';
+    const url = isEditing ? getApiUrl(`/api/products/${productData._id}`) : getApiUrl('/api/products');
     const method = isEditing ? 'PUT' : 'POST';
 
     try {
@@ -112,7 +113,7 @@ export default function Dashboard() {
   const handleDeleteProduct = async () => {
     if (!productToDelete) return;
     try {
-      const response = await fetch(`http://localhost:8000/api/products/${productToDelete._id}`, {
+      const response = await fetch(getApiUrl(`/api/products/${productToDelete._id}`), {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });
@@ -131,7 +132,7 @@ export default function Dashboard() {
     }
 
     try {
-      const response = await fetch(`http://localhost:8000/api/products/${productId}/regenerate-video`, {
+      const response = await fetch(getApiUrl(`/api/products/${productId}/regenerate-video`), {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });

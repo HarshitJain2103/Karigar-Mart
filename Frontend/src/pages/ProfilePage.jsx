@@ -11,6 +11,7 @@ import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, A
 import useAuthStore from "@/stores/authStore";
 import { useToast } from "@/hooks/use-toast";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { getApiUrl } from '@/lib/api';
 
 export default function ProfilePage() {
     const navigate = useNavigate();
@@ -74,7 +75,7 @@ export default function ProfilePage() {
         if (!token) return;
         try {
             setOrdersLoading(true);
-            const response = await fetch("http://localhost:8000/api/orders/myorders", {
+            const response = await fetch(getApiUrl("/api/orders/myorders"), {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -93,7 +94,7 @@ export default function ProfilePage() {
         if (!token) return;
         try {
             setWishlistLoading(true);
-            const response = await fetch("http://localhost:8000/api/users/profile/wishlist", {
+            const response = await fetch(getApiUrl("/api/users/profile/wishlist"), {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -155,7 +156,7 @@ export default function ProfilePage() {
         try {
             setSaving(true);
             setError("");
-            const response = await fetch("http://localhost:8000/api/users/profile", {
+            const response = await fetch(getApiUrl("/api/users/profile"), {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -199,7 +200,7 @@ export default function ProfilePage() {
             const formData = new FormData();
             formData.append("avatar", file);
 
-            const response = await fetch("http://localhost:8000/api/users/profile/avatar", {
+            const response = await fetch(getApiUrl("/api/users/profile/avatar"), {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -842,7 +843,7 @@ function SecuritySection({ user, token }) {
         setPasswordError("");
 
         try {
-            const response = await fetch("http://localhost:8000/api/users/profile/password", {
+            const response = await fetch(getApiUrl("/api/users/profile/password"), {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -1129,7 +1130,7 @@ function SecuritySection({ user, token }) {
                                         setDeleteError("");
 
                                         try {
-                                            const response = await fetch("http://localhost:8000/api/users/profile/delete", {
+                                            const response = await fetch(getApiUrl("/api/users/profile/delete"), {
                                                 method: "DELETE",
                                                 headers: {
                                                     "Content-Type": "application/json",

@@ -3,6 +3,7 @@ import passport from 'passport';
 import jwt from 'jsonwebtoken';
 
 const router = express.Router();
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
@@ -10,7 +11,7 @@ router.get(
   '/google/callback',
   passport.authenticate('google', { 
     session: false, 
-    failureRedirect: 'http://localhost:5173/login-failed' 
+    failureRedirect: `${FRONTEND_URL}/login-failed` 
   }),
   (req, res) => {
     const user = req.user;
@@ -26,7 +27,7 @@ router.get(
         email: user.email,
         role: user.role,
     };
-    res.redirect(`http://localhost:5173/auth/callback?token=${token}&user=${encodeURIComponent(JSON.stringify(userDto))}`);
+    res.redirect(`${FRONTEND_URL}/auth/callback?token=${token}&user=${encodeURIComponent(JSON.stringify(userDto))}`);
   }
 );
 

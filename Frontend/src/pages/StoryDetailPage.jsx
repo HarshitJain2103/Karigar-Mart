@@ -13,6 +13,7 @@ import {
   ArrowLeft,
   BookOpen,
 } from 'lucide-react';
+import { getApiUrl } from '@/lib/api';
 
 const formatDate = (dateString) =>
   new Date(dateString).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -33,7 +34,7 @@ export default function StoryDetailPage() {
       try {
         setLoading(true);
         setError('');
-        const res = await fetch(`http://localhost:8000/api/stories/${storyId}`);
+        const res = await fetch(getApiUrl(`/api/stories/${storyId}`));
         if (!res.ok) throw new Error('Story not found.');
         const data = await res.json();
         setStory(data);

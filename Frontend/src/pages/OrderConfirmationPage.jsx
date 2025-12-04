@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Loader2, AlertTriangle, CheckCircle } from 'lucide-react';
+import { getApiUrl } from '@/lib/api';
 
 export default function OrderConfirmationPage() {
   const { orderId } = useParams();
@@ -19,7 +20,7 @@ export default function OrderConfirmationPage() {
     window.scrollTo(0, 0);
     const fetchOrder = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/api/orders/${orderId}`, {
+        const res = await fetch(getApiUrl(`/api/orders/${orderId}`), {
           headers: {
             Authorization: `Bearer ${token}`,
           },
