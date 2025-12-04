@@ -5,7 +5,7 @@ import CategoryList from "@/components/ui/sections/CategoryList";
 import ProductGrid from "@/components/ui/sections/ProductGrid";
 import ArtisanSpotlight from "@/components/ui/sections/ArtisanSpotlight";
 import StoryHighlights from "@/components/ui/sections/StoryHighlights";
-import Newsletter from "@/components/ui/sections/Newsletter";
+import Newsletter from "@/components/ui/sections/NewsLetter";
 import { getApiUrl } from '@/lib/api';
 
 const HERO_SLIDES = [
