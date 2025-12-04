@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { getApiUrl } from '@/lib/api';
 
 const useAuthStore = create((set, get) => ({
   token: localStorage.getItem('token') || null,
@@ -23,7 +24,7 @@ const useAuthStore = create((set, get) => ({
     }
 
     try {
-      const response = await fetch('http://localhost:8000/api/users/profile', {
+      const response = await fetch(getApiUrl('/api/users/profile'), {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -49,7 +50,7 @@ const useAuthStore = create((set, get) => ({
     const currentWishlist = get().wishlist;
     const isWishlisted = currentWishlist.some(item => item._id === productId);
 
-    const endpoint = `http://localhost:8000/api/users/profile/wishlist`;
+    const endpoint = getApiUrl(`/api/users/profile/wishlist`);
     const method = isWishlisted ? 'DELETE' : 'POST';
     
     try {

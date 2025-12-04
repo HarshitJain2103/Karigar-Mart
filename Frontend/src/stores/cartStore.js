@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import useAuthStore from './authStore';
+import { getApiUrl } from '@/lib/api';
 
 const useCartStore = create((set, get) => ({
   items: [], 
@@ -13,7 +14,7 @@ const useCartStore = create((set, get) => ({
     if (!token) return;
 
     try {
-      const response = await fetch('http://localhost:8000/api/users/profile/cart', {
+      const response = await fetch(getApiUrl('/api/users/profile/cart'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,7 +35,7 @@ const useCartStore = create((set, get) => ({
     if (!token) return;
 
     try {
-      const response = await fetch(`http://localhost:8000/api/users/profile/cart/${productId}`, {
+      const response = await fetch(getApiUrl(`/api/users/profile/cart/${productId}`), {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -51,7 +52,7 @@ const useCartStore = create((set, get) => ({
     const token = useAuthStore.getState().token;
     if (!token || quantity < 1) return; 
     try {
-      const response = await fetch('http://localhost:8000/api/users/profile/cart', {
+      const response = await fetch(getApiUrl('/api/users/profile/cart'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -71,7 +72,7 @@ const useCartStore = create((set, get) => ({
     if (!token) return;
 
     try {
-      const response = await fetch('http://localhost:8000/api/users/profile/cart', {
+      const response = await fetch(getApiUrl('/api/users/profile/cart'), {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,

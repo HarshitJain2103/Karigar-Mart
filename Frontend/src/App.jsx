@@ -27,6 +27,7 @@ import ArtisanStoryManager from './pages/ArtisanStoryManager';
 import StoryEditor from './pages/StoryEditor';
 import CheckoutCartPage from './pages/CheckoutCartPage';
 import ProfilePage from "./pages/ProfilePage";
+import { getApiUrl } from "@/lib/api";
 
 export default function App() {
   const { query, setQuery, lang, setLang, startVoiceSearch, isListening } = useVoiceSearch();
@@ -40,8 +41,8 @@ export default function App() {
     const fetchInitialData = async () => {
       await fetchUserProfile();
       const headers = { Authorization: `Bearer ${token}` };
-      const wishlistPromise = fetch('http://localhost:8000/api/users/profile/wishlist', { headers }).then(res => res.json());
-      const cartPromise = fetch('http://localhost:8000/api/users/profile/cart', { headers }).then(res => res.json());
+      const wishlistPromise = fetch(getApiUrl('/api/users/profile/wishlist'), { headers }).then(res => res.json());
+      const cartPromise = fetch(getApiUrl('/api/users/profile/cart'), { headers }).then(res => res.json());
       
       const [wishlistData, cartData] = await Promise.all([wishlistPromise, cartPromise]);
       
