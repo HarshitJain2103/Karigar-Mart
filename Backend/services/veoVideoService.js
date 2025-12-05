@@ -4,6 +4,7 @@ import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from 'url';
+import { Readable } from 'stream';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -260,6 +261,10 @@ Return ONLY the final script text, no quotes, no extra formatting.
         }
     }
 
+    /**
+     * Call ElevenLabs TTS and return a Buffer containing the audio (MP3)
+     * NOTE: does NOT write to disk. Caller should pass the Buffer to the uploader.
+     */
     async generateAudioWithElevenLabs(scriptText, productId, timestamp) {
         if (!this.ELEVENLABS_API_KEY) {
             console.warn("[ELEVENLABS] API key not configured, skipping audio generation");
@@ -301,23 +306,16 @@ Return ONLY the final script text, no quotes, no extra formatting.
             }
 
             const contentType = response.headers.get('content-type');
-            if (contentType !== 'audio/mpeg') {
+            if (!contentType || !contentType.includes('audio')) {
                 const errorMsg = await response.text();
                 throw new Error(`ElevenLabs returned non-audio response: ${errorMsg}`);
             }
 
-            const audioBuffer = await response.arrayBuffer();
-            const tempDir = path.join(__dirname, '../temp');
+            const arrayBuffer = await response.arrayBuffer();
+            const audioBuffer = Buffer.from(arrayBuffer);
 
-            if (!fs.existsSync(tempDir)) {
-                fs.mkdirSync(tempDir, { recursive: true });
-            }
-
-            const audioPath = path.join(tempDir, `audio-${productId}-${timestamp}.mp3`);
-            fs.writeFileSync(audioPath, Buffer.from(audioBuffer));
-
-            console.log(`[ELEVENLABS] ✅ Audio generated: ${audioPath}`);
-            return audioPath;
+            console.log(`[ELEVENLABS] ✅ Generated audio buffer (${audioBuffer.length} bytes)`);
+            return audioBuffer;
 
         } catch (error) {
             console.error("[ELEVENLABS] Audio generation failed:", error.message);
@@ -325,24 +323,60 @@ Return ONLY the final script text, no quotes, no extra formatting.
         }
     }
 
-    async uploadAudioToCloudinary(audioPath, productTitle, productId, artisanId, timestamp) {
+    /**
+     * Upload audio to Cloudinary.
+     * - If `audio` is a Buffer, upload via upload_stream (no filesystem)
+     * - If `audio` is a file path, fallback to uploader.upload
+     */
+    async uploadAudioToCloudinary(audio, productTitle, productId, artisanId, timestamp) {
         try {
             const folder = `karigar-mart/artisans/${artisanId}/product-audio`;
             const sanitizedTitle = this.sanitizeForPublicId(productTitle);
             const publicId = `${sanitizedTitle}-${productId}-${timestamp}`;
 
-            const result = await cloudinary.uploader.upload(audioPath, {
-                resource_type: "video",
-                folder: folder,
-                public_id: publicId,
-                overwrite: false
-            });
+            // If caller passed a Buffer -> use upload_stream
+            if (Buffer.isBuffer(audio)) {
+                const options = {
+                    resource_type: "video",
+                    folder: folder,
+                    public_id: publicId,
+                    overwrite: false
+                };
 
-            if (fs.existsSync(audioPath)) {
-                fs.unlinkSync(audioPath);
+                const uploadFromBuffer = (buffer, opts) => {
+                    return new Promise((resolve, reject) => {
+                        const uploadStream = cloudinary.uploader.upload_stream(opts, (error, result) => {
+                            if (error) return reject(error);
+                            resolve(result);
+                        });
+                        const readable = Readable.from(buffer);
+                        readable.pipe(uploadStream);
+                    });
+                };
+
+                const result = await uploadFromBuffer(audio, options);
+                console.log(`[CLOUDINARY] ✅ Audio uploaded (buffer): ${result.secure_url}`);
+                return result.secure_url;
             }
 
-            return result.secure_url;
+            // Else assume file path (legacy flow)
+            if (typeof audio === 'string' && fs.existsSync(audio)) {
+                const result = await cloudinary.uploader.upload(audio, {
+                    resource_type: "video",
+                    folder: folder,
+                    public_id: publicId,
+                    overwrite: false
+                });
+
+                // Clean up local file if present
+                try { fs.unlinkSync(audio); } catch { /* ignore */ }
+
+                console.log(`[CLOUDINARY] ✅ Audio uploaded (path): ${result.secure_url}`);
+                return result.secure_url;
+            }
+
+            throw new Error("Invalid audio input for Cloudinary upload (expected Buffer or valid file path).");
+
         } catch (error) {
             console.error("[CLOUDINARY] Audio upload failed:", error.message);
             throw new Error(`Audio upload failed: ${error.message}`);
@@ -389,7 +423,7 @@ Return ONLY the final script text, no quotes, no extra formatting.
 
     async generateMarketingVideo(product, imageUrl, artisanId, options = {}) {
         let gcsUri = null;
-        let tempAudioPath = null;
+        let tempAudioBuffer = null;
 
         try {
             console.log(`[VEO] Starting video generation for: ${product._id || product.title}`);
@@ -404,7 +438,7 @@ Return ONLY the final script text, no quotes, no extra formatting.
             const timestamp = Date.now();
             const GCS_OUTPUT_URI = `gs://${this.GCS_BUCKET_NAME}/localartist-temp/${timestamp}/`;
 
-            // STEP 1: Generate audio
+            // STEP 1: Generate audio (in-memory)
             let audioUrl = null;
             let audioScript = null;
 
@@ -413,25 +447,23 @@ Return ONLY the final script text, no quotes, no extra formatting.
                 audioScript = await this.generateAudioScript(product, imageUrl);
                 console.log(`[AUDIO] Script: "${audioScript}"`);
 
-                tempAudioPath = await this.generateAudioWithElevenLabs(
+                tempAudioBuffer = await this.generateAudioWithElevenLabs(
                     audioScript,
                     product._id,
                     timestamp
                 );
 
-                if (tempAudioPath) {
+                if (tempAudioBuffer) {
                     audioUrl = await this.uploadAudioToCloudinary(
-                        tempAudioPath,
+                        tempAudioBuffer,
                         product.title,
                         product._id,
                         artisanId,
                         timestamp
                     );
                     console.log(`[AUDIO] ✅ Uploaded to Cloudinary: ${audioUrl}`);
-
-                    if (fs.existsSync(tempAudioPath)) {
-                        fs.unlinkSync(tempAudioPath);
-                    }
+                } else {
+                    console.warn("[AUDIO] ElevenLabs returned no audio buffer; skipping audio upload");
                 }
             }
 
@@ -540,7 +572,6 @@ Return ONLY the final script text, no quotes, no extra formatting.
                 }
             }
 
-
             // STEP 6: Clean up GCS
             try {
                 await this.deleteFromGCS(gcsUri, token);
@@ -570,13 +601,9 @@ Return ONLY the final script text, no quotes, no extra formatting.
                 } catch { }
             }
 
-            if (tempAudioPath && fs.existsSync(tempAudioPath)) {
-                fs.unlinkSync(tempAudioPath);
-            }
-
             return {
                 success: false,
-                error: error.message
+                error: error.message || String(error)
             };
         }
     }
