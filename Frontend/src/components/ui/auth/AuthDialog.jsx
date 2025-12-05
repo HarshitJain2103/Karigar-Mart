@@ -20,6 +20,9 @@ import useAuthStore from '@/stores/authStore';
 import { useToast } from "@/hooks/use-toast";
 import { getApiUrl } from '@/lib/api';
 
+const DEMO_EMAIL = "adivenki@gmail.com";
+const DEMO_PASSWORD = "ThirdPass";
+
 // Helper component for the Google G logo SVG
 function GoogleIcon(props) {
   return (
@@ -55,6 +58,31 @@ export default function AuthDialog({ setOpen }) {
   const [signupEmail, setSignupEmail] = useState('');
   const [signupPassword, setSignupPassword] = useState('');
 
+  const handleDemoLogin = async () => {
+    setLoginEmail(DEMO_EMAIL);
+    setLoginPassword(DEMO_PASSWORD);
+
+    try {
+      const response = await fetch(getApiUrl('/api/users/login'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: DEMO_EMAIL, password: DEMO_PASSWORD }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || 'Login failed');
+
+      login(data);
+      toast({
+        title: "Demo Login Successful!",
+        description: `Logged in as demo artisan.`,
+      });
+      setOpen(false);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
@@ -69,12 +97,12 @@ export default function AuthDialog({ setOpen }) {
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || 'Login failed');
 
-      login(data); 
-      toast({ 
+      login(data);
+      toast({
         title: "Login Successful!",
         description: `Welcome back, ${data.user.firstName}.`,
       });
-      setOpen(false); 
+      setOpen(false);
     } catch (err) {
       setError(err.message);
     }
@@ -99,12 +127,12 @@ export default function AuthDialog({ setOpen }) {
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || 'Signup failed');
 
-      login(data); 
-      toast({ 
+      login(data);
+      toast({
         title: "Account Created!",
         description: `Welcome to Karigar Mart, ${data.user.firstName}.`,
       });
-      setOpen(false); 
+      setOpen(false);
     } catch (err) {
       setError(err.message);
     }
@@ -123,7 +151,7 @@ export default function AuthDialog({ setOpen }) {
           <TabsTrigger value="login">Log In</TabsTrigger>
           <TabsTrigger value="signup">Sign Up</TabsTrigger>
         </TabsList>
-        
+
         <TabsContent value="login">
           <Card>
             <CardHeader><CardTitle>Log In</CardTitle></CardHeader>
@@ -139,6 +167,19 @@ export default function AuthDialog({ setOpen }) {
                 <div className="relative flex justify-center text-xs uppercase">
                   <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
                 </div>
+              </div>
+              <div className="mb-4">
+                <Button
+                  variant="secondary"
+                  className="w-full text-sm"
+                  onClick={handleDemoLogin}
+                >
+                  Login as Demo Artisan
+                </Button>
+
+                <p className="text-xs text-center mt-1 text-muted-foreground">
+                  Email: adivenki@gmail.com • Password: ThirdPass
+                </p>
               </div>
               <form onSubmit={handleLogin}>
                 <div className="grid gap-4 py-4">
@@ -200,7 +241,7 @@ export default function AuthDialog({ setOpen }) {
                 <DialogFooter>
                   <Button type="submit" className="w-full">Create Account</Button>
                 </DialogFooter>
-                  {error && <p className="mt-4 text-center text-sm text-red-500">{error}</p>}
+                {error && <p className="mt-4 text-center text-sm text-red-500">{error}</p>}
               </form>
             </CardContent>
           </Card>
