@@ -17,6 +17,7 @@ import {
   XCircle
 } from 'lucide-react';
 import { getApiUrl } from '@/lib/api';
+import Spinner from '@/components/ui/Spinner';
 
 export default function StoriesPage() {
   const [stories, setStories] = useState([]);
@@ -197,23 +198,8 @@ export default function StoriesPage() {
 
   if (loading) {
     return (
-      <div className="container mx-auto py-12 px-4">
-        <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold tracking-tight">Stories & Culture</h1>
-          <p className="text-lg text-muted-foreground mt-2">Discover the narratives behind the crafts.</p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {[...Array(9)].map((_, i) => (
-            <div key={i} className="rounded-lg border overflow-hidden">
-              <div className="h-40 bg-gray-200 animate-pulse" />
-              <div className="p-4 space-y-3">
-                <div className="h-5 w-2/3 bg-gray-200 rounded animate-pulse" />
-                <div className="h-4 w-1/2 bg-gray-200 rounded animate-pulse" />
-                <div className="h-4 w-full bg-gray-200 rounded animate-pulse" />
-              </div>
-            </div>
-          ))}
-        </div>
+      <div className="flex justify-center items-center min-h-screen">
+        <Spinner size="lg" />
       </div>
     );
   }
@@ -296,9 +282,8 @@ export default function StoriesPage() {
               return (
                 <button
                   key={t}
-                  className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs transition ${
-                    active ? 'bg-primary text-white border-primary' : 'bg-background hover:bg-muted'
-                  }`}
+                  className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs transition ${active ? 'bg-primary text-white border-primary' : 'bg-background hover:bg-muted'
+                    }`}
                   onClick={() => toggleTag(t)}
                 >
                   <span>{t}</span>
@@ -322,55 +307,55 @@ export default function StoriesPage() {
       {/* Hero */}
       {processed.length > 0 ? (
         <>
-            {heroStory && (
-                <div className="mb-10 rounded-2xl overflow-hidden relative border">
-                    <Link to={`/stories/${heroStory._id}`} className="block mb-10 rounded-2xl overflow-hidden relative border group">
-                    <div className="relative h-[320px] sm:h-[420px]">
-                        {heroStory?.coverImageURL || heroStory?.image ? (
-                        <img
-                            src={heroStory.coverImageURL}
-                            alt={heroStory.title}
-                            className="absolute inset-0 h-full w-full object-cover"
-                        />
-                        ) : (
-                        <div className="absolute inset-0 h-full w-full bg-gradient-to-br from-gray-100 to-gray-200" />
-                        )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-                        <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 text-white">
-                            <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs backdrop-blur">
-                                <Globe className="h-3.5 w-3.5" />
-                                {heroStory?.region || heroStory?.category?.name || 'Story'}
-                            </div>
-                            <h2 className="mt-3 text-2xl sm:text-3xl font-bold leading-snug line-clamp-2">{heroStory?.title}</h2>
-                            <p className="mt-2 text-sm text-white/90 line-clamp-2">
-                                {heroStory?.excerpt || heroStory?.summary || 'Explore the story behind the craft.'}
-                            </p>
-                            <div className="mt-4">
-                                <Button size="sm" variant="secondary">Read Story</Button>
-                            </div>
-                        </div>
+          {heroStory && (
+            <div className="mb-10 rounded-2xl overflow-hidden relative border">
+              <Link to={`/stories/${heroStory._id}`} className="block mb-10 rounded-2xl overflow-hidden relative border group">
+                <div className="relative h-[320px] sm:h-[420px]">
+                  {heroStory?.coverImageURL || heroStory?.image ? (
+                    <img
+                      src={heroStory.coverImageURL}
+                      alt={heroStory.title}
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 h-full w-full bg-gradient-to-br from-gray-100 to-gray-200" />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 text-white">
+                    <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs backdrop-blur">
+                      <Globe className="h-3.5 w-3.5" />
+                      {heroStory?.region || heroStory?.category?.name || 'Story'}
                     </div>
-                    </Link>
+                    <h2 className="mt-3 text-2xl sm:text-3xl font-bold leading-snug line-clamp-2">{heroStory?.title}</h2>
+                    <p className="mt-2 text-sm text-white/90 line-clamp-2">
+                      {heroStory?.excerpt || heroStory?.summary || 'Explore the story behind the craft.'}
+                    </p>
+                    <div className="mt-4">
+                      <Button size="sm" variant="secondary">Read Story</Button>
+                    </div>
+                  </div>
                 </div>
-            )}
-            {/* Masonry grid (CSS columns) */}
-            <div className="mb-4">
-                <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
-                    {gridStories.map((story) => (
-                        <div key={story._id} className="mb-6 break-inside-avoid">
-                            <StoryCard story={story} />
-                        </div>
-                    ))}
-                </div>
+              </Link>
             </div>
+          )}
+          {/* Masonry grid (CSS columns) */}
+          <div className="mb-4">
+            <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
+              {gridStories.map((story) => (
+                <div key={story._id} className="mb-6 break-inside-avoid">
+                  <StoryCard story={story} />
+                </div>
+              ))}
+            </div>
+          </div>
         </>
       ) : (
         <div className="text-center py-16">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
             <Globe className="h-8 w-8 text-primary" />
-            </div>
-            <h1 className="text-3xl font-bold tracking-tight">No Stories Found</h1>
-            <p className="text-muted-foreground mt-2">Try clearing your filters or refining your search.</p>
+          </div>
+          <h1 className="text-3xl font-bold tracking-tight">No Stories Found</h1>
+          <p className="text-muted-foreground mt-2">Try clearing your filters or refining your search.</p>
         </div>
       )}
 

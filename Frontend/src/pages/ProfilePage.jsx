@@ -12,6 +12,7 @@ import useAuthStore from "@/stores/authStore";
 import { useToast } from "@/hooks/use-toast";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { getApiUrl } from '@/lib/api';
+import Spinner from '@/components/ui/Spinner';
 
 export default function ProfilePage() {
     const navigate = useNavigate();
@@ -241,11 +242,7 @@ export default function ProfilePage() {
     };
 
     if (loading) {
-        return (
-            <div className="flex justify-center items-center h-screen">
-                <Loader2 className="h-8 w-8 animate-spin" />
-            </div>
-        );
+        return <div className="flex justify-center items-center h-screen"><Spinner size="lg" /></div>;
     }
 
     if (!user) {

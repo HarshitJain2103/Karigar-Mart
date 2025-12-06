@@ -8,6 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Loader2, AlertTriangle, PackageSearch, Search, Filter, ArrowUpDown, Copy, Check, Download, FileText } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { getApiUrl } from '@/lib/api';
+import Spinner from '@/components/ui/Spinner';
 
 const formatDate = (dateString) => {
   try {
@@ -169,11 +170,7 @@ export default function MyOrdersPage() {
   }
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center h-[60vh]">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    );
+    return <div className="flex justify-center items-center h-screen"><Spinner size="lg" /></div>;
   }
 
   if (error) {

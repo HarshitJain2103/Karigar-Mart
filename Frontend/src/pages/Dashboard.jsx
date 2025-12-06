@@ -9,6 +9,7 @@ import { DollarSign, Package, ShoppingCart, BookOpen, Video, Loader, Wifi, WifiO
 import { useNavigate } from 'react-router-dom';
 import { useVideoSSE } from '../hooks/useVideoSSE';
 import { getApiUrl } from "@/lib/api";
+import Spinner from '@/components/ui/Spinner';
 
 export default function Dashboard() {
   const [dashboardData, setDashboardData] = useState(null);
@@ -156,7 +157,7 @@ export default function Dashboard() {
     }
   };
 
-  if (loading) return <div>Loading dashboard...</div>;
+  if (loading) return <div className="flex justify-center items-center h-screen"><Spinner size="lg"/></div>;
   if (error) return <div>Error: {error}</div>;
   if (!dashboardData) return <div>No data found.</div>;
 

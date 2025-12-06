@@ -7,6 +7,7 @@ import ProductCard from '../components/ui/products/ProductCard';
 import { useVideoSSE } from '../hooks/useVideoSSE';
 import { Wifi, WifiOff } from 'lucide-react';
 import { getApiUrl } from '@/lib/api';
+import Spinner from '@/components/ui/Spinner';
 
 export default function ShopPage() {
   const [productsData, setProductsData] = useState({ products: [], page: 1, pages: 1 });
@@ -127,7 +128,7 @@ export default function ShopPage() {
         </div>
 
         {loading ? (
-          <div className="text-center py-20">Loading Products...</div>
+          <div className="flex justify-center items-top h-screen"><Spinner size="lg"/></div>
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">

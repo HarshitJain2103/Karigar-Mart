@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import ArtisanCard from '../components/ui/sections/ArtisanCard'; 
+import ArtisanCard from '../components/ui/sections/ArtisanCard';
 import { getApiUrl } from '@/lib/api';
+import Spinner from '@/components/ui/Spinner';
 
 export default function AllArtisansPage() {
   const [artisans, setArtisans] = useState([]);
@@ -25,7 +26,7 @@ export default function AllArtisansPage() {
     fetchArtisans();
   }, []);
 
-  if (loading) return <div className="text-center py-20">Loading Artisans...</div>;
+  if (loading) return <div className="flex justify-center items-center h-screen"><Spinner size="lg" /></div>;
   if (error) return <div className="text-center py-20 text-red-500">Error: {error}</div>;
 
   return (

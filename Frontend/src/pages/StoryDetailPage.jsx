@@ -14,6 +14,7 @@ import {
   BookOpen,
 } from 'lucide-react';
 import { getApiUrl } from '@/lib/api';
+import Spinner from '@/components/ui/Spinner';
 
 const formatDate = (dateString) =>
   new Date(dateString).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -99,21 +100,8 @@ export default function StoryDetailPage() {
 
   if (loading) {
     return (
-      <div className="container mx-auto py-12 px-4">
-        <div className="mb-6">
-          <div className="h-6 w-28 bg-gray-200 rounded animate-pulse" />
-        </div>
-        <div className="relative h-[240px] sm:h-[360px] rounded-xl overflow-hidden border">
-          <div className="absolute inset-0 bg-gray-200 animate-pulse" />
-        </div>
-        <div className="max-w-4xl mx-auto mt-8 space-y-3">
-          <div className="h-8 w-2/3 bg-gray-200 rounded animate-pulse" />
-          <div className="h-4 w-1/3 bg-gray-200 rounded animate-pulse" />
-          <Separator className="my-6" />
-          {[...Array(8)].map((_, i) => (
-            <div key={i} className="h-4 w-full bg-gray-200 rounded animate-pulse" />
-          ))}
-        </div>
+      <div className="flex justify-center items-center min-h-screen">
+        <Spinner size="lg" />
       </div>
     );
   }

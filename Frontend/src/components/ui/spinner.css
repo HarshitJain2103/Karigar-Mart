@@ -1,0 +1,42 @@
+@keyframes fadeWhole {
+  0% { opacity: 0.4; transform: scale(0.95); }
+  50% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0.4; transform: scale(0.95); }
+}
+
+@keyframes ringPulseModern {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(0.95); }
+}
+
+.spinner-wrapper {
+  animation: fadeWhole 1.8s ease-in-out infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 120px;
+  position: relative;
+}
+
+.spinner-ring {
+  position: absolute;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  animation: ringPulseModern 1.8s ease-in-out infinite;
+  box-shadow:
+    0 4px 20px rgba(0, 180, 200, 0.85),
+    inset 0 0 8px rgba(255,255,255,0.6);
+}
+
+.spinner-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  z-index: 2;
+}

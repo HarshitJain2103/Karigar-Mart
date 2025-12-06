@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { MapPin, Share2, Calendar } from 'lucide-react';
 import ProductCard from '../components/ui/products/ProductCard';
 import { getApiUrl } from '@/lib/api';
+import Spinner from '@/components/ui/Spinner';
 
 export default function ArtisanStorePage() {
   const { artisanId } = useParams(); 
@@ -34,7 +35,7 @@ export default function ArtisanStorePage() {
     }
   }, [artisanId]);
 
-  if (loading) return <div className="text-center py-20">Loading Artisan's Store...</div>;
+  if (loading) return <div className="flex justify-center items-center h-screen"><Spinner size="lg"/></div>;
   if (error) return <div className="text-center py-20 text-red-500">Error: {error}</div>;
   if (!storeData) return <div className="text-center py-20">Store not found.</div>;
 

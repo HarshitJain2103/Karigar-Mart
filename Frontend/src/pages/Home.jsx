@@ -7,6 +7,7 @@ import ArtisanSpotlight from "@/components/ui/sections/ArtisanSpotlight";
 import StoryHighlights from "@/components/ui/sections/StoryHighlights";
 import Newsletter from "@/components/ui/sections/NewsLetter";
 import { getApiUrl } from '@/lib/api';
+import Spinner from '@/components/ui/Spinner';
 
 const HERO_SLIDES = [
   {
@@ -36,7 +37,7 @@ export default function Home({ onAddToCart }) {
       try {
         setLoading(true);
         setError("");
-        
+
         const [categoriesRes, productsRes, artisansRes] = await Promise.all([
           fetch(getApiUrl('/api/categories')),
           fetch(getApiUrl('/api/products')),
@@ -70,21 +71,21 @@ export default function Home({ onAddToCart }) {
 
     return artisans.slice(0, 3).map(artisanProfile => ({
 
-      _id: artisanProfile._id, 
+      _id: artisanProfile._id,
       title: `About ${artisanProfile.storeName}`,
       imageURL: artisanProfile.media.heroImageURL,
       excerpt: artisanProfile.about.slice(0, 120) + '...',
-      artisanId: { 
+      artisanId: {
         _id: artisanProfile._id,
         storeName: artisanProfile.storeName,
-      } 
+      }
     }));
 
   }, [artisans]);
 
 
   if (loading) {
-    return <div className="flex justify-center items-center h-screen">Loading amazing crafts...</div>;
+    return <div className="flex justify-center items-center h-screen"><Spinner size="lg"/></div>;
   }
 
   if (error) {
@@ -100,7 +101,7 @@ export default function Home({ onAddToCart }) {
         products={productsData.products.slice(0, 8)}
         onAddToCart={onAddToCart}
       />
-      <ArtisanSpotlight artisans={artisans.slice(0, 2)} /> 
+      <ArtisanSpotlight artisans={artisans.slice(0, 2)} />
       <StoryHighlights stories={about} />
       <Newsletter />
     </>
