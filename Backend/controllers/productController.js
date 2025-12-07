@@ -152,8 +152,8 @@ async function generateVideoInBackground(product, imageUrl, artisanId) {
 
       // Save video + audio metadata
       product.marketingVideo = {
-        url: finalVideoUrl,  
-        baseVideoUrl: videoResult.videoUrl,  
+        url: finalVideoUrl,
+        baseVideoUrl: videoResult.videoUrl,
         prompt: videoResult.videoPrompt,
         generatedAt: new Date(),
         duration: 8,
@@ -383,6 +383,38 @@ const streamVideoStatus = asyncHandler(async (req, res) => {
   });
 });
 
+const getReels = asyncHandler(async (req, res) => {
+  try {
+    const products = await Product.find({
+      videoStatus: 'completed',
+      'marketingVideo.url': { $exists: true, $ne: null }
+    })
+      .populate({
+        path: 'artisanId',
+        select: 'storeName userId',
+        populate: {
+          path: 'userId',
+          select: 'firstName lastName avatar'
+        }
+      })
+      .populate('categoryId', 'name')
+      .sort({ 'marketingVideo.generatedAt': -1 })
+      .limit(100)
+      .lean();
+
+    res.json({
+      reels: products,
+      total: products.length
+    });
+  } catch (error) {
+    console.error('[REELS] Error:', error);
+    res.status(500).json({
+      message: 'Failed to fetch reels',
+      error: error.message
+    });
+  }
+});
+
 export {
   getProducts,
   createProduct,
@@ -391,5 +423,6 @@ export {
   getProductsByArtisan,
   getProductById,
   regenerateProductVideo,
-  streamVideoStatus
+  streamVideoStatus,
+  getReels
 };

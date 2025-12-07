@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Footer from "./components/ui/sections/Footer";
 import Header from "./components/ui/sections/Header";
 import useVoiceSearch from "./hooks/useVoiceSearch";
@@ -28,6 +28,7 @@ import StoryEditor from './pages/StoryEditor';
 import CheckoutCartPage from './pages/CheckoutCartPage';
 import ProfilePage from "./pages/ProfilePage";
 import { getApiUrl } from "@/lib/api";
+import ReelsPage from "./pages/ReelsPage";
 
 export default function App() {
   const { query, setQuery, lang, setLang, startVoiceSearch, isListening } = useVoiceSearch();
@@ -85,6 +86,7 @@ export default function App() {
           <Route path="/stories" element={<StoriesPage />} />
           <Route path="/stories/:storyId" element={<StoryDetailPage />} />
           <Route path="/profile" element={<ProfilePage/>} />
+          <Route path="/reels" element={<ReelsPage/>} />
 
           {/* --- CUSTOMER & ARTISAN PROTECTED ROUTES --- */}
           <Route element={<PrivateRoute allowedRoles={['CUSTOMER', 'ARTISAN']} />}>
@@ -102,7 +104,7 @@ export default function App() {
         </Routes>
       </main>
 
-      <Footer />
+      { location.pathname != '/reels' && <Footer />}
       <Toaster />
     </div>
   );

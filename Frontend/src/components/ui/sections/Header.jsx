@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; 
-import useAuthStore from '@/stores/authStore'; 
-import { ShoppingCart, Heart, User, Globe, Search, Mic, Store, Languages, Menu } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import useAuthStore from '@/stores/authStore';
+import { ShoppingCart, Heart, User, Globe, Search, Mic, Store, Languages, Menu, PlaySquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
@@ -14,7 +14,7 @@ import { useToast } from '@/hooks/use-toast';
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
-export default function Header({query, setQuery, setLang, startVoiceSearch, isListening }) {
+export default function Header({ query, setQuery, setLang, startVoiceSearch, isListening }) {
   const { toast } = useToast();
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
@@ -50,6 +50,7 @@ export default function Header({query, setQuery, setLang, startVoiceSearch, isLi
     { name: "Artisans", path: "/artisans" },
     { name: "Stories", path: "/stories" },
     { name: "Contact", path: "/contact" },
+    { name: <PlaySquare className="h-5 w-5" />, path: "/reels", icon: true }
   ];
 
   const handleVoiceSearchSubmit = (searchQuery) => {
@@ -75,11 +76,12 @@ export default function Header({query, setQuery, setLang, startVoiceSearch, isLi
                 </VisuallyHidden>
                 <nav className="mt-8 grid gap-4 text-lg">
                   {navItems.map((item) => (
-                    <Link 
-                      key={item.name} 
-                      to={item.path} 
-                      className="hover:underline"
+                    <Link
+                      key={item.path}
+                      to={item.path}
                       onClick={() => setIsSheetOpen(false)}
+                      className={`flex items-center gap-1 text-muted-foreground hover:text-foreground ${item.icon ? "p-1" : ""
+                        }`}
                     >
                       {item.name}
                     </Link>
@@ -119,19 +121,19 @@ export default function Header({query, setQuery, setLang, startVoiceSearch, isLi
             <form onSubmit={handleSearchSubmit} className="w-full max-w-2xl">
               <div className="flex w-full items-center gap-2 rounded-full border px-3 py-1.5 shadow-sm">
                 <Search className="h-4 w-4 text-muted-foreground" />
-                <Input 
-                  value={query} 
-                  onChange={(e) => setQuery(e.target.value)} 
+                <Input
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search products..." // Updated placeholder
-                  className="border-0 focus-visible:ring-0" 
+                  className="border-0 focus-visible:ring-0"
                 />
                 <Button type="button" variant="ghost" size="icon" onClick={() => startVoiceSearch(handleVoiceSearchSubmit)} aria-label="Voice search">
-                    <Mic className={`h-4 w-4 transition-colors ${isListening ? 'text-red-500 animate-pulse' : 'text-muted-foreground'}`} />
+                  <Mic className={`h-4 w-4 transition-colors ${isListening ? 'text-red-500 animate-pulse' : 'text-muted-foreground'}`} />
                 </Button>
               </div>
             </form>
           </div>
-          
+
           <div className="ml-auto flex items-center gap-1">
             <Link to="/wishlist">
               <Button variant="ghost" size="icon" aria-label="Wishlist">
@@ -174,7 +176,7 @@ export default function Header({query, setQuery, setLang, startVoiceSearch, isLi
             <DropdownMenu>
               <DropdownMenuTrigger asChild><Button variant="ghost" size="icon" aria-label="Language"><Globe className="h-5 w-5" /></Button></DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuLabel><div className="flex items-center gap-2"><Languages className="h-4 w-4"/> Language</div></DropdownMenuLabel>
+                <DropdownMenuLabel><div className="flex items-center gap-2"><Languages className="h-4 w-4" /> Language</div></DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {["English", "हिन्दी", "বাংলা", "தமிழ்", "తెలుగు", "मराठी"].map((l) => (
                   <DropdownMenuItem key={l} onClick={() => setLang(l)}>{l}</DropdownMenuItem>

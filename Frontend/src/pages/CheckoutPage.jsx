@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams, useNavigate , Link} from 'react-router-dom';
-import  useAuthStore from '@/stores/authStore';
+import { useSearchParams, useNavigate, Link } from 'react-router-dom';
+import useAuthStore from '@/stores/authStore';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { AlertTriangle, Loader2 } from 'lucide-react';
 import { getApiUrl } from "@/lib/api";
+import Spinner from '@/components/ui/Spinner';
 
 export default function CheckoutPage() {
   const [searchParams] = useSearchParams();
@@ -25,9 +26,10 @@ export default function CheckoutPage() {
     postalCode: '',
     phoneNumber: ''
   });
-  
+
   const productId = searchParams.get('productId');
-  const qty = Number(searchParams.get('qty'));
+  const initialQty = Number(searchParams.get('qty')) || 1;
+  const [quantity, setQuantity] = useState(initialQty);
 
   // Autofill shipping address from user data
   useEffect(() => {
@@ -78,7 +80,7 @@ export default function CheckoutPage() {
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    setShippingAddress(prev => ({...prev, [id]: value}));
+    setShippingAddress(prev => ({ ...prev, [id]: value }));
   };
 
   const handlePayment = async () => {
@@ -99,9 +101,9 @@ export default function CheckoutPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ productId, qty }),
+        body: JSON.stringify({ productId, qty: quantity }),
       });
 
       if (!createOrderRes.ok) throw new Error('Failed to create payment order.');
@@ -123,15 +125,15 @@ export default function CheckoutPage() {
               name: product.title,
               image: product.imageURLs?.[0],
               price: product.price,
-              qty: qty,
+              qty: quantity,
             }],
             shippingAddress: { ...shippingAddress, country: 'India' },
-            totalPrice: product.price * qty,
+            totalPrice: product.price * quantity,
           };
 
           const verifyRes = await fetch(getApiUrl('/api/orders/verify-payment'), {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, 
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
             body: JSON.stringify(dataToVerify),
           });
 
@@ -143,8 +145,8 @@ export default function CheckoutPage() {
           }
         },
         prefill: {
-          name: `${user.firstName} ${user.lastName}`, 
-          email: user.email,                           
+          name: `${user.firstName} ${user.lastName}`,
+          email: user.email,
           contact: shippingAddress.phoneNumber,
         },
         theme: { color: '#0f172a' },
@@ -169,7 +171,7 @@ export default function CheckoutPage() {
     }
   };
 
-  if (loadingProduct) return <div className="flex justify-center items-center h-screen"><Loader2 className="h-8 w-8 animate-spin" /></div>;
+  if (loadingProduct) return <div className="flex justify-center items-center h-screen"><Spinner size="lg" /></div>;
   if (error) return (
     <div className="flex flex-col items-center justify-center h-screen gap-4">
       <AlertTriangle className="h-10 w-10 text-red-500" />
@@ -184,7 +186,7 @@ export default function CheckoutPage() {
       <div className="container mx-auto p-4 py-12">
         <h1 className="text-3xl font-bold tracking-tight text-center mb-10">Secure Checkout</h1>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          
+
           <Card>
             <CardHeader><CardTitle>1. Shipping Address</CardTitle></CardHeader>
             <CardContent className="space-y-4">
@@ -203,7 +205,7 @@ export default function CheckoutPage() {
             </CardContent>
           </Card>
 
-          
+
           <div className="lg:sticky top-24">
             <Card>
               <CardHeader><CardTitle>2. Order Summary</CardTitle></CardHeader>
@@ -211,20 +213,35 @@ export default function CheckoutPage() {
                 <div className="flex items-center space-x-4">
                   <div className="relative">
                     <img src={product.imageURLs?.[0]} alt={product.title} className="w-20 h-20 object-cover rounded-md" />
-                    <span className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-bold">{qty}</span>
+                    <span className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-bold">{quantity}</span>
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <h3 className="font-semibold">{product.title}</h3>
-                    <p className="text-sm text-muted-foreground">Quantity: {qty}</p>
+                    <div className="flex items-center gap-3 mt-2">
+                      <span className="text-sm text-muted-foreground">Quantity:</span>
+                      <button
+                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                        className="px-2 py-1 border rounded hover:bg-gray-100 text-sm"
+                      >
+                        −
+                      </button>
+                      <span className="font-semibold w-6 text-center">{quantity}</span>
+                      <button
+                        onClick={() => setQuantity(Math.min(product.stockQuantity, quantity + 1))}
+                        className="px-2 py-1 border rounded hover:bg-gray-100 text-sm"
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
-                  <p className="ml-auto font-semibold">₹{(product.price * qty).toFixed(2)}</p>
+                  <p className="ml-auto font-semibold">₹{(product.price * quantity).toFixed(2)}</p>
                 </div>
                 <Separator className="my-4" />
                 <div className="space-y-2">
-                  <div className="flex justify-between"><span className="text-muted-foreground">Subtotal</span><span>₹{(product.price * qty).toFixed(2)}</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">Subtotal</span><span>₹{(product.price * quantity).toFixed(2)}</span></div>
                   <div className="flex justify-between"><span className="text-muted-foreground">Shipping</span><span className="font-semibold text-green-600">FREE</span></div>
                   <Separator className="my-2" />
-                  <div className="flex justify-between font-bold text-lg"><span>Total</span><span>₹{(product.price * qty).toFixed(2)}</span></div>
+                  <div className="flex justify-between font-bold text-lg"><span>Total</span><span>₹{(product.price * quantity).toFixed(2)}</span></div>
                 </div>
               </CardContent>
               <CardFooter>
