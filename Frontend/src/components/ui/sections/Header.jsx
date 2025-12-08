@@ -13,6 +13,8 @@ import useCartStore from '@/stores/cartStore';
 import { useToast } from '@/hooks/use-toast';
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { useTranslation } from '@/hooks/useTranslation';
+import useLanguageStore from '@/stores/languageStore';
 
 export default function Header({ query, setQuery, setLang, startVoiceSearch, isListening }) {
   const { toast } = useToast();
@@ -22,6 +24,8 @@ export default function Header({ query, setQuery, setLang, startVoiceSearch, isL
   const cartItems = useCartStore((state) => state.items);
   const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const { t } = useTranslation();
+  const { setLanguage } = useLanguageStore();
 
   const handleLogout = () => {
     logout();
@@ -45,11 +49,11 @@ export default function Header({ query, setQuery, setLang, startVoiceSearch, isL
   };
 
   const navItems = [
-    { name: "Home", path: "/" },
-    { name: "Shop", path: "/shop" },
-    { name: "Artisans", path: "/artisans" },
-    { name: "Stories", path: "/stories" },
-    { name: "Contact", path: "/contact" },
+    { name: t('header.home'), path: "/" },
+    { name: t('header.shop'), path: "/shop" },
+    { name: t('header.artisans'), path: "/artisans" },
+    { name: t('header.stories'), path: "/stories" },
+    { name: t('header.contact'), path: "/contact" },
     { name: <PlaySquare className="h-5 w-5" />, path: "/reels", icon: true }
   ];
 
@@ -90,15 +94,15 @@ export default function Header({ query, setQuery, setLang, startVoiceSearch, isL
                   {/* Build Store / Dashboard Logic for Mobile */}
                   {!user ? (
                     <Button className="opacity-50 cursor-not-allowed" disabled>
-                      Build your store
+                      {t('header.buildStore')}
                     </Button>
                   ) : user.role === "ARTISAN" ? (
                     <Link to="/dashboard" className="hover:underline" onClick={() => setIsSheetOpen(false)}>
-                      <Button className="w-full">My Dashboard</Button>
+                      <Button className="w-full">{t('header.myDashboard')}</Button>
                     </Link>
                   ) : (
                     <Link to="/build-store" className="hover:underline" onClick={() => setIsSheetOpen(false)}>
-                      <Button className="w-full">Build your store</Button>
+                      <Button className="w-full">{t('header.buildStore')}</Button>
                     </Link>
                   )}
                 </nav>
@@ -124,7 +128,7 @@ export default function Header({ query, setQuery, setLang, startVoiceSearch, isL
                 <Input
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search products..." // Updated placeholder
+                  placeholder={t('header.searchPlaceholder')} 
                   className="border-0 focus-visible:ring-0"
                 />
                 <Button type="button" variant="ghost" size="icon" onClick={() => startVoiceSearch(handleVoiceSearchSubmit)} aria-label="Voice search">
@@ -157,10 +161,10 @@ export default function Header({ query, setQuery, setLang, startVoiceSearch, isL
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>Hi, {user.firstName}!</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => navigate('/profile')}>Profile</DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => navigate('/orders')}>My Orders</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate('/profile')}>{t('header.profile')}</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate('/orders')}>{t('header.myOrders')}</DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout}>Log Out</DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleLogout}>{t('header.logOut')}</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
@@ -174,28 +178,33 @@ export default function Header({ query, setQuery, setLang, startVoiceSearch, isL
 
             {/* Language Selector */}
             <DropdownMenu>
-              <DropdownMenuTrigger asChild><Button variant="ghost" size="icon" aria-label="Language"><Globe className="h-5 w-5" /></Button></DropdownMenuTrigger>
+              <DropdownMenuTrigger asChild><Button variant="ghost" size="icon" aria-label={t('header.language')}><Globe className="h-5 w-5" /></Button></DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuLabel><div className="flex items-center gap-2"><Languages className="h-4 w-4" /> Language</div></DropdownMenuLabel>
+                <DropdownMenuLabel><div className="flex items-center gap-2"><Languages className="h-4 w-4" /> {t('header.language')}</div></DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                {["English", "हिन्दी", "বাংলা", "தமிழ்", "తెలుగు", "मराठी"].map((l) => (
-                  <DropdownMenuItem key={l} onClick={() => setLang(l)}>{l}</DropdownMenuItem>
-                ))}
+                {["English", "हिन्दी", "বাংলা", "தமிழ்", "తెలుగు", "मराठी"].map((l, idx) => {
+                  const langCodes = ["en", "hi", "bn", "ta", "te", "mr"];
+                  return (
+                    <DropdownMenuItem key={l} onClick={() => setLanguage(langCodes[idx])}>
+                      {l}
+                    </DropdownMenuItem>
+                  );
+                })}
               </DropdownMenuContent>
             </DropdownMenu>
 
             <div className="hidden md:block">
               {!user ? (
                 <Button className="ml-2 opacity-50 cursor-not-allowed" disabled>
-                  Build your store
+                  {t('header.buildStore')}
                 </Button>
               ) : user.role === "ARTISAN" ? (
                 <Link to="/dashboard">
-                  <Button className="ml-2">My Dashboard</Button>
+                  <Button className="ml-2">{t('header.myDashboard')}</Button>
                 </Link>
               ) : (
                 <Link to="/build-store">
-                  <Button className="ml-2">Build your store</Button>
+                  <Button className="ml-2">{t('header.buildStore')}</Button>
                 </Link>
               )}
             </div>

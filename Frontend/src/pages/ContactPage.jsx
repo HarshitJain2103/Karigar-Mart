@@ -1,4 +1,3 @@
-// /frontend/src/pages/ContactPage.jsx
 import React, { useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,10 +16,12 @@ import {
   AlertCircle,
 } from 'lucide-react';
 import { getApiUrl } from "@/lib/api";
+import { useTranslation } from '@/hooks/useTranslation';
 
 const API_CONTACT = getApiUrl('/api/contact');
 
 export default function ContactPage() {
+  const { t } = useTranslation();
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
@@ -41,9 +42,9 @@ export default function ContactPage() {
 
   function validate() {
     const e = {};
-    if (!form.name.trim()) e.name = 'Name is required';
-    if (!isValidEmail(form.email)) e.email = 'Enter a valid email';
-    if (form.message.trim().length < messageMin) e.message = `Message must be at least ${messageMin} characters`;
+    if (!form.name.trim()) e.name = t('contact.nameRequired');
+    if (!isValidEmail(form.email)) e.email = t('contact.enterValidEmail');
+    if (form.message.trim().length < messageMin) e.message = t('contact.messageMinChars');
     return e;
   }
 
@@ -61,11 +62,11 @@ export default function ContactPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
-      if (!res.ok) throw new Error('Failed to submit. Please try again.');
+      if (!res.ok) throw new Error(t('contact.messageError'));
       setSuccess(true);
       setForm({ name: '', email: '', subject: '', message: '' });
     } catch (err) {
-      setServerError(err.message || 'Something went wrong.');
+      setServerError(err.message || t('common.error'));
     } finally {
       setSubmitting(false);
     }
@@ -74,9 +75,9 @@ export default function ContactPage() {
   return (
     <div className="container mx-auto py-12 px-4">
       <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold tracking-tight">Contact Us</h1>
+        <h1 className="text-3xl font-bold tracking-tight">{t('contact.contactUs')}</h1>
         <p className="text-muted-foreground mt-2">
-          We’d love to hear from you. We usually respond within 24–48 hours.
+          {t('contact.contactUsDescription')}
         </p>
       </div>
 
@@ -88,35 +89,37 @@ export default function ContactPage() {
               <Mail className="h-5 w-5 text-primary" />
             </div>
             <div className="text-sm">
-              <div className="font-semibold">Email</div>
+              <div className="font-semibold">{t('contact.email')}</div>
               <a href="mailto:jainharshit2132005@gmail.com" className="text-primary hover:underline">
                 jainharshit2132005@gmail.com
               </a>
             </div>
           </CardContent>
         </Card>
+
         <Card>
           <CardContent className="p-4 flex items-start gap-3">
             <div className="rounded-md bg-primary/10 p-2">
               <Phone className="h-5 w-5 text-primary" />
             </div>
             <div className="text-sm">
-              <div className="font-semibold">Phone</div>
+              <div className="font-semibold">{t('contact.phone')}</div>
               <a href="tel:+919773960061" className="hover:underline">
                 +91 97739 60061
               </a>
             </div>
           </CardContent>
         </Card>
+
         <Card>
           <CardContent className="p-4 flex items-start gap-3">
             <div className="rounded-md bg-primary/10 p-2">
               <MapPin className="h-5 w-5 text-primary" />
             </div>
             <div className="text-sm">
-              <div className="font-semibold">Address</div>
+              <div className="font-semibold">{t('contact.address')}</div>
               <div className="text-muted-foreground">
-                Delhi, India
+                {t('contact.location')}
               </div>
             </div>
           </CardContent>
@@ -127,8 +130,8 @@ export default function ContactPage() {
               <Clock className="h-5 w-5 text-primary" />
             </div>
             <div className="text-sm">
-              <div className="font-semibold">Hours</div>
-              <div className="text-muted-foreground">Mon–Sat, 10:00–18:00 IST</div>
+              <div className="font-semibold">{t('contact.hours')}</div>
+              <div className="text-muted-foreground">{t('contact.businessHours')}</div>
             </div>
           </CardContent>
         </Card>
@@ -139,13 +142,13 @@ export default function ContactPage() {
         <div className="lg:col-span-2">
           <Card>
             <CardHeader>
-              <CardTitle>Send us a message</CardTitle>
+              <CardTitle>{t('contact.sendMessage')}</CardTitle>
             </CardHeader>
             <CardContent>
               {success && (
                 <div className="mb-4 flex items-center gap-2 rounded-md border border-green-200 bg-green-50 px-3 py-2 text-sm">
                   <CheckCircle2 className="h-4 w-4 text-green-600" />
-                  Message sent successfully. We’ll get back to you soon.
+                  {t('contact.messageSentSuccessfully')}
                 </div>
               )}
               {serverError && (
@@ -158,40 +161,42 @@ export default function ContactPage() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm font-medium">Name</label>
+                    <label className="text-sm font-medium">{t('contact.name')}</label>
                     <Input
                       value={form.name}
                       onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                      placeholder="Your full name"
+                      placeholder={t('contact.fullName')}
                     />
                     {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name}</p>}
                   </div>
                   <div>
-                    <label className="text-sm font-medium">Email</label>
+                    <label className="text-sm font-medium">{t('contact.email')}</label>
                     <Input
                       type="email"
                       value={form.email}
                       onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-                      placeholder="name@example.com"
+                      placeholder={t('contact.emailPlaceholder')}
                     />
                     {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
                   </div>
                 </div>
+
                 <div>
-                  <label className="text-sm font-medium">Subject</label>
+                  <label className="text-sm font-medium">{t('contact.subject')}</label>
                   <Input
                     value={form.subject}
                     onChange={(e) => setForm((f) => ({ ...f, subject: e.target.value }))}
-                    placeholder="How can we help?"
+                    placeholder={t('contact.howCanWeHelp')}
                   />
                 </div>
+
                 <div>
-                  <label className="text-sm font-medium">Message</label>
+                  <label className="text-sm font-medium">{t('contact.message')}</label>
                   <Textarea
                     rows={6}
                     value={form.message}
                     onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-                    placeholder="Tell us more about your query..."
+                    placeholder={t('contact.tellMore')}
                   />
                   {errors.message && <p className="mt-1 text-xs text-red-600">{errors.message}</p>}
                 </div>
@@ -200,11 +205,11 @@ export default function ContactPage() {
                   <Button type="submit" size="lg" disabled={!canSubmit}>
                     {submitting ? (
                       <>
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" /> Sending...
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" /> {t('contact.sending')}
                       </>
                     ) : (
                       <>
-                        <Send className="h-4 w-4 mr-2" /> Send Message
+                        <Send className="h-4 w-4 mr-2" /> {t('contact.sendMessage')}
                       </>
                     )}
                   </Button>
@@ -214,7 +219,7 @@ export default function ContactPage() {
                     )}`}
                     className="sm:ml-auto"
                   >
-                    <Button variant="outline" size="lg">Email us directly</Button>
+                    <Button variant="outline" size="lg">{t('contact.emailUsDirect')}</Button>
                   </a>
                 </div>
               </form>
@@ -223,24 +228,24 @@ export default function ContactPage() {
 
               {/* FAQ */}
               <div>
-                <h3 className="text-lg font-semibold mb-3">Frequently asked questions</h3>
+                <h3 className="text-lg font-semibold mb-3">{t('contact.faqTitle')}</h3>
                 <Accordion type="single" collapsible>
                   <AccordionItem value="a1">
-                    <AccordionTrigger>What is the usual delivery time?</AccordionTrigger>
+                    <AccordionTrigger>{t('contact.faq1Question')}</AccordionTrigger>
                     <AccordionContent>
-                      Orders are typically delivered within 2–5 business days depending on your location and the product.
+                      {t('contact.faq1Answer')}
                     </AccordionContent>
                   </AccordionItem>
                   <AccordionItem value="a2">
-                    <AccordionTrigger>What is your return policy?</AccordionTrigger>
+                    <AccordionTrigger>{t('contact.faq2Question')}</AccordionTrigger>
                     <AccordionContent>
-                      We offer a 7-day return policy on eligible items. Please ensure the product is unused and in original packaging.
+                      {t('contact.faq2Answer')}
                     </AccordionContent>
                   </AccordionItem>
                   <AccordionItem value="a3">
-                    <AccordionTrigger>How can I track my order?</AccordionTrigger>
+                    <AccordionTrigger>{t('contact.faq3Question')}</AccordionTrigger>
                     <AccordionContent>
-                      After your order ships, you’ll receive a tracking link via email. You can also view it in the My Orders page.
+                      {t('contact.faq3Answer')}
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
@@ -253,7 +258,7 @@ export default function ContactPage() {
         <div className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Our location</CardTitle>
+              <CardTitle>{t('contact.ourLocation')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="rounded-md overflow-hidden border">
@@ -271,30 +276,30 @@ export default function ContactPage() {
                 </div>
               </div>
               <div className="text-sm text-muted-foreground">
-                If visiting, please schedule an appointment in advance.
+                {t('contact.scheduleAppointment')}
               </div>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>Need quick help?</CardTitle>
+              <CardTitle>{t('contact.needQuickHelp')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 text-sm">
               <div>
-                <span className="font-medium">Email:</span>{' '}
+                <span className="font-medium">{t('contact.email')}:</span>{' '}
                 <a href="mailto:jainharshit2132005@gmail.com" className="text-primary hover:underline">
                   jainharshit2132005@gmail.com
                 </a>
               </div>
               <div>
-                <span className="font-medium">Phone:</span>{' '}
+                <span className="font-medium">{t('contact.phone')}:</span>{' '}
                 <a href="tel:+919773960061" className="hover:underline">
                   +91 97739 60061
                 </a>
               </div>
               <div className="text-muted-foreground">
-                Response typically within 24–48 hours (Mon–Sat).
+                {t('contact.responseTime')}
               </div>
             </CardContent>
           </Card>

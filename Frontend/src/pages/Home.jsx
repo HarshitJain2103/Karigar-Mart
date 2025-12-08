@@ -8,27 +8,28 @@ import StoryHighlights from "@/components/ui/sections/StoryHighlights";
 import Newsletter from "@/components/ui/sections/NewsLetter";
 import { getApiUrl } from '@/lib/api';
 import Spinner from '@/components/ui/Spinner';
-
-const HERO_SLIDES = [
-  {
-    title: "Meet the Masters: Featured Artisans",
-    subtitle: "Handcrafted pieces with centuries-old traditions.",
-    img: "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2000&auto=format&fit=crop",
-  },
-  {
-    title: "Festive Specials",
-    subtitle: "Seasonal discounts across India’s craft clusters.",
-    img: "https://images.unsplash.com/photo-1516387938699-a93567ec168e?q=80&w=2000&auto=format&fit=crop",
-  },
-];
-
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function Home({ onAddToCart }) {
+  const { t } = useTranslation();
   const [categories, setCategories] = useState([]);
   const [productsData, setProductsData] = useState({ products: [] });
   const [artisans, setArtisans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const HERO_SLIDES = [
+    {
+      title: t('home.featuredArtisans'),
+      subtitle: t('home.handcrafted'),
+      img: "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2000&auto=format&fit=crop",
+    },
+    {
+      title: t('home.festiveSpecials'),
+      subtitle: t('home.seasonalDiscounts'),
+      img: "https://images.unsplash.com/photo-1516387938699-a93567ec168e?q=80&w=2000&auto=format&fit=crop",
+    },
+  ];
 
   const { index, setIndex } = useAutoCarousel(HERO_SLIDES.length, 6000);
 
@@ -45,11 +46,11 @@ export default function Home({ onAddToCart }) {
         ]);
 
         if (!categoriesRes.ok || !productsRes.ok || !artisansRes.ok) {
-          throw new Error('Failed to fetch essential homepage data');
+          throw new Error(t('home.error'));
         }
 
         const categoriesData = await categoriesRes.json();
-        const productsDataFromApi = await productsRes.json(); // Renamed to avoid conflict
+        const productsDataFromApi = await productsRes.json();
         const artisansData = await artisansRes.json();
 
         setCategories(categoriesData);
@@ -58,7 +59,7 @@ export default function Home({ onAddToCart }) {
 
       } catch (err) {
         console.error("Homepage fetch error:", err);
-        setError("Could not load content. Please try refreshing the page.");
+        setError(t('home.error'));
       } finally {
         setLoading(false);
       }
@@ -68,11 +69,9 @@ export default function Home({ onAddToCart }) {
   }, []);
 
   const about = useMemo(() => {
-
     return artisans.slice(0, 3).map(artisanProfile => ({
-
       _id: artisanProfile._id,
-      title: `About ${artisanProfile.storeName}`,
+      title: `${t('home.aboutArtisan')} ${artisanProfile.storeName}`,
       imageURL: artisanProfile.media.heroImageURL,
       excerpt: artisanProfile.about.slice(0, 120) + '...',
       artisanId: {
@@ -80,16 +79,22 @@ export default function Home({ onAddToCart }) {
         storeName: artisanProfile.storeName,
       }
     }));
-
-  }, [artisans]);
-
+  }, [artisans, t]);
 
   if (loading) {
-    return <div className="flex justify-center items-center h-screen"><Spinner size="lg"/></div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spinner size="lg" text={t('home.loading')} />
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="flex justify-center items-center h-screen text-red-500">{error}</div>;
+    return (
+      <div className="flex justify-center items-center h-screen text-red-500">
+        {error}
+      </div>
+    );
   }
 
   return (
@@ -97,7 +102,7 @@ export default function Home({ onAddToCart }) {
       <HeroSection slides={HERO_SLIDES} index={index} setIndex={setIndex} />
       <CategoryList categories={categories} />
       <ProductGrid
-        title="Featured Products"
+        title={t('home.featuredProducts')}
         products={productsData.products.slice(0, 8)}
         onAddToCart={onAddToCart}
       />

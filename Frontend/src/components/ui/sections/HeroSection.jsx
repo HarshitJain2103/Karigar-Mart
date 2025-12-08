@@ -3,8 +3,11 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function HeroSection({ slides, index, setIndex }) {
+  const { t } = useTranslation();
+
   const prevSlide = useCallback(() => {
     const newIndex = (index - 1 + slides.length) % slides.length;
     setIndex(newIndex);
@@ -41,12 +44,12 @@ export default function HeroSection({ slides, index, setIndex }) {
                 <div className="flex gap-3">
                   <Link to="/shop">
                     <Button size="lg" className="rounded-full bg-white text-black hover:bg-white/90">
-                      Shop Now
+                      {t('hero.shopNow')}
                     </Button>
                   </Link>
                   <Link to="/artisans">
                     <Button size="lg" variant="secondary" className="rounded-full">
-                      Discover Artisans
+                      {t('hero.discoverArtisans')}
                     </Button>
                   </Link>
                 </div>

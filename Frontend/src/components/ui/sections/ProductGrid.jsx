@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ProductCard from '@/components/ui/products/ProductCard';
+import { useTranslation } from "@/hooks/useTranslation";
 
 export default function ProductGrid({ title, subtitle, link, products }) {
+  const { t } = useTranslation();
+
   return (
     <section className="mx-auto max-w-7xl px-4 pb-10">
       <div className="mb-4 flex items-center justify-between">
@@ -10,7 +13,7 @@ export default function ProductGrid({ title, subtitle, link, products }) {
         {subtitle ? (
           <span className="text-sm text-muted-foreground">{subtitle}</span>
         ) : (
-          <Link to={'/shop'} className="text-sm text-primary hover:underline">{link || "See more"}</Link>
+          <Link to={'/shop'} className="text-sm text-primary hover:underline">{link || t('productGrid.seeMore')}</Link>
         )}
       </div>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

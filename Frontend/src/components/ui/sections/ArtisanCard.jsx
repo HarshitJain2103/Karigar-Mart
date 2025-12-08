@@ -3,8 +3,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
+import { useTranslation } from "@/hooks/useTranslation";
 
 export default function ArtisanCard({ artisan }) {
+  const { t } = useTranslation();
   const artisanName = `${artisan.userId.firstName} ${artisan.userId.lastName}`;
 
   return (
@@ -24,7 +26,7 @@ export default function ArtisanCard({ artisan }) {
       </Link>
       <CardContent className="p-4 bg-white">
         <div className="mb-3">
-          <p className="text-sm text-muted-foreground font-medium">{artisan.craft || 'Unique Crafts'}</p>
+          <p className="text-sm text-muted-foreground font-medium">{artisan.craft || t('artisanCard.uniqueCrafts')}</p>
           <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
             <MapPin className="h-3 w-3" />
             {artisan.address.city}, {artisan.address.state}
@@ -35,9 +37,9 @@ export default function ArtisanCard({ artisan }) {
         </p>
         <div className="flex gap-2">
             <Link to={`/store/${artisan._id}`} className="flex-1">
-                <Button className="w-full">View Store</Button>
+                <Button className="w-full">{t('artisanCard.viewStore')}</Button>
             </Link>
-            <Button variant="secondary" className="flex-1">Follow</Button>
+            <Button variant="secondary" className="flex-1">{t('artisanCard.follow')}</Button>
         </div>
       </CardContent>
     </Card>

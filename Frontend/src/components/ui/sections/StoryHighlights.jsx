@@ -2,8 +2,11 @@ import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
+import { useTranslation } from "@/hooks/useTranslation";
 
 export default function StoryHighlights({ stories }) {
+  const { t } = useTranslation();
+
   if (!stories || stories.length === 0) {
     return null; // Don't render the section if there are no stories
   }
@@ -11,9 +14,9 @@ export default function StoryHighlights({ stories }) {
   return (
     <section className="mx-auto max-w-7xl px-4 pb-10">
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-xl font-semibold">Stories & Culture</h3>
+        <h3 className="text-xl font-semibold">{t('storyHighlights.title')}</h3>
         {/* This link would go to a future page showing all stories */}
-        <Link to="/stories" className="text-sm text-primary hover:underline">Read all</Link>
+        <Link to="/stories" className="text-sm text-primary hover:underline">{t('storyHighlights.readAll')}</Link>
       </div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {stories.map((s) => (
@@ -32,7 +35,7 @@ export default function StoryHighlights({ stories }) {
               <div className="pt-3 mt-auto">
                 {/* This link now works correctly because s.artisanId._id is defined */}
                 <Link to={`/store/${s.artisanId._id}`}>
-                  <Button variant="link" className="px-0">Read More</Button>
+                  <Button variant="link" className="px-0">{t('storyHighlights.readMore')}</Button>
                 </Link>
               </div>
             </CardContent>

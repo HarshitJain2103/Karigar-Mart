@@ -8,19 +8,22 @@ import useAuthStore from '@/stores/authStore';
 import useCartStore from '@/stores/cartStore';
 import { useToast } from "@/hooks/use-toast";
 import { getApiUrl } from '@/lib/api';
+import { useTranslation } from "@/hooks/useTranslation";
 
 export default function ProductCard({ product }) {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const token = useAuthStore((state) => state.token);
   const wishlist = useAuthStore((state) => state.wishlist);
   const toggleWishlist = useAuthStore((state) => state.toggleWishlist);
   const cartItems = useCartStore((state) => state.items);
   const addToCart = useCartStore((state) => state.addToCart);
+
   const [showVideo, setShowVideo] = useState(false);
   const [regenerating, setRegenerating] = useState(false);
-  
-  const isWishlisted = useMemo(() => 
-    wishlist.some(item => item._id === product._id), 
+
+  const isWishlisted = useMemo(
+    () => wishlist.some(item => item._id === product._id),
     [wishlist, product._id]
   );
 
@@ -30,28 +33,27 @@ export default function ProductCard({ product }) {
   const handleToggleWishlist = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!token) return alert('Please log in to manage your wishlist.');
+    if (!token) return alert(t('productCard.loginWishlist'));
     toggleWishlist(product._id);
   };
 
   const handleAddToCart = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!token) return alert('Please log in to add items to your cart.');
-    
+    if (!token) return alert(t('productCard.loginCart'));
+
     const isAlreadyInCart = cartItems.some(item => item.product._id === product._id);
 
     if (isAlreadyInCart) {
       toast({
-        title: "Already in Cart",
-        description: `"${product.title}" is already in your cart.`,
-        variant: "default",
+        title: t('productCard.alreadyInCart'),
+        description: t('productCard.alreadyInCartDesc', { title: product.title }),
       });
     } else {
       addToCart(product, 1);
       toast({
-        title: "Added to Cart!",
-        description: `"${product.title}" has been added to your cart.`,
+        title: t('productCard.addedToCart'),
+        description: t('productCard.addedToCartDesc', { title: product.title }),
       });
     }
   };
@@ -59,38 +61,33 @@ export default function ProductCard({ product }) {
   const handleRegenerateVideo = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    
-    if (!token) return alert('Please log in to regenerate videos.');
-    
-    if (!confirm('Regenerate marketing video? This will take 2-5 minutes.')) {
-      return;
-    }
+
+    if (!token) return alert(t('productCard.loginRegenerate'));
+
+    if (!confirm(t('productCard.confirmRegenerate'))) return;
 
     setRegenerating(true);
     try {
       const response = await fetch(getApiUrl(`/api/products/${product._id}/regenerate-video`), {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+        headers: { 'Authorization': `Bearer ${token}` },
       });
-      
+
       const data = await response.json();
-      
+
       if (data.success) {
         toast({
-          title: "Video Regeneration Started!",
-          description: "Check back in 2-5 minutes to see your new video.",
+          title: t('productCard.regenStarted'),
+          description: t('productCard.regenCheckBack'),
         });
       } else {
         throw new Error(data.message);
       }
     } catch (error) {
-      console.error('Video regeneration error:', error);
       toast({
-        title: "Failed to Regenerate",
-        description: error.message || "Please try again later.",
-        variant: "destructive"
+        title: t('productCard.regenFailed'),
+        description: error.message || t('productCard.tryAgain'),
+        variant: "destructive",
       });
     } finally {
       setRegenerating(false);
@@ -102,8 +99,9 @@ export default function ProductCard({ product }) {
       <div className="relative">
         <Link to={`/products/${product._id}`}>
           <div className="aspect-square w-full overflow-hidden bg-gray-100">
+
             {showVideo && hasVideo ? (
-              <video 
+              <video
                 src={product.marketingVideo.url}
                 controls
                 autoPlay
@@ -113,32 +111,29 @@ export default function ProductCard({ product }) {
                 onEnded={() => setShowVideo(false)}
               />
             ) : (
-              <img 
-                src={product.imageURLs[0]} 
-                alt={product.title} 
+              <img
+                src={product.imageURLs[0]}
+                alt={product.title}
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
             )}
+
           </div>
         </Link>
-        
+
         <div className="absolute top-2 right-2 flex gap-2">
           {isGenerating && (
             <div className="bg-blue-600 text-white px-2 py-1 rounded-full text-[10px] flex items-center gap-1 shadow-lg">
               <Loader className="w-3 h-3 animate-spin" />
-              Generating...
+              {t('productCard.generating')}
             </div>
           )}
 
           {hasVideo && !showVideo && (
             <button
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setShowVideo(true);
-              }}
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowVideo(true); }}
               className="bg-black/80 hover:bg-black text-white p-2 rounded-full transition-all shadow-lg hover:scale-110"
-              title="Play marketing video"
+              title={t('productCard.playVideo')}
             >
               <Play className="w-4 h-4 fill-white" />
             </button>
@@ -146,14 +141,10 @@ export default function ProductCard({ product }) {
 
           {hasVideo && showVideo && (
             <button
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setShowVideo(false);
-              }}
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowVideo(false); }}
               className="bg-black/80 hover:bg-black text-white px-2 py-1 rounded-full text-[10px] shadow-lg"
             >
-              Show Image
+              {t('productCard.showImage')}
             </button>
           )}
         </div>
@@ -161,35 +152,36 @@ export default function ProductCard({ product }) {
         {hasVideo && (
           <div className="absolute bottom-2 left-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-2 py-1 rounded-full text-[10px] flex items-center gap-1 shadow-lg">
             <Video className="w-3 h-3" />
-            Marketing Reel
+            {t('productCard.marketingReel')}
           </div>
         )}
-        
+
         <Button
           variant="secondary"
           size="icon"
           className="absolute top-2 left-2 h-8 w-8 rounded-full opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-lg"
-          aria-label="Toggle Wishlist"
+          aria-label={t('productCard.toggleWishlist')}
           onClick={handleToggleWishlist}
         >
           <Heart className={`h-4 w-4 transition-colors ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} />
         </Button>
       </div>
-      
+
       <CardContent className="p-4 space-y-2">
         <p className="text-sm text-muted-foreground truncate">
-          {product.artisanId?.storeName || 'Karigar Mart'}
+          {product.artisanId?.storeName || t('productCard.defaultStoreName')}
         </p>
+
         <h3 className="font-semibold text-lg truncate">{product.title}</h3>
-        
+
         <div className="flex justify-between items-center">
           <span className="font-bold text-xl">₹{product.price}</span>
           <Rating value={product.averageRating || 0} />
         </div>
-        
+
         {token && !isGenerating && (
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             size="sm"
             onClick={handleRegenerateVideo}
             disabled={regenerating}
@@ -198,25 +190,25 @@ export default function ProductCard({ product }) {
             {regenerating ? (
               <>
                 <Loader className="w-3 h-3 mr-1 animate-spin" />
-                Regenerating...
+                {t('productCard.regenerating')}
               </>
             ) : hasVideo ? (
               <>
                 <RotateCw className="w-3 h-3 mr-1" />
-                New Video
+                {t('productCard.newVideo')}
               </>
             ) : (
               <>
                 <Video className="w-3 h-3 mr-1" />
-                Generate Video
+                {t('productCard.generateVideo')}
               </>
             )}
           </Button>
         )}
-        
+
         <Button className="w-full mt-2" onClick={handleAddToCart}>
           <ShoppingCart className="mr-2 h-4 w-4" />
-          Add to Cart
+          {t('productCard.addToCart')}
         </Button>
       </CardContent>
     </Card>

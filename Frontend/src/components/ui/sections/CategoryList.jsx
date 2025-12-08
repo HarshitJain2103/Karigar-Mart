@@ -1,13 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function CategoryList({ categories }) {
+  const { t } = useTranslation();
+
   return (
     <section className="mx-auto max-w-7xl px-4 py-10">
       <div className="mb-6 flex items-center justify-between">
-        <h3 className="text-2xl font-bold tracking-tight">Categories</h3>
+        <h3 className="text-2xl font-bold tracking-tight">{t('categoryList.title')}</h3>
         <Link to="/shop" className="text-sm font-medium text-primary hover:underline">
-          View all
+          {t('categoryList.viewAll')}
         </Link>
       </div>
       
