@@ -24,7 +24,7 @@ export default function Header({ query, setQuery, setLang, startVoiceSearch, isL
   const cartItems = useCartStore((state) => state.items);
   const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const { setLanguage } = useLanguageStore();
 
   const handleLogout = () => {
@@ -128,7 +128,7 @@ export default function Header({ query, setQuery, setLang, startVoiceSearch, isL
                 <Input
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder={t('header.searchPlaceholder')} 
+                  placeholder={t('header.searchPlaceholder')}
                   className="border-0 focus-visible:ring-0"
                 />
                 <Button type="button" variant="ghost" size="icon" onClick={() => startVoiceSearch(handleVoiceSearchSubmit)} aria-label="Voice search">
@@ -182,14 +182,22 @@ export default function Header({ query, setQuery, setLang, startVoiceSearch, isL
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel><div className="flex items-center gap-2"><Languages className="h-4 w-4" /> {t('header.language')}</div></DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                {["English", "हिन्दी", "বাংলা", "தமிழ்", "తెలుగు", "मराठी"].map((l, idx) => {
-                  const langCodes = ["en", "hi", "bn", "ta", "te", "mr"];
-                  return (
-                    <DropdownMenuItem key={l} onClick={() => setLanguage(langCodes[idx])}>
-                      {l}
-                    </DropdownMenuItem>
-                  );
-                })}
+                {[
+                  { code: "en", label: "English" },
+                  { code: "hi", label: "हिन्दी" },
+                  { code: "bn", label: "বাংলা" },
+                  { code: "ta", label: "தமிழ்" },
+                  { code: "te", label: "తెలుగు" },
+                  { code: "mr", label: "मराठी" },
+                ].map((item) => (
+                  <DropdownMenuItem
+                    key={item.code}
+                    onClick={() => setLanguage(item.code)}
+                    className={`cursor-pointer ${language === item.code ? "bg-primary/10 font-semibold" : ""}`}
+                  >
+                    {item.label}
+                  </DropdownMenuItem>
+                ))}
               </DropdownMenuContent>
             </DropdownMenu>
 

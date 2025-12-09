@@ -348,6 +348,89 @@ export const translations = {
 
       defaultStoreName: "Karigar Mart",
     },
+    dashboard: {
+      welcome: "Welcome, {storeName}!",
+      overview: "Here's your store's overview.",
+      viewPublicStore: "View Public Store",
+      addNewProduct: "+ Add New Product",
+
+      liveUpdatesActive: "Live updates active",
+      trackingVideos: "Tracking {count} video(s) generating in real-time",
+      connectingRealtime: "Connecting to real-time updates...",
+
+      totalRevenue: "Total Revenue",
+      revenueDescription: "Calculated from completed orders",
+      totalOrders: "Total Orders",
+      ordersDescription: "New orders will appear here",
+      productsListed: "Products Listed",
+      productsListedDescription: "Total products in your store",
+
+      myStories: "My Stories",
+      myStoriesDescription:
+        "Share the narrative behind your craft, announce new collections, or write about your process to connect with customers.",
+      manageStories: "Manage Stories",
+
+      yourProducts: "Your Products",
+      yourProductsDescription: "Manage your inventory and product details.",
+
+      tableImage: "Image",
+      tableProduct: "Product",
+      tablePrice: "Price",
+      tableInventory: "Inventory",
+      tableMarketingVideo: "Marketing Video",
+      tableActions: "Actions",
+
+      viewVideo: "View",
+      regenerate: "Regenerate",
+      generating: "Generating...",
+      failed: "Failed",
+      retry: "Retry",
+      generateVideo: "Generate Video",
+
+      edit: "Edit",
+      delete: "Delete",
+
+      deleteConfirmTitle: "Are you sure?",
+      deleteConfirmDesc:
+        'This will permanently delete the product "{title}". This action cannot be undone.',
+      cancel: "Cancel",
+      yesDelete: "Yes, Delete",
+
+      noData: "No data found.",
+      error: "Failed to load dashboard.",
+    },
+    wishlist: {
+      title: "My Wishlist",
+      subtitle: "Your collection of saved treasures.",
+
+      emptyTitle: "Your Wishlist is Empty",
+      emptySubtitle: "Looks like you haven't added any items yet.",
+      continueShopping: "Continue Shopping",
+
+      items: "items",
+
+      showAll: "Showing all saved items",
+      showInStock: "Showing in-stock only",
+      showOutOfStock: "Showing out-of-stock only",
+
+      filterLabel: "Filter wishlist",
+      filterAll: "All",
+      filterInStock: "In stock",
+      filterOutOfStock: "Out of stock",
+
+      sortLabel: "Sort wishlist",
+      sortFeatured: "Featured",
+      sortPriceLow: "Price: Low to High",
+      sortPriceHigh: "Price: High to Low",
+      sortRatingHigh: "Rating: High to Low",
+      sortNewest: "Newest",
+
+      share: "Share",
+      copied: "Copied",
+      copyLink: "Copy link",
+      shareTitle: "My Wishlist",
+      shareText: "Check out my wishlist!",
+    },
   },
 
   hi: {
@@ -660,9 +743,9 @@ export const translations = {
       loginRegenerate: "वीडियो पुनः जनरेट करने के लिए लॉगिन करें।",
 
       alreadyInCart: "पहले से कार्ट में है",
-      alreadyInCartDesc: "\"{title}\" पहले से आपके कार्ट में है।",
+      alreadyInCartDesc: "\{title}\ पहले से आपके कार्ट में है।",
       addedToCart: "कार्ट में जोड़ दिया गया!",
-      addedToCartDesc: "\"{title}\" आपके कार्ट में जोड़ दिया गया है।",
+      addedToCartDesc: "\{title}\ आपके कार्ट में जोड़ दिया गया है।",
 
       confirmRegenerate: "क्या आप मार्केटिंग वीडियो पुनः जनरेट करना चाहते हैं? इसमें 2–5 मिनट लगेंगे।",
       regenStarted: "वीडियो पुनः जनरेट होना शुरू!",
@@ -682,6 +765,89 @@ export const translations = {
       addToCart: "कार्ट में जोड़ें",
 
       defaultStoreName: "क़ारीगर मार्ट",
+    },
+    dashboard: {
+      welcome: "स्वागत है, {storeName}!",
+      overview: "यहाँ आपके स्टोर का संक्षिप्त विवरण है।",
+      viewPublicStore: "पब्लिक स्टोर देखें",
+      addNewProduct: "+ नया उत्पाद जोड़ें",
+
+      liveUpdatesActive: "लाइव अपडेट सक्रिय",
+      trackingVideos: "रियल-टाइम में {count} वीडियो ट्रैक किए जा रहे हैं",
+      connectingRealtime: "रियल-टाइम अपडेट से कनेक्ट किया जा रहा है...",
+
+      totalRevenue: "कुल कमाई",
+      revenueDescription: "पूर्ण किए गए ऑर्डर से गणना",
+      totalOrders: "कुल ऑर्डर",
+      ordersDescription: "नए ऑर्डर यहाँ दिखाई देंगे",
+      productsListed: "सूचीबद्ध उत्पाद",
+      productsListedDescription: "आपके स्टोर में कुल उत्पाद",
+
+      myStories: "मेरी कहानियाँ",
+      myStoriesDescription:
+        "अपने शिल्प की कहानी साझा करें, नए संग्रह की घोषणा करें, या प्रक्रिया के बारे में लिखें ताकि ग्राहकों से जुड़ सकें।",
+      manageStories: "कहानियाँ प्रबंधित करें",
+
+      yourProducts: "आपके उत्पाद",
+      yourProductsDescription: "अपना इन्वेंट्री और उत्पाद विवरण प्रबंधित करें।",
+
+      tableImage: "छवि",
+      tableProduct: "उत्पाद",
+      tablePrice: "कीमत",
+      tableInventory: "इन्वेंट्री",
+      tableMarketingVideo: "मार्केटिंग वीडियो",
+      tableActions: "क्रियाएँ",
+
+      viewVideo: "देखें",
+      regenerate: "पुनः जनरेट करें",
+      generating: "जनरेट हो रहा है...",
+      failed: "विफल",
+      retry: "फिर से प्रयास करें",
+      generateVideo: "वीडियो जनरेट करें",
+
+      edit: "संपादित करें",
+      delete: "हटाएँ",
+
+      deleteConfirmTitle: "क्या आप सुनिश्चित हैं?",
+      deleteConfirmDesc:
+        'यह उत्पाद "{title}" को स्थायी रूप से हटा देगा। यह क्रिया पूर्ववत नहीं की जा सकती।',
+      cancel: "रद्द करें",
+      yesDelete: "हाँ, हटाएँ",
+
+      noData: "कोई डेटा नहीं मिला।",
+      error: "डैशबोर्ड लोड करने में विफल।",
+    },
+    wishlist: {
+      title: "मेरी विशलिस्ट",
+      subtitle: "आपके पसंदीदा खज़ानों का संग्रह।",
+
+      emptyTitle: "आपकी विशलिस्ट खाली है",
+      emptySubtitle: "लगता है आपने अभी तक कोई आइटम नहीं जोड़ा है।",
+      continueShopping: "खरीदारी जारी रखें",
+
+      items: "आइटम",
+
+      showAll: "सभी सेव किए गए आइटम दिखाए जा रहे हैं",
+      showInStock: "केवल स्टॉक में उपलब्ध",
+      showOutOfStock: "केवल आउट ऑफ स्टॉक",
+
+      filterLabel: "विशलिस्ट को फ़िल्टर करें",
+      filterAll: "सभी",
+      filterInStock: "स्टॉक में",
+      filterOutOfStock: "स्टॉक में नहीं",
+
+      sortLabel: "विशलिस्ट को सॉर्ट करें",
+      sortFeatured: "फ़ीचर्ड",
+      sortPriceLow: "कीमत: कम से अधिक",
+      sortPriceHigh: "कीमत: अधिक से कम",
+      sortRatingHigh: "रेटिंग: उच्च से निम्न",
+      sortNewest: "नवीनतम",
+
+      share: "शेयर करें",
+      copied: "कॉपी हो गया",
+      copyLink: "लिंक कॉपी करें",
+      shareTitle: "मेरी विशलिस्ट",
+      shareText: "मेरी विशलिस्ट देखें!",
     },
   },
 
@@ -983,9 +1149,9 @@ export const translations = {
       loginRegenerate: "ভিডিও রিজেনারেট করতে লগইন করুন।",
 
       alreadyInCart: "আগেই কার্টে আছে",
-      alreadyInCartDesc: "\"{title}\" আপনার কার্টে ইতিমধ্যেই আছে।",
+      alreadyInCartDesc: "\{title}\ আপনার কার্টে ইতিমধ্যেই আছে।",
       addedToCart: "কার্টে যোগ করা হয়েছে!",
-      addedToCartDesc: "\"{title}\" আপনার কার্টে যোগ করা হয়েছে।",
+      addedToCartDesc: "\{title}\ আপনার কার্টে যোগ করা হয়েছে।",
 
       confirmRegenerate: "মার্কেটিং ভিডিও রিজেনারেট করবেন? এতে ২–৫ মিনিট লাগবে।",
       regenStarted: "ভিডিও রিজেনারেশন শুরু হয়েছে!",
@@ -1005,6 +1171,89 @@ export const translations = {
       addToCart: "কার্টে যোগ করুন",
 
       defaultStoreName: "কারিগর মার্ট",
+    },
+    dashboard: {
+      welcome: "স্বাগতম, {storeName}!",
+      overview: "এটি আপনার স্টোরের এক নজরের সারাংশ।",
+      viewPublicStore: "পাবলিক স্টোর দেখুন",
+      addNewProduct: "+ নতুন পণ্য যোগ করুন",
+
+      liveUpdatesActive: "লাইভ আপডেট সক্রিয়",
+      trackingVideos: "রিয়েল-টাইমে {count} ভিডিও ট্র্যাক করা হচ্ছে",
+      connectingRealtime: "রিয়েল-টাইম আপডেটে সংযোগ করা হচ্ছে...",
+
+      totalRevenue: "মোট আয়",
+      revenueDescription: "সম্পন্ন অর্ডার থেকে গণনা করা হয়",
+      totalOrders: "মোট অর্ডার",
+      ordersDescription: "নতুন অর্ডার এখানে দেখা যাবে",
+      productsListed: "তালিকাভুক্ত পণ্য",
+      productsListedDescription: "আপনার স্টোরে মোট পণ্য",
+
+      myStories: "আমার গল্প",
+      myStoriesDescription:
+        "আপনার কারুশিল্পের গল্প শেয়ার করুন, নতুন সংগ্রহ ঘোষণা করুন বা আপনার কাজের প্রক্রিয়া লিখুন।",
+      manageStories: "গল্প পরিচালনা করুন",
+
+      yourProducts: "আপনার পণ্য",
+      yourProductsDescription: "আপনার ইনভেন্টরি ও পণ্যের বিবরণ পরিচালনা করুন।",
+
+      tableImage: "ছবি",
+      tableProduct: "পণ্য",
+      tablePrice: "মূল্য",
+      tableInventory: "ইনভেন্টরি",
+      tableMarketingVideo: "মার্কেটিং ভিডিও",
+      tableActions: "অ্যাকশন",
+
+      viewVideo: "দেখুন",
+      regenerate: "আবার তৈরি করুন",
+      generating: "তৈরি হচ্ছে...",
+      failed: "ব্যর্থ",
+      retry: "পুনরায় চেষ্টা",
+      generateVideo: "ভিডিও তৈরি করুন",
+
+      edit: "সম্পাদনা",
+      delete: "মুছুন",
+
+      deleteConfirmTitle: "আপনি কি নিশ্চিত?",
+      deleteConfirmDesc:
+        'এটি পণ্য "{title}" স্থায়ীভাবে মুছে ফেলবে। এই ক্রিয়া পূর্বাবস্থায় ফেরা যাবে না।',
+      cancel: "বাতিল",
+      yesDelete: "হ্যাঁ, মুছুন",
+
+      noData: "কোন তথ্য পাওয়া যায়নি।",
+      error: "ড্যাশবোর্ড লোড করতে ব্যর্থ।",
+    },
+    wishlist: {
+      title: "আমার উইশলিস্ট",
+      subtitle: "আপনার সঞ্চিত প্রিয় জিনিসগুলোর সংগ্রহ।",
+
+      emptyTitle: "আপনার উইশলিস্ট খালি",
+      emptySubtitle: "আপনি এখনও কোনো আইটেম যোগ করেননি।",
+      continueShopping: "কেনাকাটা চালিয়ে যান",
+
+      items: "আইটেম",
+
+      showAll: "সকল সংরক্ষিত আইটেম দেখানো হচ্ছে",
+      showInStock: "শুধু স্টকে থাকা আইটেম",
+      showOutOfStock: "শুধু স্টক শেষ হওয়া আইটেম",
+
+      filterLabel: "উইশলিস্ট ফিল্টার করুন",
+      filterAll: "সব",
+      filterInStock: "স্টকে",
+      filterOutOfStock: "স্টকে নেই",
+
+      sortLabel: "উইশলিস্ট সাজান",
+      sortFeatured: "ফিচার্ড",
+      sortPriceLow: "দাম: কম থেকে বেশি",
+      sortPriceHigh: "দাম: বেশি থেকে কম",
+      sortRatingHigh: "রেটিং: বেশি থেকে কম",
+      sortNewest: "নতুন",
+
+      share: "শেয়ার করুন",
+      copied: "কপি হয়েছে",
+      copyLink: "লিংক কপি করুন",
+      shareTitle: "আমার উইশলিস্ট",
+      shareText: "আমার উইশলিস্ট দেখে নাও!",
     },
   },
 
@@ -1305,9 +1554,9 @@ export const translations = {
       loginRegenerate: "வீடியோ மீண்டும் உருவாக்க உள்நுழைக.",
 
       alreadyInCart: "ஏற்கனவே கார்ட்டில் உள்ளது",
-      alreadyInCartDesc: "\"{title}\" ஏற்கனவே உங்கள் கார்ட்டில் உள்ளது.",
+      alreadyInCartDesc: "\{title}\ ஏற்கனவே உங்கள் கார்ட்டில் உள்ளது.",
       addedToCart: "கார்ட்டில் சேர்க்கப்பட்டது!",
-      addedToCartDesc: "\"{title}\" உங்கள் கார்ட்டில் சேர்க்கப்பட்டது.",
+      addedToCartDesc: "\{title}\ உங்கள் கார்ட்டில் சேர்க்கப்பட்டது.",
 
       confirmRegenerate: "மார்க்கெட்டிங் வீடியோ மீண்டும் உருவாக்க வேண்டுமா? 2–5 நிமிடம் ஆகும்.",
       regenStarted: "வீடியோ மீண்டும் உருவாக்க ஆரம்பிக்கப்பட்டது!",
@@ -1327,6 +1576,89 @@ export const translations = {
       addToCart: "கார்ட்டில் சேர்",
 
       defaultStoreName: "கரிகர் மார்ட்",
+    },
+    dashboard: {
+      welcome: "வரவேற்கிறோம், {storeName}!",
+      overview: "இது உங்கள் கடையின் சுருக்கமான விவரம்.",
+      viewPublicStore: "பொது கடையை காண்க",
+      addNewProduct: "+ புதிய தயாரிப்பு சேர்க்கவும்",
+
+      liveUpdatesActive: "நேரடி புதுப்பிப்புகள் செயலில் உள்ளன",
+      trackingVideos: "நேரலையில் {count} வீடியோக்கள் உருவாகின்றன",
+      connectingRealtime: "நேரடி புதுப்பிப்புகளுடன் இணைக்கப்படுகிறது...",
+
+      totalRevenue: "மொத்த வருமானம்",
+      revenueDescription: "நிறைவு செய்யப்பட்ட ஆர்டர்களிலிருந்து கணக்கிடப்பட்டது",
+      totalOrders: "மொத்த ஆர்டர்கள்",
+      ordersDescription: "புதிய ஆர்டர்கள் இங்கு தோன்றும்",
+      productsListed: "பட்டியலிடப்பட்ட தயாரிப்புகள்",
+      productsListedDescription: "உங்கள் கடையில் உள்ள தயாரிப்புகள்",
+
+      myStories: "என் கதைகள்",
+      myStoriesDescription:
+        "உங்கள் கைவினைப் பற்றிய கதையைப் பகிரவும், புதிய தயாரிப்புகளைக் அறிவிக்கவும் அல்லது உங்கள் செயற்கை முறையை விவரிக்கவும்.",
+      manageStories: "கதைகளை நிர்வகிக்கவும்",
+
+      yourProducts: "உங்கள் தயாரிப்புகள்",
+      yourProductsDescription: "உங்கள் சரக்குகளையும் தயாரிப்பு விவரங்களையும் நிர்வகிக்கவும்.",
+
+      tableImage: "படம்",
+      tableProduct: "தயாரிப்பு",
+      tablePrice: "விலை",
+      tableInventory: "சரக்கு",
+      tableMarketingVideo: "மார்க்கெட்டிங் வீடியோ",
+      tableActions: "நடவடிக்கைகள்",
+
+      viewVideo: "காண்க",
+      regenerate: "மீண்டும் உருவாக்கவும்",
+      generating: "உருவாகிறது...",
+      failed: "தோல்வி",
+      retry: "மீண்டும் முயற்சிக்கவும்",
+      generateVideo: "வீடியோ உருவாக்கவும்",
+
+      edit: "திருத்து",
+      delete: "அழிக்கவும்",
+
+      deleteConfirmTitle: "உங்கள் முடிவு உறுதியா?",
+      deleteConfirmDesc:
+        'இந்த தயாரிப்பு "{title}" நிரந்தரமாக அழிக்கப்படும். மீட்க முடியாது.',
+      cancel: "ரத்து செய்",
+      yesDelete: "ஆம், அழிக்கவும்",
+
+      noData: "தகவல் ஏதும் இல்லை.",
+      error: "டாஷ்போர்டை ஏற்ற முடியவில்லை.",
+    },
+    wishlist: {
+      title: "என் விருப்பப் பட்டியல்",
+      subtitle: "நீங்கள் சேமித்த பொக்கிஷங்களின் தொகுப்பு.",
+
+      emptyTitle: "உங்கள் விருப்பப் பட்டியல் காலியாக உள்ளது",
+      emptySubtitle: "இன்னும் எதையும் சேர்க்கவில்லை போலிருக்கிறது.",
+      continueShopping: "ஷாப்பிங் தொடர்ந்து செய்யவும்",
+
+      items: "பொருள்",
+
+      showAll: "சேமிக்கப்பட்ட அனைத்து பொருட்களும் காட்டப்படுகின்றன",
+      showInStock: "ஸ்டாக்கில் உள்ளவை மட்டும்",
+      showOutOfStock: "ஸ்டாக்கில் இல்லாதவை மட்டும்",
+
+      filterLabel: "விருப்பப் பட்டியலை வடிகட்டி",
+      filterAll: "அனைத்தும்",
+      filterInStock: "ஸ்டாக்கில் உள்ளது",
+      filterOutOfStock: "ஸ்டாக்கில் இல்லை",
+
+      sortLabel: "விருப்பப் பட்டியல் வரிசைப்படுத்தல்",
+      sortFeatured: "சிறப்பிக்கப்பட்டவை",
+      sortPriceLow: "விலை: குறைவிலிருந்து அதிகம்",
+      sortPriceHigh: "விலை: அதிகிலிருந்து குறைவு",
+      sortRatingHigh: "மதிப்பீடு: அதிகம் முதல் குறைவு வரை",
+      sortNewest: "புதியவை",
+
+      share: "பகிரவும்",
+      copied: "நகல் செய்யப்பட்டது",
+      copyLink: "இணைப்பை நகலெடுக்கவும்",
+      shareTitle: "என் விருப்பப் பட்டியல்",
+      shareText: "என் விருப்பப் பட்டியலைப் பாருங்கள்!",
     },
   },
 
@@ -1627,9 +1959,9 @@ export const translations = {
       loginRegenerate: "వీడియోను మళ్లీ రూపొందించడానికి లాగిన్ అవండి.",
 
       alreadyInCart: "ఇప్పటికే కార్ట్‌లో ఉంది",
-      alreadyInCartDesc: "\"{title}\" ఇప్పటికే మీ కార్ట్‌లో ఉంది.",
+      alreadyInCartDesc: "\{title}\ ఇప్పటికే మీ కార్ట్‌లో ఉంది.",
       addedToCart: "కార్ట్‌లో జోడించబడింది!",
-      addedToCartDesc: "\"{title}\" మీ కార్ట్‌లో జోడించబడింది.",
+      addedToCartDesc: "\{title}\ మీ కార్ట్‌లో జోడించబడింది.",
 
       confirmRegenerate: "మార్కెటింగ్ వీడియోను మళ్లీ రూపొందించాలా? దీానికి 2–5 నిమిషాలు పడుతుంది.",
       regenStarted: "వీడియో రీజెనరేషన్ ప్రారంభమైంది!",
@@ -1649,6 +1981,89 @@ export const translations = {
       addToCart: "కార్ట్‌లో జోడించండి",
 
       defaultStoreName: "కారిగర్ మార్ట్",
+    },
+    dashboard: {
+      welcome: "స్వాగతం, {storeName}!",
+      overview: "ఇది మీ స్టోర్‌కు సంబంధించిన సమగ్ర వివరాలు.",
+      viewPublicStore: "పబ్లిక్ స్టోర్ చూడండి",
+      addNewProduct: "+ కొత్త ఉత్పత్తి జోడించండి",
+
+      liveUpdatesActive: "లైవ్ అప్‌డేట్లు యాక్టివ్‌లో ఉన్నాయి",
+      trackingVideos: "రియల్‌టైమ్‌లో {count} వీడియోలు ట్రాక్ అవుతున్నాయి",
+      connectingRealtime: "రియల్‌టైమ్ అప్‌డేట్స్‌కు కనెక్ట్ అవుతున్నాము...",
+
+      totalRevenue: "మొత్తం ఆదాయం",
+      revenueDescription: "పూర్తయిన ఆర్డర్ల నుండి లెక్కించబడింది",
+      totalOrders: "మొత్తం ఆర్డర్లు",
+      ordersDescription: "కొత్త ఆర్డర్లు ఇక్కడ కనిపిస్తాయి",
+      productsListed: "జాబితాలో ఉన్న ఉత్పత్తులు",
+      productsListedDescription: "మీ స్టోర్‌లోని మొత్తం ఉత్పత్తులు",
+
+      myStories: "నా కథలు",
+      myStoriesDescription:
+        "మీ కృషి వెనుక కథను పంచుకోండి, కొత్త కలెక్షన్లను ప్రకటించండి లేదా మీ ప్రక్రియను వివరించండి.",
+      manageStories: "కథలను నిర్వహించండి",
+
+      yourProducts: "మీ ఉత్పత్తులు",
+      yourProductsDescription: "మీ ఇన్వెంటరీ మరియు ఉత్పత్తి వివరాలను నిర్వహించండి.",
+
+      tableImage: "చిత్రం",
+      tableProduct: "ఉత్పత్తి",
+      tablePrice: "ధర",
+      tableInventory: "ఇన్వెంటరీ",
+      tableMarketingVideo: "మార్కెటింగ్ వీడియో",
+      tableActions: "చర్యలు",
+
+      viewVideo: "చూడండి",
+      regenerate: "మళ్లీ సృష్టించండి",
+      generating: "సృష్టిస్తోంది...",
+      failed: "విఫలమైంది",
+      retry: "మళ్లీ ప్రయత్నించండి",
+      generateVideo: "వీడియో సృష్టించండి",
+
+      edit: "సవరించండి",
+      delete: "తొలగించండి",
+
+      deleteConfirmTitle: "మీరు ఖచ్చితంగా అనుకుంటున్నారా?",
+      deleteConfirmDesc:
+        'ఈ ఉత్పత్తి "{title}" శాశ్వతంగా తొలగించబడుతుంది. తిరిగి పొందలేరు.',
+      cancel: "రద్దు",
+      yesDelete: "అవును, తొలగించండి",
+
+      noData: "డేటా దొరకలేదు.",
+      error: "డాష్‌బోర్డ్ లోడ్ చేయడంలో విఫలమైంది.",
+    },
+    wishlist: {
+      title: "నా విష్‌లిస్ట్",
+      subtitle: "మీరు సేవ్ చేసిన ఇష్టమైన వస్తువుల సేకరణ.",
+
+      emptyTitle: "మీ విష్‌లిస్ట్ ఖాళీగా ఉంది",
+      emptySubtitle: "మీరు ఇంకా ఏ వస్తువూ జోడించలేదు.",
+      continueShopping: "షాపింగ్ కొనసాగించండి",
+
+      items: "వస్తువులు",
+
+      showAll: "సేవ్ చేసిన అన్ని వస్తువులు చూపుతున్నాం",
+      showInStock: "స్టాక్‌లో ఉన్నవి మాత్రమే",
+      showOutOfStock: "స్టాక్‌లో లేని వాటి మాత్రమే",
+
+      filterLabel: "విష్‌లిస్ట్ ఫిల్టర్",
+      filterAll: "అన్నీ",
+      filterInStock: "స్టాక్‌లో",
+      filterOutOfStock: "స్టాక్‌లో లేదు",
+
+      sortLabel: "విష్‌లిస్ట్ సార్టింగ్",
+      sortFeatured: "ఫీచర్డ్",
+      sortPriceLow: "ధర: తక్కువ నుండి ఎక్కువ",
+      sortPriceHigh: "ధర: ఎక్కువ నుండి తక్కువ",
+      sortRatingHigh: "రేటింగ్: ఎక్కువ నుండి తక్కువ",
+      sortNewest: "కొత్తవి",
+
+      share: "షేర్",
+      copied: "కాపీ అయింది",
+      copyLink: "లింక్ కాపీ చేయండి",
+      shareTitle: "నా విష్‌లిస్ట్",
+      shareText: "నా విష్‌లిస్ట్ చూడండి!",
     },
   },
 
@@ -1971,6 +2386,89 @@ export const translations = {
       addToCart: "कार्टमध्ये जोडा",
 
       defaultStoreName: "करिगर मार्ट",
+    },
+    dashboard: {
+      welcome: "स्वागत आहे, {storeName}!",
+      overview: "हे तुमच्या स्टोअरचे संक्षिप्त अवलोकन आहे.",
+      viewPublicStore: "सार्वजनिक स्टोअर पहा",
+      addNewProduct: "+ नवे उत्पादन जोडा",
+
+      liveUpdatesActive: "लाईव्ह अपडेट्स सक्रिय",
+      trackingVideos: "रिअल-टाइममध्ये {count} व्हिडिओ ट्रॅक केले जात आहेत",
+      connectingRealtime: "रिअल-टाइम अपडेट्सशी जोडले जात आहे...",
+
+      totalRevenue: "एकूण उत्पन्न",
+      revenueDescription: "पूर्ण झालेल्या ऑर्डर्समधून गणना",
+      totalOrders: "एकूण ऑर्डर्स",
+      ordersDescription: "नवीन ऑर्डर्स येथे दिसतील",
+      productsListed: "लिस्ट केलेली उत्पादने",
+      productsListedDescription: "तुमच्या स्टोअरमधील एकूण उत्पादने",
+
+      myStories: "माझ्या कथा",
+      myStoriesDescription:
+        "तुमच्या कलेची कथा ग्राहकांपर्यंत पोहोचवा, नवे कलेक्शन जाहीर करा किंवा तुमच्या प्रक्रियेबद्दल लिहा.",
+      manageStories: "कथा व्यवस्थापित करा",
+
+      yourProducts: "तुमची उत्पादने",
+      yourProductsDescription: "तुमचे इन्व्हेंटरी आणि उत्पादन तपशील व्यवस्थापित करा.",
+
+      tableImage: "प्रतिमा",
+      tableProduct: "उत्पादन",
+      tablePrice: "किंमत",
+      tableInventory: "इन्व्हेंटरी",
+      tableMarketingVideo: "मार्केटिंग व्हिडिओ",
+      tableActions: "क्रिया",
+
+      viewVideo: "पहा",
+      regenerate: "पुन्हा तयार करा",
+      generating: "तयार होत आहे...",
+      failed: "अयशस्वी",
+      retry: "पुन्हा प्रयत्न करा",
+      generateVideo: "व्हिडिओ तयार करा",
+
+      edit: "संपादित करा",
+      delete: "हटवा",
+
+      deleteConfirmTitle: "आपण खात्री आहे?",
+      deleteConfirmDesc:
+        'हे उत्पादन "{title}" कायमचे हटवले जाईल. ही क्रिया पूर्ववत करता येणार नाही.',
+      cancel: "रद्द करा",
+      yesDelete: "होय, हटवा",
+
+      noData: "डेटा आढळला नाही.",
+      error: "डॅशबोर्ड लोड करण्यात अयशस्वी.",
+    },
+    wishlist: {
+      title: "माझी विशलिस्ट",
+      subtitle: "तुम्ही जपून ठेवलेल्या वस्तूंचा संग्रह.",
+
+      emptyTitle: "तुमची विशलिस्ट रिकामी आहे",
+      emptySubtitle: "असे दिसते की तुम्ही अजून कोणतीही वस्तू जोडलेली नाही.",
+      continueShopping: "खरेदी सुरू ठेवा",
+
+      items: "वस्तू",
+
+      showAll: "जतन केलेल्या सर्व वस्तू दाखवत आहोत",
+      showInStock: "फक्त स्टॉकमध्ये असलेल्या",
+      showOutOfStock: "फक्त स्टॉक नसलेल्या",
+
+      filterLabel: "विशलिस्ट फिल्टर",
+      filterAll: "सर्व",
+      filterInStock: "स्टॉकमध्ये",
+      filterOutOfStock: "स्टॉकमध्ये नाही",
+
+      sortLabel: "विशलिस्ट क्रमबद्ध करा",
+      sortFeatured: "फीचर्ड",
+      sortPriceLow: "किंमत: कमी ते जास्त",
+      sortPriceHigh: "किंमत: जास्त ते कमी",
+      sortRatingHigh: "रेटिंग: जास्त ते कमी",
+      sortNewest: "नवीन",
+
+      share: "शेअर करा",
+      copied: "कॉपी झाले",
+      copyLink: "लिंक कॉपी करा",
+      shareTitle: "माझी विशलिस्ट",
+      shareText: "माझी विशलिस्ट पाहा!",
     },
   },
 };

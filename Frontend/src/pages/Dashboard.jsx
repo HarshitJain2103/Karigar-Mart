@@ -10,8 +10,10 @@ import { useNavigate } from 'react-router-dom';
 import { useVideoSSE } from '../hooks/useVideoSSE';
 import { getApiUrl } from "@/lib/api";
 import Spinner from '@/components/ui/Spinner';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function Dashboard() {
+  const { t } = useTranslation();
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -157,7 +159,7 @@ export default function Dashboard() {
     }
   };
 
-  if (loading) return <div className="flex justify-center items-center h-screen"><Spinner size="lg"/></div>;
+  if (loading) return <div className="flex justify-center items-center h-screen"><Spinner size="lg" /></div>;
   if (error) return <div>Error: {error}</div>;
   if (!dashboardData) return <div>No data found.</div>;
 
@@ -168,12 +170,12 @@ export default function Dashboard() {
       <div className="max-w-7xl mx-auto py-8 px-4">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-center md:text-left">Welcome, {profile.storeName}!</h1>
-            <p className="text-muted-foreground text-center md:text-left">Here's your store's overview.</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-center md:text-left">{t('dashboard.welcome', { storeName: profile.storeName })}</h1>
+            <p className="text-muted-foreground text-center md:text-left">{t('dashboard.overview')}</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
-            <Button variant="outline" onClick={() => navigate(`/store/${profile._id}`)}>View Public Store</Button>
-            <Button onClick={handleAddNewProduct}>+ Add New Product</Button>
+            <Button variant="outline" onClick={() => navigate(`/store/${profile._id}`)}>{t('dashboard.viewPublicStore')}</Button>
+            <Button onClick={handleAddNewProduct}>{t('dashboard.addNewProduct')}</Button>
           </div>
         </div>
 
@@ -184,14 +186,14 @@ export default function Dashboard() {
               <>
                 <Wifi className="w-4 h-4 text-blue-600 animate-pulse" />
                 <span className="text-sm text-blue-800">
-                  <strong>Live updates active</strong> - Tracking {generatingCount} video{generatingCount > 1 ? 's' : ''} generating in real-time
+                  <strong>{t('dashboard.liveUpdatesActive')}</strong> - {t('dashboard.trackingVideos', { count: generatingCount })}
                 </span>
               </>
             ) : (
               <>
                 <WifiOff className="w-4 h-4 text-gray-500" />
                 <span className="text-sm text-gray-700">
-                  Connecting to real-time updates...
+                  {t('dashboard.connectingRealtime')}
                 </span>
               </>
             )}
@@ -200,9 +202,9 @@ export default function Dashboard() {
 
         {/* Stats Cards */}
         <div className="grid gap-4 grid-cols-1 md:grid-cols-3 mb-8">
-          <Card><CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"><CardTitle className="text-sm font-medium">Total Revenue</CardTitle><DollarSign className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">₹{dashboardData.totalRevenue?.toFixed(2) || '0.00'}</div><p className="text-xs text-muted-foreground">Calculated from completed orders</p></CardContent></Card>
-          <Card><CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"><CardTitle className="text-sm font-medium">Total Orders</CardTitle><ShoppingCart className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{dashboardData.totalOrders || 0}</div><p className="text-xs text-muted-foreground">New orders will appear here</p></CardContent></Card>
-          <Card><CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"><CardTitle className="text-sm font-medium">Products Listed</CardTitle><Package className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{products.length}</div><p className="text-xs text-muted-foreground">Total products in your store</p></CardContent></Card>
+          <Card><CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"><CardTitle className="text-sm font-medium">{t('dashboard.totalRevenue')}</CardTitle><DollarSign className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">₹{dashboardData.totalRevenue?.toFixed(2) || '0.00'}</div><p className="text-xs text-muted-foreground">{t('dashboard.revenueDescription')}</p></CardContent></Card>
+          <Card><CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"><CardTitle className="text-sm font-medium">{t('dashboard.totalOrders')}</CardTitle><ShoppingCart className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{dashboardData.totalOrders || 0}</div><p className="text-xs text-muted-foreground">{t('dashboard.ordersDescription')}</p></CardContent></Card>
+          <Card><CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"><CardTitle className="text-sm font-medium">{t('dashboard.productsListed')}</CardTitle><Package className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{products.length}</div><p className="text-xs text-muted-foreground">{t('dashboard.productsListedDescription')}</p></CardContent></Card>
         </div>
 
         {/* Stories Card */}
@@ -210,14 +212,14 @@ export default function Dashboard() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <BookOpen className="h-5 w-5" />
-              My Stories
+              {t('dashboard.myStories')}
             </CardTitle>
             <CardDescription>
-              Share the narrative behind your craft, announce new collections, or write about your process to connect with customers.
+              {t('dashboard.myStoriesDescription')}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button onClick={() => navigate('/dashboard/stories')}>Manage Stories</Button>
+            <Button onClick={() => navigate('/dashboard/stories')}>{t('dashboard.manageStories')}</Button>
           </CardContent>
         </Card>
 
@@ -231,12 +233,12 @@ export default function Dashboard() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="hidden md:table-cell">Image</TableHead>
-                  <TableHead>Product</TableHead>
-                  <TableHead>Price</TableHead>
-                  <TableHead className="hidden md:table-cell">Inventory</TableHead>
-                  <TableHead className="hidden lg:table-cell">Marketing Video</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead className="hidden md:table-cell">{t('dashboard.tableImage')}</TableHead>
+                  <TableHead>{t('dashboard.tableProduct')}</TableHead>
+                  <TableHead>{t('dashboard.tablePrice')}</TableHead>
+                  <TableHead className="hidden md:table-cell">{t('dashboard.tableInventory')}</TableHead>
+                  <TableHead className="hidden lg:table-cell">{t('dashboard.tableMarketingVideo')}</TableHead>
+                  <TableHead className="text-right">{t('dashboard.tableActions')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -262,7 +264,7 @@ export default function Dashboard() {
                             className="text-blue-600 hover:text-blue-700 text-sm flex items-center gap-1"
                           >
                             <Video className="w-4 h-4" />
-                            View
+                            {t('dashboard.viewVideo')}
                           </a>
                           <Button
                             variant="ghost"
@@ -270,27 +272,27 @@ export default function Dashboard() {
                             onClick={() => handleRegenerateVideo(product._id)}
                             className="text-xs h-6 px-2"
                           >
-                            Regenerate
+                            {t('dashboard.regenerate')}
                           </Button>
                         </div>
                       )}
                       {product.videoStatus === 'generating' && (
                         <span className="text-xs text-blue-600 flex items-center gap-1">
                           <Loader className="w-3 h-3 animate-spin" />
-                          Generating...
+                          {t('dashboard.generating')}
                           {isConnected && <span className="text-[10px] text-gray-500">(live)</span>}
                         </span>
                       )}
                       {product.videoStatus === 'failed' && (
                         <div className="flex items-center gap-2">
-                          <span className="text-xs text-red-600">Failed</span>
+                          <span className="text-xs text-red-600">{t('dashboard.failed')}</span>
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => handleRegenerateVideo(product._id)}
                             className="text-xs h-6 px-2"
                           >
-                            Retry
+                            {t('dashboard.retry')}
                           </Button>
                         </div>
                       )}
@@ -301,14 +303,14 @@ export default function Dashboard() {
                           onClick={() => handleRegenerateVideo(product._id)}
                           className="text-xs h-6 px-2"
                         >
-                          Generate Video
+                          {t('dashboard.generateVideo')}
                         </Button>
                       )}
                     </TableCell>
 
                     <TableCell className="text-right">
-                      <Button variant="ghost" size="sm" onClick={() => handleEditProduct(product)}>Edit</Button>
-                      <Button variant="ghost" size="sm" className="text-red-500 hover:text-red-600" onClick={() => handleDeleteConfirmation(product)}>Delete</Button>
+                      <Button variant="ghost" size="sm" onClick={() => handleEditProduct(product)}>{t('dashboard.edit')}</Button>
+                      <Button variant="ghost" size="sm" className="text-red-500 hover:text-red-600" onClick={() => handleDeleteConfirmation(product)}>{t('dashboard.delete')}</Button>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -327,14 +329,14 @@ export default function Dashboard() {
         <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogTitle>{t('dashboard.deleteConfirmTitle')}</AlertDialogTitle>
               <AlertDialogDescription>
-                This will permanently delete the product "{productToDelete?.title}". This action cannot be undone.
+                {t('dashboard.deleteConfirmDesc', { title: productToDelete?.title })}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={handleDeleteProduct}>Yes, Delete</AlertDialogAction>
+              <AlertDialogCancel>{t('dashboard.cancel')}</AlertDialogCancel>
+              <AlertDialogAction onClick={handleDeleteProduct}>{t('dashboard.yesDelete')}</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
