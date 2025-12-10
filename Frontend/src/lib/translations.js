@@ -431,6 +431,21 @@ export const translations = {
       shareTitle: "My Wishlist",
       shareText: "Check out my wishlist!",
     },
+    shopPage: {
+      title: "Our Marketplace",
+      subtitle: "Explore unique, handcrafted creations from artisans across the country.",
+      liveUpdates: "Live updates active",
+      generatingVideos: "video(s) generating",
+      connecting: "Connecting to real-time updates...",
+      filterCategory: "Filter by Category",
+      allCategories: "All Categories",
+    },
+    artisansPage: {
+      title: "Meet Our Artisans",
+      subtitle: "Discover the stories and crafts of talented artists from across the nation.",
+      noArtisans: "No artisan stores have been published yet.",
+      error: "Error",
+    },
   },
 
   hi: {
@@ -849,6 +864,21 @@ export const translations = {
       shareTitle: "मेरी विशलिस्ट",
       shareText: "मेरी विशलिस्ट देखें!",
     },
+    shopPage: {
+      title: "हमारा मार्केटप्लेस",
+      subtitle: "देशभर के कारीगरों द्वारा बनाई गई अनोखी, हस्तनिर्मित वस्तुएँ खोजें।",
+      liveUpdates: "लाइव अपडेट सक्रिय",
+      generatingVideos: "वीडियो बन रहे हैं",
+      connecting: "रीयल-टाइम अपडेट से कनेक्ट किया जा रहा है...",
+      filterCategory: "कैटेगरी द्वारा फ़िल्टर करें",
+      allCategories: "सभी कैटेगरी",
+    },
+    artisansPage: {
+      title: "हमारे कारीगरों से मिलें",
+      subtitle: "देशभर के प्रतिभाशाली कलाकारों की कहानियाँ और उनकी कला जानें।",
+      noArtisans: "अभी तक कोई कारीगर स्टोर प्रकाशित नहीं हुआ है।",
+      error: "त्रुटि",
+    },
   },
 
   bn: {
@@ -1255,6 +1285,21 @@ export const translations = {
       shareTitle: "আমার উইশলিস্ট",
       shareText: "আমার উইশলিস্ট দেখে নাও!",
     },
+    shopPage: {
+      title: "আমাদের মার্কেটপ্লেস",
+      subtitle: "দেশের বিভিন্ন প্রান্তের কারিগরদের তৈরি অনন্য হস্তশিল্প আবিষ্কার করুন।",
+      liveUpdates: "লাইভ আপডেট সক্রিয়",
+      generatingVideos: "ভিডিও তৈরি হচ্ছে",
+      connecting: "রিয়েল-টাইম আপডেটে সংযোগ করা হচ্ছে...",
+      filterCategory: "বিভাগ অনুযায়ী ফিল্টার করুন",
+      allCategories: "সকল বিভাগ",
+    },
+    artisansPage: {
+      title: "আমাদের কারিগরদের সাথে পরিচিত হন",
+      subtitle: "দেশের বিভিন্ন প্রান্তের প্রতিভাবান শিল্পীদের গল্প ও তাদের কারুশিল্প আবিষ্কার করুন।",
+      noArtisans: "এখনও কোনো কারিগরের স্টোর প্রকাশিত হয়নি।",
+      error: "ত্রুটি",
+    },
   },
 
   ta: {
@@ -1659,6 +1704,21 @@ export const translations = {
       copyLink: "இணைப்பை நகலெடுக்கவும்",
       shareTitle: "என் விருப்பப் பட்டியல்",
       shareText: "என் விருப்பப் பட்டியலைப் பாருங்கள்!",
+    },
+    shopPage: {
+      title: "எங்கள் சந்தை",
+      subtitle: "நாட்டின் பல பகுதிகளில் இருந்து கலைஞர்கள் உருவாக்கிய கைவேலை பொருட்களை கண்டறியுங்கள்.",
+      liveUpdates: "நேரடி புதுப்பிப்புகள் செயல்பாட்டில் உள்ளன",
+      generatingVideos: "வீடியோக்கள் உருவாக்கப்படுகின்றன",
+      connecting: "உண்மைக் கால புதுப்பிப்புகளுடன் இணைக்கப்படுகிறது...",
+      filterCategory: "வகைப்பட வடிகட்டு",
+      allCategories: "அனைத்து வகைகள்",
+    },
+    artisansPage: {
+      title: "எங்கள் கலைஞர்களை சந்திக்கவும்",
+      subtitle: "நாட்டின் பல பகுதிகளில் உள்ள திறமைமிக்க கலைஞர்களின் கதைகளையும் அவர்களின் கைவேலைகளையும் கண்டறியுங்கள்.",
+      noArtisans: "இதுவரை எந்த கலைஞர் கடைகளும் வெளியிடப்படவில்லை.",
+      error: "பிழை",
     },
   },
 
@@ -2065,6 +2125,21 @@ export const translations = {
       shareTitle: "నా విష్‌లిస్ట్",
       shareText: "నా విష్‌లిస్ట్ చూడండి!",
     },
+    shopPage: {
+      title: "మా మార్కెట్‌ప్లేస్",
+      subtitle: "దేశవ్యాప్తంగా ఉన్న కళాకారుల చేత రూపుదిద్దిన ప్రత్యేక హస్తకళలను అన్వేషించండి.",
+      liveUpdates: "లైవ్ అప్‌డేట్‌లు యాక్టివ్‌లో ఉన్నాయి",
+      generatingVideos: "వీడియోలు రూపొందుతున్నాయి",
+      connecting: "రియల్‌టైమ్ అప్‌డేట్‌లకు కనెక్ట్ చేస్తున్నాం...",
+      filterCategory: "కేటగిరీ ద్వారా ఫిల్టర్ చేయండి",
+      allCategories: "అన్ని కేటగిరీలు",
+    },
+    artisansPage: {
+      title: "మా కళాకారులను కలవండి",
+      subtitle: "దేశవ్యాప్తంగా ఉన్న ప్రతిభావంతులైన కళాకారుల కథలు మరియు వారి హస్తకళలను తెలుసుకోండి.",
+      noArtisans: "ఇప్పటికీ ఎలాంటి కళాకారుల స్టోర్లు ప్రచురించబడలేదు.",
+      error: "పొరపాటు",
+    },
   },
 
   mr: {
@@ -2469,6 +2544,21 @@ export const translations = {
       copyLink: "लिंक कॉपी करा",
       shareTitle: "माझी विशलिस्ट",
       shareText: "माझी विशलिस्ट पाहा!",
+    },
+    shopPage: {
+      title: "आमचा मार्केटप्लेस",
+      subtitle: "देशभरातील कारागीरांनी बनवलेली अनोखी, हस्तनिर्मित उत्पादने शोधा.",
+      liveUpdates: "लाइव्ह अपडेट्स सक्रिय",
+      generatingVideos: "व्हिडिओ तयार होत आहेत",
+      connecting: "रिअल-टाइम अपडेट्सशी जोडले जात आहे...",
+      filterCategory: "वर्गानुसार फिल्टर करा",
+      allCategories: "सर्व वर्ग",
+    },
+    artisansPage: {
+      title: "आमच्या कारागिरांना भेटा",
+      subtitle: "देशभरातील प्रतिभावान कलाकारांच्या कथा आणि त्यांची कलाकृती जाणून घ्या.",
+      noArtisans: "अद्याप कोणतेही कारागीर स्टोअर्स प्रकाशित झालेले नाहीत.",
+      error: "त्रुटी",
     },
   },
 };

@@ -8,8 +8,10 @@ import { useVideoSSE } from '../hooks/useVideoSSE';
 import { Wifi, WifiOff } from 'lucide-react';
 import { getApiUrl } from '@/lib/api';
 import Spinner from '@/components/ui/Spinner';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function ShopPage() {
+  const { t } = useTranslation();
   const [productsData, setProductsData] = useState({ products: [], page: 1, pages: 1 });
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -91,9 +93,9 @@ export default function ShopPage() {
     <div className="bg-white min-h-screen">
       <div className="max-w-7xl mx-auto py-12 px-4">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900">Our Marketplace</h1>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900">{t('shopPage.title')}</h1>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-            Explore unique, handcrafted creations from artisans across the country.
+            {t('shopPage.subtitle')}
           </p>
         </div>
 
@@ -103,14 +105,14 @@ export default function ShopPage() {
               <>
                 <Wifi className="w-4 h-4 text-blue-600 animate-pulse" />
                 <span className="text-sm text-blue-800">
-                  <strong>Live updates active</strong> - {generatingCount} video{generatingCount > 1 ? 's' : ''} generating
+                  <strong>{t('shopPage.liveUpdates')}</strong> - {generatingCount} {t('shopPage.generatingVideos')}
                 </span>
               </>
             ) : (
               <>
                 <WifiOff className="w-4 h-4 text-gray-500" />
                 <span className="text-sm text-gray-700">
-                  Connecting to real-time updates...
+                  {t('shopPage.connecting')}
                 </span>
               </>
             )}
@@ -119,16 +121,16 @@ export default function ShopPage() {
 
         <div className="flex flex-col sm:flex-row gap-4 mb-8 p-4 bg-slate-50 rounded-lg border">
           <Select onValueChange={(value) => handleFilterChange('category', value)} defaultValue={searchParams.get('category') || 'all'}>
-            <SelectTrigger className="w-full sm:w-[200px]"><SelectValue placeholder="Filter by Category" /></SelectTrigger>
+            <SelectTrigger className="w-full sm:w-[200px]"><SelectValue placeholder={t('shopPage.filterCategory')} /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Categories</SelectItem>
+              <SelectItem value="all">{t('shopPage.allCategories')}</SelectItem>
               {categories.map(cat => <SelectItem key={cat._id} value={cat._id}>{cat.name}</SelectItem>)}
             </SelectContent>
           </Select>
         </div>
 
         {loading ? (
-          <div className="flex justify-center items-top h-screen"><Spinner size="lg"/></div>
+          <div className="flex justify-center items-top h-screen"><Spinner size="lg" /></div>
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
