@@ -1,4 +1,3 @@
-// Frontend/src/lib/translations.js
 export const translations = {
   en: {
     // Header & Navigation
@@ -21,8 +20,6 @@ export const translations = {
       logout: "Logout",
     },
 
-    // Home Page
-    // Home Page - Complete
     home: {
       // Hero slides
       featuredArtisans: "Meet the Masters: Featured Artisans",
@@ -445,6 +442,124 @@ export const translations = {
       subtitle: "Discover the stories and crafts of talented artists from across the nation.",
       noArtisans: "No artisan stores have been published yet.",
       error: "Error",
+    },
+    storiesPage: {
+      title: "Stories & Culture",
+      subtitle: "Discover the narratives behind the crafts.",
+
+      searchPlaceholder: "Search stories by title, region, author...",
+      allCategories: "All categories",
+
+      sortNewest: "Newest",
+      sortOldest: "Oldest",
+      sortPopular: "Popular",
+      sortFeatured: "Featured",
+
+      share: "Share",
+      copied: "Copied",
+      copyLink: "Copy link",
+
+      tags: "Tags",
+      clear: "Clear",
+
+      readStory: "Read Story",
+      fallbackExcerpt: "Explore the story behind the craft.",
+
+      noStories: "No Stories Found",
+      refineFilters: "Try clearing your filters or refining your search.",
+
+      loadMore: "Load more",
+      pauseAuto: "Pause auto-load",
+      autoLoad: "Auto-load",
+
+      footerNote: "Have a story to share? Reach out via our Contact page.",
+
+      error: "Error",
+      retry: "Retry"
+    },
+    cartPage: {
+      title: "My Shopping Cart",
+      emptyTitle: "Your Cart is Empty",
+      emptySubtitle: "Time to fill it up with some amazing crafts!",
+      continueShopping: "Continue Shopping",
+
+      itemsCount: "item",
+      itemsCountPlural: "items",
+
+      outOfStockBanner: "Some items in your cart are out of stock. Please remove them to proceed.",
+      onlyLeft: "Only {count} left in stock",
+      outOfStock: "Out of stock",
+
+      freeShippingRemaining: "You’re ₹{amount} away from free shipping",
+      freeShippingUnlocked: "You’ve unlocked free shipping!",
+
+      each: "each",
+      itemTotal: "Item total",
+
+      clearCart: "Clear Cart",
+
+      orderSummary: "Order Summary",
+      secureCheckout: "Secure checkout and encrypted payments",
+
+      subtotal: "Subtotal",
+      shipping: "Shipping",
+      shippingFree: "Free",
+      shippingCalculated: "Calculated at next step",
+      total: "Total",
+
+      orderNote: "Order note (optional)",
+      orderNotePlaceholder: "Add any special instructions for your order…",
+
+      proceedToCheckout: "Proceed to Checkout",
+
+      fastShipping: "Fast shipping",
+      buyerProtection: "Buyer protection",
+      easyReturns: "Easy returns"
+    },
+    checkoutPage: {
+      secureCheckout: "Secure Checkout",
+
+      // Errors
+      noProduct: "No product specified.",
+      productNotFound: "Could not find the product.",
+      backToShop: "Back to Shop",
+      error: "Error",
+
+      // Sections
+      shippingAddress: "1. Shipping Address",
+      orderSummary: "2. Order Summary",
+
+      // Form labels & placeholders
+      street: "Street Address",
+      streetPlaceholder: "123 Art Lane",
+
+      city: "City",
+      cityPlaceholder: "Mumbai",
+
+      state: "State",
+      statePlaceholder: "Maharashtra",
+
+      postalCode: "Postal Code",
+      postalCodePlaceholder: "400001",
+
+      phoneNumber: "Phone Number",
+      phonePlaceholder: "9876543210",
+
+      // Summary
+      quantity: "Quantity:",
+      subtotal: "Subtotal",
+      shipping: "Shipping",
+      freeShipping: "FREE",
+      total: "Total",
+
+      // Payment button
+      proceedToPayment: "Proceed to Payment",
+
+      // JS alerts
+      fillAllFields: "Please fill out all shipping fields.",
+      loginRequired: "You must be logged in to make a purchase.",
+      createOrderFailed: "Failed to create payment order.",
+      paymentFailed: "Payment verification failed. Please contact support."
     },
   },
 
@@ -879,6 +994,118 @@ export const translations = {
       noArtisans: "अभी तक कोई कारीगर स्टोर प्रकाशित नहीं हुआ है।",
       error: "त्रुटि",
     },
+    storiesPage: {
+      title: "कहानियाँ और संस्कृति",
+      subtitle: "हस्तकला के पीछे छिपी कहानियों को जानें।",
+
+      searchPlaceholder: "शीर्षक, क्षेत्र या लेखक द्वारा कहानियाँ खोजें...",
+      allCategories: "सभी श्रेणियाँ",
+
+      sortNewest: "नवीनतम",
+      sortOldest: "सबसे पुरानी",
+      sortPopular: "लोकप्रिय",
+      sortFeatured: "फ़ीचर्ड",
+
+      share: "शेयर करें",
+      copied: "कॉपी किया गया",
+      copyLink: "लिंक कॉपी करें",
+
+      tags: "टैग:",
+      clear: "साफ़ करें",
+
+      readStory: "कहानी पढ़ें",
+      fallbackExcerpt: "हस्तकला के पीछे की कहानी जानें।",
+
+      noStories: "कोई कहानी नहीं मिली",
+      refineFilters: "फ़िल्टर साफ़ करें या अपनी खोज बदलें।",
+
+      loadMore: "और लोड करें",
+      pauseAuto: "ऑटो-लोड रोकें",
+      autoLoad: "ऑटो-लोड",
+
+      footerNote: "क्या आपके पास कोई कहानी है? हमारे संपर्क पृष्ठ पर पहुंचें।",
+
+      error: "त्रुटि",
+      retry: "पुनः प्रयास करें"
+    },
+    cartPage: {
+      title: "मेरा शॉपिंग कार्ट",
+      emptyTitle: "आपका कार्ट खाली है",
+      emptySubtitle: "इसे कुछ शानदार क्राफ्ट्स से भरने का समय है!",
+      continueShopping: "खरीदारी जारी रखें",
+
+      itemsCount: "आइटम",
+      itemsCountPlural: "आइटम्स",
+
+      outOfStockBanner: "आपके कार्ट में कुछ आइटम स्टॉक में नहीं हैं। कृपया आगे बढ़ने के लिए उन्हें हटाएं।",
+      onlyLeft: "स्टॉक में केवल {count} बचे हैं",
+      outOfStock: "स्टॉक समाप्त",
+
+      freeShippingRemaining: "फ्री शिपिंग के लिए आप ₹{amount} दूर हैं",
+      freeShippingUnlocked: "आपने फ्री शिपिंग अनलॉक कर ली है!",
+
+      each: "प्रति",
+      itemTotal: "कुल आइटम",
+
+      clearCart: "कार्ट साफ करें",
+
+      orderSummary: "ऑर्डर सारांश",
+      secureCheckout: "सुरक्षित चेकआउट और एन्क्रिप्टेड भुगतान",
+
+      subtotal: "सबटोटल",
+      shipping: "शिपिंग",
+      shippingFree: "फ्री",
+      shippingCalculated: "अगले चरण में गणना होगी",
+      total: "कुल",
+
+      orderNote: "ऑर्डर नोट (वैकल्पिक)",
+      orderNotePlaceholder: "अपने ऑर्डर के लिए कोई विशेष निर्देश जोड़ें…",
+
+      proceedToCheckout: "चेकआउट पर जाएं",
+
+      fastShipping: "तेज़ शिपिंग",
+      buyerProtection: "खरीदार सुरक्षा",
+      easyReturns: "आसान रिटर्न"
+    },
+    checkoutPage: {
+      secureCheckout: "सुरक्षित चेकआउट",
+
+      noProduct: "कोई उत्पाद चयनित नहीं किया गया।",
+      productNotFound: "उत्पाद नहीं मिल पाया।",
+      backToShop: "दुकान पर वापस जाएं",
+      error: "त्रुटि",
+
+      shippingAddress: "1. शिपिंग पता",
+      orderSummary: "2. ऑर्डर सारांश",
+
+      street: "सड़क का पता",
+      streetPlaceholder: "123 आर्ट लेन",
+
+      city: "शहर",
+      cityPlaceholder: "मुंबई",
+
+      state: "राज्य",
+      statePlaceholder: "महाराष्ट्र",
+
+      postalCode: "पिन कोड",
+      postalCodePlaceholder: "400001",
+
+      phoneNumber: "फ़ोन नंबर",
+      phonePlaceholder: "9876543210",
+
+      quantity: "मात्रा:",
+      subtotal: "उप-योग",
+      shipping: "शिपिंग",
+      freeShipping: "फ्री",
+      total: "कुल",
+
+      proceedToPayment: "भुगतान के लिए आगे बढ़ें",
+
+      fillAllFields: "कृपया सभी शिपिंग विवरण भरें।",
+      loginRequired: "खरीदारी करने के लिए आपको लॉग इन होना आवश्यक है।",
+      createOrderFailed: "भुगतान ऑर्डर बनाना विफल रहा।",
+      paymentFailed: "भुगतान सत्यापन विफल रहा। कृपया सहायता से संपर्क करें।"
+    },
   },
 
   bn: {
@@ -1300,6 +1527,118 @@ export const translations = {
       noArtisans: "এখনও কোনো কারিগরের স্টোর প্রকাশিত হয়নি।",
       error: "ত্রুটি",
     },
+    storiesPage: {
+      title: "গল্প ও সংস্কৃতি",
+      subtitle: "হস্তশিল্পের পেছনের গল্প আবিষ্কার করুন।",
+
+      searchPlaceholder: "শিরোনাম, অঞ্চল বা লেখক অনুযায়ী গল্প খুঁজুন...",
+      allCategories: "সব বিভাগ",
+
+      sortNewest: "নতুনতম",
+      sortOldest: "প্রাচীনতম",
+      sortPopular: "জনপ্রিয়",
+      sortFeatured: "ফিচার্ড",
+
+      share: "শেয়ার করুন",
+      copied: "কপি হয়েছে",
+      copyLink: "লিংক কপি করুন",
+
+      tags: "ট্যাগ:",
+      clear: "মুছুন",
+
+      readStory: "গল্প পড়ুন",
+      fallbackExcerpt: "হস্তশিল্পের গল্প আবিষ্কার করুন।",
+
+      noStories: "কোন গল্প পাওয়া যায়নি",
+      refineFilters: "ফিল্টার ক্লিয়ার করুন বা নতুনভাবে অনুসন্ধান করুন।",
+
+      loadMore: "আরো লোড করুন",
+      pauseAuto: "অটো-লোড বিরতি দিন",
+      autoLoad: "অটো-লোড",
+
+      footerNote: "আপনার কি কোনো গল্প আছে? আমাদের যোগাযোগ পাতায় জানান।",
+
+      error: "ত্রুটি",
+      retry: "পুনরায় চেষ্টা করুন"
+    },
+    cartPage: {
+      title: "আমার শপিং কার্ট",
+      emptyTitle: "আপনার কার্ট খালি",
+      emptySubtitle: "অসাধারণ ক্রাফ্ট দিয়ে এটি ভরার সময় এসেছে!",
+      continueShopping: "কেনাকাটা চালিয়ে যান",
+
+      itemsCount: "আইটেম",
+      itemsCountPlural: "আইটেমসমূহ",
+
+      outOfStockBanner: "আপনার কার্টের কিছু পণ্য স্টকে নেই। এগিয়ে যেতে সেগুলো সরিয়ে দিন।",
+      onlyLeft: "স্টকে মাত্র {count} বাকি আছে",
+      outOfStock: "স্টক আউট",
+
+      freeShippingRemaining: "ফ্রি শিপিং পেতে আপনাকে আরও ₹{amount} কিনতে হবে",
+      freeShippingUnlocked: "আপনি ফ্রি শিপিং আনলক করেছেন!",
+
+      each: "প্রতি",
+      itemTotal: "মোট",
+
+      clearCart: "কার্ট খালি করুন",
+
+      orderSummary: "অর্ডার সারাংশ",
+      secureCheckout: "নিরাপদ চেকআউট এবং এনক্রিপ্টেড পেমেন্ট",
+
+      subtotal: "সাবটোটাল",
+      shipping: "শিপিং",
+      shippingFree: "ফ্রি",
+      shippingCalculated: "পরবর্তী ধাপে গণনা হবে",
+      total: "মোট",
+
+      orderNote: "অর্ডার নোট (ঐচ্ছিক)",
+      orderNotePlaceholder: "আপনার অর্ডার সম্পর্কে কোনও বিশেষ নির্দেশ দিন…",
+
+      proceedToCheckout: "চেকআউটে যান",
+
+      fastShipping: "দ্রুত শিপিং",
+      buyerProtection: "ক্রেতা সুরক্ষা",
+      easyReturns: "সহজ রিটার্ন"
+    },
+    checkoutPage: {
+      secureCheckout: "সুরক্ষিত চেকআউট",
+
+      noProduct: "কোনো পণ্য নির্বাচিত হয়নি।",
+      productNotFound: "পণ্যটি খুঁজে পাওয়া যায়নি।",
+      backToShop: "দোকানে ফিরে যান",
+      error: "ত্রুটি",
+
+      shippingAddress: "১. শিপিং ঠিকানা",
+      orderSummary: "২. অর্ডার সারাংশ",
+
+      street: "রাস্তার ঠিকানা",
+      streetPlaceholder: "১২৩ আর্ট লেন",
+
+      city: "শহর",
+      cityPlaceholder: "মুম্বাই",
+
+      state: "রাজ্য",
+      statePlaceholder: "মহারাষ্ট্র",
+
+      postalCode: "পোস্টাল কোড",
+      postalCodePlaceholder: "400001",
+
+      phoneNumber: "ফোন নম্বর",
+      phonePlaceholder: "9876543210",
+
+      quantity: "পরিমাণ:",
+      subtotal: "সাবটোটাল",
+      shipping: "শিপিং",
+      freeShipping: "ফ্রি",
+      total: "মোট",
+
+      proceedToPayment: "পেমেন্টে এগিয়ে যান",
+
+      fillAllFields: "দয়া করে সব শিপিং তথ্য পূরণ করুন।",
+      loginRequired: "কেনাকাটা করতে আপনাকে লগ ইন থাকতে হবে।",
+      createOrderFailed: "পেমেন্ট অর্ডার তৈরি ব্যর্থ হয়েছে।",
+      paymentFailed: "পেমেন্ট যাচাই ব্যর্থ হয়েছে। সহায়তার সাথে যোগাযোগ করুন।"
+    },
   },
 
   ta: {
@@ -1719,6 +2058,118 @@ export const translations = {
       subtitle: "நாட்டின் பல பகுதிகளில் உள்ள திறமைமிக்க கலைஞர்களின் கதைகளையும் அவர்களின் கைவேலைகளையும் கண்டறியுங்கள்.",
       noArtisans: "இதுவரை எந்த கலைஞர் கடைகளும் வெளியிடப்படவில்லை.",
       error: "பிழை",
+    },
+    storiesPage: {
+      title: "கதைகள் & கலாசாரம்",
+      subtitle: "கைவினை பொருட்களின் பின்னால் உள்ள கதைகளை அறியுங்கள்.",
+
+      searchPlaceholder: "தலைப்பு, பகுதி, ஆசிரியர் என்பவற்றால் தேடுங்கள்...",
+      allCategories: "அனைத்து பிரிவுகள்",
+
+      sortNewest: "புதியவை",
+      sortOldest: "பழையவை",
+      sortPopular: "பிரபலமானவை",
+      sortFeatured: "சிறப்பு கதைகள்",
+
+      share: "பகிர்",
+      copied: "நகலெடுக்கப்பட்டது",
+      copyLink: "இணைப்பை நகலெடுக்கவும்",
+
+      tags: "டேக்கள்:",
+      clear: "அழிக்க",
+
+      readStory: "கதை படிக்க",
+      fallbackExcerpt: "கைவினைப் பொருளின் பின்னணிக் கதையை அறியுங்கள்.",
+
+      noStories: "கதைகள் எதுவும் இல்லை",
+      refineFilters: "பில்ட்டரை நீக்கி மீண்டும் முயற்சிக்கவும்.",
+
+      loadMore: "மேலும் ஏற்றவும்",
+      pauseAuto: "ஆட்டோ-லோடு நிறுத்தவும்",
+      autoLoad: "ஆட்டோ-லோடு",
+
+      footerNote: "உங்களிடம் ஒரு கதை உள்ளதா? எங்களை தொடர்பு கொள்ளுங்கள்.",
+
+      error: "பிழை",
+      retry: "மீண்டும் முயற்சி"
+    },
+    cartPage: {
+      title: "என் ஷாப்பிங் கார்ட்",
+      emptyTitle: "உங்கள் கார்ட் காலியாக உள்ளது",
+      emptySubtitle: "அற்புதமான கைவினைப் பொருட்களால் அதை நிரப்பும் நேரம் வந்துவிட்டது!",
+      continueShopping: "ஷாப்பிங் தொடருங்கள்",
+
+      itemsCount: "பொருள்",
+      itemsCountPlural: "பொருள்கள்",
+
+      outOfStockBanner: "உங்கள் கார்டில் சில பொருட்கள் ஸ்டாக்கில் இல்லை. தொடர முன்னர் அவற்றை நீக்கவும்.",
+      onlyLeft: "ஸ்டாக்கில் {count} மட்டும் உள்ளது",
+      outOfStock: "ஸ்டாக் இல்லை",
+
+      freeShippingRemaining: "இலவச ஷிப்பிங்கிற்கு நீங்கள் ₹{amount} தூரத்தில் உள்ளீர்கள்",
+      freeShippingUnlocked: "நீங்கள் இலவச ஷிப்பிங்கைப் பெற்றுள்ளீர்கள்!",
+
+      each: "ஒன்றுக்கு",
+      itemTotal: "மொத்தம்",
+
+      clearCart: "கார்டை காலி செய்யவும்",
+
+      orderSummary: "ஆர்டர் சாராம்சம்",
+      secureCheckout: "பாதுகாப்பான கட்டணம் மற்றும் குறியாக்கப்பட்ட பரிவர்த்தனைகள்",
+
+      subtotal: "மொத்தம்",
+      shipping: "ஷிப்பிங்",
+      shippingFree: "இலவசம்",
+      shippingCalculated: "அடுத்த படியில் கணக்கிடப்படும்",
+      total: "மொத்தம்",
+
+      orderNote: "ஆர்டர் குறிப்பு (விருப்பம்)",
+      orderNotePlaceholder: "உங்கள் ஆர்டருக்கான சிறப்பு குறிப்புகளை சேர்க்கவும்…",
+
+      proceedToCheckout: "Checkout தொடரவும்",
+
+      fastShipping: "வேகமான ஷிப்பிங்",
+      buyerProtection: "கொள்முதல் பாதுகாப்பு",
+      easyReturns: "எளிய ரிட்டர்ன்ஸ்"
+    },
+    checkoutPage: {
+      secureCheckout: "பாதுகாப்பான செலுத்தல்",
+
+      noProduct: "எந்த பொருளும் தேர்வு செய்யப்படவில்லை.",
+      productNotFound: "பொருள் கிடைக்கவில்லை.",
+      backToShop: "கடைக்குத் திரும்பவும்",
+      error: "பிழை",
+
+      shippingAddress: "1. அனுப்பும் முகவரி",
+      orderSummary: "2. ஆர்டர் சுருக்கம்",
+
+      street: "தெரு முகவரி",
+      streetPlaceholder: "123 ஆர்ட் லேன்",
+
+      city: "நகரம்",
+      cityPlaceholder: "மும்பை",
+
+      state: "மாநிலம்",
+      statePlaceholder: "மகாராஷ்டிரா",
+
+      postalCode: "அஞ்சல் குறியீடு",
+      postalCodePlaceholder: "400001",
+
+      phoneNumber: "தொலைபேசி எண்",
+      phonePlaceholder: "9876543210",
+
+      quantity: "அளவு:",
+      subtotal: "உப தொகை",
+      shipping: "கப்பல் கட்டணம்",
+      freeShipping: "இலவசம்",
+      total: "மொத்தம்",
+
+      proceedToPayment: "கட்டணத்திற்கு சென்றடையவும்",
+
+      fillAllFields: "அனைத்து விபரங்களையும் நிரப்பவும்.",
+      loginRequired: "வாங்குவதற்கு நீங்கள் உள்நுழைந்திருக்க வேண்டும்.",
+      createOrderFailed: "கட்டண ஆர்டர் உருவாக்க முடியவில்லை.",
+      paymentFailed: "கட்டண சரிபார்ப்பு தோல்வியடைந்தது. உதவியைத் தொடர்பு கொள்ளவும்."
     },
   },
 
@@ -2140,6 +2591,118 @@ export const translations = {
       noArtisans: "ఇప్పటికీ ఎలాంటి కళాకారుల స్టోర్లు ప్రచురించబడలేదు.",
       error: "పొరపాటు",
     },
+    storiesPage: {
+      title: "కథలు & సంస్కృతి",
+      subtitle: "కళాకృతుల వెనుక ఉన్న కథలను తెలుసుకోండి.",
+
+      searchPlaceholder: "శీర్షిక, ప్రాంతం, రచయిత ద్వారా కథలను వెతకండి...",
+      allCategories: "అన్ని వర్గాలు",
+
+      sortNewest: "తాజా",
+      sortOldest: "పాతవి",
+      sortPopular: "ప్రముఖమైనవి",
+      sortFeatured: "ఫీచర్డ్",
+
+      share: "షేర్ చేయండి",
+      copied: "కాపీ అయింది",
+      copyLink: "లింక్ కాపీ చేయండి",
+
+      tags: "ట్యాగ్స్:",
+      clear: "క్లియర్ చేయండి",
+
+      readStory: "కథ చదవండి",
+      fallbackExcerpt: "కళాకారుడి కథను తెలుసుకోండి.",
+
+      noStories: "కథలు కనబడలేదు",
+      refineFilters: "ఫిల్టర్స్ తొలగించి మళ్లీ ప్రయత్నించండి.",
+
+      loadMore: "ఇంకా లోడ్ చేయండి",
+      pauseAuto: "ఆటో-లోడ్ నిలిపివేయండి",
+      autoLoad: "ఆటో-లోడ్",
+
+      footerNote: "మీ వద్ద కథ ఉందా? మా సంప్రదింపు పేజీ ద్వారా చేరుకోండి.",
+
+      error: "లోపం",
+      retry: "మళ్లీ ప్రయత్నించండి"
+    },
+    cartPage: {
+      title: "నా షాపింగ్ కార్ట్",
+      emptyTitle: "మీ కార్ట్ ఖాళీగా ఉంది",
+      emptySubtitle: "అద్భుతమైన క్రాఫ్ట్స్‌తో దీన్ని నింపే సమయం వచ్చింది!",
+      continueShopping: "షాపింగ్ కొనసాగించండి",
+
+      itemsCount: "అంశం",
+      itemsCountPlural: "అంశాలు",
+
+      outOfStockBanner: "మీ కార్ట్‌లో కొన్ని వస్తువులు స్టాక్‌లో లేవు. ముందు వాటిని తీసేయండి.",
+      onlyLeft: "స్టాక్‌లో కేవలం {count} మాత్రమే ఉంది",
+      outOfStock: "స్టాక్ లేదు",
+
+      freeShippingRemaining: "ఫ్రీ షిప్పింగ్ కోసం మీరు ఇంకా ₹{amount} దూరంలో ఉన్నారు",
+      freeShippingUnlocked: "మీకు ఫ్రీ షిప్పింగ్ అన్‌లాక్ అయింది!",
+
+      each: "ప్రతి ఒక్కటి",
+      itemTotal: "మొత్తం",
+
+      clearCart: "కార్ట్ ఖాళీ చేయండి",
+
+      orderSummary: "ఆర్డర్ సారాంశం",
+      secureCheckout: "సురక్షిత చెకౌట్ మరియు గుప్తీకరించిన చెల్లింపులు",
+
+      subtotal: "సబ్‌టోటల్",
+      shipping: "షిప్పింగ్",
+      shippingFree: "ఉచితం",
+      shippingCalculated: "తదుపరి దశలో లెక్కించబడుతుంది",
+      total: "మొత్తం",
+
+      orderNote: "ఆర్డర్ నోట్ (ఐచ్చికం)",
+      orderNotePlaceholder: "మీ ఆర్డర్ కోసం ప్రత్యేక సూచనలు ఇవ్వండి…",
+
+      proceedToCheckout: "చెకౌట్కు వెళ్లండి",
+
+      fastShipping: "ఫాస్ట్ షిప్పింగ్",
+      buyerProtection: "బయ్యర్ ప్రొటెక్షన్",
+      easyReturns: "ఈజీ రిటర్న్స్"
+    },
+    checkoutPage: {
+      secureCheckout: "భద్రతాయుత చెకౌట్",
+
+      noProduct: "ఏ ఉత్పత్తి ఎంపిక చేయబడలేదు.",
+      productNotFound: "ఉత్పత్తి కనిపించలేదు.",
+      backToShop: "షాప్‌కు తిరిగి వెళ్లండి",
+      error: "లోపం",
+
+      shippingAddress: "1. షిప్పింగ్ చిరునామా",
+      orderSummary: "2. ఆర్డర్ సారాంశం",
+
+      street: "స్ట్రీట్ అడ్రెస్",
+      streetPlaceholder: "123 ఆర్ట్ లేన్",
+
+      city: "నగరం",
+      cityPlaceholder: "ముంబై",
+
+      state: "రాష్ట్రం",
+      statePlaceholder: "మహారాష్ట్ర",
+
+      postalCode: "పోస్టల్ కోడ్",
+      postalCodePlaceholder: "400001",
+
+      phoneNumber: "ఫోన్ నంబర్",
+      phonePlaceholder: "9876543210",
+
+      quantity: "పరిమాణం:",
+      subtotal: "సబ్‌టోటల్",
+      shipping: "షిప్పింగ్",
+      freeShipping: "ఉచితం",
+      total: "మొత్తం",
+
+      proceedToPayment: "చెల్లింపుకు కొనసాగండి",
+
+      fillAllFields: "దయచేసి అన్ని షిప్పింగ్ వివరాలు పూరించండి.",
+      loginRequired: "కొనుగోలు చేయడానికి మీరు లాగిన్ అయి ఉండాలి.",
+      createOrderFailed: "పేమెంట్ ఆర్డర్ సృష్టించడం విఫలమైంది.",
+      paymentFailed: "చెల్లింపు ధృవీకరణ విఫలమైంది. సహాయం కోసం సంప్రదించండి."
+    },
   },
 
   mr: {
@@ -2559,6 +3122,118 @@ export const translations = {
       subtitle: "देशभरातील प्रतिभावान कलाकारांच्या कथा आणि त्यांची कलाकृती जाणून घ्या.",
       noArtisans: "अद्याप कोणतेही कारागीर स्टोअर्स प्रकाशित झालेले नाहीत.",
       error: "त्रुटी",
+    },
+    storiesPage: {
+      title: "कथा आणि संस्कृती",
+      subtitle: "हस्तकलेमागील कथा जाणून घ्या.",
+
+      searchPlaceholder: "शीर्षक, प्रदेश किंवा लेखकानुसार कथा शोधा...",
+      allCategories: "सर्व श्रेण्या",
+
+      sortNewest: "नवीन",
+      sortOldest: "जुने",
+      sortPopular: "लोकप्रिय",
+      sortFeatured: "विशेष",
+
+      share: "शेअर करा",
+      copied: "कॉपी केले",
+      copyLink: "लिंक कॉपी करा",
+
+      tags: "टॅग्स:",
+      clear: "क्लिअर करा",
+
+      readStory: "कथा वाचा",
+      fallbackExcerpt: "हस्तकलेमागील कथा जाणून घ्या.",
+
+      noStories: "कथा आढळल्या नाहीत",
+      refineFilters: "फिल्टर्स काढून टाका किंवा शोध बदला.",
+
+      loadMore: "अजून लोड करा",
+      pauseAuto: "ऑटो-लोड थांबवा",
+      autoLoad: "ऑटो-लोड",
+
+      footerNote: "तुमच्याकडे एखादी कथा आहे का? आमच्या संपर्क पृष्ठावर कळवा.",
+
+      error: "त्रुटी",
+      retry: "पुन्हा प्रयत्न करा"
+    },
+    cartPage: {
+      title: "माझी खरेदीची टोपली",
+      emptyTitle: "तुमची टोपली रिकामी आहे",
+      emptySubtitle: "ती काही अप्रतिम हस्तकलेच्या वस्तूंनी भरा!",
+      continueShopping: "खरेदी सुरू ठेवा",
+
+      itemsCount: "वस्तू",
+      itemsCountPlural: "वस्तू",
+
+      outOfStockBanner: "तुमच्या कार्टमधील काही वस्तू स्टॉकमध्ये नाहीत. पुढे जाण्यासाठी कृपया त्या काढा.",
+      onlyLeft: "स्टॉकमध्ये फक्त {count} उरले आहेत",
+      outOfStock: "स्टॉक संपला",
+
+      freeShippingRemaining: "फ्री शिपिंगसाठी तुम्ही अजून ₹{amount} दूर आहात",
+      freeShippingUnlocked: "तुम्ही फ्री शिपिंग अनलॉक केले आहे!",
+
+      each: "प्रति",
+      itemTotal: "एकूण",
+
+      clearCart: "कार्ट रिकामी करा",
+
+      orderSummary: "ऑर्डर सारांश",
+      secureCheckout: "सुरक्षित चेकआउट आणि एन्क्रिप्टेड पेमेंट्स",
+
+      subtotal: "उपएकूण",
+      shipping: "शिपिंग",
+      shippingFree: "फ्री",
+      shippingCalculated: "पुढील टप्प्यात गणना होईल",
+      total: "एकूण",
+
+      orderNote: "ऑर्डर नोट (ऐच्छिक)",
+      orderNotePlaceholder: "तुमच्या ऑर्डरसाठी विशेष सूचना जोडा…",
+
+      proceedToCheckout: "चेकआउटकडे जा",
+
+      fastShipping: "जलद शिपिंग",
+      buyerProtection: "खरेदीदार संरक्षण",
+      easyReturns: "सुलभ परतावा"
+    },
+    checkoutPage: {
+      secureCheckout: "सुरक्षित चेकआउट",
+
+      noProduct: "कोणताही उत्पादन निवडलेले नाही.",
+      productNotFound: "उत्पादन सापडले नाही.",
+      backToShop: "दुकानात परत जा",
+      error: "त्रुटी",
+
+      shippingAddress: "1. शिपिंग पत्ता",
+      orderSummary: "2. ऑर्डर सारांश",
+
+      street: "रस्त्याचा पत्ता",
+      streetPlaceholder: "123 आर्ट लेन",
+
+      city: "शहर",
+      cityPlaceholder: "मुंबई",
+
+      state: "राज्य",
+      statePlaceholder: "महाराष्ट्र",
+
+      postalCode: "पोस्टल कोड",
+      postalCodePlaceholder: "400001",
+
+      phoneNumber: "फोन नंबर",
+      phonePlaceholder: "9876543210",
+
+      quantity: "प्रमाण:",
+      subtotal: "उपएकूण",
+      shipping: "शिपिंग",
+      freeShipping: "फ्री",
+      total: "एकूण",
+
+      proceedToPayment: "पेमेंटसाठी पुढे जा",
+
+      fillAllFields: "कृपया सर्व शिपिंग तपशील भरा.",
+      loginRequired: "खरेदी करण्यासाठी तुम्हाला लॉगिन केलेले असणे आवश्यक आहे.",
+      createOrderFailed: "पेमेंट ऑर्डर तयार करण्यात अयशस्वी.",
+      paymentFailed: "पेमेंट पडताळणी अयशस्वी. कृपया सहाय्याशी संपर्क साधा."
     },
   },
 };

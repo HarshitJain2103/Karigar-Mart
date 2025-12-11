@@ -18,17 +18,18 @@ import {
 } from 'lucide-react';
 import { getApiUrl } from '@/lib/api';
 import Spinner from '@/components/ui/Spinner';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function StoriesPage() {
+  const { t } = useTranslation();
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // UI state
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('all');
-  const [selectedTags, setSelectedTags] = useState([]); // multi-select tags
-  const [sortBy, setSortBy] = useState('newest'); // newest | oldest | popular | featured
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [sortBy, setSortBy] = useState('newest');
   const [copied, setCopied] = useState(false);
 
   // Masonry + infinite scroll
@@ -179,7 +180,7 @@ export default function StoriesPage() {
     const url = typeof window !== 'undefined' ? `${window.location.origin}/stories` : '';
     try {
       if (navigator.share) {
-        await navigator.share({ title: 'Stories & Culture', text: 'Discover the narratives behind the crafts.', url });
+        await navigator.share({ title: t('storiesPage.title'), text: t('storiesPage.subtitle'), url });
       } else {
         await navigator.clipboard.writeText(url);
         setCopied(true);
@@ -208,8 +209,8 @@ export default function StoriesPage() {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
         <AlertTriangle className="h-10 w-10 text-red-500" />
-        <p className="text-center text-red-600 font-medium">Error: {error}</p>
-        <Button variant="outline" onClick={() => window.location.reload()}>Retry</Button>
+        <p className="text-center text-red-600 font-medium">{t('storiesPage.error')}: {error}</p>
+        <Button variant="outline" onClick={() => window.location.reload()}>{t('storiesPage.retry')}</Button>
       </div>
     );
   }
@@ -217,8 +218,8 @@ export default function StoriesPage() {
   return (
     <div className="container mx-auto py-12 px-4">
       <div className="mb-4 text-center">
-        <h1 className="text-4xl font-bold tracking-tight">Stories & Culture</h1>
-        <p className="text-lg text-muted-foreground mt-2">Discover the narratives behind the crafts.</p>
+        <h1 className="text-4xl font-bold tracking-tight">{t('storiesPage.title')}</h1>
+        <p className="text-lg text-muted-foreground mt-2">{t('storiesPage.subtitle')}</p>
       </div>
 
       {/* Toolbar */}
@@ -228,7 +229,7 @@ export default function StoriesPage() {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search stories by title, region, author..."
+            placeholder={t('storiesPage.searchPlaceholder')}
             className="w-full bg-transparent text-sm outline-none"
           />
         </div>
@@ -241,7 +242,7 @@ export default function StoriesPage() {
               onChange={(e) => setCategory(e.target.value)}
               aria-label="Filter by category"
             >
-              <option value="all">All categories</option>
+              <option value="all">{t('storiesPage.allCategories')}</option>
               {categories.map((c) => (
                 <option key={c} value={c}>
                   {c} {categoryCounts[c] ? `(${categoryCounts[c]})` : ''}
@@ -257,15 +258,15 @@ export default function StoriesPage() {
               onChange={(e) => setSortBy(e.target.value)}
               aria-label="Sort stories"
             >
-              <option value="newest">Newest</option>
-              <option value="oldest">Oldest</option>
-              <option value="popular">Popular</option>
-              <option value="featured">Featured</option>
+              <option value="newest">{t('storiesPage.sortNewest')}</option>
+              <option value="oldest">{t('storiesPage.sortOldest')}</option>
+              <option value="popular">{t('storiesPage.sortPopular')}</option>
+              <option value="featured">{t('storiesPage.sortFeatured')}</option>
             </select>
           </div>
           <Button variant="outline" className="gap-2" onClick={handleShare}>
             {navigator.share ? <Share2 className="h-4 w-4" /> : copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-            {navigator.share ? 'Share' : copied ? 'Copied' : 'Copy link'}
+            {navigator.share ? t('storiesPage.share') : copied ? t('storiesPage.copied') : t('storiesPage.copyLink')}
           </Button>
         </div>
       </div>
@@ -274,7 +275,7 @@ export default function StoriesPage() {
       {tags.length > 0 && (
         <div className="mb-6 flex items-center gap-3 overflow-x-auto no-scrollbar">
           <div className="flex items-center gap-2 text-sm text-muted-foreground shrink-0">
-            <TagIcon className="h-4 w-4" /> Tags:
+            <TagIcon className="h-4 w-4" /> {t('storiesPage.tags')}
           </div>
           <div className="flex items-center gap-2">
             {tags.map((t) => {
@@ -297,7 +298,7 @@ export default function StoriesPage() {
             })}
             {selectedTags.length > 0 && (
               <Button variant="ghost" size="sm" className="gap-2" onClick={() => setSelectedTags([])}>
-                <XCircle className="h-4 w-4" /> Clear
+                <XCircle className="h-4 w-4" /> {t('storiesPage.clear')}
               </Button>
             )}
           </div>
@@ -328,10 +329,10 @@ export default function StoriesPage() {
                     </div>
                     <h2 className="mt-3 text-2xl sm:text-3xl font-bold leading-snug line-clamp-2">{heroStory?.title}</h2>
                     <p className="mt-2 text-sm text-white/90 line-clamp-2">
-                      {heroStory?.excerpt || heroStory?.summary || 'Explore the story behind the craft.'}
+                      {heroStory?.excerpt || heroStory?.summary || t('storiesPage.fallbackExcerpt')}
                     </p>
                     <div className="mt-4">
-                      <Button size="sm" variant="secondary">Read Story</Button>
+                      <Button size="sm" variant="secondary">{t('storiesPage.readStory')}</Button>
                     </div>
                   </div>
                 </div>
@@ -354,8 +355,8 @@ export default function StoriesPage() {
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
             <Globe className="h-8 w-8 text-primary" />
           </div>
-          <h1 className="text-3xl font-bold tracking-tight">No Stories Found</h1>
-          <p className="text-muted-foreground mt-2">Try clearing your filters or refining your search.</p>
+          <h1 className="text-3xl font-bold tracking-tight">{t('storiesPage.noStories')}</h1>
+          <p className="text-muted-foreground mt-2">{t('storiesPage.refineFilters')}</p>
         </div>
       )}
 
@@ -364,10 +365,10 @@ export default function StoriesPage() {
         <div className="flex items-center justify-center gap-3 mt-2">
           <div ref={sentinelRef} />
           <Button variant="outline" onClick={() => setVisible((v) => v + pageSize)}>
-            Load more
+            {t('storiesPage.loadMore')}
           </Button>
           <Button variant="ghost" onClick={() => setAutoPaging((v) => !v)}>
-            {autoPaging ? 'Pause auto-load' : 'Auto-load'}
+            {autoPaging ? t('storiesPage.pauseAuto') : t('storiesPage.autoLoad')}
           </Button>
         </div>
       )}
@@ -376,7 +377,7 @@ export default function StoriesPage() {
 
       {/* Footer note */}
       <div className="text-center text-sm text-muted-foreground">
-        Have a story to share? Reach out via our Contact page.
+        {t('storiesPage.footerNote')}
       </div>
     </div>
   );
