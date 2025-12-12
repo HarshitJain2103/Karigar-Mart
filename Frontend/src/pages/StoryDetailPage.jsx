@@ -15,11 +15,13 @@ import {
 } from 'lucide-react';
 import { getApiUrl } from '@/lib/api';
 import Spinner from '@/components/ui/Spinner';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const formatDate = (dateString) =>
   new Date(dateString).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
 
 export default function StoryDetailPage() {
+  const { t } = useTranslation();
   const { storyId } = useParams();
   const navigate = useNavigate();
 
@@ -112,7 +114,7 @@ export default function StoryDetailPage() {
         <AlertTriangle className="h-10 w-10 text-red-500" />
         <p className="text-center text-red-600 font-medium">{error}</p>
         <Button variant="outline" onClick={() => navigate(-1)} className="mt-2">
-          <ArrowLeft className="h-4 w-4 mr-2" /> Go Back
+          <ArrowLeft className="h-4 w-4 mr-2" /> {t('storyDetails.back')}
         </Button>
       </div>
     );
@@ -130,10 +132,10 @@ export default function StoryDetailPage() {
       <div className="mb-3 flex items-center justify-between">
         <Button variant="ghost" size="sm" onClick={() => navigate(-1)} className="gap-2">
           <ArrowLeft className="h-4 w-4" />
-          Back
+          {t('storyDetails.back')}
         </Button>
         <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
-          <Link to="/stories" className="hover:underline">Stories</Link>
+          <Link to="/stories" className="hover:underline">{t('storyDetails.stories')}</Link>
           <span>/</span>
           <span className="truncate max-w-[40ch]">{story.title}</span>
         </div>
@@ -150,12 +152,12 @@ export default function StoryDetailPage() {
         <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10 text-white">
           <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs backdrop-blur">
             <BookOpen className="h-3.5 w-3.5" />
-            Story
+            {t('storyDetails.story')}
           </div>
           <h1 className="mt-3 text-2xl sm:text-4xl font-bold leading-tight">{story.title}</h1>
           <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-white/85">
             <span>
-              By{' '}
+              {t('storyDetails.by')}{' '}
               {artisanId ? (
                 <Link to={`/store/${artisanId}`} className="font-semibold hover:underline">
                   {artisanName}
@@ -172,19 +174,19 @@ export default function StoryDetailPage() {
             <span>•</span>
             <span className="inline-flex items-center gap-1">
               <Clock className="h-4 w-4" />
-              {readingStats.minutes} min read
+              {t('storyDetails.minRead', {minutes: readingStats.minutes})}
             </span>
           </div>
 
           <div className="mt-4 flex items-center gap-2">
             <Button variant="secondary" size="sm" className="gap-2" onClick={handleShare} disabled={sharing}>
               <Share2 className="h-4 w-4" />
-              Share
+              {t('storyDetails.share')}
             </Button>
             {!navigator.share && (
               <Button variant="secondary" size="sm" className="gap-2" onClick={handleCopy}>
                 {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                {copied ? 'Copied' : 'Copy link'}
+                {copied ? t('storyDetails.copied') : t('storyDetails.copyLink')}
               </Button>
             )}
           </div>
@@ -202,11 +204,11 @@ export default function StoryDetailPage() {
             <span className="hidden sm:inline">•</span>
             <span className="inline-flex items-center gap-1">
               <Clock className="h-4 w-4" />
-              {readingStats.minutes} min read • {readingStats.wordCount} words
+              {t('storyDetails.minRead', {minutes: readingStats.minutes})} • {t('storyDetails.wordsCount', {count: readingStats.wordCount})}
             </span>
           </div>
           <Link to="/stories" className="hidden sm:inline text-primary hover:underline">
-            Browse more stories
+            {t('storyDetails.browseMore')}
           </Link>
         </div>
 
@@ -221,7 +223,7 @@ export default function StoryDetailPage() {
         {/* Footer actions */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="text-sm text-muted-foreground">
-            Published on {formatDate(story.createdAt)} by{' '}
+            {t('storyDetails.publishedOn', {date: formatDate(story.createdAt)})} by{' '}
             {artisanId ? (
               <Link to={`/store/${artisanId}`} className="text-primary hover:underline">
                 {artisanName}
@@ -233,18 +235,18 @@ export default function StoryDetailPage() {
           <div className="flex items-center gap-2">
             <Button variant="outline" className="gap-2" onClick={handleShare} disabled={sharing}>
               <Share2 className="h-4 w-4" />
-              Share
+              {t("storyDetails.share")}
             </Button>
             {!navigator.share && (
               <Button variant="outline" className="gap-2" onClick={handleCopy}>
                 {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                {copied ? 'Copied' : 'Copy link'}
+                {copied ? t('storyDetails.copied') : t('storyDetails.copyLink')}
               </Button>
             )}
             <Link to="/stories">
               <Button variant="ghost" className="gap-2">
                 <ArrowLeft className="h-4 w-4" />
-                Back to Stories
+                {t("storyDetails.backToStories")}
               </Button>
             </Link>
           </div>

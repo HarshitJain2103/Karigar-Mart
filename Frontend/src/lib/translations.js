@@ -73,19 +73,51 @@ export const translations = {
     },
 
     // Product Detail Page
-    productDetail: {
-      price: "Price",
-      stock: "In Stock",
+    productDetails: {
+      breadcrumbsHome: "Home",
+      breadcrumbsShop: "Shop",
+
+      noMedia: "No media",
+      savePercent: "Save {percent}%",
       outOfStock: "Out of Stock",
+
+      byArtisan: "by",
+      share: "Share",
+      copyLink: "Copy link",
+      copied: "Copied",
+
       quantity: "Quantity",
+      inStockCount: "{count} in stock",
+
       addToCart: "Add to Cart",
       buyNow: "Buy Now",
-      description: "Description",
-      reviews: "Reviews",
-      relatedProducts: "Related Products",
-      addedToCart: "Added to cart!",
-      addedToWishlist: "Added to wishlist!",
-      removedFromWishlist: "Removed from wishlist!",
+      outOfStockBtn: "Out of Stock",
+
+      fastShipping: "Fast shipping",
+      fastShippingDesc: "2–5 business days",
+
+      secureCheckout: "Secure checkout",
+      secureCheckoutDesc: "SSL encrypted",
+
+      easyReturns: "Easy returns",
+      easyReturnsDesc: "7-day return policy",
+
+      details: "Product details",
+      handcraftedBy: "Handcrafted by {name}",
+      categoryLabel: "Category: {category}",
+      shipsFrom: "Ships from: India",
+
+      shippingReturns: "Shipping & returns",
+      shippingReturnsDesc:
+        "Enjoy fast shipping and hassle-free returns within 7 days of delivery.",
+
+      careInstructions: "Care instructions",
+      careInstructionsDesc:
+        "Keep in a cool, dry place. Clean gently with a soft cloth.",
+
+      error: "Error: {error}",
+      backToShop: "Back to Shop",
+      notFound: "Product not found.",
     },
 
     // Cart Page
@@ -561,6 +593,27 @@ export const translations = {
       createOrderFailed: "Failed to create payment order.",
       paymentFailed: "Payment verification failed. Please contact support."
     },
+    storyDetails: {
+      back: "Back",
+      stories: "Stories",
+      story: "Story",
+      by: "By",
+      minRead: "{minutes} min read",
+      wordsCount: "{count} words",
+      share: "Share",
+      copied: "Copied",
+      copyLink: "Copy link",
+      browseMore: "Browse more stories",
+      publishedOn: "Published on {date}",
+      goBack: "Go Back",
+      backToStories: "Back to Stories",
+
+      errorNotFound: "Story not found.",
+      errorFailed: "Failed to load story.",
+      loading: "Loading story...",
+
+      shareText: "Check out this story",
+    },
   },
 
   hi: {
@@ -635,19 +688,51 @@ export const translations = {
       loading: "उत्पाद लोड हो रहे हैं...",
     },
 
-    productDetail: {
-      price: "कीमत",
-      stock: "स्टॉक में",
-      outOfStock: "स्टॉक में नहीं",
+    productDetails: {
+      breadcrumbsHome: "होम",
+      breadcrumbsShop: "दुकान",
+
+      noMedia: "कोई मीडिया नहीं",
+      savePercent: "{percent}% बचत करें",
+      outOfStock: "स्टॉक समाप्त",
+
+      byArtisan: "द्वारा",
+      share: "शेयर करें",
+      copyLink: "लिंक कॉपी करें",
+      copied: "कॉपी किया गया",
+
       quantity: "मात्रा",
+      inStockCount: "{count} उपलब्ध",
+
       addToCart: "कार्ट में जोड़ें",
       buyNow: "अभी खरीदें",
-      description: "विवरण",
-      reviews: "समीक्षा",
-      relatedProducts: "संबंधित उत्पाद",
-      addedToCart: "कार्ट में जोड़ा गया!",
-      addedToWishlist: "विशलिस्ट में जोड़ा गया!",
-      removedFromWishlist: "विशलिस्ट से हटाया गया!",
+      outOfStockBtn: "स्टॉक समाप्त",
+
+      fastShipping: "तेज़ शिपिंग",
+      fastShippingDesc: "2–5 कार्य दिवस",
+
+      secureCheckout: "सुरक्षित चेकआउट",
+      secureCheckoutDesc: "SSL एन्क्रिप्टेड",
+
+      easyReturns: "आसान रिटर्न",
+      easyReturnsDesc: "7-दिन की रिटर्न नीति",
+
+      details: "उत्पाद विवरण",
+      handcraftedBy: "{name} द्वारा हस्तनिर्मित",
+      categoryLabel: "श्रेणी: {category}",
+      shipsFrom: "भारत से भेजा जाता है",
+
+      shippingReturns: "शिपिंग और रिटर्न",
+      shippingReturnsDesc:
+        "डिलीवरी के 7 दिनों के भीतर तेज़ शिपिंग और hassle-free रिटर्न का आनंद लें।",
+
+      careInstructions: "देखभाल निर्देश",
+      careInstructionsDesc:
+        "ठंडी, सूखी जगह में रखें। मुलायम कपड़े से धीरे से साफ करें।",
+
+      error: "त्रुटि: {error}",
+      backToShop: "दुकान पर वापस जाएं",
+      notFound: "उत्पाद नहीं मिला।",
     },
 
     cart: {
@@ -1106,6 +1191,27 @@ export const translations = {
       createOrderFailed: "भुगतान ऑर्डर बनाना विफल रहा।",
       paymentFailed: "भुगतान सत्यापन विफल रहा। कृपया सहायता से संपर्क करें।"
     },
+    storyDetails: {
+      back: "वापस",
+      stories: "कहानियाँ",
+      story: "कहानी",
+      by: "द्वारा",
+      minRead: "{minutes} मिनट पढ़ने का समय",
+      wordsCount: "{count} शब्द",
+      share: "शेयर करें",
+      copied: "कॉपी हो गया",
+      copyLink: "लिंक कॉपी करें",
+      browseMore: "और कहानियाँ देखें",
+      publishedOn: "{date} को प्रकाशित",
+      goBack: "वापस जाएँ",
+      backToStories: "कहानियों पर वापस जाएँ",
+
+      errorNotFound: "कहानी नहीं मिली।",
+      errorFailed: "कहानी लोड करने में विफल।",
+      loading: "कहानी लोड हो रही है...",
+
+      shareText: "इस कहानी को देखें",
+    },
   },
 
   bn: {
@@ -1177,19 +1283,51 @@ export const translations = {
       noProducts: "কোন পণ্য পাওয়া যায়নি",
       loading: "পণ্য লোড হচ্ছে...",
     },
-    productDetail: {
-      price: "মূল্য",
-      stock: "স্টকে",
+    productDetails: {
+      breadcrumbsHome: "হোম",
+      breadcrumbsShop: "দোকান",
+
+      noMedia: "কোনো মিডিয়া নেই",
+      savePercent: "{percent}% সেভ করুন",
       outOfStock: "স্টকে নেই",
+
+      byArtisan: "দ্বারা",
+      share: "শেয়ার করুন",
+      copyLink: "লিঙ্ক কপি করুন",
+      copied: "কপি হয়েছে",
+
       quantity: "পরিমাণ",
+      inStockCount: "{count} স্টকে আছে",
+
       addToCart: "কার্টে যোগ করুন",
       buyNow: "এখনই কিনুন",
-      description: "বর্ণনা",
-      reviews: "পর্যালোচনা",
-      relatedProducts: "সম্পর্কিত পণ্য",
-      addedToCart: "কার্টে যোগ করা হয়েছে!",
-      addedToWishlist: "উইশলিস্টে যোগ করা হয়েছে!",
-      removedFromWishlist: "উইশলিস্ট থেকে সরানো হয়েছে!",
+      outOfStockBtn: "স্টকে নেই",
+
+      fastShipping: "দ্রুত শিপিং",
+      fastShippingDesc: "২–৫ কর্মদিবস",
+
+      secureCheckout: "নিরাপদ চেকআউট",
+      secureCheckoutDesc: "SSL এনক্রিপ্টেড",
+
+      easyReturns: "সহজ রিটার্ন",
+      easyReturnsDesc: "৭ দিনের রিটার্ন নীতি",
+
+      details: "পণ্যের বিবরণ",
+      handcraftedBy: "{name} দ্বারা হাতে তৈরি",
+      categoryLabel: "বিভাগ: {category}",
+      shipsFrom: "ভারত থেকে প্রেরিত",
+
+      shippingReturns: "শিপিং ও রিটার্ন",
+      shippingReturnsDesc:
+        "ডেলিভারির ৭ দিনের মধ্যে দ্রুত শিপিং এবং ঝামেলাহীন রিটার্ন উপভোগ করুন।",
+
+      careInstructions: "যত্ন নির্দেশনা",
+      careInstructionsDesc:
+        "ঠান্ডা, শুকনো স্থানে সংরক্ষণ করুন। নরম কাপড় দিয়ে আলতো করে পরিষ্কার করুন।",
+
+      error: "ত্রুটি: {error}",
+      backToShop: "দোকানে ফিরে যান",
+      notFound: "পণ্য পাওয়া যায়নি।",
     },
     cart: {
       yourCart: "আপনার কার্ট",
@@ -1639,6 +1777,27 @@ export const translations = {
       createOrderFailed: "পেমেন্ট অর্ডার তৈরি ব্যর্থ হয়েছে।",
       paymentFailed: "পেমেন্ট যাচাই ব্যর্থ হয়েছে। সহায়তার সাথে যোগাযোগ করুন।"
     },
+    storyDetails: {
+      back: "ফিরে যান",
+      stories: "গল্পসমূহ",
+      story: "গল্প",
+      by: "দ্বারা",
+      minRead: "{minutes} মিনিটে পড়া যাবে",
+      wordsCount: "{count} শব্দ",
+      share: "শেয়ার করুন",
+      copied: "কপি হয়েছে",
+      copyLink: "লিঙ্ক কপি করুন",
+      browseMore: "আরো গল্প দেখুন",
+      publishedOn: "{date} প্রকাশিত",
+      goBack: "ফিরে যান",
+      backToStories: "গল্পসমূহে ফিরে যান",
+
+      errorNotFound: "গল্পটি পাওয়া যায়নি।",
+      errorFailed: "গল্প লোড করতে ব্যর্থ।",
+      loading: "গল্প লোড হচ্ছে...",
+
+      shareText: "এই গল্পটি দেখুন",
+    },
   },
 
   ta: {
@@ -1709,19 +1868,51 @@ export const translations = {
       noProducts: "பொருட்கள் கிடைக்கவில்லை",
       loading: "பொருட்கள் ஏற்றுகின்றன...",
     },
-    productDetail: {
-      price: "விலை",
-      stock: "கொள்முதல் கையாளுக",
-      outOfStock: "கொள்முதல் வெளியே",
+    productDetails: {
+      breadcrumbsHome: "முகப்பு",
+      breadcrumbsShop: "கடை",
+
+      noMedia: "ஊடகம் இல்லை",
+      savePercent: "{percent}% சேமிக்கவும்",
+      outOfStock: "கையிருப்பில் இல்லை",
+
+      byArtisan: "உருவாக்கியவர்",
+      share: "பகிர்",
+      copyLink: "இணைப்பை நகலெடு",
+      copied: "நகலெடுக்கப்பட்டது",
+
       quantity: "அளவு",
-      addToCart: "வண்டியில் சேர்க்கவும்",
-      buyNow: "இப்போது வாங்குக",
-      description: "விளக்கம்",
-      reviews: "மதிப்புரைகள்",
-      relatedProducts: "தொடர்புடைய பொருட்கள்",
-      addedToCart: "வண்டியில் சேர்க்கப்பட்டது!",
-      addedToWishlist: "விருப்பப் பட்டியலில் சேர்க்கப்பட்டது!",
-      removedFromWishlist: "விருப்பப் பட்டியலிலிருந்து நீக்கப்பட்டது!",
+      inStockCount: "{count} இருப்பில் உள்ளது",
+
+      addToCart: "வண்டியில் சேர்",
+      buyNow: "இப்போது வாங்க",
+      outOfStockBtn: "கையிருப்பில் இல்லை",
+
+      fastShipping: "வேகமான டெலிவரி",
+      fastShippingDesc: "2–5 தொழில் நாட்கள்",
+
+      secureCheckout: "பாதுகாப்பான கட்டணம்",
+      secureCheckoutDesc: "SSL குறியாக்கம்",
+
+      easyReturns: "எளிய திரும்ப பெறுதல்",
+      easyReturnsDesc: "7 நாள் திரும்ப கொடுக்கும் கொள்கை",
+
+      details: "தயாரிப்பு விவரங்கள்",
+      handcraftedBy: "{name} ஆல் செய்யப்பட்ட கைவேலை",
+      categoryLabel: "வகை: {category}",
+      shipsFrom: "இந்தியாவில் இருந்து அனுப்பப்படுகிறது",
+
+      shippingReturns: "கப்பல் & திரும்ப",
+      shippingReturnsDesc:
+        "டெலிவரியின் 7 நாட்களுக்குள் வேகமான அனுப்புதல் மற்றும் சிரமமில்லா திரும்ப பெறுதல்.",
+
+      careInstructions: "பராமரிப்பு வழிமுறைகள்",
+      careInstructionsDesc:
+        "குளிர்ந்த, உலர்ந்த இடத்தில் வைத்திருக்கவும். மென்மையான துணியால் சுத்தம் செய்யவும்.",
+
+      error: "பிழை: {error}",
+      backToShop: "கடைக்குத் திரும்பவும்",
+      notFound: "தயாரிப்பு கிடைக்கவில்லை.",
     },
     cart: {
       yourCart: "உங்கள் வண்டி",
@@ -2171,6 +2362,27 @@ export const translations = {
       createOrderFailed: "கட்டண ஆர்டர் உருவாக்க முடியவில்லை.",
       paymentFailed: "கட்டண சரிபார்ப்பு தோல்வியடைந்தது. உதவியைத் தொடர்பு கொள்ளவும்."
     },
+    storyDetails: {
+      back: "திரும்ப",
+      stories: "கதைகள்",
+      story: "கதை",
+      by: "ஆல்",
+      minRead: "{minutes} நிமிட வாசிப்பு",
+      wordsCount: "{count} சொற்கள்",
+      share: "பகிர்",
+      copied: "நகலெடுக்கப்பட்டது",
+      copyLink: "இணைப்பை நகலெடு",
+      browseMore: "மேலும் கதைகளைப் பார்க்கவும்",
+      publishedOn: "{date} அன்று வெளியிடப்பட்டது",
+      goBack: "திரும்ப செல்லவும்",
+      backToStories: "கதைகளுக்குத் திரும்ப",
+
+      errorNotFound: "கதை கிடைக்கவில்லை.",
+      errorFailed: "கதை ஏற்ற முடியவில்லை.",
+      loading: "கதை ஏற்றப்படுகிறது...",
+
+      shareText: "இந்தக் கதையைப் பாருங்கள்",
+    },
   },
 
   te: {
@@ -2241,19 +2453,51 @@ export const translations = {
       noProducts: "ఉత్పత్తులు కనుగొనబడలేదు",
       loading: "ఉత్పత్తులు లోడ్ అవుతున్నాయి...",
     },
-    productDetail: {
-      price: "ధర",
-      stock: "స్టాక్‌లో",
-      outOfStock: "స్టాక్‌లో లేనిది",
+    productDetails: {
+      breadcrumbsHome: "హోమ్",
+      breadcrumbsShop: "షాప్",
+
+      noMedia: "మీడియా లేదు",
+      savePercent: "{percent}% సేవ్ చేయండి",
+      outOfStock: "స్టాక్ లేదు",
+
+      byArtisan: "ద్వారా",
+      share: "షేర్ చేయండి",
+      copyLink: "లింక్ కాపీ చేయండి",
+      copied: "కాపీ అయింది",
+
       quantity: "పరిమాణం",
-      addToCart: "కార్టుకు జోడించండి",
+      inStockCount: "{count} స్టాక్‌లో ఉంది",
+
+      addToCart: "కార్ట్‌లో జోడించండి",
       buyNow: "ఇప్పుడే కొనండి",
-      description: "వివరణ",
-      reviews: "సమీక్షలు",
-      relatedProducts: "సంబంధిత ఉత్పత్తులు",
-      addedToCart: "కార్టుకు జోడించబడింది!",
-      addedToWishlist: "విషయ జాబితకు జోడించబడింది!",
-      removedFromWishlist: "విషయ జాబితనుండి తీసివేయబడింది!",
+      outOfStockBtn: "స్టాక్ లేదు",
+
+      fastShipping: "త్వరిత షిప్పింగ్",
+      fastShippingDesc: "2–5 వ్యాపార రోజులు",
+
+      secureCheckout: "సురక్షిత చెకౌట్",
+      secureCheckoutDesc: "SSL సంకేతీకరించబడింది",
+
+      easyReturns: "సులభ రిటర్న్స్",
+      easyReturnsDesc: "7-రోజుల రిటర్న్ పాలసీ",
+
+      details: "ఉత్పత్తి వివరాలు",
+      handcraftedBy: "{name} చేత హస్తకళ",
+      categoryLabel: "వర్గం: {category}",
+      shipsFrom: "భారతదేశం నుండి పంపబడుతుంది",
+
+      shippingReturns: "షిప్పింగ్ & రిటర్న్స్",
+      shippingReturnsDesc:
+        "డెలివరీ తర్వాత 7 రోజుల్లో వేగవంతమైన షిప్పింగ్ మరియు ఇబ్బందులేని రిటర్న్స్‌ను ఆస్వాదించండి.",
+
+      careInstructions: "పరిరక్షణ సూచనలు",
+      careInstructionsDesc:
+        "చల్లని, పొడి ప్రదేశంలో ఉంచండి. మృదువైన గుడ్డతో నెమ్మదిగా శుభ్రం చేయండి.",
+
+      error: "లోపం: {error}",
+      backToShop: "షాప్‌కు తిరిగి వెళ్ళండి",
+      notFound: "ఉత్పత్తి కనుగొనబడలేదు.",
     },
     cart: {
       yourCart: "మీ కార్ట్",
@@ -2703,6 +2947,27 @@ export const translations = {
       createOrderFailed: "పేమెంట్ ఆర్డర్ సృష్టించడం విఫలమైంది.",
       paymentFailed: "చెల్లింపు ధృవీకరణ విఫలమైంది. సహాయం కోసం సంప్రదించండి."
     },
+    storyDetails: {
+      back: "వెనుకకు",
+      stories: "కథలు",
+      story: "కథ",
+      by: "ద్వారా",
+      minRead: "{minutes} నిమిషాల చదువు",
+      wordsCount: "{count} పదాలు",
+      share: "షేర్ చేయండి",
+      copied: "కాపీ అయింది",
+      copyLink: "లింక్ కాపీ చేయండి",
+      browseMore: "మరిన్ని కథలు చూడండి",
+      publishedOn: "{date} న ప్రచురించబడింది",
+      goBack: "వెనక్కి వెళ్లండి",
+      backToStories: "కథలకు తిరిగి వెళ్లండి",
+
+      errorNotFound: "కథ కనబడలేదు.",
+      errorFailed: "కథను లోడ్ చేయడం విఫలమైంది.",
+      loading: "కథ లోడ్ అవుతోంది...",
+
+      shareText: "ఈ కథను చూడండి",
+    },
   },
 
   mr: {
@@ -2773,19 +3038,51 @@ export const translations = {
       noProducts: "उत्पाद सापडले नाहीत",
       loading: "उत्पाद लोड होत आहे...",
     },
-    productDetail: {
-      price: "किंमत",
-      stock: "स्टॉकमध्ये",
-      outOfStock: "स्टॉकमध्ये नाही",
+    productDetails: {
+      breadcrumbsHome: "मुख्यपृष्ठ",
+      breadcrumbsShop: "दुकान",
+
+      noMedia: "मीडिया उपलब्ध नाही",
+      savePercent: "{percent}% बचत करा",
+      outOfStock: "साठा संपला",
+
+      byArtisan: "द्वारे",
+      share: "शेअर करा",
+      copyLink: "लिंक कॉपी करा",
+      copied: "कॉपी झाले",
+
       quantity: "प्रमाण",
+      inStockCount: "{count} उपलब्ध आहे",
+
       addToCart: "कार्टमध्ये जोडा",
       buyNow: "आता खरेदी करा",
-      description: "वर्णन",
-      reviews: "समीक्षा",
-      relatedProducts: "संबंधित उत्पाद",
-      addedToCart: "कार्टमध्ये जोडले!",
-      addedToWishlist: "विशलिस्टमध्ये जोडले!",
-      removedFromWishlist: "विशलिस्टमधून काढले!",
+      outOfStockBtn: "साठा संपला",
+
+      fastShipping: "जलद शिपिंग",
+      fastShippingDesc: "2–5 कार्यदिवस",
+
+      secureCheckout: "सुरक्षित चेकआउट",
+      secureCheckoutDesc: "SSL एनक्रिप्टेड",
+
+      easyReturns: "सुलभ परतावा",
+      easyReturnsDesc: "7 दिवसांची परतावा धोरण",
+
+      details: "उत्पादन तपशील",
+      handcraftedBy: "{name} यांनी हस्तनिर्मित",
+      categoryLabel: "वर्ग: {category}",
+      shipsFrom: "भारताकडून पाठवले जाते",
+
+      shippingReturns: "शिपिंग आणि रिटर्न",
+      shippingReturnsDesc:
+        "डिलिव्हरीनंतर 7 दिवसांच्या आत जलद शिपिंग आणि त्रासमुक्त रिटर्नचा आनंद घ्या.",
+
+      careInstructions: "देखभाल सूचना",
+      careInstructionsDesc:
+        "थंड, कोरड्या ठिकाणी ठेवा. मऊ कापडाने हलकेच स्वच्छ करा.",
+
+      error: "त्रुटी: {error}",
+      backToShop: "दुकानवर परत जा",
+      notFound: "उत्पादन सापडले नाही.",
     },
     cart: {
       yourCart: "आपली कार्ट",
@@ -3234,6 +3531,27 @@ export const translations = {
       loginRequired: "खरेदी करण्यासाठी तुम्हाला लॉगिन केलेले असणे आवश्यक आहे.",
       createOrderFailed: "पेमेंट ऑर्डर तयार करण्यात अयशस्वी.",
       paymentFailed: "पेमेंट पडताळणी अयशस्वी. कृपया सहाय्याशी संपर्क साधा."
+    },
+    storyDetails: {
+      back: "मागे जा",
+      stories: "कथा",
+      story: "कथा",
+      by: "द्वारे",
+      minRead: "{minutes} मिनिटे वाचन",
+      wordsCount: "{count} शब्द",
+      share: "शेअर करा",
+      copied: "कॉपी झाले",
+      copyLink: "लिंक कॉपी करा",
+      browseMore: "आणखी कथा पहा",
+      publishedOn: "{date} रोजी प्रकाशित",
+      goBack: "मागे जा",
+      backToStories: "कथांकडे परत",
+
+      errorNotFound: "कथा सापडली नाही.",
+      errorFailed: "कथा लोड करण्यात अयशस्वी.",
+      loading: "कथा लोड होत आहे...",
+
+      shareText: "ही कथा पहा",
     },
   },
 };

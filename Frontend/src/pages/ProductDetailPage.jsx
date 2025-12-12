@@ -22,6 +22,7 @@ import RelatedProducts from '@/components/ui/products/RelatedProducts';
 import useAuthStore from '@/stores/authStore';
 import useCartStore from '@/stores/cartStore';
 import { getApiUrl } from '@/lib/api';
+import { useTranslation } from '@/hooks/useTranslation';
 
 function StaticRating({ rating, reviews = 0 }) {
   const displayRating = rating !== undefined ? rating : 0;
@@ -97,6 +98,7 @@ function ProductSkeleton() {
 }
 
 export default function ProductDetailsPage() {
+  const { t } = useTranslation();
   const { productId } = useParams();
   const navigate = useNavigate();
 
@@ -232,13 +234,13 @@ export default function ProductDetailsPage() {
     return (
       <div className="flex flex-col items-center justify-center h-[70vh] gap-4">
         <AlertTriangle className="h-10 w-10 text-red-500" />
-        <p className="text-center text-red-600 font-medium">Error: {error}</p>
+        <p className="text-center text-red-600 font-medium">{t('productDetails.error', {error})}</p>
         <Link to="/shop">
-          <Button variant="outline">Back to Shop</Button>
+          <Button variant="outline">{t('productDetails.backToShop')}</Button>
         </Link>
       </div>
     );
-  if (!product) return <div className="text-center py-20">Product not found.</div>;
+  if (!product) return <div className="text-center py-20">{t('productDetails.notFound')}</div>;
 
   const showNavigation = mediaItems.length > 1;
   const currentMedia = mediaItems[activeMediaIndex];
@@ -254,11 +256,11 @@ export default function ProductDetailsPage() {
         <div className="text-sm breadcrumbs mb-4">
           <ul className="flex items-center gap-2 text-muted-foreground">
             <li>
-              <Link to="/" className="hover:underline">Home</Link>
+              <Link to="/" className="hover:underline">{t('productDetails.breadcrumbsHome')}</Link>
             </li>
             <li>/</li>
             <li>
-              <Link to="/shop" className="hover:underline">Shop</Link>
+              <Link to="/shop" className="hover:underline">{t('productDetails.breadcrumbsShop')}</Link>
             </li>
             {categoryId && (
               <>
@@ -339,7 +341,7 @@ export default function ProductDetailsPage() {
                 </>
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                  No media
+                  {t('productDetails.noMedia')}
                 </div>
               )}
             </div>
@@ -403,12 +405,12 @@ export default function ProductDetailsPage() {
               <div className="flex items-center gap-2">
                 {(product.discountPercentage ?? 0) > 0 && (
                   <span className="inline-flex items-center rounded-full bg-green-50 text-green-700 text-xs font-semibold px-3 py-1">
-                    Save {product.discountPercentage}%
+                    {t('productDetails.savePercent', {percent: product.discountPercentage})}
                   </span>
                 )}
                 {product.stockQuantity === 0 && (
                   <span className="inline-flex items-center rounded-full bg-red-50 text-red-600 text-xs font-semibold px-3 py-1">
-                    Out of stock
+                    {t('productDetails.outOfStock')}
                   </span>
                 )}
               </div>
@@ -418,7 +420,7 @@ export default function ProductDetailsPage() {
               </h1>
 
               <p className="text-md text-muted-foreground">
-                by{' '}
+                {t('productDetails.byArtisan')}{' '}
                 {artisanId ? (
                   <Link to={`/store/${artisanId}`} className="text-primary hover:underline font-semibold">
                     {artisanName}
@@ -435,7 +437,7 @@ export default function ProductDetailsPage() {
                   className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
                   <Share2 className="h-4 w-4" />
-                  Share
+                  {t('productDetails.share')}
                 </button>
                 {!navigator.share && (
                   <button
@@ -465,7 +467,7 @@ export default function ProductDetailsPage() {
             <Separator />
 
             <div className="flex flex-wrap items-center gap-4">
-              <p className="font-medium">Quantity:</p>
+              <p className="font-medium">{t('productDetails.quantity')}</p>
               <div className="flex items-center border rounded-md">
                 <Button variant="ghost" size="icon" onClick={() => canDecrease && setQuantity((q) => Math.max(1, q - 1))} disabled={!canDecrease} aria-label="Decrease quantity">
                   <Minus className="h-4 w-4" />
@@ -477,7 +479,7 @@ export default function ProductDetailsPage() {
                   <Plus className="h-4 w-4" />
                 </Button>
               </div>
-              <p className="text-sm text-muted-foreground">{product.stockQuantity} in stock</p>
+              <p className="text-sm text-muted-foreground">{t('productDetails.inStockCount', {count: product.stockQuantity})}</p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full">
@@ -486,7 +488,7 @@ export default function ProductDetailsPage() {
                 className="w-full sm:flex-1 py-4"
                 onClick={handleAddToCart}
               >
-                <ShoppingCart className="mr-2 h-5 w-5" /> Add to Cart
+                <ShoppingCart className="mr-2 h-5 w-5" /> {t('productDetails.addToCart')}
               </Button>
               <Button
                 size="lg"
@@ -495,7 +497,7 @@ export default function ProductDetailsPage() {
                 onClick={handleBuyNow}
                 disabled={!canBuyNow}
               >
-                {canBuyNow ? 'Buy Now' : 'Out of Stock'}
+                {canBuyNow ? t('productDetails.buyNow') : t('productDetails.outOfStockBtn')}
               </Button>
             </div>
 
@@ -503,22 +505,22 @@ export default function ProductDetailsPage() {
               <div className="flex items-center gap-3 rounded-lg border p-3">
                 <Truck className="h-5 w-5 text-primary" />
                 <div className="text-sm">
-                  <p className="font-semibold">Fast shipping</p>
-                  <p className="text-muted-foreground">2–5 business days</p>
+                  <p className="font-semibold">{t('productDetails.fastShipping')}</p>
+                  <p className="text-muted-foreground">{t('productDetails.fastShippingDesc')}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 rounded-lg border p-3">
                 <Shield className="h-5 w-5 text-primary" />
                 <div className="text-sm">
-                  <p className="font-semibold">Secure checkout</p>
-                  <p className="text-muted-foreground">SSL encrypted</p>
+                  <p className="font-semibold">{t('productDetails.secureCheckout')}</p>
+                  <p className="text-muted-foreground">{t('productDetails.secureCheckoutDesc')}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 rounded-lg border p-3">
                 <RefreshCw className="h-5 w-5 text-primary" />
                 <div className="text-sm">
-                  <p className="font-semibold">Easy returns</p>
-                  <p className="text-muted-foreground">7-day return policy</p>
+                  <p className="font-semibold">{t('productDetails.easyReturns')}</p>
+                  <p className="text-muted-foreground">{t('productDetails.easyReturnsDesc')}</p>
                 </div>
               </div>
             </div>
@@ -526,39 +528,39 @@ export default function ProductDetailsPage() {
             <div className="space-y-2">
               <details className="group border rounded-lg p-4">
                 <summary className="cursor-pointer font-semibold list-none flex items-center justify-between">
-                  Product details
+                  {t('productDetails.details')}
                   <span className="text-muted-foreground group-open:rotate-180 transition-transform">
                     <ChevronDownIcon />
                   </span>
                 </summary>
                 <div className="mt-3 text-sm text-gray-700 leading-relaxed">
                   <ul className="list-disc pl-5 space-y-1">
-                    <li>Handcrafted by {artisanName}</li>
-                    <li>Category: {categoryName}</li>
-                    <li>Ships from: India</li>
+                    <li>{t('productDetails.handcraftedBy',{name: artisanName})}</li>
+                    <li>{t('productDetails.categoryLabel', {category: categoryName})}</li>
+                    <li>{t('productDetails.shipsFrom')}</li>
                   </ul>
                 </div>
               </details>
               <details className="group border rounded-lg p-4">
                 <summary className="cursor-pointer font-semibold list-none flex items-center justify-between">
-                  Shipping & returns
+                  {t('productDetails.shippingReturns')}
                   <span className="text-muted-foreground group-open:rotate-180 transition-transform">
                     <ChevronDownIcon />
                   </span>
                 </summary>
                 <div className="mt-3 text-sm text-gray-700 leading-relaxed">
-                  Enjoy fast shipping and hassle-free returns within 7 days of delivery.
+                  {t('productDetails.shippingReturnsDesc')}
                 </div>
               </details>
               <details className="group border rounded-lg p-4">
                 <summary className="cursor-pointer font-semibold list-none flex items-center justify-between">
-                  Care instructions
+                  {t('productDetails.careInstructions')}
                   <span className="text-muted-foreground group-open:rotate-180 transition-transform">
                     <ChevronDownIcon />
                   </span>
                 </summary>
                 <div className="mt-3 text-sm text-gray-700 leading-relaxed">
-                  Keep in a cool, dry place. Clean gently with a soft cloth.
+                  {t('productDetails.careInstructionsDesc')}
                 </div>
               </details>
             </div>
@@ -573,10 +575,10 @@ export default function ProductDetailsPage() {
       <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/90 backdrop-blur border-t p-3 sm:hidden">
         <div className="max-w-7xl mx-auto flex items-center gap-2">
           <Button size="lg" className="flex-1" onClick={handleAddToCart}>
-            <ShoppingCart className="mr-2 h-5 w-5" /> Add to Cart
+            <ShoppingCart className="mr-2 h-5 w-5" /> {t('productDetails.addToCart')}
           </Button>
           <Button size="lg" variant="outline" onClick={handleBuyNow} disabled={!canBuyNow}>
-            {canBuyNow ? 'Buy Now' : 'Out of Stock'}
+            {canBuyNow ? t('productDetails.buyNow') : t('productDetails.outOfStockBtn')}
           </Button>
         </div>
       </div>
