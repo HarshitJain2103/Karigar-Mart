@@ -19,6 +19,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import useAuthStore from '@/stores/authStore';
 import { useToast } from "@/hooks/use-toast";
 import { getApiUrl } from '@/lib/api';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const DEMO_EMAIL = "adivenki@gmail.com";
 const DEMO_PASSWORD = "ThirdPass";
@@ -48,6 +49,7 @@ function GoogleIcon(props) {
 }
 
 export default function AuthDialog({ setOpen }) {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [error, setError] = useState(null);
   const login = useAuthStore((state) => state.login);
@@ -70,12 +72,12 @@ export default function AuthDialog({ setOpen }) {
       });
 
       const data = await response.json();
-      if (!response.ok) throw new Error(data.message || 'Login failed');
+      if (!response.ok) throw new Error(data.message || t('authDialog.loginFailed'));
 
       login(data);
       toast({
-        title: "Demo Login Successful!",
-        description: `Logged in as demo artisan.`,
+        title: t('authDialog.demoLoginSuccess'),
+        description: t('authDialog.demoLoginDesc'),
       });
       setOpen(false);
     } catch (err) {
@@ -95,12 +97,14 @@ export default function AuthDialog({ setOpen }) {
       });
 
       const data = await response.json();
-      if (!response.ok) throw new Error(data.message || 'Login failed');
+      if (!response.ok) throw new Error(data.message || t('authDialog.loginFailed'));
 
       login(data);
       toast({
-        title: "Login Successful!",
-        description: `Welcome back, ${data.user.firstName}.`,
+        title: t('authDialog.loginSuccess'),
+        description: t('authDialog.welcomeBack', {
+          name: data.user.firstName
+        }),
       });
       setOpen(false);
     } catch (err) {
@@ -125,12 +129,14 @@ export default function AuthDialog({ setOpen }) {
       });
 
       const data = await response.json();
-      if (!response.ok) throw new Error(data.message || 'Signup failed');
+      if (!response.ok) throw new Error(data.message || t('authDialog.signupFailed'));
 
       login(data);
       toast({
-        title: "Account Created!",
-        description: `Welcome to Karigar Mart, ${data.user.firstName}.`,
+        title: t('authDialog.signupSuccess'),
+        description: t('authDialog.welcomeNew', {
+          name: data.user.firstName
+        }),
       });
       setOpen(false);
     } catch (err) {
@@ -141,31 +147,31 @@ export default function AuthDialog({ setOpen }) {
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
-        <DialogTitle>Welcome to Karigar Mart</DialogTitle>
+        <DialogTitle>{t('authDialog.title')}</DialogTitle>
         <DialogDescription>
-          Access your account or create a new one to start your journey.
+          {t('authDialog.description')}
         </DialogDescription>
       </DialogHeader>
       <Tabs defaultValue="login" className="w-full" onValueChange={() => setError(null)}>
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="login">Log In</TabsTrigger>
-          <TabsTrigger value="signup">Sign Up</TabsTrigger>
+          <TabsTrigger value="login">{t('authDialog.loginTab')}</TabsTrigger>
+          <TabsTrigger value="signup">{t('authDialog.signupTab')}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="login">
           <Card>
-            <CardHeader><CardTitle>Log In</CardTitle></CardHeader>
+            <CardHeader><CardTitle>{t('authDialog.loginTitle')}</CardTitle></CardHeader>
             <CardContent>
               <a href={getApiUrl('/api/auth/google')}>
                 <Button variant="outline" className="w-full">
                   <GoogleIcon className="mr-2 h-4 w-4" />
-                  Sign in with Google
+                  {t('authDialog.googleLogin')}
                 </Button>
               </a>
               <div className="relative my-4">
                 <div className="absolute inset-0 flex items-center"><span className="w-full border-t" /></div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+                  <span className="bg-background px-2 text-muted-foreground">{t('authDialog.orContinue')}</span>
                 </div>
               </div>
               <div className="mb-4">
@@ -174,26 +180,29 @@ export default function AuthDialog({ setOpen }) {
                   className="w-full text-sm"
                   onClick={handleDemoLogin}
                 >
-                  Login as Demo Artisan
+                  {t('authDialog.demoLogin')}
                 </Button>
 
                 <p className="text-xs text-center mt-1 text-muted-foreground">
-                  Email: adivenki@gmail.com • Password: ThirdPass
+                  {t('authDialog.demoCredentials', {
+                    email: DEMO_EMAIL,
+                    password: DEMO_PASSWORD
+                  })}
                 </p>
               </div>
               <form onSubmit={handleLogin}>
                 <div className="grid gap-4 py-4">
                   <div className="grid w-full items-center gap-1.5">
-                    <Label htmlFor="login-email">Email</Label>
-                    <Input type="email" id="login-email" placeholder="name@example.com" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} required />
+                    <Label htmlFor="login-email">{t('authDialog.email')}</Label>
+                    <Input type="email" id="login-email" placeholder={t('authDialog.emailPlaceholder')} value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} required />
                   </div>
                   <div className="grid w-full items-center gap-1.5">
-                    <Label htmlFor="login-password">Password</Label>
-                    <Input type="password" id="login-password" placeholder="Your password" value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} required />
+                    <Label htmlFor="login-password">{t('authDialog.password')}</Label>
+                    <Input type="password" id="login-password" placeholder={t('authDialog.passwordPlaceholder')} value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} required />
                   </div>
                 </div>
                 <DialogFooter>
-                  <Button type="submit" className="w-full">Log In</Button>
+                  <Button type="submit" className="w-full">{t('authDialog.loginButton')}</Button>
                 </DialogFooter>
                 {error && <p className="mt-4 text-center text-sm text-red-500">{error}</p>}
               </form>
@@ -203,43 +212,43 @@ export default function AuthDialog({ setOpen }) {
 
         <TabsContent value="signup">
           <Card>
-            <CardHeader><CardTitle>Sign Up</CardTitle></CardHeader>
+            <CardHeader><CardTitle>{t('authDialog.signupTitle')}</CardTitle></CardHeader>
             <CardContent>
               <a href={getApiUrl('/api/auth/google')}>
                 <Button variant="outline" className="w-full">
                   <GoogleIcon className="mr-2 h-4 w-4" />
-                  Sign up with Google
+                  {t('authDialog.googleSignup')}
                 </Button>
               </a>
               <div className="relative my-4">
                 <div className="absolute inset-0 flex items-center"><span className="w-full border-t" /></div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-background px-2 text-muted-foreground">Or create an account with</span>
+                  <span className="bg-background px-2 text-muted-foreground">{t('authDialog.orCreateWith')}</span>
                 </div>
               </div>
               <form onSubmit={handleSignup}>
                 <div className="grid gap-4 py-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="grid w-full items-center gap-1.5">
-                      <Label htmlFor="signup-firstname">First Name</Label>
-                      <Input id="signup-firstname" placeholder="John" value={signupFirstName} onChange={(e) => setSignupFirstName(e.target.value)} required />
+                      <Label htmlFor="signup-firstname">{t('authDialog.firstName')}</Label>
+                      <Input id="signup-firstname" placeholder={t('authDialog.firstNamePlaceholder')} value={signupFirstName} onChange={(e) => setSignupFirstName(e.target.value)} required />
                     </div>
                     <div className="grid w-full items-center gap-1.5">
-                      <Label htmlFor="signup-lastname">Last Name</Label>
-                      <Input id="signup-lastname" placeholder="Doe" value={signupLastName} onChange={(e) => setSignupLastName(e.target.value)} required />
+                      <Label htmlFor="signup-lastname">{t('authDialog.lastName')}</Label>
+                      <Input id="signup-lastname" placeholder={t('authDialog.lastNamePlaceholder')} value={signupLastName} onChange={(e) => setSignupLastName(e.target.value)} required />
                     </div>
                   </div>
                   <div className="grid w-full items-center gap-1.5">
-                    <Label htmlFor="signup-email">Email</Label>
-                    <Input type="email" id="signup-email" placeholder="name@example.com" value={signupEmail} onChange={(e) => setSignupEmail(e.target.value)} required />
+                    <Label htmlFor="signup-email">{t('authDialog.email')}</Label>
+                    <Input type="email" id="signup-email" placeholder={t('authDialog.emailPlaceholder')} value={signupEmail} onChange={(e) => setSignupEmail(e.target.value)} required />
                   </div>
                   <div className="grid w-full items-center gap-1.5">
-                    <Label htmlFor="signup-password">Password</Label>
-                    <Input type="password" id="signup-password" placeholder="Create a password" value={signupPassword} onChange={(e) => setSignupPassword(e.target.value)} required />
+                    <Label htmlFor="signup-password">{t('authDialog.password')}</Label>
+                    <Input type="password" id="signup-password" placeholder={t('authDialog.createPasswordPlaceholder')} value={signupPassword} onChange={(e) => setSignupPassword(e.target.value)} required />
                   </div>
                 </div>
                 <DialogFooter>
-                  <Button type="submit" className="w-full">Create Account</Button>
+                  <Button type="submit" className="w-full">{t('authDialog.signupButton')}</Button>
                 </DialogFooter>
                 {error && <p className="mt-4 text-center text-sm text-red-500">{error}</p>}
               </form>

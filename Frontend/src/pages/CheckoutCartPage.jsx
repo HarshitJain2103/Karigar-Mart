@@ -9,8 +9,10 @@ import { Separator } from '@/components/ui/separator';
 import { Loader2 } from 'lucide-react';
 import useCartStore from '@/stores/cartStore';
 import { getApiUrl } from '@/lib/api';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function CheckoutCartPage() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const token = useAuthStore((state) => state.token);
     const user = useAuthStore((state) => state.user);
@@ -43,11 +45,11 @@ export default function CheckoutCartPage() {
 
     const handlePayment = async () => {
         if (Object.values(shippingAddress).some(field => field.trim() === '')) {
-            alert('Please fill out all shipping fields.');
+            alert(t('checkoutPage.fillAllFields'));
             return;
         }
         if (!user) {
-            alert('You must be logged in to make a purchase.');
+            alert(t('checkoutPage.loginRequired'));
             return;
         }
 
@@ -63,14 +65,14 @@ export default function CheckoutCartPage() {
                 body: JSON.stringify({}), // Body can be empty, backend reads from DB
             });
 
-            if (!createOrderRes.ok) throw new Error('Failed to create payment order.');
+            if (!createOrderRes.ok) throw new Error(t('checkoutPage.createOrderFailed'));
             const orderData = await createOrderRes.json();
             const options = {
                 key: import.meta.env.VITE_RAZORPAY_KEY_ID,
                 amount: orderData.amount,
                 currency: orderData.currency,
                 name: 'Karigar-Mart',
-                description: `Payment for ${cartItems.length} items`,
+                description: t('checkoutPage.razorpayDescription', {count: cartItems.length}),
                 order_id: orderData.id,
                 handler: async function (response) {
                 const dataToVerify = {
@@ -98,7 +100,7 @@ export default function CheckoutCartPage() {
                 if (verifyData.success) {
                     navigate(`/order-confirmation/${verifyData.orderId}`);
                 } else {
-                    alert('Payment verification failed. Please contact support.');
+                    alert(t('checkoutPage.paymentFailed'));
                 }
             },
             prefill: {
@@ -131,23 +133,23 @@ export default function CheckoutCartPage() {
     return (
         <div className="bg-gray-50 min-h-screen">
             <div className="container mx-auto p-4 py-12">
-                <h1 className="text-3xl font-bold tracking-tight text-center mb-10">Secure Checkout</h1>
+                <h1 className="text-3xl font-bold tracking-tight text-center mb-10">{t('checkoutPage.secureCheckout')}</h1>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
                 
                     <Card>
-                        <CardHeader><CardTitle>1. Shipping Address</CardTitle></CardHeader>
+                        <CardHeader><CardTitle>{t('checkoutPage.shippingAddress')}</CardTitle></CardHeader>
                         <CardContent className="space-y-4">
                             <div>
-                                <Label htmlFor="street">Street Address</Label>
-                                <Input id="street" value={shippingAddress.street} onChange={handleInputChange} placeholder="123 Art Lane" />
+                                <Label htmlFor="street">{t('checkoutPage.street')}</Label>
+                                <Input id="street" value={shippingAddress.street} onChange={handleInputChange} placeholder={t('checkoutPage.streetPlaceholder')} />
                             </div>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div><Label htmlFor="city">City</Label><Input id="city" value={shippingAddress.city} onChange={handleInputChange} placeholder="Mumbai" /></div>
-                                <div><Label htmlFor="state">State</Label><Input id="state" value={shippingAddress.state} onChange={handleInputChange} placeholder="Maharashtra" /></div>
+                                <div><Label htmlFor="city">{t('checkoutPage.city')}</Label><Input id="city" value={shippingAddress.city} onChange={handleInputChange} placeholder={t('checkoutPage.cityPlaceholder')} /></div>
+                                <div><Label htmlFor="state">{t('checkoutPage.state')}</Label><Input id="state" value={shippingAddress.state} onChange={handleInputChange} placeholder={t('checkoutPage.statePlaceholder')} /></div>
                             </div>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div><Label htmlFor="postalCode">Postal Code</Label><Input id="postalCode" value={shippingAddress.postalCode} onChange={handleInputChange} placeholder="400001" /></div>
-                                <div><Label htmlFor="phoneNumber">Phone Number</Label><Input id="phoneNumber" type="tel" value={shippingAddress.phoneNumber} onChange={handleInputChange} placeholder="9876543210" /></div>
+                                <div><Label htmlFor="postalCode">{t('checkoutPage.postalCode')}</Label><Input id="postalCode" value={shippingAddress.postalCode} onChange={handleInputChange} placeholder={t('checkoutPage.postalCodePlaceholder')} /></div>
+                                <div><Label htmlFor="phoneNumber">{t('checkoutPage.phoneNumber')}</Label><Input id="phoneNumber" type="tel" value={shippingAddress.phoneNumber} onChange={handleInputChange} placeholder={t('checkoutPage.phonePlaceholder')} /></div>
                             </div>
                         </CardContent>
                     </Card>
@@ -155,7 +157,7 @@ export default function CheckoutCartPage() {
                 
                     <div className="lg:sticky top-24">
                         <Card>
-                            <CardHeader><CardTitle>2. Order Summary</CardTitle></CardHeader>
+                            <CardHeader><CardTitle>{t('checkoutPage.orderSummary')}</CardTitle></CardHeader>
                             <CardContent>
                                 <div className="space-y-4 max-h-64 overflow-y-auto pr-2">
                                     {cartItems.map(item => (
@@ -175,16 +177,16 @@ export default function CheckoutCartPage() {
 
                                 <Separator className="my-4" />
                                 <div className="space-y-2">
-                                    <div className="flex justify-between"><span className="text-muted-foreground">Subtotal</span><span>₹{subtotal().toFixed(2)}</span></div>
-                                    <div className="flex justify-between"><span className="text-muted-foreground">Shipping</span><span className="font-semibold text-green-600">FREE</span></div>
+                                    <div className="flex justify-between"><span className="text-muted-foreground">{t('checkoutPage.subtotal')}</span><span>₹{subtotal().toFixed(2)}</span></div>
+                                    <div className="flex justify-between"><span className="text-muted-foreground">{t('checkoutPage.shipping')}</span><span className="font-semibold text-green-600">{t('checkoutPage.freeShipping')}</span></div>
                                     <Separator className="my-2" />
-                                    <div className="flex justify-between font-bold text-lg"><span>Total</span><span>₹{subtotal().toFixed(2)}</span></div>
+                                    <div className="flex justify-between font-bold text-lg"><span>{t('checkoutPage.total')}</span><span>₹{subtotal().toFixed(2)}</span></div>
                                 </div>
                             </CardContent>
                             <CardFooter>
                                 <Button onClick={handlePayment} className="w-full" size="lg" disabled={paymentLoading}>
                                     {paymentLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                                    Proceed to Payment
+                                    {t('checkoutPage.proceedToPayment')}
                                 </Button>
                             </CardFooter>
                         </Card>

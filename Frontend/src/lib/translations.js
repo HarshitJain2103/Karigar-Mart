@@ -549,6 +549,7 @@ export const translations = {
       easyReturns: "Easy returns"
     },
     checkoutPage: {
+      razorpayDescription: "Payment for {count} items",
       secureCheckout: "Secure Checkout",
 
       // Errors
@@ -613,6 +614,51 @@ export const translations = {
       loading: "Loading story...",
 
       shareText: "Check out this story",
+    },
+    authDialog: {
+      title: "Welcome to Karigar Mart",
+      description: "Access your account or create a new one to start your journey.",
+
+      loginTab: "Log In",
+      signupTab: "Sign Up",
+
+      loginTitle: "Log In",
+      signupTitle: "Sign Up",
+
+      googleLogin: "Sign in with Google",
+      googleSignup: "Sign up with Google",
+
+      orContinue: "Or continue with",
+      orCreateWith: "Or create an account with",
+
+      demoLogin: "Login as Demo Artisan",
+      demoCredentials: "Email: {email} • Password: {password}",
+
+      email: "Email",
+      password: "Password",
+      firstName: "First Name",
+      lastName: "Last Name",
+
+      emailPlaceholder: "name@example.com",
+      passwordPlaceholder: "Your password",
+      createPasswordPlaceholder: "Create a password",
+      firstNamePlaceholder: "John",
+      lastNamePlaceholder: "Doe",
+
+      loginButton: "Log In",
+      signupButton: "Create Account",
+
+      demoLoginSuccess: "Demo Login Successful!",
+      demoLoginDesc: "Logged in as demo artisan.",
+
+      loginSuccess: "Login Successful!",
+      welcomeBack: "Welcome back, {name}.",
+
+      signupSuccess: "Account Created!",
+      welcomeNew: "Welcome to Karigar Mart, {name}.",
+
+      loginFailed: "Login failed",
+      signupFailed: "Signup failed",
     },
   },
 
@@ -1153,6 +1199,7 @@ export const translations = {
       easyReturns: "आसान रिटर्न"
     },
     checkoutPage: {
+      razorpayDescription: "{count} वस्तुओं के लिए भुगतान",
       secureCheckout: "सुरक्षित चेकआउट",
 
       noProduct: "कोई उत्पाद चयनित नहीं किया गया।",
@@ -1211,6 +1258,51 @@ export const translations = {
       loading: "कहानी लोड हो रही है...",
 
       shareText: "इस कहानी को देखें",
+    },
+    authDialog: {
+      title: "करिगर मार्ट में आपका स्वागत है",
+      description: "अपने खाते में प्रवेश करें या अपनी यात्रा शुरू करने के लिए नया खाता बनाएं।",
+
+      loginTab: "लॉग इन",
+      signupTab: "साइन अप",
+
+      loginTitle: "लॉग इन",
+      signupTitle: "साइन अप",
+
+      googleLogin: "Google से साइन इन करें",
+      googleSignup: "Google से साइन अप करें",
+
+      orContinue: "या इसके साथ जारी रखें",
+      orCreateWith: "या इसके साथ खाता बनाएं",
+
+      demoLogin: "डेमो कारीगर के रूप में लॉग इन करें",
+      demoCredentials: "ईमेल: {email} • पासवर्ड: {password}",
+
+      email: "ईमेल",
+      password: "पासवर्ड",
+      firstName: "पहला नाम",
+      lastName: "अंतिम नाम",
+
+      emailPlaceholder: "name@example.com",
+      passwordPlaceholder: "आपका पासवर्ड",
+      createPasswordPlaceholder: "पासवर्ड बनाएं",
+      firstNamePlaceholder: "राम",
+      lastNamePlaceholder: "कुमार",
+
+      loginButton: "लॉग इन",
+      signupButton: "खाता बनाएं",
+
+      demoLoginSuccess: "डेमो लॉगिन सफल!",
+      demoLoginDesc: "डेमो कारीगर के रूप में लॉग इन किया गया।",
+
+      loginSuccess: "लॉगिन सफल!",
+      welcomeBack: "वापसी पर स्वागत है, {name}।",
+
+      signupSuccess: "खाता बन गया!",
+      welcomeNew: "करिगर मार्ट में आपका स्वागत है, {name}।",
+
+      loginFailed: "लॉगिन विफल",
+      signupFailed: "साइन अप विफल",
     },
   },
 
@@ -1739,6 +1831,7 @@ export const translations = {
       easyReturns: "সহজ রিটার্ন"
     },
     checkoutPage: {
+      razorpayDescription: "{count}টি পণ্যের জন্য পেমেন্ট",
       secureCheckout: "সুরক্ষিত চেকআউট",
 
       noProduct: "কোনো পণ্য নির্বাচিত হয়নি।",
@@ -1797,6 +1890,51 @@ export const translations = {
       loading: "গল্প লোড হচ্ছে...",
 
       shareText: "এই গল্পটি দেখুন",
+    },
+    authDialog: {
+      title: "করিগর মার্টে আপনাকে স্বাগতম",
+      description: "আপনার অ্যাকাউন্টে প্রবেশ করুন অথবা নতুন একটি অ্যাকাউন্ট তৈরি করুন।",
+
+      loginTab: "লগ ইন",
+      signupTab: "সাইন আপ",
+
+      loginTitle: "লগ ইন",
+      signupTitle: "সাইন আপ",
+
+      googleLogin: "Google দিয়ে সাইন ইন করুন",
+      googleSignup: "Google দিয়ে সাইন আপ করুন",
+
+      orContinue: "অথবা এর মাধ্যমে চালিয়ে যান",
+      orCreateWith: "অথবা এর মাধ্যমে অ্যাকাউন্ট তৈরি করুন",
+
+      demoLogin: "ডেমো কারিগর হিসেবে লগ ইন করুন",
+      demoCredentials: "ইমেইল: {email} • পাসওয়ার্ড: {password}",
+
+      email: "ইমেইল",
+      password: "পাসওয়ার্ড",
+      firstName: "নাম",
+      lastName: "পদবি",
+
+      emailPlaceholder: "name@example.com",
+      passwordPlaceholder: "আপনার পাসওয়ার্ড",
+      createPasswordPlaceholder: "একটি পাসওয়ার্ড তৈরি করুন",
+      firstNamePlaceholder: "রাহুল",
+      lastNamePlaceholder: "দাস",
+
+      loginButton: "লগ ইন",
+      signupButton: "অ্যাকাউন্ট তৈরি করুন",
+
+      demoLoginSuccess: "ডেমো লগইন সফল!",
+      demoLoginDesc: "ডেমো কারিগর হিসেবে লগ ইন করা হয়েছে।",
+
+      loginSuccess: "লগইন সফল!",
+      welcomeBack: "ফিরে স্বাগতম, {name}।",
+
+      signupSuccess: "অ্যাকাউন্ট তৈরি হয়েছে!",
+      welcomeNew: "করিগর মার্টে স্বাগতম, {name}।",
+
+      loginFailed: "লগইন ব্যর্থ হয়েছে",
+      signupFailed: "সাইন আপ ব্যর্থ হয়েছে",
     },
   },
 
@@ -2324,6 +2462,7 @@ export const translations = {
       easyReturns: "எளிய ரிட்டர்ன்ஸ்"
     },
     checkoutPage: {
+      razorpayDescription: "{count} பொருட்களுக்கான கட்டணம்",
       secureCheckout: "பாதுகாப்பான செலுத்தல்",
 
       noProduct: "எந்த பொருளும் தேர்வு செய்யப்படவில்லை.",
@@ -2382,6 +2521,51 @@ export const translations = {
       loading: "கதை ஏற்றப்படுகிறது...",
 
       shareText: "இந்தக் கதையைப் பாருங்கள்",
+    },
+    authDialog: {
+      title: "கரிகர் மார்ட்டிற்கு வரவேற்கிறோம்",
+      description: "உங்கள் கணக்கில் உள்நுழையுங்கள் அல்லது புதிய கணக்கை உருவாக்குங்கள்.",
+
+      loginTab: "உள்நுழை",
+      signupTab: "பதிவு செய்",
+
+      loginTitle: "உள்நுழை",
+      signupTitle: "பதிவு செய்",
+
+      googleLogin: "Google மூலம் உள்நுழையவும்",
+      googleSignup: "Google மூலம் பதிவு செய்யவும்",
+
+      orContinue: "அல்லது இதன் மூலம் தொடரவும்",
+      orCreateWith: "அல்லது இதன் மூலம் கணக்கு உருவாக்கவும்",
+
+      demoLogin: "டெமோ கலைஞராக உள்நுழையவும்",
+      demoCredentials: "மின்னஞ்சல்: {email} • கடவுச்சொல்: {password}",
+
+      email: "மின்னஞ்சல்",
+      password: "கடவுச்சொல்",
+      firstName: "முதல் பெயர்",
+      lastName: "கடைசி பெயர்",
+
+      emailPlaceholder: "name@example.com",
+      passwordPlaceholder: "உங்கள் கடவுச்சொல்",
+      createPasswordPlaceholder: "கடவுச்சொல் உருவாக்கவும்",
+      firstNamePlaceholder: "அருண்",
+      lastNamePlaceholder: "குமார்",
+
+      loginButton: "உள்நுழை",
+      signupButton: "கணக்கு உருவாக்கு",
+
+      demoLoginSuccess: "டெமோ உள்நுழைவு வெற்றி!",
+      demoLoginDesc: "டெமோ கலைஞராக உள்நுழைந்துள்ளீர்கள்.",
+
+      loginSuccess: "உள்நுழைவு வெற்றி!",
+      welcomeBack: "மீண்டும் வரவேற்கிறோம், {name}.",
+
+      signupSuccess: "கணக்கு உருவாக்கப்பட்டது!",
+      welcomeNew: "கரிகர் மார்ட்டிற்கு வரவேற்கிறோம், {name}.",
+
+      loginFailed: "உள்நுழைவு தோல்வி",
+      signupFailed: "பதிவு தோல்வி",
     },
   },
 
@@ -2909,6 +3093,7 @@ export const translations = {
       easyReturns: "ఈజీ రిటర్న్స్"
     },
     checkoutPage: {
+      razorpayDescription: "{count} వస్తువుల కోసం చెల్లింపు",
       secureCheckout: "భద్రతాయుత చెకౌట్",
 
       noProduct: "ఏ ఉత్పత్తి ఎంపిక చేయబడలేదు.",
@@ -2967,6 +3152,51 @@ export const translations = {
       loading: "కథ లోడ్ అవుతోంది...",
 
       shareText: "ఈ కథను చూడండి",
+    },
+    authDialog: {
+      title: "కరిగర్ మార్ట్‌కు స్వాగతం",
+      description: "మీ ఖాతాలోకి లాగిన్ అవ్వండి లేదా కొత్త ఖాతాను సృష్టించండి.",
+
+      loginTab: "లాగిన్",
+      signupTab: "సైన్ అప్",
+
+      loginTitle: "లాగిన్",
+      signupTitle: "సైన్ అప్",
+
+      googleLogin: "Google తో లాగిన్ అవ్వండి",
+      googleSignup: "Google తో సైన్ అప్ చేయండి",
+
+      orContinue: "లేదా దీనితో కొనసాగించండి",
+      orCreateWith: "లేదా దీనితో ఖాతా సృష్టించండి",
+
+      demoLogin: "డెమో కారిగర్‌గా లాగిన్ అవ్వండి",
+      demoCredentials: "ఈమెయిల్: {email} • పాస్‌వర్డ్: {password}",
+
+      email: "ఈమెయిల్",
+      password: "పాస్‌వర్డ్",
+      firstName: "మొదటి పేరు",
+      lastName: "చివరి పేరు",
+
+      emailPlaceholder: "name@example.com",
+      passwordPlaceholder: "మీ పాస్‌వర్డ్",
+      createPasswordPlaceholder: "పాస్‌వర్డ్ సృష్టించండి",
+      firstNamePlaceholder: "రాహుల్",
+      lastNamePlaceholder: "శర్మ",
+
+      loginButton: "లాగిన్",
+      signupButton: "ఖాతా సృష్టించండి",
+
+      demoLoginSuccess: "డెమో లాగిన్ విజయవంతం!",
+      demoLoginDesc: "డెమో కారిగర్‌గా లాగిన్ అయ్యారు.",
+
+      loginSuccess: "లాగిన్ విజయవంతం!",
+      welcomeBack: "మళ్లీ స్వాగతం, {name}.",
+
+      signupSuccess: "ఖాతా సృష్టించబడింది!",
+      welcomeNew: "కరిగర్ మార్ట్‌కు స్వాగతం, {name}.",
+
+      loginFailed: "లాగిన్ విఫలమైంది",
+      signupFailed: "సైన్ అప్ విఫలమైంది",
     },
   },
 
@@ -3494,6 +3724,7 @@ export const translations = {
       easyReturns: "सुलभ परतावा"
     },
     checkoutPage: {
+      razorpayDescription: "{count} वस्तूंसाठी पेमेंट",
       secureCheckout: "सुरक्षित चेकआउट",
 
       noProduct: "कोणताही उत्पादन निवडलेले नाही.",
@@ -3552,6 +3783,51 @@ export const translations = {
       loading: "कथा लोड होत आहे...",
 
       shareText: "ही कथा पहा",
+    },
+    authDialog: {
+      title: "करिगर मार्टमध्ये आपले स्वागत आहे",
+      description: "आपल्या खात्यात लॉग इन करा किंवा नवीन खाते तयार करा.",
+
+      loginTab: "लॉग इन",
+      signupTab: "साइन अप",
+
+      loginTitle: "लॉग इन",
+      signupTitle: "साइन अप",
+
+      googleLogin: "Google द्वारे लॉग इन करा",
+      googleSignup: "Google द्वारे साइन अप करा",
+
+      orContinue: "किंवा यासह सुरू ठेवा",
+      orCreateWith: "किंवा यासह खाते तयार करा",
+
+      demoLogin: "डेमो कारागीर म्हणून लॉग इन करा",
+      demoCredentials: "ईमेल: {email} • पासवर्ड: {password}",
+
+      email: "ईमेल",
+      password: "पासवर्ड",
+      firstName: "पहिले नाव",
+      lastName: "आडनाव",
+
+      emailPlaceholder: "name@example.com",
+      passwordPlaceholder: "आपला पासवर्ड",
+      createPasswordPlaceholder: "पासवर्ड तयार करा",
+      firstNamePlaceholder: "अमोल",
+      lastNamePlaceholder: "पाटील",
+
+      loginButton: "लॉग इन",
+      signupButton: "खाते तयार करा",
+
+      demoLoginSuccess: "डेमो लॉगिन यशस्वी!",
+      demoLoginDesc: "डेमो कारागीर म्हणून लॉग इन झाले.",
+
+      loginSuccess: "लॉगिन यशस्वी!",
+      welcomeBack: "पुन्हा स्वागत आहे, {name}.",
+
+      signupSuccess: "खाते तयार झाले!",
+      welcomeNew: "करिगर मार्टमध्ये आपले स्वागत आहे, {name}.",
+
+      loginFailed: "लॉगिन अयशस्वी",
+      signupFailed: "साइन अप अयशस्वी",
     },
   },
 };
