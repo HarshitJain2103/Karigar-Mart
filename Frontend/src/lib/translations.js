@@ -660,6 +660,217 @@ export const translations = {
       loginFailed: "Login failed",
       signupFailed: "Signup failed",
     },
+    myOrdersPage: {
+      fetchFailed: "Failed to fetch orders.",
+
+      errorPrefix: "Error:",
+
+      title: "My Orders",
+      subtitle: "View your order history and details.",
+
+      emptyTitle: "No Orders Yet",
+      emptyDescription: "You haven't placed any orders with us. Let's change that!",
+      startShopping: "Start Shopping",
+
+      totalOrders: "Total Orders",
+      delivered: "Delivered",
+      totalSpent: "Total Spent",
+
+      searchPlaceholder: "Search by Order ID or item name",
+
+      filterAll: "All",
+
+      sortNewest: "Newest first",
+      sortOldest: "Oldest first",
+      sortTotalHigh: "Total: High to Low",
+      sortTotalLow: "Total: Low to High",
+
+      exportCsv: "Export CSV",
+
+      orderId: "Order ID",
+      copyOrderId: "Copy Order ID",
+      date: "Date",
+      total: "Total",
+      items: "Items",
+      status: "Status",
+
+      statusDelivered: "Delivered",
+      statusProcessing: "Processing",
+      deliveredOn: "on {date}",
+
+      orderItems: "Order Items",
+      noImage: "No image",
+      quantity: "Qty: {qty}",
+
+      shippingAddress: "Shipping Address",
+
+      payment: "Payment",
+      paidOn: "Paid on {date}",
+      paymentPending: "Payment pending",
+
+      invoice: "Invoice",
+      viewInvoice: "View Invoice",
+      invoiceUnavailable: "Invoice not available",
+      reorder: "Reorder",
+
+      csv: {
+        orderId: "Order ID",
+        date: "Date",
+        total: "Total",
+        delivered: "Delivered",
+        itemsCount: "Items Count",
+        city: "Shipping City",
+        state: "Shipping State",
+        postal: "Shipping Postal",
+        yes: "Yes",
+        no: "No",
+      },
+    },
+    profilePage: {
+      loadFailed: "Failed to load profile.",
+      loginRequired: "Please log in to view your profile.",
+
+      greeting: "Hello, {name}",
+      member: "Member",
+      memberSince: "Member since {date}",
+      logout: "Log out",
+
+      sidebar: {
+        overview: "Overview",
+        edit: "Edit Profile",
+        address: "Address",
+        orders: "Orders",
+        wishlist: "Wishlist",
+        security: "Security",
+      },
+
+      overview: {
+        title: "Profile Overview",
+        firstName: "First Name",
+        lastName: "Last Name",
+        email: "Email",
+        phone: "Phone Number",
+        notProvided: "Not provided",
+        status: "Status",
+        active: "Active",
+        memberSince: "Member Since",
+      },
+
+      edit: {
+        title: "Edit Profile",
+        emailHint: "Email cannot be changed.",
+        phonePlaceholder: "Enter your phone number",
+      },
+
+      actions: {
+        edit: "Edit",
+        save: "Save",
+        saving: "Saving...",
+        cancel: "Cancel",
+      },
+
+      errors: {
+        nameRequired: "First and last name are required.",
+        invalidName: "Name contains invalid characters.",
+        invalidPhone: "Invalid phone number.",
+        updateFailed: "Failed to update profile.",
+      },
+
+      avatar: {
+        previewTitle: "Profile Picture",
+        previewDesc: "Preview of your profile picture.",
+        updatedTitle: "Profile Updated",
+        updatedDesc: "Your profile picture has been updated.",
+        failedTitle: "Upload Failed",
+        failedDesc: "Failed to upload profile picture.",
+      },
+
+      address: {
+        title: "Saved Address",
+        empty: "No address saved yet.",
+        helper: "Your shipping address will appear here.",
+      },
+
+      orders: {
+        fetchFailed: "Failed to fetch orders.",
+        total: "Total Orders",
+        delivered: "Delivered",
+        processing: "Processing",
+        cancelled: "Cancelled",
+        recent: "Recent Orders",
+        empty: "You haven't placed any orders yet.",
+        order: "Order",
+        items: "{count} items",
+      },
+
+      wishlist: {
+        title: "Wishlist",
+        count: "{count} items",
+        empty: "Your wishlist is empty.",
+        addToCart: "Add to Cart",
+        store: "Store",
+        fetchFailed: "Failed to fetch wishlist.",
+      },
+
+      security: {
+        title: "Security",
+        changePassword: "Change Password",
+        description: "Update your account password.",
+        dialogTitle: "Change Password",
+        dialogDesc: "Enter your current and new password.",
+        currentPassword: "Current Password",
+        newPassword: "New Password",
+        confirmPassword: "Confirm Password",
+        passwordHint: "Minimum 8 characters",
+        update: "Update Password",
+        updating: "Updating...",
+        successTitle: "Password Updated",
+        successDesc: "Your password has been updated successfully.",
+
+        errors: {
+          loginRequired: "You must be logged in.",
+          mismatch: "Passwords do not match.",
+          updateFailed: "Failed to update password.",
+        },
+      },
+
+      artisan: {
+        title: "Become a Seller",
+        description: "Sell your handcrafted products on KarigarMart.",
+        apply: "Apply Now",
+      },
+
+      danger: {
+        title: "Danger Zone",
+        warning: "These actions are permanent and cannot be undone.",
+        delete: "Delete Account",
+        confirmTitle: "Delete Account",
+        irreversible: "This action is irreversible.",
+        willDelete: "This will permanently delete:",
+        confirmEmail: "Please type your email to confirm",
+        confirmPassword: "Enter your password to continue",
+        emailPlaceholder: "Your email",
+        passwordPlaceholder: "Your password",
+        confirmAction: "Delete Account",
+        deleting: "Deleting...",
+        deletedTitle: "Account Deleted",
+        deletedDesc: "Your account has been permanently deleted.",
+
+        items: {
+          profile: "Your profile",
+          orders: "All orders",
+          wishlist: "Your wishlist",
+          all: "All associated data",
+        },
+
+        errors: {
+          loginRequired: "You must be logged in.",
+          emailMismatch: "Email does not match.",
+          passwordRequired: "Password is required.",
+          failed: "Failed to delete account.",
+        },
+      },
+    },
   },
 
   hi: {
@@ -1304,6 +1515,218 @@ export const translations = {
       loginFailed: "लॉगिन विफल",
       signupFailed: "साइन अप विफल",
     },
+    myOrdersPage: {
+      fetchFailed: "ऑर्डर लाने में विफल रहा।",
+
+      errorPrefix: "त्रुटि:",
+
+      title: "मेरे ऑर्डर",
+      subtitle: "अपने ऑर्डर का इतिहास और विवरण देखें।",
+
+      emptyTitle: "कोई ऑर्डर नहीं मिला",
+      emptyDescription: "आपने अभी तक कोई ऑर्डर नहीं किया है। चलिए शुरू करते हैं!",
+      startShopping: "खरीदारी शुरू करें",
+
+      totalOrders: "कुल ऑर्डर",
+      delivered: "डिलीवर हुए",
+      totalSpent: "कुल खर्च",
+
+      searchPlaceholder: "ऑर्डर आईडी या आइटम नाम से खोजें",
+
+      filterAll: "सभी",
+
+      sortNewest: "नवीनतम पहले",
+      sortOldest: "सबसे पुराने पहले",
+      sortTotalHigh: "कुल: अधिक से कम",
+      sortTotalLow: "कुल: कम से अधिक",
+
+      exportCsv: "CSV निर्यात करें",
+
+      orderId: "ऑर्डर आईडी",
+      copyOrderId: "ऑर्डर आईडी कॉपी करें",
+      date: "तारीख",
+      total: "कुल",
+      items: "आइटम",
+      status: "स्थिति",
+
+      statusDelivered: "डिलीवर हुआ",
+      statusProcessing: "प्रोसेस में",
+      deliveredOn: "{date} को",
+
+      orderItems: "ऑर्डर आइटम",
+      noImage: "कोई छवि नहीं",
+      quantity: "मात्रा: {qty}",
+
+      shippingAddress: "शिपिंग पता",
+
+      payment: "भुगतान",
+      paidOn: "{date} को भुगतान किया",
+      paymentPending: "भुगतान लंबित",
+
+      invoice: "इनवॉइस",
+      viewInvoice: "इनवॉइस देखें",
+      invoiceUnavailable: "इनवॉइस उपलब्ध नहीं है",
+      reorder: "फिर से ऑर्डर करें",
+
+      csv: {
+        orderId: "ऑर्डर आईडी",
+        date: "तारीख",
+        total: "कुल",
+        delivered: "डिलीवर",
+        itemsCount: "आइटम संख्या",
+        city: "शिपिंग शहर",
+        state: "शिपिंग राज्य",
+        postal: "पिन कोड",
+        yes: "हाँ",
+        no: "नहीं",
+      },
+    },
+    profilePage: {
+      loadFailed: "प्रोफ़ाइल लोड नहीं हो सकी।",
+      loginRequired: "कृपया प्रोफ़ाइल देखने के लिए लॉग इन करें।",
+
+      greeting: "नमस्ते, {name}",
+      member: "सदस्य",
+      memberSince: "{date} से सदस्य",
+      logout: "लॉग आउट",
+
+      sidebar: {
+        overview: "सारांश",
+        edit: "प्रोफ़ाइल संपादित करें",
+        address: "पता",
+        orders: "ऑर्डर",
+        wishlist: "इच्छा सूची",
+        security: "सुरक्षा",
+      },
+
+      overview: {
+        title: "प्रोफ़ाइल विवरण",
+        firstName: "पहला नाम",
+        lastName: "अंतिम नाम",
+        email: "ईमेल",
+        phone: "फोन नंबर",
+        notProvided: "उपलब्ध नहीं",
+        status: "स्थिति",
+        active: "सक्रिय",
+        memberSince: "सदस्यता तिथि",
+      },
+
+      edit: {
+        title: "प्रोफ़ाइल संपादित करें",
+        emailHint: "ईमेल बदला नहीं जा सकता।",
+        phonePlaceholder: "फोन नंबर दर्ज करें",
+      },
+
+      actions: {
+        edit: "संपादित करें",
+        save: "सहेजें",
+        saving: "सहेजा जा रहा है...",
+        cancel: "रद्द करें",
+      },
+
+      errors: {
+        nameRequired: "पहला और अंतिम नाम आवश्यक है।",
+        invalidName: "नाम अमान्य है।",
+        invalidPhone: "अमान्य फोन नंबर।",
+        updateFailed: "प्रोफ़ाइल अपडेट नहीं हो सकी।",
+      },
+
+      avatar: {
+        previewTitle: "प्रोफ़ाइल चित्र",
+        previewDesc: "प्रोफ़ाइल चित्र का पूर्वावलोकन।",
+        updatedTitle: "प्रोफ़ाइल अपडेट",
+        updatedDesc: "प्रोफ़ाइल चित्र अपडेट हो गया।",
+        failedTitle: "अपलोड विफल",
+        failedDesc: "चित्र अपलोड नहीं हो सका।",
+      },
+
+      address: {
+        title: "सहेजा गया पता",
+        empty: "कोई पता सहेजा नहीं गया।",
+        helper: "आपका शिपिंग पता यहाँ दिखेगा।",
+      },
+
+      orders: {
+        fetchFailed: "ऑर्डर लोड नहीं हो सके।",
+        total: "कुल ऑर्डर",
+        delivered: "डिलीवर",
+        processing: "प्रोसेसिंग",
+        cancelled: "रद्द",
+        recent: "हाल के ऑर्डर",
+        empty: "आपने अभी तक कोई ऑर्डर नहीं किया।",
+        order: "ऑर्डर",
+        items: "{count} आइटम",
+      },
+
+      wishlist: {
+        title: "इच्छा सूची",
+        count: "{count} आइटम",
+        empty: "आपकी इच्छा सूची खाली है।",
+        addToCart: "कार्ट में जोड़ें",
+        store: "स्टोर",
+        fetchFailed: "इच्छा सूची लोड नहीं हो सकी।",
+      },
+
+      security: {
+        title: "सुरक्षा",
+        changePassword: "पासवर्ड बदलें",
+        description: "अपना खाता पासवर्ड अपडेट करें।",
+        dialogTitle: "पासवर्ड बदलें",
+        dialogDesc: "वर्तमान और नया पासवर्ड दर्ज करें।",
+        currentPassword: "वर्तमान पासवर्ड",
+        newPassword: "नया पासवर्ड",
+        confirmPassword: "पासवर्ड की पुष्टि करें",
+        passwordHint: "कम से कम 8 अक्षर",
+        update: "अपडेट करें",
+        updating: "अपडेट हो रहा है...",
+
+        successTitle: "पासवर्ड अपडेट",
+        successDesc: "पासवर्ड सफलतापूर्वक अपडेट हुआ।",
+
+        errors: {
+          loginRequired: "लॉग इन आवश्यक है।",
+          mismatch: "पासवर्ड मेल नहीं खाते।",
+          updateFailed: "पासवर्ड अपडेट विफल।",
+        },
+      },
+
+      artisan: {
+        title: "विक्रेता बनें",
+        description: "KarigarMart पर अपने उत्पाद बेचें।",
+        apply: "आवेदन करें",
+      },
+
+      danger: {
+        title: "खतरे का क्षेत्र",
+        warning: "ये क्रियाएँ स्थायी हैं।",
+        delete: "खाता हटाएँ",
+        confirmTitle: "खाता हटाएँ",
+        irreversible: "यह क्रिया वापस नहीं ली जा सकती।",
+        willDelete: "निम्नलिखित हट जाएगा:",
+        confirmEmail: "पुष्टि के लिए ईमेल लिखें",
+        confirmPassword: "पासवर्ड दर्ज करें",
+        emailPlaceholder: "आपका ईमेल",
+        passwordPlaceholder: "आपका पासवर्ड",
+        confirmAction: "खाता हटाएँ",
+        deleting: "हटाया जा रहा है...",
+        deletedTitle: "खाता हटाया गया",
+        deletedDesc: "आपका खाता हटा दिया गया है।",
+
+        items: {
+          profile: "प्रोफ़ाइल",
+          orders: "सभी ऑर्डर",
+          wishlist: "इच्छा सूची",
+          all: "सभी डेटा",
+        },
+
+        errors: {
+          loginRequired: "लॉग इन आवश्यक है।",
+          emailMismatch: "ईमेल मेल नहीं खाता।",
+          passwordRequired: "पासवर्ड आवश्यक है।",
+          failed: "खाता हटाने में विफल।",
+        },
+      },
+    },
   },
 
   bn: {
@@ -1936,6 +2359,217 @@ export const translations = {
       loginFailed: "লগইন ব্যর্থ হয়েছে",
       signupFailed: "সাইন আপ ব্যর্থ হয়েছে",
     },
+    myOrdersPage: {
+      fetchFailed: "অর্ডার আনতে ব্যর্থ হয়েছে।",
+
+      errorPrefix: "ত্রুটি:",
+
+      title: "আমার অর্ডার",
+      subtitle: "আপনার অর্ডারের ইতিহাস ও বিস্তারিত দেখুন।",
+
+      emptyTitle: "কোনো অর্ডার নেই",
+      emptyDescription: "আপনি এখনো কোনো অর্ডার দেননি। চলুন শুরু করা যাক!",
+      startShopping: "কেনাকাটা শুরু করুন",
+
+      totalOrders: "মোট অর্ডার",
+      delivered: "ডেলিভারি হয়েছে",
+      totalSpent: "মোট খরচ",
+
+      searchPlaceholder: "অর্ডার আইডি বা পণ্যের নাম দিয়ে খুঁজুন",
+
+      filterAll: "সব",
+
+      sortNewest: "নতুন আগে",
+      sortOldest: "পুরোনো আগে",
+      sortTotalHigh: "মোট: বেশি থেকে কম",
+      sortTotalLow: "মোট: কম থেকে বেশি",
+
+      exportCsv: "CSV এক্সপোর্ট করুন",
+
+      orderId: "অর্ডার আইডি",
+      copyOrderId: "অর্ডার আইডি কপি করুন",
+      date: "তারিখ",
+      total: "মোট",
+      items: "পণ্য",
+      status: "অবস্থা",
+
+      statusDelivered: "ডেলিভার্ড",
+      statusProcessing: "প্রক্রিয়াধীন",
+      deliveredOn: "{date} তারিখে",
+
+      orderItems: "অর্ডারকৃত পণ্য",
+      noImage: "ছবি নেই",
+      quantity: "পরিমাণ: {qty}",
+
+      shippingAddress: "শিপিং ঠিকানা",
+
+      payment: "পেমেন্ট",
+      paidOn: "{date} তারিখে পরিশোধিত",
+      paymentPending: "পেমেন্ট বাকি",
+
+      invoice: "ইনভয়েস",
+      viewInvoice: "ইনভয়েস দেখুন",
+      invoiceUnavailable: "ইনভয়েস পাওয়া যায়নি",
+      reorder: "পুনরায় অর্ডার করুন",
+
+      csv: {
+        orderId: "অর্ডার আইডি",
+        date: "তারিখ",
+        total: "মোট",
+        delivered: "ডেলিভার্ড",
+        itemsCount: "পণ্যের সংখ্যা",
+        city: "শিপিং শহর",
+        state: "শিপিং রাজ্য",
+        postal: "পোস্টাল কোড",
+        yes: "হ্যাঁ",
+        no: "না",
+      },
+    },
+    profilePage: {
+      loadFailed: "প্রোফাইল লোড করা যায়নি।",
+      loginRequired: "প্রোফাইল দেখতে অনুগ্রহ করে লগ ইন করুন।",
+
+      greeting: "হ্যালো, {name}",
+      member: "সদস্য",
+      memberSince: "{date} থেকে সদস্য",
+      logout: "লগ আউট",
+
+      sidebar: {
+        overview: "সংক্ষিপ্ত বিবরণ",
+        edit: "প্রোফাইল সম্পাদনা",
+        address: "ঠিকানা",
+        orders: "অর্ডার",
+        wishlist: "ইচ্ছেতালিকা",
+        security: "নিরাপত্তা",
+      },
+
+      overview: {
+        title: "প্রোফাইল সংক্ষিপ্ত বিবরণ",
+        firstName: "নামের প্রথম অংশ",
+        lastName: "নামের শেষ অংশ",
+        email: "ইমেইল",
+        phone: "ফোন নম্বর",
+        notProvided: "দেওয়া হয়নি",
+        status: "স্থিতি",
+        active: "সক্রিয়",
+        memberSince: "সদস্যতার তারিখ",
+      },
+
+      edit: {
+        title: "প্রোফাইল সম্পাদনা",
+        emailHint: "ইমেইল পরিবর্তন করা যাবে না।",
+        phonePlaceholder: "ফোন নম্বর লিখুন",
+      },
+
+      actions: {
+        edit: "সম্পাদনা",
+        save: "সংরক্ষণ",
+        saving: "সংরক্ষণ হচ্ছে...",
+        cancel: "বাতিল",
+      },
+
+      errors: {
+        nameRequired: "নামের প্রথম ও শেষ অংশ আবশ্যক।",
+        invalidName: "নাম সঠিক নয়।",
+        invalidPhone: "অবৈধ ফোন নম্বর।",
+        updateFailed: "প্রোফাইল আপডেট ব্যর্থ হয়েছে।",
+      },
+
+      avatar: {
+        previewTitle: "প্রোফাইল ছবি",
+        previewDesc: "প্রোফাইল ছবির পূর্বরূপ।",
+        updatedTitle: "প্রোফাইল আপডেট হয়েছে",
+        updatedDesc: "প্রোফাইল ছবি সফলভাবে আপডেট হয়েছে।",
+        failedTitle: "আপলোড ব্যর্থ",
+        failedDesc: "প্রোফাইল ছবি আপলোড করা যায়নি।",
+      },
+
+      address: {
+        title: "সংরক্ষিত ঠিকানা",
+        empty: "এখনো কোনো ঠিকানা যোগ করা হয়নি।",
+        helper: "আপনার শিপিং ঠিকানা এখানে দেখানো হবে।",
+      },
+
+      orders: {
+        fetchFailed: "অর্ডার লোড করা যায়নি।",
+        total: "মোট অর্ডার",
+        delivered: "ডেলিভার হয়েছে",
+        processing: "প্রক্রিয়াধীন",
+        cancelled: "বাতিল",
+        recent: "সাম্প্রতিক অর্ডার",
+        empty: "আপনি এখনো কোনো অর্ডার দেননি।",
+        order: "অর্ডার",
+        items: "{count}টি পণ্য",
+      },
+
+      wishlist: {
+        title: "ইচ্ছেতালিকা",
+        count: "{count}টি পণ্য",
+        empty: "আপনার ইচ্ছেতালিকা খালি।",
+        addToCart: "কার্টে যোগ করুন",
+        store: "দোকান",
+        fetchFailed: "ইচ্ছেতালিকা লোড করা যায়নি।",
+      },
+
+      security: {
+        title: "নিরাপত্তা",
+        changePassword: "পাসওয়ার্ড পরিবর্তন",
+        description: "আপনার অ্যাকাউন্টের পাসওয়ার্ড আপডেট করুন।",
+        dialogTitle: "পাসওয়ার্ড পরিবর্তন",
+        dialogDesc: "বর্তমান এবং নতুন পাসওয়ার্ড লিখুন।",
+        currentPassword: "বর্তমান পাসওয়ার্ড",
+        newPassword: "নতুন পাসওয়ার্ড",
+        confirmPassword: "পাসওয়ার্ড নিশ্চিত করুন",
+        passwordHint: "ন্যূনতম ৮ অক্ষর",
+        update: "আপডেট করুন",
+        updating: "আপডেট হচ্ছে...",
+        successTitle: "পাসওয়ার্ড আপডেট হয়েছে",
+        successDesc: "আপনার পাসওয়ার্ড সফলভাবে আপডেট হয়েছে।",
+
+        errors: {
+          loginRequired: "লগ ইন করা আবশ্যক।",
+          mismatch: "পাসওয়ার্ড মিলছে না।",
+          updateFailed: "পাসওয়ার্ড আপডেট ব্যর্থ হয়েছে।",
+        },
+      },
+
+      artisan: {
+        title: "বিক্রেতা হন",
+        description: "KarigarMart-এ আপনার নিজস্ব পণ্য বিক্রি করুন।",
+        apply: "আবেদন করুন",
+      },
+
+      danger: {
+        title: "ঝুঁকিপূর্ণ এলাকা",
+        warning: "এই কাজগুলো স্থায়ী এবং ফিরিয়ে আনা যাবে না।",
+        delete: "অ্যাকাউন্ট মুছুন",
+        confirmTitle: "অ্যাকাউন্ট মুছুন",
+        irreversible: "এই কাজটি অপরিবর্তনীয়।",
+        willDelete: "নিম্নলিখিতগুলো মুছে যাবে:",
+        confirmEmail: "নিশ্চিত করতে আপনার ইমেইল লিখুন",
+        confirmPassword: "চালিয়ে যেতে পাসওয়ার্ড লিখুন",
+        emailPlaceholder: "আপনার ইমেইল",
+        passwordPlaceholder: "আপনার পাসওয়ার্ড",
+        confirmAction: "অ্যাকাউন্ট মুছুন",
+        deleting: "মুছে ফেলা হচ্ছে...",
+        deletedTitle: "অ্যাকাউন্ট মুছে ফেলা হয়েছে",
+        deletedDesc: "আপনার অ্যাকাউন্ট স্থায়ীভাবে মুছে ফেলা হয়েছে।",
+
+        items: {
+          profile: "প্রোফাইল",
+          orders: "সব অর্ডার",
+          wishlist: "ইচ্ছেতালিকা",
+          all: "সমস্ত তথ্য",
+        },
+
+        errors: {
+          loginRequired: "লগ ইন করা আবশ্যক।",
+          emailMismatch: "ইমেইল মিলছে না।",
+          passwordRequired: "পাসওয়ার্ড প্রয়োজন।",
+          failed: "অ্যাকাউন্ট মুছতে ব্যর্থ হয়েছে।",
+        },
+      },
+    },
   },
 
   ta: {
@@ -2566,6 +3200,217 @@ export const translations = {
 
       loginFailed: "உள்நுழைவு தோல்வி",
       signupFailed: "பதிவு தோல்வி",
+    },
+    myOrdersPage: {
+      fetchFailed: "ஆர்டர்களை பெற முடியவில்லை।",
+
+      errorPrefix: "பிழை:",
+
+      title: "என் ஆர்டர்கள்",
+      subtitle: "உங்கள் ஆர்டர் வரலாறையும் விவரங்களையும் காண்க।",
+
+      emptyTitle: "ஆர்டர்கள் இல்லை",
+      emptyDescription: "நீங்கள் இன்னும் எந்த ஆர்டரையும் இடவில்லை। வாங்க தொடங்கலாம்!",
+      startShopping: "வாங்கத் தொடங்குங்கள்",
+
+      totalOrders: "மொத்த ஆர்டர்கள்",
+      delivered: "விநியோகிக்கப்பட்டது",
+      totalSpent: "மொத்த செலவு",
+
+      searchPlaceholder: "ஆர்டர் ஐடி அல்லது பொருள் பெயர் மூலம் தேடுங்கள்",
+
+      filterAll: "அனைத்தும்",
+
+      sortNewest: "புதியவை முதலில்",
+      sortOldest: "பழையவை முதலில்",
+      sortTotalHigh: "மொத்தம்: அதிகம் முதல் குறைவு",
+      sortTotalLow: "மொத்தம்: குறைவு முதல் அதிகம்",
+
+      exportCsv: "CSV ஏற்றுமதி",
+
+      orderId: "ஆர்டர் ஐடி",
+      copyOrderId: "ஆர்டர் ஐடி நகலெடுக்கவும்",
+      date: "தேதி",
+      total: "மொத்தம்",
+      items: "பொருட்கள்",
+      status: "நிலை",
+
+      statusDelivered: "விநியோகிக்கப்பட்டது",
+      statusProcessing: "செயலாக்கத்தில்",
+      deliveredOn: "{date} அன்று",
+
+      orderItems: "ஆர்டர் பொருட்கள்",
+      noImage: "படம் இல்லை",
+      quantity: "அளவு: {qty}",
+
+      shippingAddress: "விநியோக முகவரி",
+
+      payment: "கட்டணம்",
+      paidOn: "{date} அன்று செலுத்தப்பட்டது",
+      paymentPending: "கட்டணம் நிலுவையில்",
+
+      invoice: "விலைப்பட்டியல்",
+      viewInvoice: "விலைப்பட்டியல் காண்க",
+      invoiceUnavailable: "விலைப்பட்டியல் கிடைக்கவில்லை",
+      reorder: "மீண்டும் ஆர்டர் செய்யவும்",
+
+      csv: {
+        orderId: "ஆர்டர் ஐடி",
+        date: "தேதி",
+        total: "மொத்தம்",
+        delivered: "விநியோகிக்கப்பட்டது",
+        itemsCount: "பொருட்களின் எண்ணிக்கை",
+        city: "நகரம்",
+        state: "மாநிலம்",
+        postal: "அஞ்சல் குறியீடு",
+        yes: "ஆம்",
+        no: "இல்லை",
+      },
+    },
+    profilePage: {
+      loadFailed: "சுயவிவரத்தை ஏற்ற முடியவில்லை.",
+      loginRequired: "சுயவிவரத்தை பார்க்க உள்நுழையவும்.",
+
+      greeting: "வணக்கம், {name}",
+      member: "உறுப்பினர்",
+      memberSince: "{date} முதல் உறுப்பினர்",
+      logout: "வெளியேறு",
+
+      sidebar: {
+        overview: "மேலோட்டம்",
+        edit: "சுயவிவரம் திருத்த",
+        address: "முகவரி",
+        orders: "ஆர்டர்கள்",
+        wishlist: "விருப்பப்பட்டியல்",
+        security: "பாதுகாப்பு",
+      },
+
+      overview: {
+        title: "சுயவிவர மேலோட்டம்",
+        firstName: "முதல் பெயர்",
+        lastName: "கடைசி பெயர்",
+        email: "மின்னஞ்சல்",
+        phone: "தொலைபேசி எண்",
+        notProvided: "வழங்கப்படவில்லை",
+        status: "நிலை",
+        active: "செயலில்",
+        memberSince: "உறுப்பினர் தேதி",
+      },
+
+      edit: {
+        title: "சுயவிவரம் திருத்த",
+        emailHint: "மின்னஞ்சலை மாற்ற முடியாது.",
+        phonePlaceholder: "தொலைபேசி எண்ணை உள்ளிடவும்",
+      },
+
+      actions: {
+        edit: "திருத்த",
+        save: "சேமி",
+        saving: "சேமிக்கப்படுகிறது...",
+        cancel: "ரத்து",
+      },
+
+      errors: {
+        nameRequired: "முதல் மற்றும் கடைசி பெயர் அவசியம்.",
+        invalidName: "தவறான பெயர்.",
+        invalidPhone: "தவறான தொலைபேசி எண்.",
+        updateFailed: "சுயவிவரத்தை புதுப்பிக்க முடியவில்லை.",
+      },
+
+      avatar: {
+        previewTitle: "சுயவிவர படம்",
+        previewDesc: "சுயவிவர படத்தின் முன்னோட்டம்.",
+        updatedTitle: "சுயவிவரம் புதுப்பிக்கப்பட்டது",
+        updatedDesc: "சுயவிவர படம் புதுப்பிக்கப்பட்டது.",
+        failedTitle: "பதிவேற்றம் தோல்வி",
+        failedDesc: "படத்தை பதிவேற்ற முடியவில்லை.",
+      },
+
+      address: {
+        title: "சேமிக்கப்பட்ட முகவரி",
+        empty: "முகவரி இன்னும் சேர்க்கப்படவில்லை.",
+        helper: "உங்கள் விநியோக முகவரி இங்கு காட்டப்படும்.",
+      },
+
+      orders: {
+        fetchFailed: "ஆர்டர்களை ஏற்ற முடியவில்லை.",
+        total: "மொத்த ஆர்டர்கள்",
+        delivered: "விநியோகிக்கப்பட்டது",
+        processing: "செயல்பாட்டில்",
+        cancelled: "ரத்து செய்யப்பட்டது",
+        recent: "சமீபத்திய ஆர்டர்கள்",
+        empty: "நீங்கள் இன்னும் எந்த ஆர்டரும் செய்யவில்லை.",
+        order: "ஆர்டர்",
+        items: "{count} பொருட்கள்",
+      },
+
+      wishlist: {
+        title: "விருப்பப்பட்டியல்",
+        count: "{count} பொருட்கள்",
+        empty: "உங்கள் விருப்பப்பட்டியல் காலியாக உள்ளது.",
+        addToCart: "கார்ட்டில் சேர்க்க",
+        store: "கடை",
+        fetchFailed: "விருப்பப்பட்டியலை ஏற்ற முடியவில்லை.",
+      },
+
+      security: {
+        title: "பாதுகாப்பு",
+        changePassword: "கடவுச்சொல்லை மாற்று",
+        description: "உங்கள் கணக்கு கடவுச்சொல்லை புதுப்பிக்கவும்.",
+        dialogTitle: "கடவுச்சொல்லை மாற்று",
+        dialogDesc: "தற்போதைய மற்றும் புதிய கடவுச்சொல்லை உள்ளிடவும்.",
+        currentPassword: "தற்போதைய கடவுச்சொல்",
+        newPassword: "புதிய கடவுச்சொல்",
+        confirmPassword: "கடவுச்சொல்லை உறுதிப்படுத்து",
+        passwordHint: "குறைந்தது 8 எழுத்துகள்",
+        update: "புதுப்பிக்கவும்",
+        updating: "புதுப்பிக்கப்படுகிறது...",
+        successTitle: "கடவுச்சொல் புதுப்பிக்கப்பட்டது",
+        successDesc: "உங்கள் கடவுச்சொல் வெற்றிகரமாக புதுப்பிக்கப்பட்டது.",
+
+        errors: {
+          loginRequired: "உள்நுழைவு தேவை.",
+          mismatch: "கடவுச்சொற்கள் பொருந்தவில்லை.",
+          updateFailed: "கடவுச்சொல் புதுப்பிக்க முடியவில்லை.",
+        },
+      },
+
+      artisan: {
+        title: "விற்பனையாளராகுங்கள்",
+        description: "KarigarMart-ல் உங்கள் பொருட்களை விற்கவும்.",
+        apply: "விண்ணப்பிக்கவும்",
+      },
+
+      danger: {
+        title: "அபாய பகுதி",
+        warning: "இந்த செயல்கள் நிரந்தரமானவை.",
+        delete: "கணக்கை நீக்கு",
+        confirmTitle: "கணக்கை நீக்கு",
+        irreversible: "இந்த செயலை மீட்டெடுக்க முடியாது.",
+        willDelete: "பின்வருவன நீக்கப்படும்:",
+        confirmEmail: "உறுதிப்படுத்த உங்கள் மின்னஞ்சலை உள்ளிடவும்",
+        confirmPassword: "தொடர உங்கள் கடவுச்சொல்லை உள்ளிடவும்",
+        emailPlaceholder: "உங்கள் மின்னஞ்சல்",
+        passwordPlaceholder: "உங்கள் கடவுச்சொல்",
+        confirmAction: "கணக்கை நீக்கு",
+        deleting: "நீக்கப்படுகிறது...",
+        deletedTitle: "கணக்கு நீக்கப்பட்டது",
+        deletedDesc: "உங்கள் கணக்கு நிரந்தரமாக நீக்கப்பட்டது.",
+
+        items: {
+          profile: "சுயவிவரம்",
+          orders: "அனைத்து ஆர்டர்கள்",
+          wishlist: "விருப்பப்பட்டியல்",
+          all: "அனைத்து தரவுகள்",
+        },
+
+        errors: {
+          loginRequired: "உள்நுழைவு தேவை.",
+          emailMismatch: "மின்னஞ்சல் பொருந்தவில்லை.",
+          passwordRequired: "கடவுச்சொல் தேவை.",
+          failed: "கணக்கை நீக்க முடியவில்லை.",
+        },
+      },
     },
   },
 
@@ -3198,6 +4043,217 @@ export const translations = {
       loginFailed: "లాగిన్ విఫలమైంది",
       signupFailed: "సైన్ అప్ విఫలమైంది",
     },
+    myOrdersPage: {
+      fetchFailed: "ఆర్డర్లను పొందడం విఫలమైంది.",
+
+      errorPrefix: "లోపం:",
+
+      title: "నా ఆర్డర్లు",
+      subtitle: "మీ ఆర్డర్ చరిత్రను మరియు వివరాలను చూడండి.",
+
+      emptyTitle: "ఆర్డర్లు లేవు",
+      emptyDescription: "మీరు ఇంకా ఎలాంటి ఆర్డర్ చేయలేదు. షాపింగ్ ప్రారంభిద్దాం!",
+      startShopping: "షాపింగ్ ప్రారంభించండి",
+
+      totalOrders: "మొత్తం ఆర్డర్లు",
+      delivered: "డెలివర్ అయ్యాయి",
+      totalSpent: "మొత్తం ఖర్చు",
+
+      searchPlaceholder: "ఆర్డర్ ఐడి లేదా ఉత్పత్తి పేరుతో వెతకండి",
+
+      filterAll: "అన్నీ",
+
+      sortNewest: "కొత్తవి ముందుగా",
+      sortOldest: "పాతవి ముందుగా",
+      sortTotalHigh: "మొత్తం: ఎక్కువ నుండి తక్కువ",
+      sortTotalLow: "మొత్తం: తక్కువ నుండి ఎక్కువ",
+
+      exportCsv: "CSV ఎగుమతి",
+
+      orderId: "ఆర్డర్ ఐడి",
+      copyOrderId: "ఆర్డర్ ఐడి కాపీ చేయండి",
+      date: "తేదీ",
+      total: "మొత్తం",
+      items: "వస్తువులు",
+      status: "స్థితి",
+
+      statusDelivered: "డెలివర్ అయింది",
+      statusProcessing: "ప్రాసెసింగ్‌లో ఉంది",
+      deliveredOn: "{date} న",
+
+      orderItems: "ఆర్డర్ చేసిన వస్తువులు",
+      noImage: "చిత్రం లేదు",
+      quantity: "పరిమాణం: {qty}",
+
+      shippingAddress: "షిప్పింగ్ చిరునామా",
+
+      payment: "చెల్లింపు",
+      paidOn: "{date} న చెల్లించబడింది",
+      paymentPending: "చెల్లింపు పెండింగ్‌లో ఉంది",
+
+      invoice: "ఇన్వాయిస్",
+      viewInvoice: "ఇన్వాయిస్ చూడండి",
+      invoiceUnavailable: "ఇన్వాయిస్ అందుబాటులో లేదు",
+      reorder: "మళ్లీ ఆర్డర్ చేయండి",
+
+      csv: {
+        orderId: "ఆర్డర్ ఐడి",
+        date: "తేదీ",
+        total: "మొత్తం",
+        delivered: "డెలివర్",
+        itemsCount: "వస్తువుల సంఖ్య",
+        city: "నగరం",
+        state: "రాష్ట్రం",
+        postal: "పిన్ కోడ్",
+        yes: "అవును",
+        no: "కాదు",
+      },
+    },
+    profilePage: {
+      loadFailed: "ప్రొఫైల్ లోడ్ చేయలేకపోయాము.",
+      loginRequired: "ప్రొఫైల్ చూడటానికి లాగిన్ చేయండి.",
+
+      greeting: "హలో, {name}",
+      member: "సభ్యుడు",
+      memberSince: "{date} నుండి సభ్యుడు",
+      logout: "లాగౌట్",
+
+      sidebar: {
+        overview: "సారాంశం",
+        edit: "ప్రొఫైల్ సవరించండి",
+        address: "చిరునామా",
+        orders: "ఆర్డర్లు",
+        wishlist: "విష్‌లిస్ట్",
+        security: "భద్రత",
+      },
+
+      overview: {
+        title: "ప్రొఫైల్ సారాంశం",
+        firstName: "మొదటి పేరు",
+        lastName: "చివరి పేరు",
+        email: "ఇమెయిల్",
+        phone: "ఫోన్ నంబర్",
+        notProvided: "ఇవ్వలేదు",
+        status: "స్థితి",
+        active: "సక్రియం",
+        memberSince: "సభ్యత్వ తేదీ",
+      },
+
+      edit: {
+        title: "ప్రొఫైల్ సవరించండి",
+        emailHint: "ఇమెయిల్ మార్చలేరు.",
+        phonePlaceholder: "ఫోన్ నంబర్ నమోదు చేయండి",
+      },
+
+      actions: {
+        edit: "సవరించండి",
+        save: "సేవ్",
+        saving: "సేవ్ అవుతోంది...",
+        cancel: "రద్దు",
+      },
+
+      errors: {
+        nameRequired: "మొదటి మరియు చివరి పేరు అవసరం.",
+        invalidName: "చెల్లని పేరు.",
+        invalidPhone: "చెల్లని ఫోన్ నంబర్.",
+        updateFailed: "ప్రొఫైల్ అప్డేట్ విఫలమైంది.",
+      },
+
+      avatar: {
+        previewTitle: "ప్రొఫైల్ చిత్రం",
+        previewDesc: "ప్రొఫైల్ చిత్ర ప్రివ్యూ.",
+        updatedTitle: "ప్రొఫైల్ అప్డేట్ అయింది",
+        updatedDesc: "ప్రొఫైల్ చిత్రం విజయవంతంగా అప్డేట్ అయింది.",
+        failedTitle: "అప్‌లోడ్ విఫలమైంది",
+        failedDesc: "చిత్రాన్ని అప్‌లోడ్ చేయలేకపోయాము.",
+      },
+
+      address: {
+        title: "సేవ్ చేసిన చిరునామా",
+        empty: "ఇంకా చిరునామా జోడించలేదు.",
+        helper: "మీ డెలివరీ చిరునామా ఇక్కడ చూపబడుతుంది.",
+      },
+
+      orders: {
+        fetchFailed: "ఆర్డర్లను లోడ్ చేయలేకపోయాము.",
+        total: "మొత్తం ఆర్డర్లు",
+        delivered: "డెలివర్ అయింది",
+        processing: "ప్రాసెసింగ్‌లో",
+        cancelled: "రద్దు",
+        recent: "ఇటీవలి ఆర్డర్లు",
+        empty: "మీరు ఇంకా ఎలాంటి ఆర్డర్ చేయలేదు.",
+        order: "ఆర్డర్",
+        items: "{count} వస్తువులు",
+      },
+
+      wishlist: {
+        title: "విష్‌లిస్ట్",
+        count: "{count} వస్తువులు",
+        empty: "మీ విష్‌లిస్ట్ ఖాళీగా ఉంది.",
+        addToCart: "కార్ట్‌కు జోడించండి",
+        store: "స్టోర్",
+        fetchFailed: "విష్‌లిస్ట్ లోడ్ కాలేదు.",
+      },
+
+      security: {
+        title: "భద్రత",
+        changePassword: "పాస్‌వర్డ్ మార్చండి",
+        description: "మీ ఖాతా పాస్‌వర్డ్‌ను అప్డేట్ చేయండి.",
+        dialogTitle: "పాస్‌వర్డ్ మార్చండి",
+        dialogDesc: "ప్రస్తుత మరియు కొత్త పాస్‌వర్డ్ నమోదు చేయండి.",
+        currentPassword: "ప్రస్తుత పాస్‌వర్డ్",
+        newPassword: "కొత్త పాస్‌వర్డ్",
+        confirmPassword: "పాస్‌వర్డ్ నిర్ధారించండి",
+        passwordHint: "కనీసం 8 అక్షరాలు",
+        update: "అప్డేట్",
+        updating: "అప్డేట్ అవుతోంది...",
+        successTitle: "పాస్‌వర్డ్ అప్డేట్ అయింది",
+        successDesc: "మీ పాస్‌వర్డ్ విజయవంతంగా అప్డేట్ అయింది.",
+
+        errors: {
+          loginRequired: "లాగిన్ కావాలి.",
+          mismatch: "పాస్‌వర్డ్‌లు సరిపోలలేదు.",
+          updateFailed: "పాస్‌వర్డ్ అప్డేట్ విఫలమైంది.",
+        },
+      },
+
+      artisan: {
+        title: "విక్రేతగా మారండి",
+        description: "KarigarMart‌లో మీ ఉత్పత్తులు విక్రయించండి.",
+        apply: "దరఖాస్తు చేయండి",
+      },
+
+      danger: {
+        title: "ప్రమాద ప్రాంతం",
+        warning: "ఈ చర్యలు శాశ్వతమైనవి.",
+        delete: "ఖాతా తొలగించండి",
+        confirmTitle: "ఖాతా తొలగింపు",
+        irreversible: "ఈ చర్య తిరస్కరించలేనిది.",
+        willDelete: "క్రింది అంశాలు తొలగించబడతాయి:",
+        confirmEmail: "నిర్ధారణకు మీ ఇమెయిల్ నమోదు చేయండి",
+        confirmPassword: "కొనసాగేందుకు పాస్‌వర్డ్ నమోదు చేయండి",
+        emailPlaceholder: "మీ ఇమెయిల్",
+        passwordPlaceholder: "మీ పాస్‌వర్డ్",
+        confirmAction: "ఖాతా తొలగించండి",
+        deleting: "తొలగిస్తోంది...",
+        deletedTitle: "ఖాతా తొలగించబడింది",
+        deletedDesc: "మీ ఖాతా శాశ్వతంగా తొలగించబడింది.",
+
+        items: {
+          profile: "ప్రొఫైల్",
+          orders: "అన్ని ఆర్డర్లు",
+          wishlist: "విష్‌లిస్ట్",
+          all: "అన్ని డేటా",
+        },
+
+        errors: {
+          loginRequired: "లాగిన్ కావాలి.",
+          emailMismatch: "ఇమెయిల్ సరిపోలలేదు.",
+          passwordRequired: "పాస్‌వర్డ్ అవసరం.",
+          failed: "ఖాతా తొలగింపు విఫలమైంది.",
+        },
+      },
+    },
   },
 
   mr: {
@@ -3828,6 +4884,217 @@ export const translations = {
 
       loginFailed: "लॉगिन अयशस्वी",
       signupFailed: "साइन अप अयशस्वी",
+    },
+    myOrdersPage: {
+      fetchFailed: "ऑर्डर आणण्यात अयशस्वी.",
+
+      errorPrefix: "त्रुटी:",
+
+      title: "माझे ऑर्डर",
+      subtitle: "तुमचा ऑर्डर इतिहास आणि तपशील पहा.",
+
+      emptyTitle: "कोणतेही ऑर्डर नाहीत",
+      emptyDescription: "तुम्ही अजून कोणताही ऑर्डर दिलेला नाही. चला सुरुवात करूया!",
+      startShopping: "खरेदी सुरू करा",
+
+      totalOrders: "एकूण ऑर्डर",
+      delivered: "पोहोचलेले",
+      totalSpent: "एकूण खर्च",
+
+      searchPlaceholder: "ऑर्डर आयडी किंवा वस्तू नावाने शोधा",
+
+      filterAll: "सर्व",
+
+      sortNewest: "नवीन आधी",
+      sortOldest: "जुने आधी",
+      sortTotalHigh: "एकूण: जास्त ते कमी",
+      sortTotalLow: "एकूण: कमी ते जास्त",
+
+      exportCsv: "CSV निर्यात करा",
+
+      orderId: "ऑर्डर आयडी",
+      copyOrderId: "ऑर्डर आयडी कॉपी करा",
+      date: "तारीख",
+      total: "एकूण",
+      items: "वस्तू",
+      status: "स्थिती",
+
+      statusDelivered: "पोहोचले",
+      statusProcessing: "प्रक्रियेत",
+      deliveredOn: "{date} रोजी",
+
+      orderItems: "ऑर्डर केलेल्या वस्तू",
+      noImage: "प्रतिमा नाही",
+      quantity: "प्रमाण: {qty}",
+
+      shippingAddress: "शिपिंग पत्ता",
+
+      payment: "पेमेंट",
+      paidOn: "{date} रोजी पेमेंट झाले",
+      paymentPending: "पेमेंट प्रलंबित",
+
+      invoice: "चलन",
+      viewInvoice: "चलन पहा",
+      invoiceUnavailable: "चलन उपलब्ध नाही",
+      reorder: "पुन्हा ऑर्डर करा",
+
+      csv: {
+        orderId: "ऑर्डर आयडी",
+        date: "तारीख",
+        total: "एकूण",
+        delivered: "पोहोचले",
+        itemsCount: "वस्तू संख्या",
+        city: "शिपिंग शहर",
+        state: "शिपिंग राज्य",
+        postal: "पिन कोड",
+        yes: "होय",
+        no: "नाही",
+      },
+    },
+    profilePage: {
+      loadFailed: "प्रोफाइल लोड करता आली नाही.",
+      loginRequired: "प्रोफाइल पाहण्यासाठी लॉग इन करा.",
+
+      greeting: "नमस्कार, {name}",
+      member: "सदस्य",
+      memberSince: "{date} पासून सदस्य",
+      logout: "लॉग आउट",
+
+      sidebar: {
+        overview: "आढावा",
+        edit: "प्रोफाइल संपादित करा",
+        address: "पत्ता",
+        orders: "ऑर्डर्स",
+        wishlist: "इच्छा यादी",
+        security: "सुरक्षा",
+      },
+
+      overview: {
+        title: "प्रोफाइल आढावा",
+        firstName: "पहिले नाव",
+        lastName: "आडनाव",
+        email: "ईमेल",
+        phone: "फोन नंबर",
+        notProvided: "उपलब्ध नाही",
+        status: "स्थिती",
+        active: "सक्रिय",
+        memberSince: "सदस्यत्व तारीख",
+      },
+
+      edit: {
+        title: "प्रोफाइल संपादित करा",
+        emailHint: "ईमेल बदलता येत नाही.",
+        phonePlaceholder: "फोन नंबर टाका",
+      },
+
+      actions: {
+        edit: "संपादित करा",
+        save: "जतन करा",
+        saving: "जतन होत आहे...",
+        cancel: "रद्द करा",
+      },
+
+      errors: {
+        nameRequired: "पहिले व आडनाव आवश्यक आहे.",
+        invalidName: "अवैध नाव.",
+        invalidPhone: "अवैध फोन नंबर.",
+        updateFailed: "प्रोफाइल अपडेट अयशस्वी.",
+      },
+
+      avatar: {
+        previewTitle: "प्रोफाइल फोटो",
+        previewDesc: "प्रोफाइल फोटो पूर्वावलोकन.",
+        updatedTitle: "प्रोफाइल अपडेट",
+        updatedDesc: "प्रोफाइल फोटो यशस्वीरित्या अपडेट झाला.",
+        failedTitle: "अपलोड अयशस्वी",
+        failedDesc: "फोटो अपलोड करता आला नाही.",
+      },
+
+      address: {
+        title: "जतन केलेला पत्ता",
+        empty: "अजून कोणताही पत्ता जोडलेला नाही.",
+        helper: "आपला वितरण पत्ता येथे दिसेल.",
+      },
+
+      orders: {
+        fetchFailed: "ऑर्डर्स लोड करता आल्या नाहीत.",
+        total: "एकूण ऑर्डर्स",
+        delivered: "पोहोचवले",
+        processing: "प्रक्रियेत",
+        cancelled: "रद्द",
+        recent: "अलीकडील ऑर्डर्स",
+        empty: "आपण अजून कोणतीही ऑर्डर दिलेली नाही.",
+        order: "ऑर्डर",
+        items: "{count} वस्तू",
+      },
+
+      wishlist: {
+        title: "इच्छा यादी",
+        count: "{count} वस्तू",
+        empty: "आपली इच्छा यादी रिकामी आहे.",
+        addToCart: "कार्टमध्ये जोडा",
+        store: "स्टोअर",
+        fetchFailed: "इच्छा यादी लोड करता आली नाही.",
+      },
+
+      security: {
+        title: "सुरक्षा",
+        changePassword: "पासवर्ड बदला",
+        description: "आपल्या खात्याचा पासवर्ड अपडेट करा.",
+        dialogTitle: "पासवर्ड बदला",
+        dialogDesc: "सध्याचा आणि नवीन पासवर्ड टाका.",
+        currentPassword: "सध्याचा पासवर्ड",
+        newPassword: "नवीन पासवर्ड",
+        confirmPassword: "पासवर्ड पुष्टी करा",
+        passwordHint: "किमान ८ अक्षरे",
+        update: "अपडेट करा",
+        updating: "अपडेट होत आहे...",
+        successTitle: "पासवर्ड अपडेट",
+        successDesc: "आपला पासवर्ड यशस्वीरित्या अपडेट झाला.",
+
+        errors: {
+          loginRequired: "लॉग इन आवश्यक आहे.",
+          mismatch: "पासवर्ड जुळत नाहीत.",
+          updateFailed: "पासवर्ड अपडेट अयशस्वी.",
+        },
+      },
+
+      artisan: {
+        title: "विक्रेता बना",
+        description: "KarigarMart वर आपली उत्पादने विक्रीस ठेवा.",
+        apply: "अर्ज करा",
+      },
+
+      danger: {
+        title: "धोकादायक क्षेत्र",
+        warning: "या क्रिया कायमस्वरूपी आहेत.",
+        delete: "खाते हटवा",
+        confirmTitle: "खाते हटवा",
+        irreversible: "ही क्रिया परत करता येणार नाही.",
+        willDelete: "खालील गोष्टी हटविल्या जातील:",
+        confirmEmail: "पुष्टीसाठी आपला ईमेल टाका",
+        confirmPassword: "सुरू ठेवण्यासाठी पासवर्ड टाका",
+        emailPlaceholder: "आपला ईमेल",
+        passwordPlaceholder: "आपला पासवर्ड",
+        confirmAction: "खाते हटवा",
+        deleting: "हटवले जात आहे...",
+        deletedTitle: "खाते हटवले",
+        deletedDesc: "आपले खाते कायमस्वरूपी हटवले गेले आहे.",
+
+        items: {
+          profile: "प्रोफाइल",
+          orders: "सर्व ऑर्डर्स",
+          wishlist: "इच्छा यादी",
+          all: "सर्व डेटा",
+        },
+
+        errors: {
+          loginRequired: "लॉग इन आवश्यक आहे.",
+          emailMismatch: "ईमेल जुळत नाही.",
+          passwordRequired: "पासवर्ड आवश्यक आहे.",
+          failed: "खाते हटवता आले नाही.",
+        },
+      },
     },
   },
 };

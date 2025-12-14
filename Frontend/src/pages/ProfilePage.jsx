@@ -13,8 +13,10 @@ import { useToast } from "@/hooks/use-toast";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { getApiUrl } from '@/lib/api';
 import Spinner from '@/components/ui/Spinner';
+import { useTranslation } from "@/hooks/useTranslation";
 
 export default function ProfilePage() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { toast } = useToast();
     const token = useAuthStore((state) => state.token);
@@ -50,7 +52,7 @@ export default function ProfilePage() {
                 try {
                     await fetchUserProfile();
                 } catch (err) {
-                    setError("Failed to load profile");
+                    setError(t('profilePage.loadFailed'));
                 } finally {
                     setLoading(false);
                 }
@@ -81,7 +83,7 @@ export default function ProfilePage() {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            if (!response.ok) throw new Error("Failed to fetch orders");
+            if (!response.ok) throw new Error(t('profilePage.orders.fetchFailed'));
             const data = await response.json();
             setOrders(Array.isArray(data) ? data : []);
         } catch (err) {
@@ -100,7 +102,7 @@ export default function ProfilePage() {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            if (!response.ok) throw new Error("Failed to fetch wishlist");
+            if (!response.ok) throw new Error(t('profilePage.wishlist.fetchFailed'));
             const data = await response.json();
             setWishlist(Array.isArray(data) ? data : []);
         } catch (err) {
@@ -141,17 +143,17 @@ export default function ProfilePage() {
         if (!token) return;
         // Validation
         if (!editForm.firstName?.trim() || !editForm.lastName?.trim()) {
-            setError("First name and last name are required");
+            setError(t('profilePage.errors.nameRequired'));
             return;
         }
 
         if (!validateName(editForm.firstName) || !validateName(editForm.lastName)) {
-            setError("Names must contain only letters and be in a proper format");
+            setError(t('profilePage.errors.invalidName'));
             return;
         }
 
         if (editForm.phoneNumber && !validatePhoneNumber(editForm.phoneNumber)) {
-            setError("Please enter a valid 10-digit phone number starting with 6-9");
+            setError(t('profilePage.errors.invalidPhone'));
             return;
         }
         try {
@@ -168,7 +170,7 @@ export default function ProfilePage() {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message || "Failed to update profile");
+                throw new Error(errorData.message || t('profilePage.errors.updateFailed'));
             }
 
             const updatedUser = await response.json();
@@ -176,7 +178,7 @@ export default function ProfilePage() {
             setUser(updatedUser);
             setIsEditing(false);
         } catch (err) {
-            setError(err.message || "Failed to update profile");
+            setError(err.message || t('profilePage.errors.updateFailed'));
         } finally {
             setSaving(false);
         }
@@ -211,19 +213,19 @@ export default function ProfilePage() {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message || "Failed to upload avatar");
+                throw new Error(errorData.message || t('profilePage.avatar.failedDesc'));
             }
 
             const updatedUser = await response.json();
             setUser(updatedUser);
             toast({
-                title: "Profile picture updated",
-                description: "Your avatar has been refreshed successfully.",
+                title: t('profilePage.avatar.updatedTitle'),
+                description: t('profilePage.avatar.updatedDesc'),
             });
         } catch (err) {
             toast({
-                title: "Avatar upload failed",
-                description: err.message || "Unable to upload profile picture.",
+                title: t('profilePage.avatar.failedTitle'),
+                description: err.message || t('profilePage.avatar.failedDesc'),
                 variant: "destructive",
             });
         } finally {
@@ -249,7 +251,7 @@ export default function ProfilePage() {
         return (
             <div className="flex flex-col justify-center items-center h-screen gap-4">
                 <AlertTriangle className="h-10 w-10 text-red-500" />
-                <p className="text-center text-red-600 font-medium">Please log in to view your profile</p>
+                <p className="text-center text-red-600 font-medium">{t('profilePage.loginRequired')}</p>
             </div>
         );
     }
@@ -257,7 +259,7 @@ export default function ProfilePage() {
     const renderSection = () => {
         switch (activeSection) {
             case "overview":
-                return <OverviewSection user={user} />;
+                return <OverviewSection user={user} t={t} />;
             case "edit":
                 return (
                     <EditProfileSection
@@ -269,18 +271,19 @@ export default function ProfilePage() {
                         handleSaveProfile={handleSaveProfile}
                         saving={saving}
                         error={error}
+                        t={t}
                     />
                 );
             case "address":
-                return <AddressSection user={user} token={token} />;
+                return <AddressSection user={user} token={token} t={t} />;
             case "orders":
-                return <OrdersSection stats={orderStats} orders={orders} loading={ordersLoading} />;
+                return <OrdersSection stats={orderStats} orders={orders} loading={ordersLoading} t={t} />;
             case "wishlist":
-                return <WishlistSection wishlist={wishlist} loading={wishlistLoading} token={token} />;
+                return <WishlistSection wishlist={wishlist} loading={wishlistLoading} token={token} t={t} />;
             case "security":
-                return <SecuritySection user={user} token={token} />;
+                return <SecuritySection user={user} token={token} t={t} />;
             default:
-                return <OverviewSection user={user} />;
+                return <OverviewSection user={user} t={t} />;
         }
     };
 
@@ -288,7 +291,7 @@ export default function ProfilePage() {
         <div className="min-h-screen bg-gray-50">
             {/* Header with User Info */}
             <div className="bg-white shadow-sm border-b">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div className="mx-auto max-w-7xl px-4 py-6">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <div className="flex items-center gap-4">
                             <div className="relative">
@@ -303,8 +306,8 @@ export default function ProfilePage() {
                                     <DialogContent className="max-w-lg p-0 bg-transparent border-none shadow-none">
                                         <VisuallyHidden>
                                             <DialogHeader>
-                                                <DialogTitle>Profile Picture Preview</DialogTitle>
-                                                <DialogDescription>Enlarged profile avatar preview</DialogDescription>
+                                                <DialogTitle>{t('profilePage.avatar.previewTitle')}</DialogTitle>
+                                                <DialogDescription>{t('profilePage.avatar.previewDesc')}</DialogDescription>
                                             </DialogHeader>
                                         </VisuallyHidden>
                                         <div className="w-full h-full flex items-center justify-center">
@@ -339,14 +342,17 @@ export default function ProfilePage() {
                             </div>
                             <div>
                                 <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
-                                    Hi, {user?.firstName}!
+                                    {t('profilePage.greeting', { name: user?.firstName })}
                                 </h1>
                                 <p className="text-sm text-gray-500">
-                                    {user?.createdAt ? (
-                                        <>Member since {new Date(user.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</>
-                                    ) : (
-                                        <>Member</>
-                                    )}
+                                    {user?.createdAt
+                                        ? t('profilePage.memberSince', {
+                                            date: new Date(user.createdAt).toLocaleDateString('en-US', {
+                                                month: 'long',
+                                                year: 'numeric',
+                                            }),
+                                        })
+                                        : t('profilePage.member')}
                                 </p>
                             </div>
                         </div>
@@ -356,58 +362,57 @@ export default function ProfilePage() {
                             className="flex items-center gap-2 text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700"
                         >
                             <LogOut className="w-4 h-4" />
-                            <span className="hidden sm:inline">Logout</span>
+                            <span className="hidden sm:inline">{t('profilePage.logout')}</span>
                         </Button>
                     </div>
                 </div>
             </div>
 
             {/* Main Content */}
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+            <div className="mx-auto max-w-7xl px-4 py-6 sm:py-10">
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
-
                     {/* Sidebar */}
                     <Card className="h-fit lg:sticky lg:top-6">
                         <CardContent className="p-4">
                             <div className="space-y-2">
                                 <SidebarItem
                                     icon={<User size={18} />}
-                                    label="Profile Overview"
+                                    label={t('profilePage.sidebar.overview')}
                                     active={activeSection === "overview"}
                                     onClick={() => setActiveSection("overview")}
                                 />
 
                                 <SidebarItem
                                     icon={<Edit2 size={18} />}
-                                    label="Edit Profile"
+                                    label={t('profilePage.sidebar.edit')}
                                     active={activeSection === "edit"}
                                     onClick={() => setActiveSection("edit")}
                                 />
 
                                 <SidebarItem
                                     icon={<MapPin size={18} />}
-                                    label="Shipping Address"
+                                    label={t('profilePage.sidebar.address')}
                                     active={activeSection === "address"}
                                     onClick={() => setActiveSection("address")}
                                 />
 
                                 <SidebarItem
                                     icon={<Package size={18} />}
-                                    label="My Orders"
+                                    label={t('profilePage.sidebar.orders')}
                                     active={activeSection === "orders"}
                                     onClick={() => setActiveSection("orders")}
                                 />
 
                                 <SidebarItem
                                     icon={<Heart size={18} />}
-                                    label="Wishlist"
+                                    label={t('profilePage.sidebar.wishlist')}
                                     active={activeSection === "wishlist"}
                                     onClick={() => setActiveSection("wishlist")}
                                 />
 
                                 <SidebarItem
                                     icon={<Lock size={18} />}
-                                    label="Account Security"
+                                    label={t('profilePage.sidebar.security')}
                                     active={activeSection === "security"}
                                     onClick={() => setActiveSection("security")}
                                 />
@@ -445,34 +450,34 @@ function SidebarItem({ icon, label, active, onClick }) {
 }
 
 /* Overview Section */
-function OverviewSection({ user }) {
+function OverviewSection({ user, t }) {
     return (
         <Card>
             <CardHeader className="border-b bg-white">
-                <CardTitle className="text-2xl">Profile Overview</CardTitle>
+                <CardTitle className="text-2xl">{t('profilePage.overview.title')}</CardTitle>
             </CardHeader>
 
             <CardContent className="p-6 space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label className="text-sm font-medium text-gray-500 mb-1 block">First Name</label>
+                        <label className="text-sm font-medium text-gray-500 mb-1 block">{t('profilePage.overview.firstName')}</label>
                         <p className="text-base font-semibold text-gray-900">{user?.firstName}</p>
                     </div>
 
                     <div>
-                        <label className="text-sm font-medium text-gray-500 mb-1 block">Last Name</label>
+                        <label className="text-sm font-medium text-gray-500 mb-1 block">{t('profilePage.overview.lastName')}</label>
                         <p className="text-base font-semibold text-gray-900">{user?.lastName}</p>
                     </div>
 
                     <div>
-                        <label className="text-sm font-medium text-gray-500 mb-1 block">Email Address</label>
+                        <label className="text-sm font-medium text-gray-500 mb-1 block">{t('profilePage.overview.email')}</label>
                         <p className="text-base font-semibold text-gray-900">{user?.email}</p>
                     </div>
 
                     <div>
-                        <label className="text-sm font-medium text-gray-500 mb-1 block">Phone Number</label>
+                        <label className="text-sm font-medium text-gray-500 mb-1 block">{t('profilePage.overview.phone')}</label>
                         <p className="text-base font-semibold text-gray-900">
-                            {user?.phoneNumber || "Not provided"}
+                            {user?.phoneNumber || t('profilePage.overview.notProvided')}
                         </p>
                     </div>
                 </div>
@@ -481,10 +486,10 @@ function OverviewSection({ user }) {
 
                 <div className="bg-gray-50 rounded-lg p-4">
                     <p className="text-sm text-gray-600">
-                        <span className="font-medium text-gray-900">Account Status:</span> Active
+                        <span className="font-medium text-gray-900">{t('profilePage.overview.status')}:</span> {t('profilePage.overview.active')}
                     </p>
                     <p className="text-sm text-gray-600 mt-2">
-                        <span className="font-medium text-gray-900">Member Since:</span>{" "}
+                        <span className="font-medium text-gray-900">{t('profilePage.overview.memberSince')}:</span>
                         {user?.createdAt ? new Date(user.createdAt).toDateString() : "N/A"}
                     </p>
                 </div>
@@ -494,18 +499,18 @@ function OverviewSection({ user }) {
 }
 
 /* Edit Profile Section */
-function EditProfileSection({ user, isEditing, editForm, setEditForm, setIsEditing, handleSaveProfile, saving, error }) {
+function EditProfileSection({ user, isEditing, editForm, setEditForm, setIsEditing, handleSaveProfile, saving, error, t }) {
     return (
         <Card>
             <CardHeader className="border-b bg-white flex flex-row items-center justify-between">
-                <CardTitle className="text-2xl">Edit Profile</CardTitle>
+                <CardTitle className="text-2xl">{t('profilePage.edit.title')}</CardTitle>
                 {!isEditing ? (
                     <Button
                         onClick={() => setIsEditing(true)}
                         className="bg-slate-900 hover:bg-slate-800"
                     >
                         <Edit2 className="w-4 h-4 mr-2" />
-                        Edit
+                        {t('profilePage.actions.edit')}
                     </Button>
                 ) : (
                     <div className="flex gap-2">
@@ -517,12 +522,12 @@ function EditProfileSection({ user, isEditing, editForm, setEditForm, setIsEditi
                             {saving ? (
                                 <>
                                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                    Saving...
+                                    {t('profilePage.actions.saving')}
                                 </>
                             ) : (
                                 <>
                                     <Save className="w-4 h-4 mr-2" />
-                                    Save
+                                    {t('profilePage.actions.save')}
                                 </>
                             )}
                         </Button>
@@ -539,7 +544,7 @@ function EditProfileSection({ user, isEditing, editForm, setEditForm, setIsEditi
                             disabled={saving}
                         >
                             <X className="w-4 h-4 mr-2" />
-                            Cancel
+                            {t('profilePage.actions.cancel')}
                         </Button>
                     </div>
                 )}
@@ -554,7 +559,7 @@ function EditProfileSection({ user, isEditing, editForm, setEditForm, setIsEditi
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            First Name
+                            {t('profilePage.overview.firstName')}
                         </label>
                         <Input
                             value={isEditing ? editForm.firstName : user?.firstName}
@@ -566,7 +571,7 @@ function EditProfileSection({ user, isEditing, editForm, setEditForm, setIsEditi
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Last Name
+                            {t('profilePage.overview.lastName')}
                         </label>
                         <Input
                             value={isEditing ? editForm.lastName : user?.lastName}
@@ -578,26 +583,26 @@ function EditProfileSection({ user, isEditing, editForm, setEditForm, setIsEditi
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Email Address
+                            {t('profilePage.overview.email')}
                         </label>
                         <Input
                             value={user?.email}
                             disabled
                             className="bg-gray-100"
                         />
-                        <p className="text-xs text-gray-500 mt-1">Email cannot be changed</p>
+                        <p className="text-xs text-gray-500 mt-1">{t('profilePage.edit.emailHint')}</p>
                     </div>
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Phone Number
+                            {t('profilePage.overview.phone')}
                         </label>
                         <Input
                             value={isEditing ? editForm.phoneNumber || "" : user?.phoneNumber || ""}
                             onChange={(e) => setEditForm({ ...editForm, phoneNumber: e.target.value })}
                             disabled={!isEditing || saving}
                             className="disabled:opacity-60"
-                            placeholder="Enter phone number"
+                            placeholder={t('profilePage.edit.phonePlaceholder')}
                         />
                     </div>
                 </div>
@@ -607,11 +612,11 @@ function EditProfileSection({ user, isEditing, editForm, setEditForm, setIsEditi
 }
 
 /* Address Section */
-function AddressSection({ user, token }) {
+function AddressSection({ user, token, t }) {
     return (
         <Card>
             <CardHeader className="border-b bg-white flex flex-row items-center justify-between">
-                <CardTitle className="text-2xl">Shipping Address</CardTitle>
+                <CardTitle className="text-2xl">{t('profilePage.address.title')}</CardTitle>
                 {/* Address management can be added later */}
             </CardHeader>
 
@@ -636,8 +641,8 @@ function AddressSection({ user, token }) {
                 ) : (
                     <div className="text-center py-12">
                         <MapPin className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-                        <p className="text-gray-500 mb-4">No shipping address added yet</p>
-                        <p className="text-sm text-gray-400">Address will be added when you place an order</p>
+                        <p className="text-gray-500 mb-4">{t('profilePage.address.empty')}</p>
+                        <p className="text-sm text-gray-400">{t('profilePage.address.helper')}</p>
                     </div>
                 )}
             </CardContent>
@@ -646,7 +651,7 @@ function AddressSection({ user, token }) {
 }
 
 /* Orders Section */
-function OrdersSection({ stats, orders, loading }) {
+function OrdersSection({ stats, orders, loading, t }) {
     if (loading) {
         return (
             <Card>
@@ -666,25 +671,25 @@ function OrdersSection({ stats, orders, loading }) {
                 <Card>
                     <CardContent className="p-6 text-center">
                         <div className="text-3xl font-bold text-slate-900 mb-2">{stats.total}</div>
-                        <div className="text-sm text-gray-600">Total Orders</div>
+                        <div className="text-sm text-gray-600">{t('profilePage.orders.total')}</div>
                     </CardContent>
                 </Card>
                 <Card>
                     <CardContent className="p-6 text-center">
                         <div className="text-3xl font-bold text-green-600 mb-2">{stats.delivered}</div>
-                        <div className="text-sm text-gray-600">Delivered</div>
+                        <div className="text-sm text-gray-600">{t('profilePage.orders.delivered')}</div>
                     </CardContent>
                 </Card>
                 <Card>
                     <CardContent className="p-6 text-center">
                         <div className="text-3xl font-bold text-blue-600 mb-2">{stats.inProgress}</div>
-                        <div className="text-sm text-gray-600">In Progress</div>
+                        <div className="text-sm text-gray-600">{t('profilePage.orders.processing')}</div>
                     </CardContent>
                 </Card>
                 <Card>
                     <CardContent className="p-6 text-center">
                         <div className="text-3xl font-bold text-red-600 mb-2">{stats.cancelled}</div>
-                        <div className="text-sm text-gray-600">Cancelled</div>
+                        <div className="text-sm text-gray-600">{t('profilePage.orders.cancelled')}</div>
                     </CardContent>
                 </Card>
             </div>
@@ -692,13 +697,13 @@ function OrdersSection({ stats, orders, loading }) {
             {/* Recent Orders */}
             <Card>
                 <CardHeader className="border-b bg-white">
-                    <CardTitle className="text-2xl">Recent Orders</CardTitle>
+                    <CardTitle className="text-2xl">{t('profilePage.orders.recent')}</CardTitle>
                 </CardHeader>
                 <CardContent className="p-6">
                     {orders.length === 0 ? (
                         <div className="text-center py-12">
                             <ShoppingBag className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-                            <p className="text-gray-500 mb-4">You haven't placed any orders yet</p>
+                            <p className="text-gray-500 mb-4">{t('profilePage.orders.empty')}</p>
                         </div>
                     ) : (
                         <div className="space-y-4">
@@ -706,7 +711,7 @@ function OrdersSection({ stats, orders, loading }) {
                                 <div key={order._id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
                                     <div className="flex items-center justify-between mb-2">
                                         <div>
-                                            <p className="font-semibold text-sm text-gray-900">Order #{order._id.slice(-8)}</p>
+                                            <p className="font-semibold text-sm text-gray-900">{t('profilePage.orders.order')} #{order._id.slice(-8)}</p>
                                             <p className="text-xs text-gray-500">
                                                 {new Date(order.createdAt).toLocaleDateString('en-US', {
                                                     month: 'long',
@@ -718,12 +723,12 @@ function OrdersSection({ stats, orders, loading }) {
                                         <div className="text-right">
                                             <p className="font-semibold text-gray-900">₹{order.totalPrice.toFixed(2)}</p>
                                             <p className={`text-xs ${order.isDelivered ? 'text-green-600' : 'text-blue-600'}`}>
-                                                {order.isDelivered ? 'Delivered' : 'Processing'}
+                                                {order.isDelivered ? t('profilePage.orders.delivered') : t('profilePage.orders.processing')}
                                             </p>
                                         </div>
                                     </div>
                                     <div className="text-xs text-gray-600">
-                                        {order.orderItems?.length || 0} item{order.orderItems?.length !== 1 ? 's' : ''}
+                                        {t('profilePage.orders.items', { count: order.orderItems?.length || 0 })}
                                     </div>
                                 </div>
                             ))}
@@ -736,7 +741,7 @@ function OrdersSection({ stats, orders, loading }) {
 }
 
 /* Wishlist Section */
-function WishlistSection({ wishlist, loading, token }) {
+function WishlistSection({ wishlist, loading, token, t }) {
     if (loading) {
         return (
             <Card>
@@ -752,15 +757,17 @@ function WishlistSection({ wishlist, loading, token }) {
     return (
         <Card>
             <CardHeader className="border-b bg-white">
-                <CardTitle className="text-2xl">My Wishlist</CardTitle>
-                <p className="text-sm text-gray-500 mt-1">{wishlist.length} item{wishlist.length !== 1 ? 's' : ''} saved</p>
+                <CardTitle className="text-2xl">{t('profilePage.wishlist.title')}</CardTitle>
+                <p className="text-sm text-gray-500 mt-1">{t('profilePage.wishlist.count', {
+                    count: wishlist.length,
+                })}</p>
             </CardHeader>
 
             <CardContent className="p-6">
                 {wishlist.length === 0 ? (
                     <div className="text-center py-12">
                         <Heart className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-                        <p className="text-gray-500 mb-4">Your wishlist is empty</p>
+                        <p className="text-gray-500 mb-4">{t('profilePage.wishlist.empty')}</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -777,12 +784,12 @@ function WishlistSection({ wishlist, loading, token }) {
                                     </button>
                                 </div>
                                 <div className="p-4">
-                                    <p className="text-xs text-gray-500 mb-1">{item.artisanId?.businessName || "Store"}</p>
+                                    <p className="text-xs text-gray-500 mb-1">{item.artisanId?.businessName || t('profilePage.wishlist.store')}</p>
                                     <h3 className="font-semibold text-gray-900 mb-2">{item.title || item.name}</h3>
                                     <p className="text-lg font-bold text-slate-900 mb-3">₹{item.price?.toFixed(2) || item.price}</p>
                                     <Button className="w-full bg-slate-900 hover:bg-slate-800">
                                         <ShoppingBag className="w-4 h-4 mr-2" />
-                                        Add to Cart
+                                        {t('profilePage.wishlist.addToCart')}
                                     </Button>
                                 </div>
                             </div>
@@ -795,7 +802,7 @@ function WishlistSection({ wishlist, loading, token }) {
 }
 
 /* Security Section */
-function SecuritySection({ user, token }) {
+function SecuritySection({ user, token, t }) {
     const navigate = useNavigate();
     const logout = useAuthStore((state) => state.logout);
     const { toast } = useToast();
@@ -827,12 +834,12 @@ function SecuritySection({ user, token }) {
     const handleChangePassword = async (e) => {
         e.preventDefault();
         if (!token) {
-            setPasswordError("You must be logged in to change your password.");
+            setPasswordError(t('profilePage.security.errors.loginRequired'));
             return;
         }
 
         if (newPassword !== confirmPassword) {
-            setPasswordError("New passwords do not match.");
+            setPasswordError(t('profilePage.security.errors.mismatch'));
             return;
         }
 
@@ -851,17 +858,17 @@ function SecuritySection({ user, token }) {
 
             const data = await response.json();
             if (!response.ok) {
-                throw new Error(data.message || "Failed to update password");
+                throw new Error(data.message || t('profilePage.security.errors.updateFailed'));
             }
 
             toast({
-                title: "Password updated",
-                description: "Use your new password the next time you log in.",
+                title: t('profilePage.security.successTitle'),
+                description: t('profilePage.security.successDesc'),
             });
             resetPasswordForm();
             setIsPasswordDialogOpen(false);
         } catch (err) {
-            setPasswordError(err.message || "Failed to update password.");
+            setPasswordError(err.message || t('profilePage.security.errors.updateFailed'));
         } finally {
             setPasswordLoading(false);
         }
@@ -870,15 +877,15 @@ function SecuritySection({ user, token }) {
     return (
         <Card>
             <CardHeader className="border-b bg-white">
-                <CardTitle className="text-2xl">Account Security</CardTitle>
+                <CardTitle className="text-2xl">{t('profilePage.security.title')}</CardTitle>
             </CardHeader>
 
             <CardContent className="p-6 space-y-8">
                 {/* Change Password */}
                 <div>
-                    <h3 className="font-semibold text-lg mb-2">Change Password</h3>
+                    <h3 className="font-semibold text-lg mb-2">{t('profilePage.security.changePassword')}</h3>
                     <p className="text-sm text-gray-600 mb-4">
-                        Update your password to keep your account secure
+                        {t('profilePage.security.description')}
                     </p>
                     <Dialog
                         open={isPasswordDialogOpen}
@@ -892,20 +899,20 @@ function SecuritySection({ user, token }) {
                         <DialogTrigger asChild>
                             <Button className="bg-slate-900 hover:bg-slate-800">
                                 <Lock className="w-4 h-4 mr-2" />
-                                Change Password
+                                {t('profilePage.security.changePassword')}
                             </Button>
                         </DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
-                                <DialogTitle>Change password</DialogTitle>
+                                <DialogTitle>{t('profilePage.security.dialogTitle')}</DialogTitle>
                                 <DialogDescription>
-                                    For your security we need your current password before setting a new one.
+                                    {t('profilePage.security.dialogDesc')}
                                 </DialogDescription>
                             </DialogHeader>
                             <form onSubmit={handleChangePassword} className="space-y-4 mt-4">
                                 <div>
                                     <label className="text-sm font-medium text-gray-700 mb-1 block">
-                                        Current Password
+                                        {t('profilePage.security.currentPassword')}
                                     </label>
                                     <div className="relative">
                                         <Input
@@ -926,7 +933,7 @@ function SecuritySection({ user, token }) {
                                 </div>
                                 <div>
                                     <label className="text-sm font-medium text-gray-700 mb-1 block">
-                                        New Password
+                                        {t('profilePage.security.newPassword')}
                                     </label>
                                     <div className="relative">
                                         <Input
@@ -935,7 +942,7 @@ function SecuritySection({ user, token }) {
                                             onChange={(e) => setNewPassword(e.target.value)}
                                             required
                                             minLength={8}
-                                            placeholder="At least 8 characters"
+                                            placeholder={t('profilePage.security.passwordHint')}
                                             className="pr-10"
                                         />
                                         <button
@@ -949,7 +956,7 @@ function SecuritySection({ user, token }) {
                                 </div>
                                 <div>
                                     <label className="text-sm font-medium text-gray-700 mb-1 block">
-                                        Confirm New Password
+                                        {t('profilePage.security.confirmPassword')}
                                     </label>
                                     <div className="relative">
                                         <Input
@@ -982,16 +989,16 @@ function SecuritySection({ user, token }) {
                                         }}
                                         disabled={passwordLoading}
                                     >
-                                        Cancel
+                                        {t('profilePage.actions.cancel')}
                                     </Button>
                                     <Button type="submit" disabled={passwordLoading}>
                                         {passwordLoading ? (
                                             <span className="flex items-center gap-2">
                                                 <Loader2 className="w-4 h-4 animate-spin" />
-                                                Updating
+                                                {t('profilePage.security.updating')}
                                             </span>
                                         ) : (
-                                            "Update Password"
+                                            t('profilePage.security.update')
                                         )}
                                     </Button>
                                 </DialogFooter>
@@ -1006,15 +1013,15 @@ function SecuritySection({ user, token }) {
                 {user?.role !== 'ARTISAN' && (
                     <>
                         <div>
-                            <h3 className="font-semibold text-lg mb-2">Become an Artisan</h3>
+                            <h3 className="font-semibold text-lg mb-2">{t('profilePage.artisan.title')}</h3>
                             <p className="text-sm text-gray-600 mb-4">
-                                Want to sell your own handcrafted products on KarigarMart?
+                                {t('profilePage.artisan.description')}
                             </p>
                             <Button
                                 onClick={() => navigate("/build-store")}
                                 className="bg-gradient-to-r from-slate-700 to-slate-900 hover:from-slate-800 hover:to-slate-950"
                             >
-                                Apply to Become a Seller
+                                {t('profilePage.artisan.apply')}
                             </Button>
                         </div>
 
@@ -1024,9 +1031,9 @@ function SecuritySection({ user, token }) {
 
                 {/* Danger Zone */}
                 <div>
-                    <h3 className="font-semibold text-lg text-red-600 mb-2">Danger Zone</h3>
+                    <h3 className="font-semibold text-lg text-red-600 mb-2">{t('profilePage.danger.title')}</h3>
                     <p className="text-sm text-gray-600 mb-4">
-                        Once you delete your account, there is no going back. Please be certain.
+                        {t('profilePage.danger.warning')}
                     </p>
                     <AlertDialog
                         open={isDeleteDialogOpen}
@@ -1041,43 +1048,43 @@ function SecuritySection({ user, token }) {
                         }}
                     >
                         <AlertDialogTrigger asChild>
-                            <Button variant="destructive">Delete Account</Button>
+                            <Button variant="destructive">{t('profilePage.danger.delete')}</Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                             <AlertDialogHeader>
-                                <AlertDialogTitle className="text-red-600">Are you absolutely sure?</AlertDialogTitle>
+                                <AlertDialogTitle className="text-red-600">{t('profilePage.danger.confirmTitle')}</AlertDialogTitle>
                                 <AlertDialogDescription className="space-y-3">
                                     <p className="font-semibold text-base text-gray-900">
-                                        This action cannot be undone. This will permanently delete your account and remove all associated data.
+                                        {t('profilePage.danger.irreversible')}
                                     </p>
                                     <div className="bg-red-50 border border-red-200 rounded-lg p-4 mt-4">
-                                        <p className="text-sm text-red-800 font-medium mb-2">This will delete:</p>
+                                        <p className="text-sm text-red-800 font-medium mb-2">{t('profilePage.danger.willDelete')}</p>
                                         <ul className="list-disc list-inside text-sm text-red-700 space-y-1">
-                                            <li>Your profile and account information</li>
-                                            <li>Your order history</li>
-                                            <li>Your wishlist and cart</li>
-                                            <li>All associated data</li>
+                                            <li>{t('profilePage.danger.items.profile')}</li>
+                                            <li>{t('profilePage.danger.items.orders')}</li>
+                                            <li>{t('profilePage.danger.items.wishlist')}</li>
+                                            <li>{t('profilePage.danger.items.all')}</li>
                                         </ul>
                                     </div>
                                     <p className="text-sm text-gray-600 mt-4">
-                                        Please type <strong className="font-mono text-red-600">{user?.email || "your email"}</strong> to confirm:
+                                        {t('profilePage.danger.confirmEmail')}
                                     </p>
                                     <Input
                                         type="text"
                                         value={deleteConfirmText}
                                         onChange={(e) => setDeleteConfirmText(e.target.value)}
-                                        placeholder="Type your email to confirm"
+                                        placeholder={t('profilePage.danger.emailPlaceholder')}
                                         className="mt-2"
                                     />
                                     <p className="text-sm text-gray-600 mt-2">
-                                        Enter your password to verify this action:
+                                        {t('profilePage.danger.confirmPassword')}
                                     </p>
                                     <div className="relative mt-2">
                                         <Input
                                             type={showDeletePassword ? "text" : "password"}
                                             value={deletePassword}
                                             onChange={(e) => setDeletePassword(e.target.value)}
-                                            placeholder="Enter your password"
+                                            placeholder={t('profilePage.danger.passwordPlaceholder')}
                                             className="pr-10"
                                         />
                                         <button
@@ -1109,17 +1116,17 @@ function SecuritySection({ user, token }) {
                                         e.preventDefault();
 
                                         if (!token) {
-                                            setDeleteError("You must be logged in to delete your account.");
+                                            setDeleteError(t('profilePage.danger.errors.loginRequired'));
                                             return;
                                         }
 
                                         if (deleteConfirmText !== user?.email) {
-                                            setDeleteError("Email confirmation does not match.");
+                                            setDeleteError(t('profilePage.danger.errors.emailMismatch'));
                                             return;
                                         }
 
                                         if (!deletePassword) {
-                                            setDeleteError("Please enter your password to confirm.");
+                                            setDeleteError(t('profilePage.danger.errors.passwordRequired'));
                                             return;
                                         }
 
@@ -1138,12 +1145,12 @@ function SecuritySection({ user, token }) {
 
                                             const data = await response.json();
                                             if (!response.ok) {
-                                                throw new Error(data.message || "Failed to delete account");
+                                                throw new Error(data.message || t('profilePage.danger.errors.failed'));
                                             }
 
                                             toast({
-                                                title: "Account deleted",
-                                                description: "Your account has been permanently deleted.",
+                                                title: t('profilePage.danger.deletedTitle'),
+                                                description: t('profilePage.danger.deletedDesc'),
                                             });
 
                                             // Logout and redirect
@@ -1152,7 +1159,7 @@ function SecuritySection({ user, token }) {
                                                 navigate("/");
                                             }, 1000);
                                         } catch (err) {
-                                            setDeleteError(err.message || "Failed to delete account. Please try again.");
+                                            setDeleteError(err.message || t('profilePage.danger.errors.failed'));
                                         } finally {
                                             setDeleteLoading(false);
                                         }
@@ -1163,10 +1170,10 @@ function SecuritySection({ user, token }) {
                                     {deleteLoading ? (
                                         <span className="flex items-center gap-2">
                                             <Loader2 className="w-4 h-4 animate-spin" />
-                                            Deleting...
+                                            {t('profilePage.danger.deleting')}
                                         </span>
                                     ) : (
-                                        "I understand, delete my account"
+                                        t('profilePage.danger.confirmAction')
                                     )}
                                 </AlertDialogAction>
                             </AlertDialogFooter>

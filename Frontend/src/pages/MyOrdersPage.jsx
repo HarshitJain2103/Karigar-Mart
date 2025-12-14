@@ -9,6 +9,7 @@ import { Loader2, AlertTriangle, PackageSearch, Search, Filter, ArrowUpDown, Cop
 import { Separator } from '@/components/ui/separator';
 import { getApiUrl } from '@/lib/api';
 import Spinner from '@/components/ui/Spinner';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const formatDate = (dateString) => {
   try {
@@ -32,14 +33,15 @@ const formatINR = (amount) => {
 };
 
 export default function MyOrdersPage() {
+  const { t } = useTranslation();
   const token = useAuthStore((state) => state.token);
 
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [query, setQuery] = useState('');
-  const [filterStatus, setFilterStatus] = useState('all'); // all | delivered | processing
-  const [sortBy, setSortBy] = useState('date_desc'); // date_desc | date_asc | total_desc | total_asc
+  const [filterStatus, setFilterStatus] = useState('all');
+  const [sortBy, setSortBy] = useState('date_desc');
   const [copiedId, setCopiedId] = useState('');
   const [downloadingCsv, setDownloadingCsv] = useState(false);
 
@@ -55,11 +57,11 @@ export default function MyOrdersPage() {
         const response = await fetch(getApiUrl('/api/orders/myorders'), {
           headers: { Authorization: `Bearer ${token}` },
         });
-        if (!response.ok) throw new Error('Failed to fetch orders.');
+        if (!response.ok) throw new Error(t('myOrdersPage.fetchFailed'));
         const data = await response.json();
         setOrders(Array.isArray(data) ? data : []);
       } catch (err) {
-        setError(err.message || 'Failed to fetch orders.');
+        setError(err.message || t('myOrdersPage.fetchFailed'));
       } finally {
         setLoading(false);
       }
@@ -133,20 +135,20 @@ export default function MyOrdersPage() {
     try {
       setDownloadingCsv(true);
       const headers = [
-        'Order ID',
-        'Date',
-        'Total',
-        'Delivered',
-        'Items Count',
-        'Shipping City',
-        'Shipping State',
-        'Shipping Postal',
+        t('myOrdersPage.csv.orderId'),
+        t('myOrdersPage.csv.date'),
+        t('myOrdersPage.csv.total'),
+        t('myOrdersPage.csv.delivered'),
+        t('myOrdersPage.csv.itemsCount'),
+        t('myOrdersPage.csv.city'),
+        t('myOrdersPage.csv.state'),
+        t('myOrdersPage.csv.postal'),
       ];
       const rows = processed.map((o) => [
         o?._id || '',
         formatDate(o?.createdAt || ''),
         Number(o?.totalPrice || 0),
-        o?.isDelivered ? 'Yes' : 'No',
+        o?.isDelivered ? t('myOrdersPage.csv.yes') : t('myOrdersPage.csv.no'),
         Array.isArray(o?.orderItems) ? o.orderItems.reduce((n, it) => n + Number(it?.qty || 0), 0) : 0,
         o?.shippingAddress?.city || '',
         o?.shippingAddress?.state || '',
@@ -177,45 +179,45 @@ export default function MyOrdersPage() {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
         <AlertTriangle className="h-10 w-10 text-red-500" />
-        <p className="text-center text-red-600 font-medium">Error: {error}</p>
+        <p className="text-center text-red-600 font-medium">{t('myOrdersPage.errorPrefix')} {error}</p>
       </div>
     );
   }
 
   if (!orders.length) {
     return (
-      <div className="container mx-auto py-12 px-4 text-center">
+      <div className="mx-auto max-w-7xl px-4 py-12 text-center">
         <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
           <PackageSearch className="h-8 w-8 text-primary" />
         </div>
-        <h1 className="text-3xl font-bold tracking-tight">No Orders Yet</h1>
-        <p className="text-muted-foreground mt-2">You haven&apos;t placed any orders with us. Let&apos;s change that!</p>
+        <h1 className="text-3xl font-bold tracking-tight">{t('myOrdersPage.emptyTitle')}</h1>
+        <p className="text-muted-foreground mt-2">{t('myOrdersPage.emptyDescription')}</p>
         <Link to="/shop">
-          <Button className="mt-6">Start Shopping</Button>
+          <Button className="mt-6">{t('myOrdersPage.startShopping')}</Button>
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto py-12 px-4">
+    <div className="mx-auto max-w-7xl px-4 py-12">
       <div className="mb-4">
-        <h1 className="text-3xl font-bold tracking-tight">My Orders</h1>
-        <p className="text-muted-foreground">View your order history and details.</p>
+        <h1 className="text-3xl font-bold tracking-tight">{t('myOrdersPage.title')}</h1>
+        <p className="text-muted-foreground">{t('myOrdersPage.subtitle')}</p>
       </div>
 
       {/* Summary stats */}
       <div className="mb-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
         <div className="rounded-lg border p-4">
-          <div className="text-sm text-muted-foreground">Total Orders</div>
+          <div className="text-sm text-muted-foreground">{t('myOrdersPage.totalOrders')}</div>
           <div className="text-2xl font-bold">{orders.length}</div>
         </div>
         <div className="rounded-lg border p-4">
-          <div className="text-sm text-muted-foreground">Delivered</div>
+          <div className="text-sm text-muted-foreground">{t('myOrdersPage.delivered')}</div>
           <div className="text-2xl font-bold">{deliveredCount}</div>
         </div>
         <div className="rounded-lg border p-4">
-          <div className="text-sm text-muted-foreground">Total Spent</div>
+          <div className="text-sm text-muted-foreground">{t('myOrdersPage.totalSpent')}</div>
           <div className="text-2xl font-bold">{formatINR(totalSpent)}</div>
         </div>
       </div>
@@ -227,7 +229,7 @@ export default function MyOrdersPage() {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by Order ID or item name"
+            placeholder={t('myOrdersPage.searchPlaceholder')}
             className="w-full bg-transparent text-sm outline-none"
           />
         </div>
@@ -241,9 +243,9 @@ export default function MyOrdersPage() {
               onChange={(e) => setFilterStatus(e.target.value)}
               aria-label="Filter orders"
             >
-              <option value="all">All</option>
-              <option value="delivered">Delivered</option>
-              <option value="processing">Processing</option>
+              <option value="all">{t('myOrdersPage.filterAll')}</option>
+              <option value="delivered">{t('myOrdersPage.statusDelivered')}</option>
+              <option value="processing">{t('myOrdersPage.statusProcessing')}</option>
             </select>
           </div>
 
@@ -255,16 +257,16 @@ export default function MyOrdersPage() {
               onChange={(e) => setSortBy(e.target.value)}
               aria-label="Sort orders"
             >
-              <option value="date_desc">Newest first</option>
-              <option value="date_asc">Oldest first</option>
-              <option value="total_desc">Total: High to Low</option>
-              <option value="total_asc">Total: Low to High</option>
+              <option value="date_desc">{t('myOrdersPage.sortNewest')}</option>
+              <option value="date_asc">{t('myOrdersPage.sortOldest')}</option>
+              <option value="total_desc">{t('myOrdersPage.sortTotalHigh')}</option>
+              <option value="total_asc">{t('myOrdersPage.sortTotalLow')}</option>
             </select>
           </div>
 
           <Button variant="outline" className="gap-2" onClick={exportCSV} disabled={!processed.length || downloadingCsv}>
             {downloadingCsv ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
-            Export CSV
+            {t('myOrdersPage.exportCsv')}
           </Button>
         </div>
       </div>
@@ -284,7 +286,7 @@ export default function MyOrdersPage() {
                   <AccordionTrigger className="px-6 py-4 hover:bg-muted/50">
                     <div className="flex flex-wrap items-center gap-4 text-sm text-left w-full">
                       <div className="flex-1 min-w-[160px]">
-                        <div className="text-xs text-muted-foreground">Order ID</div>
+                        <div className="text-xs text-muted-foreground">{t('myOrdersPage.orderId')}</div>
                         <div className="font-mono break-all flex items-center gap-2">
                           <span>{order._id}</span>
                           <span
@@ -295,33 +297,33 @@ export default function MyOrdersPage() {
                               e.preventDefault();
                               handleCopy(order._id);
                             }}
-                            aria-label="Copy order id"
-                            title="Copy Order ID"
+                            aria-label={t('myOrdersPage.copyOrderId')}
+                            title={t('myOrdersPage.copyOrderId')}
                           >
                             {copiedId === order._id ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                           </span>
                         </div>
                       </div>
                       <div className="flex-1 min-w-[120px]">
-                        <div className="text-xs text-muted-foreground">Date</div>
+                        <div className="text-xs text-muted-foreground">{t('myOrdersPage.date')}</div>
                         <div>{formatDate(order.createdAt)}</div>
                       </div>
                       <div className="flex-1 min-w-[100px]">
-                        <div className="text-xs text-muted-foreground">Total</div>
+                        <div className="text-xs text-muted-foreground">{t('myOrdersPage.total')}</div>
                         <div className="font-semibold">{formatINR(total)}</div>
                       </div>
                       <div className="flex-1 min-w-[120px]">
-                        <div className="text-xs text-muted-foreground">Items</div>
+                        <div className="text-xs text-muted-foreground">{t('myOrdersPage.items')}</div>
                         <div>{itemsCount}</div>
                       </div>
                       <div className="flex-1 min-w-[120px]">
-                        <div className="text-xs text-muted-foreground">Status</div>
+                        <div className="text-xs text-muted-foreground">{t('myOrdersPage.status')}</div>
                         <div className="flex items-center gap-2">
                           <Badge variant={order.isDelivered ? 'default' : 'secondary'}>
-                            {order.isDelivered ? 'Delivered' : 'Processing'}
+                            {order.isDelivered ? t('myOrdersPage.statusDelivered') : t('myOrdersPage.statusProcessing')}
                           </Badge>
                           {order.isDelivered && order.deliveredAt && (
-                            <span className="text-xs text-muted-foreground">on {formatDate(order.deliveredAt)}</span>
+                            <span className="text-xs text-muted-foreground">{t('myOrdersPage.deliveredOn', { date: formatDate(order.deliveredAt)})}</span>
                           )}
                         </div>
                       </div>
@@ -330,7 +332,7 @@ export default function MyOrdersPage() {
 
                   <AccordionContent className="px-6 py-5 border-t bg-muted/20">
                     {/* Items */}
-                    <h4 className="font-semibold mb-3">Order Items</h4>
+                    <h4 className="font-semibold mb-3">{t('myOrdersPage.orderItems')}</h4>
                     <div className="space-y-4">
                       {Array.isArray(order.orderItems) && order.orderItems.map((item) => (
                         <div key={item._id} className="flex gap-4">
@@ -338,12 +340,12 @@ export default function MyOrdersPage() {
                             {item.image ? (
                               <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
                             ) : (
-                              <div className="h-full w-full flex items-center justify-center text-xs text-muted-foreground">No image</div>
+                              <div className="h-full w-full flex items-center justify-center text-xs text-muted-foreground">{t('myOrdersPage.noImage')}</div>
                             )}
                           </div>
                           <div className="flex-grow min-w-0">
                             <p className="font-medium truncate">{item.name}</p>
-                            <p className="text-sm text-muted-foreground">Qty: {item.qty}</p>
+                            <p className="text-sm text-muted-foreground">{t('myOrdersPage.quantity', { qty: item.qty })}</p>
                           </div>
                           <p className="text-sm font-medium">{formatINR(item.price)}</p>
                         </div>
@@ -355,19 +357,19 @@ export default function MyOrdersPage() {
                     {/* Shipping */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div className="md:col-span-2">
-                        <h4 className="font-semibold mb-2">Shipping Address</h4>
+                        <h4 className="font-semibold mb-2">{t('myOrdersPage.shippingAddress')}</h4>
                         <address className="not-italic text-sm text-muted-foreground">
                           {order?.shippingAddress?.street}<br />
                           {order?.shippingAddress?.city}, {order?.shippingAddress?.state} {order?.shippingAddress?.postalCode}
                         </address>
                       </div>
                       <div className="space-y-2">
-                        <h4 className="font-semibold mb-2">Payment</h4>
+                        <h4 className="font-semibold mb-2">{t('myOrdersPage.payment')}</h4>
                         <div className="text-sm text-muted-foreground">
                           {order?.isPaid ? (
-                            <>Paid on {formatDate(order?.paidAt)}</>
+                            <>{t('myOrdersPage.paidOn', { date: formatDate(order?.paidAt) })}</>
                           ) : (
-                            <>Payment pending</>
+                            <>{t('myOrdersPage.paymentPending')}</>
                           )}
                         </div>
                         <div className="flex flex-wrap gap-2">
@@ -379,10 +381,10 @@ export default function MyOrdersPage() {
                               if (order?.invoiceUrl) window.open(order.invoiceUrl, '_blank', 'noopener,noreferrer');
                             }}
                             disabled={!order?.invoiceUrl}
-                            title={order?.invoiceUrl ? 'View Invoice' : 'Invoice not available'}
+                            title={order?.invoiceUrl ? t('myOrdersPage.viewInvoice') : t('myOrdersPage.invoiceUnavailable')}
                           >
                             <FileText className="h-4 w-4" />
-                            Invoice
+                            {t('myOrdersPage.invoice')}
                           </Button>
                           <Button
                             variant="outline"
@@ -392,7 +394,7 @@ export default function MyOrdersPage() {
                               window.location.href = '/shop';
                             }}
                           >
-                            Reorder
+                            {t('myOrdersPage.reorder')}
                           </Button>
                         </div>
                       </div>
