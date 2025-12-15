@@ -4,8 +4,10 @@ import { getApiUrl } from '@/lib/api';
 import Spinner from '@/components/ui/Spinner';
 import ReelCard from '@/components/ui/products/ReelCard';
 import { ChevronUp, ChevronDown } from 'lucide-react';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function ReelsPage() {
+  const { t } = useTranslation();
   const [reels, setReels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -23,7 +25,7 @@ export default function ReelsPage() {
       try {
         setLoading(true);
         const response = await fetch(getApiUrl('/api/products/reels'));
-        if (!response.ok) throw new Error('Failed to fetch reels');
+        if (!response.ok) throw new Error(t('reelsPage.fetchFailed'));
         const data = await response.json();
         setReels(data.reels || data);
       } catch (err) {
@@ -105,7 +107,7 @@ export default function ReelsPage() {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen w-screen bg-white overflow-hidden">
-        <Spinner size="lg" text="Loading reels..." />
+        <Spinner size="lg" text={t('reelsPage.loading')} />
       </div>
     );
   }
@@ -114,9 +116,9 @@ export default function ReelsPage() {
     return (
       <div className="flex justify-center items-center h-screen w-screen bg-black overflow-hidden">
         <div className="text-center text-white">
-          <h2 className="text-2xl font-bold mb-2">No Reels Available</h2>
+          <h2 className="text-2xl font-bold mb-2">{t('reelsPage.emptyTitle')}</h2>
           <p className="text-gray-400">
-            {error || 'Check back soon for amazing product videos!'}
+            {error || t('reelsPage.emptyDescription')}
           </p>
         </div>
       </div>

@@ -6,8 +6,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import useAuthStore from '@/stores/authStore';
 import useCartStore from '@/stores/cartStore';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function ReelCard({ reel, isActive, autoPlay = true }) {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { toast } = useToast();
     const videoRef = useRef(null);
@@ -23,8 +25,8 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
     const user = useAuthStore((state) => state.user);
     const addToCart = useCartStore((state) => state.addToCart);
 
-    const productTitle = reel.title || 'Untitled Product';
-    const artisanName = reel.artisanId?.storeName || 'Artisan';
+    const productTitle = reel.title || t('reelCard.untitledProduct');
+    const artisanName = reel.artisanId?.storeName || t('reelCard.artisan');
     const artisanId = reel.artisanId?._id;
     const videoUrl = reel.marketingVideo?.url || reel.marketingVideo?.videoUrlWithAudio;
     const productDescription = reel.description || '';
@@ -79,7 +81,7 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
             try {
                 await navigator.share({
                     title: productTitle,
-                    text: `Check out this amazing product: ${productTitle}`,
+                    text: t('reelCard.shareText', { title: productTitle }),
                     url,
                 });
             } catch (err) {
@@ -88,8 +90,8 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
         } else {
             await navigator.clipboard.writeText(url);
             toast({
-                title: 'Copied!',
-                description: 'Link copied to clipboard',
+                title: t('reelCard.copied'),
+                description: t('reelCard.linkCopied'),
             });
         }
     };
@@ -97,8 +99,8 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
     const handleAddToCart = () => {
         if (!token) {
             toast({
-                title: 'Please sign in',
-                description: 'You need to be logged in to add items to cart',
+                title: t('reelCard.signInRequired'),
+                description: t('reelCard.loginToAdd'),
                 variant: 'destructive',
             });
             return;
@@ -113,8 +115,8 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
         }, quantity);
 
         toast({
-            title: 'Added to cart!',
-            description: `${quantity} x ${productTitle}`,
+            title: t('reelCard.addedToCart'),
+            description: t('reelCard.addedDesc', { qty: quantity, title: productTitle }),
         });
         setQuantity(1);
         setShowCheckoutModal(false);
@@ -123,8 +125,8 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
     const handleBuyNow = () => {
         if (!token) {
             toast({
-                title: 'Please sign in',
-                description: 'You need to be logged in to checkout',
+                title: t('reelCard.signInRequired'),
+                description: t('reelCard.loginToCheckout'),
                 variant: 'destructive',
             });
             return;
@@ -137,7 +139,7 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
         return (
             <div className="w-full h-full bg-gray-900 flex items-center justify-center">
                 <div className="text-center text-white">
-                    <p className="text-gray-400">Video not available</p>
+                    <p className="text-gray-400">{t('reelCard.videoUnavailable')}</p>
                 </div>
             </div>
         );
@@ -189,7 +191,7 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
             {/* Top Right: Close Button and Stock Info */}
             <div className="absolute top-4 right-4 z-30 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-1.5">
                 <p className="text-xs font-semibold text-white">
-                    {inStock ? `${stockQuantity} in stock` : 'Out of Stock'}
+                    {inStock ? t('reelCard.inStock', { count: stockQuantity }) : t('reelCard.outOfStock')}
                 </p>
             </div>
 
@@ -208,7 +210,7 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
                     >
                         <Heart className={`w-5 h-5 ${liked ? 'fill-white' : ''}`} />
                     </div>
-                    <span className="text-xs font-semibold">{liked ? '1' : '0'}</span>
+                    <span className="text-xs font-semibold">{liked ? t('reelCard.likeCount.one') : t('reelCard.likeCount.zero')}</span>
                 </button>
 
                 {/* Comment button */}
@@ -216,7 +218,7 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
                     <div className="p-3 rounded-full bg-white/20 group-hover/btn:bg-white/40 backdrop-blur-sm transform hover:scale-110 transition">
                         <MessageCircle className="w-5 h-5" />
                     </div>
-                    <span className="text-xs font-semibold">0</span>
+                    <span className="text-xs font-semibold">{t('reelCard.commentCount')}</span>
                 </button>
 
                 {/* Share button */}
@@ -227,7 +229,7 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
                     <div className="p-3 rounded-full bg-white/20 group-hover/btn:bg-white/40 backdrop-blur-sm transform hover:scale-110 transition">
                         <Share2 className="w-5 h-5" />
                     </div>
-                    <span className="text-xs font-semibold">Share</span>
+                    <span className="text-xs font-semibold">{t('reelCard.share')}</span>
                 </button>
 
                 {/* Mute button */}
@@ -247,7 +249,7 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
                     </div>
 
                     <span className="text-xs font-semibold">
-                        {isMuted ? "Muted" : "Audio"}
+                        {isMuted ? t('reelCard.muted') : t('reelCard.audio')}
                     </span>
                 </button>
 
@@ -269,7 +271,7 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
                         </Avatar>
                         <div>
                             <p className="text-xs font-semibold text-white line-clamp-1">{artisanName}</p>
-                            <p className="text-xs text-white/60">View store</p>
+                            <p className="text-xs text-white/60">{t('reelCard.viewStore')}</p>
                         </div>
                     </Link>
                 )}
@@ -292,7 +294,7 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
                                         onClick={() => setShowFullDescription(true)}
                                         className="text-white font-semibold ml-1 cursor-pointer"
                                     >
-                                        more
+                                        {t('reelCard.more')}
                                     </span>
                                 </>
                             ) : (
@@ -309,7 +311,7 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
                                 onClick={() => setShowFullDescription(false)}
                                 className="block text-white/70 text-xs mt-1 cursor-pointer"
                             >
-                                Show less
+                                {t('reelCard.showLess')}
                             </span>
                         </div>
                     )}
@@ -323,14 +325,14 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
                         className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white font-semibold py-2.5 rounded-lg transition text-sm"
                     >
                         <ShoppingCart className="w-4 h-4" />
-                        Add to Cart
+                        {t('reelCard.addToCart')}
                     </button>
                     <button
                         onClick={handleBuyNow}
                         disabled={!inStock}
                         className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-semibold py-2.5 rounded-lg transition text-sm"
                     >
-                        Buy Now
+                        {t('reelCard.buyNow')}
                     </button>
                 </div>
             </div>
@@ -340,7 +342,7 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
                 <div className="absolute inset-0 z-50 flex items-end bg-black/60 backdrop-blur-sm rounded-3xl">
                     <div className="w-full bg-gray-900 text-white rounded-t-3xl p-6 animate-in slide-in-from-bottom-5">
                         <div className="flex justify-between items-center mb-4">
-                            <h3 className="text-lg font-bold">Select Quantity</h3>
+                            <h3 className="text-lg font-bold">{t('reelCard.selectQuantity')}</h3>
                             <button
                                 onClick={() => setShowCheckoutModal(false)}
                                 className="p-1 hover:bg-white/10 rounded"
@@ -385,13 +387,15 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
                                 className="flex-1"
                                 onClick={() => setShowCheckoutModal(false)}
                             >
-                                Cancel
+                                {t('common.cancel')}
                             </Button>
                             <Button
                                 className="flex-1 bg-blue-600 hover:bg-blue-700"
                                 onClick={handleAddToCart}
                             >
-                                Add ₹{(price * quantity).toLocaleString('en-IN')}
+                                {t('reelCard.addAmount', {
+                                    amount: (price * quantity).toLocaleString('en-IN'),
+                                })}
                             </Button>
                         </div>
                     </div>

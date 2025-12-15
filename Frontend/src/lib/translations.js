@@ -871,6 +871,53 @@ export const translations = {
         },
       },
     },
+    reelsPage: {
+      loading: "Loading reels...",
+      fetchFailed: "Failed to fetch reels",
+      emptyTitle: "No Reels Available",
+      emptyDescription: "Check back soon for amazing product videos!",
+    },
+    reelCard: {
+      untitledProduct: "Untitled Product",
+      artisan: "Artisan",
+
+      inStock: "{count} in stock",
+      outOfStock: "Out of Stock",
+
+      share: "Share",
+      shareText: "Check out this amazing product: {title}",
+
+      muted: "Muted",
+      audio: "Audio",
+
+      addToCart: "Add to Cart",
+      buyNow: "Buy Now",
+
+      copied: "Copied!",
+      linkCopied: "Link copied to clipboard",
+
+      signInRequired: "Please sign in",
+      loginToAdd: "You need to be logged in to add items to cart",
+      loginToCheckout: "You need to be logged in to checkout",
+
+      addedToCart: "Added to cart!",
+      addedDesc: "{qty} × {title}",
+
+      videoUnavailable: "Video not available",
+
+      selectQuantity: "Select Quantity",
+      addAmount: "Add ₹{amount}",
+
+      viewStore: "View store",
+      more: "more",
+      showLess: "Show less",
+
+      likeCount: {
+        one: "1",
+        zero: "0",
+      },
+      commentCount: "0",
+    },
   },
 
   hi: {
@@ -1727,6 +1774,53 @@ export const translations = {
         },
       },
     },
+    reelsPage: {
+      loading: "रील्स लोड हो रही हैं...",
+      fetchFailed: "रील्स लोड करने में विफल",
+      emptyTitle: "कोई रील उपलब्ध नहीं है",
+      emptyDescription: "शानदार प्रोडक्ट वीडियो के लिए जल्द ही फिर से देखें!",
+    },
+    reelCard: {
+      untitledProduct: "बिना शीर्षक वाला उत्पाद",
+      artisan: "कारीगर",
+
+      inStock: "{count} स्टॉक में",
+      outOfStock: "स्टॉक समाप्त",
+
+      share: "शेयर करें",
+      shareText: "इस शानदार उत्पाद को देखें: {title}",
+
+      muted: "म्यूट",
+      audio: "ऑडियो",
+
+      addToCart: "कार्ट में जोड़ें",
+      buyNow: "अभी खरीदें",
+
+      copied: "कॉपी हो गया!",
+      linkCopied: "लिंक क्लिपबोर्ड में कॉपी किया गया",
+
+      signInRequired: "कृपया साइन इन करें",
+      loginToAdd: "कार्ट में जोड़ने के लिए लॉग इन करें",
+      loginToCheckout: "चेकआउट के लिए लॉग इन करें",
+
+      addedToCart: "कार्ट में जोड़ा गया!",
+      addedDesc: "{qty} × {title}",
+
+      videoUnavailable: "वीडियो उपलब्ध नहीं है",
+
+      selectQuantity: "मात्रा चुनें",
+      addAmount: "₹{amount} जोड़ें",
+
+      viewStore: "स्टोर देखें",
+      more: "और देखें",
+      showLess: "कम दिखाएँ",
+
+      likeCount: {
+        one: "1",
+        zero: "0",
+      },
+      commentCount: "0",
+    },
   },
 
   bn: {
@@ -2570,6 +2664,53 @@ export const translations = {
         },
       },
     },
+    reelsPage: {
+      loading: "রিল লোড হচ্ছে...",
+      fetchFailed: "রিল লোড করা যায়নি",
+      emptyTitle: "কোনো রিল নেই",
+      emptyDescription: "শীঘ্রই দারুণ পণ্যের ভিডিও নিয়ে ফিরে আসুন!",
+    },
+    reelCard: {
+      untitledProduct: "শিরোনামহীন পণ্য",
+      artisan: "কারিগর",
+
+      inStock: "{count}টি স্টকে আছে",
+      outOfStock: "স্টক শেষ",
+
+      share: "শেয়ার",
+      shareText: "এই চমৎকার পণ্যটি দেখুন: {title}",
+
+      muted: "নিঃশব্দ",
+      audio: "অডিও",
+
+      addToCart: "কার্টে যোগ করুন",
+      buyNow: "এখনই কিনুন",
+
+      copied: "কপি হয়েছে!",
+      linkCopied: "লিংক ক্লিপবোর্ডে কপি হয়েছে",
+
+      signInRequired: "অনুগ্রহ করে সাইন ইন করুন",
+      loginToAdd: "কার্টে যোগ করতে লগ ইন করুন",
+      loginToCheckout: "চেকআউট করতে লগ ইন করুন",
+
+      addedToCart: "কার্টে যোগ করা হয়েছে!",
+      addedDesc: "{qty} × {title}",
+
+      videoUnavailable: "ভিডিও উপলব্ধ নয়",
+
+      selectQuantity: "পরিমাণ নির্বাচন করুন",
+      addAmount: "₹{amount} যোগ করুন",
+
+      viewStore: "দোকান দেখুন",
+      more: "আরও",
+      showLess: "কম দেখান",
+
+      likeCount: {
+        one: "1",
+        zero: "0",
+      },
+      commentCount: "0",
+    },
   },
 
   ta: {
@@ -3411,6 +3552,53 @@ export const translations = {
           failed: "கணக்கை நீக்க முடியவில்லை.",
         },
       },
+    },
+    reelsPage: {
+      loading: "ரீல்கள் ஏற்றப்படுகிறது...",
+      fetchFailed: "ரீல்கள் ஏற்ற முடியவில்லை",
+      emptyTitle: "ரீல்கள் இல்லை",
+      emptyDescription: "அற்புதமான தயாரிப்பு வீடியோக்களுக்கு விரைவில் மீண்டும் பாருங்கள்!",
+    },
+    reelCard: {
+      untitledProduct: "தலைப்பில்லா பொருள்",
+      artisan: "கைவினையாளர்",
+
+      inStock: "{count} இருப்பில் உள்ளது",
+      outOfStock: "இருப்பில் இல்லை",
+
+      share: "பகிர்",
+      shareText: "இந்த சிறந்த பொருளைப் பாருங்கள்: {title}",
+
+      muted: "ஒலியில்லை",
+      audio: "ஒலி",
+
+      addToCart: "கார்ட்டில் சேர்க்கவும்",
+      buyNow: "இப்போது வாங்குங்கள்",
+
+      copied: "நகலெடுக்கப்பட்டது!",
+      linkCopied: "இணைப்பு கிளிப்போர்டில் நகலெடுக்கப்பட்டது",
+
+      signInRequired: "தயவுசெய்து உள்நுழைக",
+      loginToAdd: "கார்ட்டில் சேர்க்க உள்நுழைய வேண்டும்",
+      loginToCheckout: "செக் அவுட் செய்ய உள்நுழைய வேண்டும்",
+
+      addedToCart: "கார்ட்டில் சேர்க்கப்பட்டது!",
+      addedDesc: "{qty} × {title}",
+
+      videoUnavailable: "வீடியோ கிடைக்கவில்லை",
+
+      selectQuantity: "அளவை தேர்ந்தெடுக்கவும்",
+      addAmount: "₹{amount} சேர்க்கவும்",
+
+      viewStore: "கடை பார்க்கவும்",
+      more: "மேலும்",
+      showLess: "குறைவாக காட்டவும்",
+
+      likeCount: {
+        one: "1",
+        zero: "0",
+      },
+      commentCount: "0",
     },
   },
 
@@ -4254,6 +4442,53 @@ export const translations = {
         },
       },
     },
+    reelsPage: {
+      loading: "రీల్స్ లోడ్ అవుతున్నాయి...",
+      fetchFailed: "రీల్స్ లోడ్ చేయలేకపోయాము",
+      emptyTitle: "రీల్స్ లేవు",
+      emptyDescription: "అద్భుతమైన ఉత్పత్తి వీడియోల కోసం త్వరలో తిరిగి చూడండి!",
+    },
+    reelCard: {
+      untitledProduct: "శీర్షిక లేని ఉత్పత్తి",
+      artisan: "కారిగర్",
+
+      inStock: "{count} స్టాక్‌లో ఉంది",
+      outOfStock: "స్టాక్ లేదు",
+
+      share: "షేర్ చేయండి",
+      shareText: "ఈ అద్భుతమైన ఉత్పత్తిని చూడండి: {title}",
+
+      muted: "మ్యూట్",
+      audio: "ఆడియో",
+
+      addToCart: "కార్ట్‌లో చేర్చండి",
+      buyNow: "ఇప్పుడే కొనండి",
+
+      copied: "కాపీ అయింది!",
+      linkCopied: "లింక్ క్లిప్‌బోర్డ్‌కు కాపీ అయింది",
+
+      signInRequired: "దయచేసి సైన్ ఇన్ చేయండి",
+      loginToAdd: "కార్ట్‌లో చేర్చేందుకు లాగిన్ చేయండి",
+      loginToCheckout: "చెక్ అవుట్ చేయడానికి లాగిన్ చేయండి",
+
+      addedToCart: "కార్ట్‌లో చేర్చబడింది!",
+      addedDesc: "{qty} × {title}",
+
+      videoUnavailable: "వీడియో అందుబాటులో లేదు",
+
+      selectQuantity: "పరిమాణాన్ని ఎంచుకోండి",
+      addAmount: "₹{amount} చేర్చండి",
+
+      viewStore: "స్టోర్ చూడండి",
+      more: "మరింత",
+      showLess: "తక్కువ చూపించు",
+
+      likeCount: {
+        one: "1",
+        zero: "0",
+      },
+      commentCount: "0",
+    },
   },
 
   mr: {
@@ -5095,6 +5330,53 @@ export const translations = {
           failed: "खाते हटवता आले नाही.",
         },
       },
+    },
+    reelsPage: {
+      loading: "रील्स लोड होत आहेत...",
+      fetchFailed: "रील्स लोड करता आल्या नाहीत",
+      emptyTitle: "रील्स उपलब्ध नाहीत",
+      emptyDescription: "छान उत्पादन व्हिडिओसाठी लवकरच पुन्हा भेट द्या!",
+    },
+    reelCard: {
+      untitledProduct: "शीर्षक नसलेले उत्पादन",
+      artisan: "कारागीर",
+
+      inStock: "{count} स्टॉकमध्ये उपलब्ध",
+      outOfStock: "स्टॉक संपला",
+
+      share: "शेअर करा",
+      shareText: "हे अप्रतिम उत्पादन पाहा: {title}",
+
+      muted: "म्यूट",
+      audio: "ऑडिओ",
+
+      addToCart: "कार्टमध्ये जोडा",
+      buyNow: "आत्ताच खरेदी करा",
+
+      copied: "कॉपी झाले!",
+      linkCopied: "लिंक क्लिपबोर्डमध्ये कॉपी झाले",
+
+      signInRequired: "कृपया साइन इन करा",
+      loginToAdd: "कार्टमध्ये जोडण्यासाठी लॉग इन करा",
+      loginToCheckout: "चेकआउटसाठी लॉग इन करा",
+
+      addedToCart: "कार्टमध्ये जोडले!",
+      addedDesc: "{qty} × {title}",
+
+      videoUnavailable: "व्हिडिओ उपलब्ध नाही",
+
+      selectQuantity: "प्रमाण निवडा",
+      addAmount: "₹{amount} जोडा",
+
+      viewStore: "स्टोअर पहा",
+      more: "अधिक",
+      showLess: "कमी दाखवा",
+
+      likeCount: {
+        one: "1",
+        zero: "0",
+      },
+      commentCount: "0",
     },
   },
 };
