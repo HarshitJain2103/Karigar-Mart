@@ -26,8 +26,10 @@ export default function Header({ query, setQuery, setLang, startVoiceSearch, isL
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { t, language } = useTranslation();
   const { setLanguage } = useLanguageStore();
+  const resetCart = useCartStore((state) => state.resetCart);
 
   const handleLogout = () => {
+    resetCart();
     logout();
     toast({
       title: "Logged Out",

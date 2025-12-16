@@ -1,9 +1,10 @@
 import { create } from 'zustand';
-import useAuthStore from './authStore';
+import useAuthStore from '@/stores/authStore';
 import { getApiUrl } from '@/lib/api';
 
 const useCartStore = create((set, get) => ({
   items: [], 
+  resetCart: () => set({ items: [] }),
   subtotal: () => {
     return get().items.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
   },
