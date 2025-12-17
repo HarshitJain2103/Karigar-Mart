@@ -918,6 +918,32 @@ export const translations = {
       },
       commentCount: "0",
     },
+    storyEditor: {
+      fetchFailed: "Failed to fetch story data.",
+      updateFailed: "Failed to update story.",
+      createFailed: "Failed to create story.",
+
+      error: "Error",
+
+      updatedTitle: "Story Updated!",
+      updatedDesc: "Your story has been successfully saved.",
+
+      publishedTitle: "Story Published!",
+      createdDesc: "Your story has been successfully created.",
+
+      editTitle: "Edit Story",
+      editSubtitle: "Make changes to your story and save.",
+
+      createTitle: "Create a New Story",
+      createSubtitle: "Share a new chapter of your artisan journey.",
+
+      titleLabel: "Story Title",
+      coverImageLabel: "Cover Image",
+      contentLabel: "Story Content",
+
+      saveChanges: "Save Changes",
+      publishStory: "Publish Story",
+    },
   },
 
   hi: {
@@ -1821,6 +1847,32 @@ export const translations = {
       },
       commentCount: "0",
     },
+    storyEditor: {
+      fetchFailed: "कहानी डेटा प्राप्त करने में विफल।",
+      updateFailed: "कहानी अपडेट करने में विफल।",
+      createFailed: "कहानी बनाने में विफल।",
+
+      error: "त्रुटि",
+
+      updatedTitle: "कहानी अपडेट हो गई!",
+      updatedDesc: "आपकी कहानी सफलतापूर्वक सहेज ली गई है।",
+
+      publishedTitle: "कहानी प्रकाशित हुई!",
+      createdDesc: "आपकी कहानी सफलतापूर्वक बनाई गई है।",
+
+      editTitle: "कहानी संपादित करें",
+      editSubtitle: "अपनी कहानी में बदलाव करें और सहेजें।",
+
+      createTitle: "नई कहानी बनाएं",
+      createSubtitle: "अपनी कारीगरी की यात्रा का नया अध्याय साझा करें।",
+
+      titleLabel: "कहानी का शीर्षक",
+      coverImageLabel: "कवर चित्र",
+      contentLabel: "कहानी की सामग्री",
+
+      saveChanges: "परिवर्तन सहेजें",
+      publishStory: "कहानी प्रकाशित करें",
+    },
   },
 
   bn: {
@@ -2711,6 +2763,32 @@ export const translations = {
       },
       commentCount: "0",
     },
+    storyEditor: {
+      fetchFailed: "গল্পের তথ্য আনতে ব্যর্থ হয়েছে।",
+      updateFailed: "গল্প আপডেট করতে ব্যর্থ হয়েছে।",
+      createFailed: "গল্প তৈরি করতে ব্যর্থ হয়েছে।",
+
+      error: "ত্রুটি",
+
+      updatedTitle: "গল্প আপডেট হয়েছে!",
+      updatedDesc: "আপনার গল্প সফলভাবে সংরক্ষণ করা হয়েছে।",
+
+      publishedTitle: "গল্প প্রকাশিত হয়েছে!",
+      createdDesc: "আপনার গল্প সফলভাবে তৈরি করা হয়েছে।",
+
+      editTitle: "গল্প সম্পাদনা করুন",
+      editSubtitle: "আপনার গল্পে পরিবর্তন করুন এবং সংরক্ষণ করুন।",
+
+      createTitle: "নতুন গল্প তৈরি করুন",
+      createSubtitle: "আপনার কারুশিল্প যাত্রার একটি নতুন অধ্যায় শেয়ার করুন।",
+
+      titleLabel: "গল্পের শিরোনাম",
+      coverImageLabel: "কভার ছবি",
+      contentLabel: "গল্পের বিষয়বস্তু",
+
+      saveChanges: "পরিবর্তন সংরক্ষণ করুন",
+      publishStory: "গল্প প্রকাশ করুন",
+    },
   },
 
   ta: {
@@ -3599,6 +3677,32 @@ export const translations = {
         zero: "0",
       },
       commentCount: "0",
+    },
+    storyEditor: {
+      fetchFailed: "கதை தரவை பெற முடியவில்லை.",
+      updateFailed: "கதை புதுப்பிக்க முடியவில்லை.",
+      createFailed: "கதை உருவாக்க முடியவில்லை.",
+
+      error: "பிழை",
+
+      updatedTitle: "கதை புதுப்பிக்கப்பட்டது!",
+      updatedDesc: "உங்கள் கதை வெற்றிகரமாக சேமிக்கப்பட்டது.",
+
+      publishedTitle: "கதை வெளியிடப்பட்டது!",
+      createdDesc: "உங்கள் கதை வெற்றிகரமாக உருவாக்கப்பட்டது.",
+
+      editTitle: "கதையை திருத்தவும்",
+      editSubtitle: "உங்கள் கதையில் மாற்றங்கள் செய்து சேமிக்கவும்.",
+
+      createTitle: "புதிய கதையை உருவாக்கவும்",
+      createSubtitle: "உங்கள் கைவினைப் பயணத்தின் புதிய அத்தியாயத்தை பகிரவும்.",
+
+      titleLabel: "கதையின் தலைப்பு",
+      coverImageLabel: "முகப்பு படம்",
+      contentLabel: "கதையின் உள்ளடக்கம்",
+
+      saveChanges: "மாற்றங்களை சேமிக்கவும்",
+      publishStory: "கதையை வெளியிடவும்",
     },
   },
 
@@ -4489,6 +4593,32 @@ export const translations = {
       },
       commentCount: "0",
     },
+    storyEditor: {
+      fetchFailed: "కథ డేటాను పొందడంలో విఫలమైంది.",
+      updateFailed: "కథను నవీకరించడంలో విఫలమైంది.",
+      createFailed: "కథను సృష్టించడంలో విఫలమైంది.",
+
+      error: "లోపం",
+
+      updatedTitle: "కథ నవీకరించబడింది!",
+      updatedDesc: "మీ కథ విజయవంతంగా సేవ్ చేయబడింది.",
+
+      publishedTitle: "కథ ప్రచురించబడింది!",
+      createdDesc: "మీ కథ విజయవంతంగా సృష్టించబడింది.",
+
+      editTitle: "కథను సవరించండి",
+      editSubtitle: "మీ కథలో మార్పులు చేసి సేవ్ చేయండి.",
+
+      createTitle: "కొత్త కథను సృష్టించండి",
+      createSubtitle: "మీ శిల్పకార ప్రయాణంలోని కొత్త అధ్యాయాన్ని పంచుకోండి.",
+
+      titleLabel: "కథ శీర్షిక",
+      coverImageLabel: "కవర్ చిత్రం",
+      contentLabel: "కథ విషయము",
+
+      saveChanges: "మార్పులను సేవ్ చేయండి",
+      publishStory: "కథను ప్రచురించండి",
+    },
   },
 
   mr: {
@@ -5377,6 +5507,32 @@ export const translations = {
         zero: "0",
       },
       commentCount: "0",
+    },
+    storyEditor: {
+      fetchFailed: "कथा डेटा मिळवण्यात अयशस्वी.",
+      updateFailed: "कथा अपडेट करण्यात अयशस्वी.",
+      createFailed: "कथा तयार करण्यात अयशस्वी.",
+
+      error: "त्रुटी",
+
+      updatedTitle: "कथा अपडेट झाली!",
+      updatedDesc: "तुमची कथा यशस्वीपणे जतन केली आहे.",
+
+      publishedTitle: "कथा प्रकाशित झाली!",
+      createdDesc: "तुमची कथा यशस्वीपणे तयार केली आहे.",
+
+      editTitle: "कथा संपादित करा",
+      editSubtitle: "तुमच्या कथेमध्ये बदल करा आणि जतन करा.",
+
+      createTitle: "नवीन कथा तयार करा",
+      createSubtitle: "तुमच्या कारागिरीच्या प्रवासाचा नवा अध्याय शेअर करा.",
+
+      titleLabel: "कथेचे शीर्षक",
+      coverImageLabel: "कव्हर प्रतिमा",
+      contentLabel: "कथेची सामग्री",
+
+      saveChanges: "बदल जतन करा",
+      publishStory: "कथा प्रकाशित करा",
     },
   },
 };
