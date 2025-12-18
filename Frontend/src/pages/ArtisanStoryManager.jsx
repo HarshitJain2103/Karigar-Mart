@@ -8,14 +8,15 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { Separator } from '@/components/ui/separator';
 import { Plus, Loader2, Edit, Trash2, ExternalLink, RefreshCw, Search, Filter, ArrowUpDown, ImageOff } from 'lucide-react';
 import { getApiUrl } from "@/lib/api";
+import { useTranslation } from '@/hooks/useTranslation';
 
 const formatDate = (dateString) =>
   new Date(dateString).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 
 export default function ArtisanStoryManager() {
+  const { t } = useTranslation();
   const token = useAuthStore((state) => state.token);
 
   const [stories, setStories] = useState([]);
@@ -24,8 +25,8 @@ export default function ArtisanStoryManager() {
 
   // UI state
   const [query, setQuery] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all'); // all | PUBLISHED | DRAFT
-  const [sortBy, setSortBy] = useState('newest'); // newest | oldest | title_az | title_za
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [sortBy, setSortBy] = useState('newest');
   const [deletingId, setDeletingId] = useState('');
   const [refreshing, setRefreshing] = useState(false);
 
@@ -45,11 +46,11 @@ export default function ArtisanStoryManager() {
       const res = await fetch(getApiUrl(`/api/stories/my-stories`), {
         headers: { Authorization: `Bearer ${token}` },
       });
-      if (!res.ok) throw new Error('Failed to fetch stories.');
+      if (!res.ok) throw new Error(t('artisanStories.fetchFailed'));
       const data = await res.json();
       setStories(Array.isArray(data) ? data : []);
     } catch (error) {
-      setFetchError(error.message || 'Failed to fetch stories.');
+      setFetchError(error.message || t('artisanStories.fetchFailed'));
     } finally {
       setLoading(false);
     }
@@ -105,10 +106,10 @@ export default function ArtisanStoryManager() {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
-      if (!res.ok) throw new Error('Failed to delete story.');
+      if (!res.ok) throw new Error(t('artisanStories.deleteFailed'));
       setStories((prev) => prev.filter((s) => s._id !== storyId));
     } catch (err) {
-      setFetchError(err.message || 'Failed to delete story.');
+      setFetchError(err.message || t('artisanStories.deleteFailed'));
     } finally {
       setDeletingId('');
     }
@@ -127,18 +128,18 @@ export default function ArtisanStoryManager() {
     <div className="max-w-7xl mx-auto py-8 px-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-6">
         <div>
-          <h1 className="text-3xl font-bold">My Stories</h1>
-          <p className="text-muted-foreground">Create and manage stories for your store.</p>
+          <h1 className="text-3xl font-bold">{t('artisanStories.title')}</h1>
+          <p className="text-muted-foreground">{t('artisanStories.subtitle')}</p>
         </div>
         <div className="flex items-center gap-2">
           <Button variant="outline" className="gap-2" onClick={handleRefresh} disabled={refreshing || loading}>
             {refreshing ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
-            Refresh
+            {t('artisanStories.refresh')}
           </Button>
           <Link to="/dashboard/stories/new">
             <Button className="flex items-center gap-2">
               <Plus className="h-4 w-4" />
-              Create New Story
+              {t('artisanStories.create')}
             </Button>
           </Link>
         </div>
@@ -156,7 +157,7 @@ export default function ArtisanStoryManager() {
                   setQuery(e.target.value);
                   setPage(1);
                 }}
-                placeholder="Search by title or ID..."
+                placeholder={t('artisanStories.searchPlaceholder')}
                 className="border-none shadow-none focus-visible:ring-0"
               />
             </div>
@@ -171,12 +172,12 @@ export default function ArtisanStoryManager() {
                   }}
                 >
                   <SelectTrigger className="w-[160px]">
-                    <SelectValue placeholder="Status" />
+                    <SelectValue placeholder={t('artisanStories.status')} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All statuses</SelectItem>
-                    <SelectItem value="PUBLISHED">Published</SelectItem>
-                    <SelectItem value="DRAFT">Draft</SelectItem>
+                    <SelectItem value="all">{t('artisanStories.statusAll')}</SelectItem>
+                    <SelectItem value="PUBLISHED">{t('artisanStories.published')}</SelectItem>
+                    <SelectItem value="DRAFT">{t('artisanStories.draft')}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -190,13 +191,13 @@ export default function ArtisanStoryManager() {
                   }}
                 >
                   <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Sort by" />
+                    <SelectValue placeholder={t('artisanStories.sortBy')} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="newest">Newest first</SelectItem>
-                    <SelectItem value="oldest">Oldest first</SelectItem>
-                    <SelectItem value="title_az">Title A–Z</SelectItem>
-                    <SelectItem value="title_za">Title Z–A</SelectItem>
+                    <SelectItem value="newest">{t('artisanStories.sortNewest')}</SelectItem>
+                    <SelectItem value="oldest">{t('artisanStories.sortOldest')}</SelectItem>
+                    <SelectItem value="title_az">{t('artisanStories.sortAZ')}</SelectItem>
+                    <SelectItem value="title_za">{t('artisanStories.sortZA')}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -214,7 +215,7 @@ export default function ArtisanStoryManager() {
 
       <Card>
         <CardHeader className="pb-2">
-          <CardTitle className="text-lg">Stories</CardTitle>
+          <CardTitle className="text-lg">{t('artisanStories.tableTitle')}</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           {loading ? (
@@ -235,10 +236,10 @@ export default function ArtisanStoryManager() {
             </div>
           ) : stories.length === 0 ? (
             <div className="text-center p-12">
-              <p className="text-muted-foreground">You haven&apos;t written any stories yet.</p>
+              <p className="text-muted-foreground">{t('artisanStories.empty')}</p>
               <div className="mt-4">
                 <Link to="/dashboard/stories/new">
-                  <Button>Create your first story</Button>
+                  <Button>{t('artisanStories.createFirst')}</Button>
                 </Link>
               </div>
             </div>
@@ -247,10 +248,10 @@ export default function ArtisanStoryManager() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Story</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Created</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                    <TableHead>{t('artisanStories.table.story')}</TableHead>
+                    <TableHead>{t('artisanStories.table.status')}</TableHead>
+                    <TableHead>{t('artisanStories.table.created')}</TableHead>
+                    <TableHead className="text-right">{t('artisanStories.table.actions')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -281,7 +282,7 @@ export default function ArtisanStoryManager() {
                       </TableCell>
                       <TableCell>
                         <Badge variant={String(story.status).toUpperCase() === 'PUBLISHED' ? 'default' : 'secondary'}>
-                          {String(story.status || '').toUpperCase()}
+                          {story.status === 'PUBLISHED' ? t('artisanStories.published') : t('artisanStories.draft')}
                         </Badge>
                       </TableCell>
                       <TableCell>{formatDate(story.createdAt)}</TableCell>
@@ -291,17 +292,17 @@ export default function ArtisanStoryManager() {
                             href={`/stories/${story._id}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            title="View story"
+                            title={t('artisanStories.actions.view')}
                           >
                             <Button variant="ghost" size="sm" className="gap-1">
                               <ExternalLink className="h-4 w-4" />
-                              View
+                              {t('artisanStories.actions.view')}
                             </Button>
                           </a>
                           <Link to={`/dashboard/stories/edit/${story._id}`}>
                             <Button variant="ghost" size="sm" className="gap-1">
                               <Edit className="h-4 w-4" />
-                              Edit
+                              {t('artisanStories.actions.edit')}
                             </Button>
                           </Link>
 
@@ -312,30 +313,30 @@ export default function ArtisanStoryManager() {
                                 size="sm"
                                 className="gap-1 text-destructive"
                                 disabled={deletingId === story._id}
-                                title="Delete story"
+                                title={t('artisanStories.actions.delete')}
                               >
                                 {deletingId === story._id ? (
                                   <Loader2 className="h-4 w-4 animate-spin" />
                                 ) : (
                                   <Trash2 className="h-4 w-4" />
                                 )}
-                                Delete
+                                {t('artisanStories.actions.delete')}
                               </Button>
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                               <AlertDialogHeader>
-                                <AlertDialogTitle>Delete this story?</AlertDialogTitle>
+                                <AlertDialogTitle>{t('artisanStories.deleteTitle')}</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  This action cannot be undone. This will permanently delete “{story.title}”.
+                                  {t('artisanStories.deleteDesc', { title: story.title })}
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
                                 <AlertDialogAction
                                   className="bg-destructive hover:bg-destructive/90"
                                   onClick={() => handleDelete(story._id)}
                                 >
-                                  Delete
+                                  {t('artisanStories.actions.delete')}
                                 </AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>
@@ -350,7 +351,11 @@ export default function ArtisanStoryManager() {
               {/* Pagination */}
               <div className="flex items-center justify-between p-4">
                 <div className="text-sm text-muted-foreground">
-                  Page {currentPage} of {totalPages} • {filteredSorted.length} total
+                  {t('artisanStories.pagination', {
+                    page: currentPage,
+                    totalPages,
+                    total: filteredSorted.length,
+                  })}
                 </div>
                 <div className="flex items-center gap-2">
                   <Button
@@ -359,7 +364,7 @@ export default function ArtisanStoryManager() {
                     onClick={() => setPage((p) => Math.max(1, p - 1))}
                     disabled={currentPage === 1}
                   >
-                    Prev
+                    {t('common.prev')}
                   </Button>
                   <Button
                     variant="outline"
@@ -367,7 +372,7 @@ export default function ArtisanStoryManager() {
                     onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                     disabled={currentPage === totalPages}
                   >
-                    Next
+                    {t('common.next')}
                   </Button>
                 </div>
               </div>

@@ -288,6 +288,8 @@ export const translations = {
       noResults: "No results found",
       tryAgain: "Try Again",
       backHome: "Back to Home",
+      prev: "Previous",
+      next: "Next",
     },
     categoryList: {
       title: "Categories",
@@ -944,6 +946,59 @@ export const translations = {
       saveChanges: "Save Changes",
       publishStory: "Publish Story",
     },
+    artisanStories: {
+      // Page header
+      title: "My Stories",
+      subtitle: "Create, manage, and publish your stories.",
+
+      // Actions
+      refresh: "Refresh",
+      create: "New Story",
+      createFirst: "Create your first story",
+
+      // Fetch / delete
+      fetchFailed: "Failed to fetch stories.",
+      deleteFailed: "Failed to delete story.",
+
+      // Toolbar
+      searchPlaceholder: "Search by title or ID",
+      status: "Status",
+      statusAll: "All",
+      published: "Published",
+      draft: "Draft",
+
+      sortBy: "Sort by",
+      sortNewest: "Newest first",
+      sortOldest: "Oldest first",
+      sortAZ: "Title: A–Z",
+      sortZA: "Title: Z–A",
+
+      // Empty state
+      empty: "You haven’t created any stories yet.",
+
+      // Table
+      tableTitle: "Stories",
+      table: {
+        story: "Story",
+        status: "Status",
+        created: "Created",
+        actions: "Actions",
+      },
+
+      // Row actions
+      actions: {
+        view: "View",
+        edit: "Edit",
+        delete: "Delete",
+      },
+
+      // Delete dialog
+      deleteTitle: "Delete Story",
+      deleteDesc: "Are you sure you want to delete “{title}”? This action cannot be undone.",
+
+      // Pagination
+      pagination: "Page {page} of {totalPages} · {total} stories",
+    },
   },
 
   hi: {
@@ -1222,6 +1277,8 @@ export const translations = {
       noResults: "कोई परिणाम नहीं मिला",
       tryAgain: "पुनः प्रयास करें",
       backHome: "होम पर वापस जाएं",
+      prev: "पिछला",
+      next: "अगला",
     },
     categoryList: {
       title: "श्रेणियाँ",
@@ -1873,6 +1930,50 @@ export const translations = {
       saveChanges: "परिवर्तन सहेजें",
       publishStory: "कहानी प्रकाशित करें",
     },
+    artisanStories: {
+      title: "मेरी कहानियाँ",
+      subtitle: "अपनी कहानियाँ बनाएँ, प्रबंधित करें और प्रकाशित करें।",
+
+      refresh: "रीफ़्रेश करें",
+      create: "नई कहानी",
+      createFirst: "अपनी पहली कहानी बनाएँ",
+
+      fetchFailed: "कहानियाँ लोड करने में विफल।",
+      deleteFailed: "कहानी हटाने में विफल।",
+
+      searchPlaceholder: "शीर्षक या ID से खोजें",
+      status: "स्थिति",
+      statusAll: "सभी",
+      published: "प्रकाशित",
+      draft: "ड्राफ्ट",
+
+      sortBy: "क्रमबद्ध करें",
+      sortNewest: "नवीनतम पहले",
+      sortOldest: "सबसे पुरानी पहले",
+      sortAZ: "शीर्षक: A–Z",
+      sortZA: "शीर्षक: Z–A",
+
+      empty: "आपने अभी तक कोई कहानी नहीं बनाई है।",
+
+      tableTitle: "कहानियाँ",
+      table: {
+        story: "कहानी",
+        status: "स्थिति",
+        created: "निर्माण तिथि",
+        actions: "क्रियाएँ",
+      },
+
+      actions: {
+        view: "देखें",
+        edit: "संपादित करें",
+        delete: "हटाएँ",
+      },
+
+      deleteTitle: "कहानी हटाएँ",
+      deleteDesc: "क्या आप वाकई “{title}” हटाना चाहते हैं? यह क्रिया वापस नहीं ली जा सकती।",
+
+      pagination: "पृष्ठ {page} / {totalPages} · कुल {total} कहानियाँ",
+    },
   },
 
   bn: {
@@ -2139,6 +2240,8 @@ export const translations = {
       noResults: "কোনো ফলাফল পাওয়া যায়নি",
       tryAgain: "আবার চেষ্টা করুন",
       backHome: "বাড়িতে ফিরে যান",
+      prev: "পূর্ববর্তী",
+      next: "পরবর্তী",
     },
     categoryList: {
       title: "বিভাগসমূহ",
@@ -2789,6 +2892,50 @@ export const translations = {
       saveChanges: "পরিবর্তন সংরক্ষণ করুন",
       publishStory: "গল্প প্রকাশ করুন",
     },
+    artisanStories: {
+      title: "আমার গল্পসমূহ",
+      subtitle: "আপনার গল্প তৈরি, পরিচালনা ও প্রকাশ করুন।",
+
+      refresh: "রিফ্রেশ",
+      create: "নতুন গল্প",
+      createFirst: "আপনার প্রথম গল্প তৈরি করুন",
+
+      fetchFailed: "গল্প লোড করতে ব্যর্থ হয়েছে।",
+      deleteFailed: "গল্প মুছে ফেলতে ব্যর্থ হয়েছে।",
+
+      searchPlaceholder: "শিরোনাম বা ID দিয়ে খুঁজুন",
+      status: "অবস্থা",
+      statusAll: "সব",
+      published: "প্রকাশিত",
+      draft: "খসড়া",
+
+      sortBy: "সাজান",
+      sortNewest: "নতুন আগে",
+      sortOldest: "পুরোনো আগে",
+      sortAZ: "শিরোনাম: A–Z",
+      sortZA: "শিরোনাম: Z–A",
+
+      empty: "আপনি এখনো কোনো গল্প তৈরি করেননি।",
+
+      tableTitle: "গল্পসমূহ",
+      table: {
+        story: "গল্প",
+        status: "অবস্থা",
+        created: "তৈরি হয়েছে",
+        actions: "অ্যাকশন",
+      },
+
+      actions: {
+        view: "দেখুন",
+        edit: "সম্পাদনা",
+        delete: "মুছুন",
+      },
+
+      deleteTitle: "গল্প মুছুন",
+      deleteDesc: "আপনি কি নিশ্চিত যে “{title}” মুছে ফেলতে চান? এটি আর ফেরানো যাবে না।",
+
+      pagination: "পৃষ্ঠা {page} / {totalPages} · মোট {total}টি গল্প",
+    },
   },
 
   ta: {
@@ -3054,6 +3201,8 @@ export const translations = {
       noResults: "முடிவுகள் இல்லை",
       tryAgain: "மீண்டும் முயற்சி",
       backHome: "வீட்டிற்குத் திரும்பு",
+      prev: "முந்தையது",
+      next: "அடுத்தது",
     },
     categoryList: {
       title: "வகைகள்",
@@ -3704,6 +3853,50 @@ export const translations = {
       saveChanges: "மாற்றங்களை சேமிக்கவும்",
       publishStory: "கதையை வெளியிடவும்",
     },
+    artisanStories: {
+      title: "என் கதைகள்",
+      subtitle: "உங்கள் கதைகளை உருவாக்கி, நிர்வகித்து, வெளியிடுங்கள்.",
+
+      refresh: "புதுப்பிக்க",
+      create: "புதிய கதை",
+      createFirst: "உங்கள் முதல் கதையை உருவாக்குங்கள்",
+
+      fetchFailed: "கதைகளை ஏற்ற முடியவில்லை.",
+      deleteFailed: "கதையை நீக்க முடியவில்லை.",
+
+      searchPlaceholder: "தலைப்பு அல்லது ID மூலம் தேடுங்கள்",
+      status: "நிலை",
+      statusAll: "அனைத்தும்",
+      published: "வெளியிடப்பட்டது",
+      draft: "வரைவு",
+
+      sortBy: "வரிசைப்படுத்த",
+      sortNewest: "புதியவை முதலில்",
+      sortOldest: "பழையவை முதலில்",
+      sortAZ: "தலைப்பு: A–Z",
+      sortZA: "தலைப்பு: Z–A",
+
+      empty: "நீங்கள் இன்னும் எந்தக் கதையும் உருவாக்கவில்லை.",
+
+      tableTitle: "கதைகள்",
+      table: {
+        story: "கதை",
+        status: "நிலை",
+        created: "உருவாக்கப்பட்டது",
+        actions: "செயல்கள்",
+      },
+
+      actions: {
+        view: "பார்க்க",
+        edit: "திருத்த",
+        delete: "நீக்கு",
+      },
+
+      deleteTitle: "கதை நீக்கு",
+      deleteDesc: "“{title}” கதையை நீக்க விரும்புகிறீர்களா? இதை மீட்டெடுக்க முடியாது.",
+
+      pagination: "பக்கம் {page} / {totalPages} · மொத்தம் {total} கதைகள்",
+    },
   },
 
   te: {
@@ -3969,6 +4162,8 @@ export const translations = {
       noResults: "ఫలితాలు కనుగొనబడలేదు",
       tryAgain: "మళ్లీ ప్రయత్నించండి",
       backHome: "హోమ్‌కు తిరిగి వెళ్లండి",
+      prev: "మునుపటి",
+      next: "తదుపరి",
     },
     categoryList: {
       title: "వర్గాలు",
@@ -4619,6 +4814,50 @@ export const translations = {
       saveChanges: "మార్పులను సేవ్ చేయండి",
       publishStory: "కథను ప్రచురించండి",
     },
+    artisanStories: {
+      title: "నా కథలు",
+      subtitle: "మీ కథలను సృష్టించి, నిర్వహించి, ప్రచురించండి.",
+
+      refresh: "రిఫ్రెష్",
+      create: "కొత్త కథ",
+      createFirst: "మీ మొదటి కథను సృష్టించండి",
+
+      fetchFailed: "కథలను పొందడంలో విఫలమైంది.",
+      deleteFailed: "కథను తొలగించడంలో విఫలమైంది.",
+
+      searchPlaceholder: "శీర్షిక లేదా ID ద్వారా శోధించండి",
+      status: "స్థితి",
+      statusAll: "అన్నీ",
+      published: "ప్రచురించబడింది",
+      draft: "డ్రాఫ్ట్",
+
+      sortBy: "క్రమబద్ధీకరించు",
+      sortNewest: "కొత్తవి ముందు",
+      sortOldest: "పాతవి ముందు",
+      sortAZ: "శీర్షిక: A–Z",
+      sortZA: "శీర్షిక: Z–A",
+
+      empty: "మీరు ఇంకా ఏ కథను సృష్టించలేదు.",
+
+      tableTitle: "కథలు",
+      table: {
+        story: "కథ",
+        status: "స్థితి",
+        created: "సృష్టించిన తేదీ",
+        actions: "చర్యలు",
+      },
+
+      actions: {
+        view: "చూడండి",
+        edit: "సవరించండి",
+        delete: "తొలగించండి",
+      },
+
+      deleteTitle: "కథను తొలగించండి",
+      deleteDesc: "మీరు నిజంగా “{title}”ను తొలగించాలనుకుంటున్నారా? ఇది తిరిగి పొందలేరు.",
+
+      pagination: "పేజీ {page} / {totalPages} · మొత్తం {total} కథలు",
+    },
   },
 
   mr: {
@@ -4884,6 +5123,8 @@ export const translations = {
       noResults: "परिणाम सापडले नाहीत",
       tryAgain: "पुन्हा प्रयत्न करा",
       backHome: "होमला परत जा",
+      prev: "मागील",
+      next: "पुढील",
     },
     categoryList: {
       title: "श्रेण्या",
@@ -5533,6 +5774,50 @@ export const translations = {
 
       saveChanges: "बदल जतन करा",
       publishStory: "कथा प्रकाशित करा",
+    },
+    artisanStories: {
+      title: "माझ्या कथा",
+      subtitle: "तुमच्या कथा तयार करा, व्यवस्थापित करा आणि प्रकाशित करा.",
+
+      refresh: "रिफ्रेश करा",
+      create: "नवी कथा",
+      createFirst: "तुमची पहिली कथा तयार करा",
+
+      fetchFailed: "कथा मिळवण्यात अयशस्वी.",
+      deleteFailed: "कथा हटवण्यात अयशस्वी.",
+
+      searchPlaceholder: "शीर्षक किंवा ID ने शोधा",
+      status: "स्थिती",
+      statusAll: "सर्व",
+      published: "प्रकाशित",
+      draft: "मसुदा",
+
+      sortBy: "क्रमवारी",
+      sortNewest: "नवीन प्रथम",
+      sortOldest: "जुनी प्रथम",
+      sortAZ: "शीर्षक: A–Z",
+      sortZA: "शीर्षक: Z–A",
+
+      empty: "आपण अद्याप कोणतीही कथा तयार केलेली नाही.",
+
+      tableTitle: "कथा",
+      table: {
+        story: "कथा",
+        status: "स्थिती",
+        created: "तयार केली",
+        actions: "क्रिया",
+      },
+
+      actions: {
+        view: "पहा",
+        edit: "संपादित करा",
+        delete: "हटवा",
+      },
+
+      deleteTitle: "कथा हटवा",
+      deleteDesc: "आपण “{title}” हटवू इच्छिता का? ही क्रिया परत करता येणार नाही.",
+
+      pagination: "पृष्ठ {page} / {totalPages} · एकूण {total} कथा",
     },
   },
 };
