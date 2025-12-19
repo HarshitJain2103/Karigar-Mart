@@ -999,6 +999,25 @@ export const translations = {
       // Pagination
       pagination: "Page {page} of {totalPages} · {total} stories",
     },
+    artisanStorePage: {
+      bannerAlt: "{store} store banner",
+
+      aboutStore: "About our store",
+      aboutArtisan: "About the Artisan",
+
+      collection: "Our Collection",
+      noProducts: "This artisan hasn't added any products yet.",
+
+      creator: "Creator",
+
+      basedIn: "Based in {city}, {state}",
+      memberSince: "Member since {date}",
+
+      errors: {
+        notFound: "Artisan store not found.",
+        storeNotFound: "Store not found.",
+      },
+    },
   },
 
   hi: {
@@ -1974,6 +1993,25 @@ export const translations = {
 
       pagination: "पृष्ठ {page} / {totalPages} · कुल {total} कहानियाँ",
     },
+    artisanStorePage: {
+      bannerAlt: "{store} स्टोर बैनर",
+
+      aboutStore: "हमारे स्टोर के बारे में",
+      aboutArtisan: "कारीगर के बारे में",
+
+      collection: "हमारा संग्रह",
+      noProducts: "इस कारीगर ने अभी तक कोई उत्पाद नहीं जोड़ा है।",
+
+      creator: "निर्माता",
+
+      basedIn: "{city}, {state} में स्थित",
+      memberSince: "{date} से सदस्य",
+
+      errors: {
+        notFound: "कारीगर का स्टोर नहीं मिला।",
+        storeNotFound: "स्टोर नहीं मिला।",
+      },
+    },
   },
 
   bn: {
@@ -2936,6 +2974,25 @@ export const translations = {
 
       pagination: "পৃষ্ঠা {page} / {totalPages} · মোট {total}টি গল্প",
     },
+    artisanStorePage: {
+      bannerAlt: "{store} স্টোর ব্যানার",
+
+      aboutStore: "আমাদের স্টোর সম্পর্কে",
+      aboutArtisan: "কারিগর সম্পর্কে",
+
+      collection: "আমাদের সংগ্রহ",
+      noProducts: "এই কারিগর এখনও কোনো পণ্য যোগ করেননি।",
+
+      creator: "স্রষ্টা",
+
+      basedIn: "{city}, {state} ভিত্তিক",
+      memberSince: "{date} থেকে সদস্য",
+
+      errors: {
+        notFound: "কারিগরের স্টোর খুঁজে পাওয়া যায়নি।",
+        storeNotFound: "স্টোর খুঁজে পাওয়া যায়নি।",
+      },
+    },
   },
 
   ta: {
@@ -3896,6 +3953,25 @@ export const translations = {
       deleteDesc: "“{title}” கதையை நீக்க விரும்புகிறீர்களா? இதை மீட்டெடுக்க முடியாது.",
 
       pagination: "பக்கம் {page} / {totalPages} · மொத்தம் {total} கதைகள்",
+    },
+    artisanStorePage: {
+      bannerAlt: "{store} கடை பதாகை",
+
+      aboutStore: "எங்கள் கடை பற்றி",
+      aboutArtisan: "கலைஞர் பற்றி",
+
+      collection: "எங்கள் தொகுப்பு",
+      noProducts: "இந்த கலைஞர் இன்னும் எந்த தயாரிப்பையும் சேர்க்கவில்லை.",
+
+      creator: "உருவாக்குநர்",
+
+      basedIn: "{city}, {state} இல் அமைந்துள்ளது",
+      memberSince: "{date} முதல் உறுப்பினர்",
+
+      errors: {
+        notFound: "கலைஞரின் கடை கிடைக்கவில்லை.",
+        storeNotFound: "கடை கிடைக்கவில்லை.",
+      },
     },
   },
 
@@ -4858,6 +4934,25 @@ export const translations = {
 
       pagination: "పేజీ {page} / {totalPages} · మొత్తం {total} కథలు",
     },
+    artisanStorePage: {
+      bannerAlt: "{store} స్టోర్ బ్యానర్",
+
+      aboutStore: "మా స్టోర్ గురించి",
+      aboutArtisan: "కళాకారుడి గురించి",
+
+      collection: "మా సేకరణ",
+      noProducts: "ఈ కళాకారుడు ఇంకా ఏ ఉత్పత్తులను జోడించలేదు.",
+
+      creator: "సృష్టికర్త",
+
+      basedIn: "{city}, {state} లో ఉంది",
+      memberSince: "{date} నుండి సభ్యుడు",
+
+      errors: {
+        notFound: "కళాకారుడి స్టోర్ కనుగొనబడలేదు.",
+        storeNotFound: "స్టోర్ కనుగొనబడలేదు.",
+      },
+    },
   },
 
   mr: {
@@ -5818,6 +5913,25 @@ export const translations = {
       deleteDesc: "आपण “{title}” हटवू इच्छिता का? ही क्रिया परत करता येणार नाही.",
 
       pagination: "पृष्ठ {page} / {totalPages} · एकूण {total} कथा",
+    },
+    artisanStorePage: {
+      bannerAlt: "{store} स्टोअर बॅनर",
+
+      aboutStore: "आमच्या स्टोअरबद्दल",
+      aboutArtisan: "कारागिराबद्दल",
+
+      collection: "आमचा संग्रह",
+      noProducts: "या कारागिराने अद्याप कोणतीही उत्पादने जोडलेली नाहीत.",
+
+      creator: "निर्माता",
+
+      basedIn: "{city}, {state} येथे आधारित",
+      memberSince: "{date} पासून सदस्य",
+
+      errors: {
+        notFound: "कारागिराचे स्टोअर सापडले नाही.",
+        storeNotFound: "स्टोअर सापडले नाही.",
+      },
     },
   },
 };
