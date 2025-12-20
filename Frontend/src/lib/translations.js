@@ -270,6 +270,7 @@ export const translations = {
       signupSuccess: "Account created successfully!",
       loginError: "Invalid email or password",
       signupError: "Failed to create account",
+      callbackLoading: "Finalizing your login, please wait...",
     },
 
     // Common
@@ -1279,6 +1280,7 @@ export const translations = {
       signupSuccess: "खाता सफलतापूर्वक बनाया गया!",
       loginError: "अमान्य ईमेल या पासवर्ड",
       signupError: "खाता बनाने में विफल",
+      callbackLoading: "आपका लॉगिन पूरा किया जा रहा है, कृपया प्रतीक्षा करें...",
     },
 
     common: {
@@ -2262,6 +2264,7 @@ export const translations = {
       signupSuccess: "অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!",
       loginError: "অবৈধ ইমেল বা পাসওয়ার্ড",
       signupError: "অ্যাকাউন্ট তৈরি করতে ব্যর্থ",
+      callbackLoading: "আপনার লগইন সম্পন্ন করা হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...",
     },
     common: {
       loading: "লোড হচ্ছে...",
@@ -3242,6 +3245,7 @@ export const translations = {
       signupSuccess: "கணக்கு வெற்றிகரமாக உருவாக்கப்பட்டது!",
       loginError: "தவறான மின்னஞ்சல் அல்லது கடவுச்சொல்",
       signupError: "கணக்கை உருவாக்க முடியவில்லை",
+      callbackLoading: "உங்கள் உள்நுழைவு முடிக்கப்படுகிறது, தயவுசெய்து காத்திருக்கவும்...",
     },
     common: {
       loading: "ஏற்றுகிறது...",
@@ -4222,6 +4226,7 @@ export const translations = {
       signupSuccess: "ఖాతా విజయవంతంగా సృష్టించబడింది!",
       loginError: "చెల్లని ఇమెయిల్ లేదా పాస్‌వర్డ్",
       signupError: "ఖాతా సృష్టించలేకపోయారు",
+      callbackLoading: "మీ లాగిన్ పూర్తి చేయబడుతోంది, దయచేసి వేచి ఉండండి...",
     },
     common: {
       loading: "లోడ్ చేస్తోంది...",
@@ -5202,6 +5207,7 @@ export const translations = {
       signupSuccess: "खाते यशस्वीरित्या तयार केले!",
       loginError: "अमान्य ईमेल किंवा पासवर्ड",
       signupError: "खाते तयार करू शकत नाही",
+      callbackLoading: "आपले लॉगिन पूर्ण केले जात आहे, कृपया प्रतीक्षा करा...",
     },
     common: {
       loading: "लोड होत आहे...",

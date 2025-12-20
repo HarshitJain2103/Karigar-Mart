@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import useAuthStore from '../stores/authStore';
 import { Loader2 } from 'lucide-react';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function AuthCallbackPage() {
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const login = useAuthStore((state) => state.login);
@@ -32,7 +34,7 @@ export default function AuthCallbackPage() {
   return (
     <div className="flex flex-col justify-center items-center h-screen">
       <Loader2 className="h-8 w-8 animate-spin mb-4" />
-      <p className="text-muted-foreground">Finalizing your login, please wait...</p>
+      <p className="text-muted-foreground">{t('auth.callbackLoading')}</p>
     </div>
   );
 }
