@@ -291,6 +291,7 @@ export const translations = {
       backHome: "Back to Home",
       prev: "Previous",
       next: "Next",
+      notAvailable: "N/A",
     },
     categoryList: {
       title: "Categories",
@@ -1019,6 +1020,201 @@ export const translations = {
         storeNotFound: "Store not found.",
       },
     },
+    buildStore: {
+      // Image Uploader
+      imageUploader: {
+        limitExceeded: "You can only upload {count} more image(s). Please select fewer files.",
+        uploading: "Uploading...",
+        uploadImage: "Upload Image",
+        uploadImages: "Upload Images",
+        noImages: "No images uploaded.",
+      },
+
+      // Product Card
+      productCard: {
+        noImage: "No Image",
+        untitled: "Untitled",
+        inStock: "{count} in stock",
+        edit: "Edit",
+        remove: "Remove",
+      },
+
+      // Header
+      header: {
+        brandName: "ArtisanMarket",
+        setupProgress: "Setup progress: {progress}%",
+        save: "Save",
+        draftSaved: "Draft saved locally",
+        saveFailed: "Save failed",
+        help: "Help",
+        helpStub: "Open help (AI assistant)",
+      },
+
+      // Hero Section
+      hero: {
+        title: "Bring Your Craft Online — Build Your Store in Minutes",
+        subtitle: "We'll guide you step-by-step. Use the AI assistant (right) anytime for suggestions.",
+        startBuilding: "Start Building",
+        watchTutorial: "Watch Tutorial",
+        tutorialStub: "Open tutorial (stub)",
+        quickTip: "Quick tips: Use 3 photos per product for best results",
+      },
+
+      // Steps Navigation
+      steps: {
+        title: "Steps",
+        identity: "1. Identity",
+        about: "2. About",
+        products: "3. Products",
+        media: "4. Media",
+        theme: "5. Theme",
+        seo: "6. Marketing",
+        publish: "7. Publish",
+        autosave: "Autosave enabled • Local draft",
+      },
+
+      // Common
+      common: {
+        next: "Next",
+      },
+
+      // Identity Step
+      identity: {
+        title: "Identity Setup",
+        description: "Store name, tagline and basic location",
+        storeNamePlaceholder: "Store name",
+        taglinePlaceholder: "Tagline (AI suggest)",
+        cityPlaceholder: "City",
+        statePlaceholder: "State",
+      },
+
+      // About Step
+      about: {
+        title: "About your store",
+        description: "Tell about your store — AI will help refine it.",
+        placeholder: "Write about your store here...",
+        aiSuggest: "Suggest with AI",
+        aiStub: "AI feature stub",
+      },
+
+      // Products Step
+      products: {
+        title: "Product Catalog",
+        description: "Add the products you want to sell in your store.",
+        yourProducts: "Your Products ({count})",
+        addProduct: "+ Add Product",
+        noProducts: "No products yet. Click 'Add Product' to start.",
+      },
+
+      // Media Step
+      media: {
+        title: "Media & Branding",
+        description: "Upload a hero image for your store page and a few gallery images.",
+        heroImageLabel: "Hero Image (Store Banner)",
+        galleryImagesLabel: "Gallery Images",
+      },
+
+      // Theme Step
+      theme: {
+        title: "Appearance",
+        description: "Choose a theme that best represents your craft.",
+        presetLabel: "Theme Preset",
+        presets: {
+          modern: "Modern",
+          classic: "Classic",
+          minimal: "Minimal",
+          rustic: "Rustic",
+        },
+      },
+
+      // SEO Step
+      seo: {
+        title: "Marketing & SEO",
+        description: "Help customers find your store on search engines.",
+        metaDescriptionLabel: "Meta Description",
+        metaDescriptionPlaceholder: "A short description of your store for search engines.",
+        keywordsLabel: "Keywords",
+        keywordsPlaceholder: "e.g., handmade, pottery, indian craft",
+      },
+
+      // Publish Step
+      publish: {
+        title: "Review & Publish",
+        description: "Review your store details and publish to go live!",
+        checklistTitle: "Store Health Checklist",
+        checklistStoreName: "Store Name",
+        checklistLocation: "Location",
+        checklistProducts: "At least one product",
+        checklistAbout: "About your store",
+        publishButton: "Publish Store",
+        publishing: "Publishing...",
+        validationBasicInfo: "Please add store name, city and state before publishing.",
+        validationProducts: "Add at least one product to publish.",
+        validationProductDetails: "Product \"{title}\" needs a title, price, and category.",
+        success: "Congratulations! Your store has been published successfully!",
+      },
+
+      // Preview
+      preview: {
+        title: "Live Store Preview",
+        desktop: "Desktop",
+        mobile: "Mobile",
+        heroPlaceholder: "Hero Image Preview",
+        storeNamePlaceholder: "Your Store Name",
+        taglinePlaceholder: "A short tagline will appear here",
+        productsPlaceholder: "Products will appear here...",
+        heroAlt: "Store hero image preview",
+      },
+
+      // Assistant
+      assistant: {
+        title: "Karigar Assistant",
+        description: "Get help with descriptions, translations, and more.",
+        autoDescribe: "Auto-describe",
+        autoDescribeStub: "Generate descriptions (stub)",
+        translate: "Translate",
+        translateStub: "Translate to Hindi (stub)",
+      },
+
+      // Product Dialog
+      productDialog: {
+        editTitle: "Edit product",
+        addTitle: "Add product",
+        titleLabel: "Product title",
+        titlePlaceholder: "e.g., Hand-painted Ceramic Mug",
+        descriptionLabel: "Description",
+        descriptionPlaceholder: "Describe your product...",
+        categoryLabel: "Category",
+        categoryPlaceholder: "Select a category",
+        categoryLoading: "Loading...",
+        priceLabel: "Price (₹)",
+        pricePlaceholder: "e.g., 999",
+        inventoryLabel: "Inventory",
+        inventoryPlaceholder: "e.g., 10",
+        imagesLabel: "Images",
+        cancel: "Cancel",
+        save: "Save Product",
+      },
+
+      // Floating Assistant
+      floatingAssistant: {
+        buttonLabel: "AI",
+        title: "Karigar Assistant",
+        description: "Generate content, translate, and get tips.",
+        generate: "Generate",
+        generateStub: "Generate store description (stub)",
+        translate: "Translate",
+        translateStub: "Translate description (stub)",
+      },
+
+      // Errors
+      errors: {
+        categoriesLoadFailed: "Could not load product categories. Please refresh the page.",
+        profileCreationFailed: "Failed to create your store profile.",
+        productCreationFailed: "Failed to create product \"{title}\": {message}",
+        categoriesFetchFailed: "Failed to fetch product categories.",
+      },
+    },
   },
 
   hi: {
@@ -1300,6 +1496,7 @@ export const translations = {
       backHome: "होम पर वापस जाएं",
       prev: "पिछला",
       next: "अगला",
+      notAvailable: "उपलब्ध नहीं",
     },
     categoryList: {
       title: "श्रेणियाँ",
@@ -2014,6 +2211,183 @@ export const translations = {
         storeNotFound: "स्टोर नहीं मिला।",
       },
     },
+    buildStore: {
+      imageUploader: {
+        limitExceeded: "आप केवल {count} और छवि अपलोड कर सकते हैं। कृपया कम फ़ाइलें चुनें।",
+        uploading: "अपलोड हो रहा है...",
+        uploadImage: "छवि अपलोड करें",
+        uploadImages: "छवियाँ अपलोड करें",
+        noImages: "कोई छवि अपलोड नहीं की गई।",
+      },
+
+      productCard: {
+        noImage: "कोई छवि नहीं",
+        untitled: "शीर्षकहीन",
+        inStock: "स्टॉक में",
+        edit: "संपादित करें",
+        remove: "हटाएं",
+      },
+
+      header: {
+        brandName: "कारीगर बाजार",
+        setupProgress: "सेटअप प्रगति: {progress}%",
+        save: "सहेजें",
+        draftSaved: "ड्राफ्ट स्थानीय रूप से सहेजा गया",
+        saveFailed: "सहेजना विफल",
+        help: "सहायता",
+        helpStub: "सहायता खोलें (AI सहायक)",
+      },
+
+      hero: {
+        title: "अपनी कला को ऑनलाइन लाएं — मिनटों में अपना स्टोर बनाएं",
+        subtitle: "हम आपको चरण-दर-चरण मार्गदर्शन करेंगे। सुझावों के लिए किसी भी समय AI सहायक का उपयोग करें।",
+        startBuilding: "निर्माण शुरू करें",
+        watchTutorial: "ट्यूटोरियल देखें",
+        tutorialStub: "ट्यूटोरियल खोलें (स्टब)",
+        quickTip: "त्वरित सुझाव: सर्वोत्तम परिणामों के लिए प्रति उत्पाद 3 फोटो का उपयोग करें",
+      },
+
+      steps: {
+        title: "चरण",
+        identity: "1. पहचान",
+        about: "2. परिचय",
+        products: "3. उत्पाद",
+        media: "4. मीडिया",
+        theme: "5. थीम",
+        seo: "6. विपणन",
+        publish: "7. प्रकाशित करें",
+        autosave: "ऑटोसेव सक्षम • स्थानीय ड्राफ्ट",
+      },
+
+      common: {
+        next: "अगला",
+      },
+
+      identity: {
+        title: "पहचान सेटअप",
+        description: "स्टोर का नाम, टैगलाइन और बुनियादी स्थान",
+        storeNamePlaceholder: "स्टोर का नाम",
+        taglinePlaceholder: "टैगलाइन (AI सुझाव)",
+        cityPlaceholder: "शहर",
+        statePlaceholder: "राज्य",
+      },
+
+      about: {
+        title: "अपने स्टोर के बारे में",
+        description: "अपने स्टोर के बारे में बताएं — AI इसे परिष्कृत करने में मदद करेगा।",
+        placeholder: "यहाँ अपने स्टोर के बारे में लिखें...",
+        aiSuggest: "AI से सुझाव लें",
+        aiStub: "AI सुविधा स्टब",
+      },
+
+      products: {
+        title: "उत्पाद कैटलॉग",
+        description: "अपने स्टोर में बेचने के लिए उत्पाद जोड़ें।",
+        yourProducts: "आपके उत्पाद ({count})",
+        addProduct: "+ उत्पाद जोड़ें",
+        noProducts: "अभी तक कोई उत्पाद नहीं। शुरू करने के लिए 'उत्पाद जोड़ें' पर क्लिक करें।",
+      },
+
+      media: {
+        title: "मीडिया और ब्रांडिंग",
+        description: "अपने स्टोर पेज के लिए एक हीरो छवि और कुछ गैलरी छवियाँ अपलोड करें।",
+        heroImageLabel: "हीरो छवि (स्टोर बैनर)",
+        galleryImagesLabel: "गैलरी छवियाँ",
+      },
+
+      theme: {
+        title: "दिखावट",
+        description: "एक थीम चुनें जो आपकी कला का सबसे अच्छा प्रतिनिधित्व करती है।",
+        presetLabel: "थीम प्रीसेट",
+        presets: {
+          modern: "आधुनिक",
+          classic: "क्लासिक",
+          minimal: "न्यूनतम",
+          rustic: "देहाती",
+        },
+      },
+
+      seo: {
+        title: "विपणन और SEO",
+        description: "ग्राहकों को खोज इंजन पर अपना स्टोर खोजने में मदद करें।",
+        metaDescriptionLabel: "मेटा विवरण",
+        metaDescriptionPlaceholder: "खोज इंजन के लिए अपने स्टोर का एक संक्षिप्त विवरण।",
+        keywordsLabel: "कीवर्ड",
+        keywordsPlaceholder: "उदा., हस्तनिर्मित, मिट्टी के बर्तन, भारतीय शिल्प",
+      },
+
+      publish: {
+        title: "समीक्षा और प्रकाशन",
+        description: "अपने स्टोर के विवरण की समीक्षा करें और लाइव होने के लिए प्रकाशित करें!",
+        checklistTitle: "स्टोर स्वास्थ्य चेकलिस्ट",
+        checklistStoreName: "स्टोर का नाम",
+        checklistLocation: "स्थान",
+        checklistProducts: "कम से कम एक उत्पाद",
+        checklistAbout: "अपने स्टोर के बारे में",
+        publishButton: "स्टोर प्रकाशित करें",
+        publishing: "प्रकाशित हो रहा है...",
+        validationBasicInfo: "कृपया प्रकाशित करने से पहले स्टोर का नाम, शहर और राज्य जोड़ें।",
+        validationProducts: "प्रकाशित करने के लिए कम से कम एक उत्पाद जोड़ें।",
+        validationProductDetails: "उत्पाद \"{title}\" को शीर्षक, मूल्य और श्रेणी की आवश्यकता है।",
+        success: "बधाई हो! आपका स्टोर सफलतापूर्वक प्रकाशित हो गया है!",
+      },
+
+      preview: {
+        title: "लाइव स्टोर पूर्वावलोकन",
+        desktop: "डेस्कटॉप",
+        mobile: "मोबाइल",
+        heroPlaceholder: "हीरो छवि पूर्वावलोकन",
+        storeNamePlaceholder: "आपके स्टोर का नाम",
+        taglinePlaceholder: "यहाँ एक छोटी टैगलाइन दिखाई देगी",
+        productsPlaceholder: "उत्पाद यहाँ दिखाई देंगे...",
+        heroAlt: "स्टोर हीरो इमेज पूर्वावलोकन",
+      },
+
+      assistant: {
+        title: "कारीगर सहायक",
+        description: "विवरण, अनुवाद और अधिक के साथ सहायता प्राप्त करें।",
+        autoDescribe: "स्वतः-विवरण",
+        autoDescribeStub: "विवरण उत्पन्न करें (स्टब)",
+        translate: "अनुवाद करें",
+        translateStub: "हिंदी में अनुवाद करें (स्टब)",
+      },
+
+      productDialog: {
+        editTitle: "उत्पाद संपादित करें",
+        addTitle: "उत्पाद जोड़ें",
+        titleLabel: "उत्पाद शीर्षक",
+        titlePlaceholder: "उदा., हाथ से चित्रित सिरेमिक मग",
+        descriptionLabel: "विवरण",
+        descriptionPlaceholder: "अपने उत्पाद का वर्णन करें...",
+        categoryLabel: "श्रेणी",
+        categoryPlaceholder: "एक श्रेणी चुनें",
+        categoryLoading: "लोड हो रहा है...",
+        priceLabel: "मूल्य (₹)",
+        pricePlaceholder: "उदा., 999",
+        inventoryLabel: "इन्वेंटरी",
+        inventoryPlaceholder: "उदा., 10",
+        imagesLabel: "छवियाँ",
+        cancel: "रद्द करें",
+        save: "उत्पाद सहेजें",
+      },
+
+      floatingAssistant: {
+        buttonLabel: "AI",
+        title: "कारीगर सहायक",
+        description: "सामग्री उत्पन्न करें, अनुवाद करें और सुझाव प्राप्त करें।",
+        generate: "उत्पन्न करें",
+        generateStub: "स्टोर विवरण उत्पन्न करें (स्टब)",
+        translate: "अनुवाद करें",
+        translateStub: "विवरण अनुवाद करें (स्टब)",
+      },
+
+      errors: {
+        categoriesLoadFailed: "उत्पाद श्रेणियां लोड नहीं हो सकीं। कृपया पृष्ठ को रीफ्रेश करें।",
+        profileCreationFailed: "आपका स्टोर प्रोफ़ाइल बनाने में विफल।",
+        productCreationFailed: "उत्पाद \"{title}\" बनाने में विफल: {message}",
+        categoriesFetchFailed: "उत्पाद श्रेणियाँ प्राप्त करने में विफल।",
+      },
+    },
   },
 
   bn: {
@@ -2283,6 +2657,7 @@ export const translations = {
       backHome: "বাড়িতে ফিরে যান",
       prev: "পূর্ববর্তী",
       next: "পরবর্তী",
+      notAvailable: "উপলব্ধ নয়",
     },
     categoryList: {
       title: "বিভাগসমূহ",
@@ -2996,6 +3371,183 @@ export const translations = {
         storeNotFound: "স্টোর খুঁজে পাওয়া যায়নি।",
       },
     },
+    buildStore: {
+      imageUploader: {
+        limitExceeded: "আপনি শুধুমাত্র {count}টি বেশি ছবি আপলোড করতে পারেন। অনুগ্রহ করে কম ফাইল নির্বাচন করুন।",
+        uploading: "আপলোড হচ্ছে...",
+        uploadImage: "ছবি আপলোড করুন",
+        uploadImages: "ছবি আপলোড করুন",
+        noImages: "কোনো ছবি আপলোড করা হয়নি।",
+      },
+
+      productCard: {
+        noImage: "কোনো ছবি নেই",
+        untitled: "শিরোনামহীন",
+        inStock: "স্টকে আছে",
+        edit: "সম্পাদনা করুন",
+        remove: "সরান",
+      },
+
+      header: {
+        brandName: "কারিগর বাজার",
+        setupProgress: "সেটআপ অগ্রগতি: {progress}%",
+        save: "সংরক্ষণ করুন",
+        draftSaved: "খসড়া স্থানীয়ভাবে সংরক্ষিত",
+        saveFailed: "সংরক্ষণ ব্যর্থ",
+        help: "সহায়তা",
+        helpStub: "সহায়তা খুলুন (AI সহায়ক)",
+      },
+
+      hero: {
+        title: "আপনার কারুশিল্প অনলাইনে আনুন — মিনিটে আপনার দোকান তৈরি করুন",
+        subtitle: "আমরা আপনাকে ধাপে ধাপে গাইড করব। পরামর্শের জন্য যেকোনো সময় AI সহায়ক ব্যবহার করুন।",
+        startBuilding: "নির্মাণ শুরু করুন",
+        watchTutorial: "টিউটোরিয়াল দেখুন",
+        tutorialStub: "টিউটোরিয়াল খুলুন (স্টাব)",
+        quickTip: "দ্রুত টিপস: সর্বোত্তম ফলাফলের জন্য প্রতি পণ্যে 3টি ফটো ব্যবহার করুন",
+      },
+
+      steps: {
+        title: "ধাপ",
+        identity: "১. পরিচয়",
+        about: "২. সম্পর্কে",
+        products: "৩. পণ্য",
+        media: "৪. মিডিয়া",
+        theme: "৫. থিম",
+        seo: "৬. মার্কেটিং",
+        publish: "৭. প্রকাশ করুন",
+        autosave: "অটোসেভ সক্রিয় • স্থানীয় খসড়া",
+      },
+
+      common: {
+        next: "পরবর্তী",
+      },
+
+      identity: {
+        title: "পরিচয় সেটআপ",
+        description: "দোকানের নাম, ট্যাগলাইন এবং মৌলিক অবস্থান",
+        storeNamePlaceholder: "দোকানের নাম",
+        taglinePlaceholder: "ট্যাগলাইন (AI পরামর্শ)",
+        cityPlaceholder: "শহর",
+        statePlaceholder: "রাজ্য",
+      },
+
+      about: {
+        title: "আপনার দোকান সম্পর্কে",
+        description: "আপনার দোকান সম্পর্কে বলুন — AI এটি পরিমার্জন করতে সাহায্য করবে।",
+        placeholder: "এখানে আপনার দোকান সম্পর্কে লিখুন...",
+        aiSuggest: "AI দিয়ে পরামর্শ নিন",
+        aiStub: "AI বৈশিষ্ট্য স্টাব",
+      },
+
+      products: {
+        title: "পণ্য ক্যাটালগ",
+        description: "আপনার দোকানে বিক্রি করতে পণ্য যোগ করুন।",
+        yourProducts: "আপনার পণ্য ({count})",
+        addProduct: "+ পণ্য যোগ করুন",
+        noProducts: "এখনও কোনো পণ্য নেই। শুরু করতে 'পণ্য যোগ করুন' ক্লিক করুন।",
+      },
+
+      media: {
+        title: "মিডিয়া এবং ব্র্যান্ডিং",
+        description: "আপনার দোকান পেজের জন্য একটি হিরো ছবি এবং কিছু গ্যালারি ছবি আপলোড করুন।",
+        heroImageLabel: "হিরো ছবি (দোকান ব্যানার)",
+        galleryImagesLabel: "গ্যালারি ছবি",
+      },
+
+      theme: {
+        title: "চেহারা",
+        description: "একটি থিম চয়ন করুন যা আপনার কারুশিল্পের সেরা প্রতিনিধিত্ব করে।",
+        presetLabel: "থিম প্রিসেট",
+        presets: {
+          modern: "আধুনিক",
+          classic: "ক্লাসিক",
+          minimal: "ন্যূনতম",
+          rustic: "দেশীয়",
+        },
+      },
+
+      seo: {
+        title: "মার্কেটিং এবং SEO",
+        description: "গ্রাহকদের সার্চ ইঞ্জিনে আপনার দোকান খুঁজে পেতে সাহায্য করুন।",
+        metaDescriptionLabel: "মেটা বিবরণ",
+        metaDescriptionPlaceholder: "সার্চ ইঞ্জিনের জন্য আপনার দোকানের একটি সংক্ষিপ্ত বিবরণ।",
+        keywordsLabel: "কীওয়ার্ড",
+        keywordsPlaceholder: "যেমন, হস্তনির্মিত, মৃৎশিল্প, ভারতীয় কারুশিল্প",
+      },
+
+      publish: {
+        title: "পর্যালোচনা এবং প্রকাশ",
+        description: "আপনার দোকানের বিবরণ পর্যালোচনা করুন এবং লাইভ হতে প্রকাশ করুন!",
+        checklistTitle: "দোকান স্বাস্থ্য চেকলিস্ট",
+        checklistStoreName: "দোকানের নাম",
+        checklistLocation: "অবস্থান",
+        checklistProducts: "কমপক্ষে একটি পণ্য",
+        checklistAbout: "আপনার দোকান সম্পর্কে",
+        publishButton: "দোকান প্রকাশ করুন",
+        publishing: "প্রকাশ হচ্ছে...",
+        validationBasicInfo: "অনুগ্রহ করে প্রকাশের আগে দোকানের নাম, শহর এবং রাজ্য যোগ করুন।",
+        validationProducts: "প্রকাশ করতে কমপক্ষে একটি পণ্য যোগ করুন।",
+        validationProductDetails: "পণ্য \"{title}\"-এর শিরোনাম, মূল্য এবং বিভাগ প্রয়োজন।",
+        success: "অভিনন্দন! আপনার দোকান সফলভাবে প্রকাশিত হয়েছে!",
+      },
+
+      preview: {
+        title: "লাইভ দোকান পূর্বরূপ",
+        desktop: "ডেস্কটপ",
+        mobile: "মোবাইল",
+        heroPlaceholder: "হিরো ছবি পূর্বরূপ",
+        storeNamePlaceholder: "আপনার দোকানের নাম",
+        taglinePlaceholder: "এখানে একটি ছোট ট্যাগলাইন প্রদর্শিত হবে",
+        productsPlaceholder: "পণ্য এখানে প্রদর্শিত হবে...",
+        heroAlt: "স্টোর হিরো ইমেজ প্রিভিউ",
+      },
+
+      assistant: {
+        title: "কারিগর সহায়ক",
+        description: "বিবরণ, অনুবাদ এবং আরও অনেক কিছুর সাহায্য পান।",
+        autoDescribe: "স্বয়ংক্রিয়-বিবরণ",
+        autoDescribeStub: "বিবরণ তৈরি করুন (স্টাব)",
+        translate: "অনুবাদ করুন",
+        translateStub: "বাংলায় অনুবাদ করুন (স্টাব)",
+      },
+
+      productDialog: {
+        editTitle: "পণ্য সম্পাদনা করুন",
+        addTitle: "পণ্য যোগ করুন",
+        titleLabel: "পণ্যের শিরোনাম",
+        titlePlaceholder: "যেমন, হাতে আঁকা সিরামিক মগ",
+        descriptionLabel: "বিবরণ",
+        descriptionPlaceholder: "আপনার পণ্যের বর্ণনা দিন...",
+        categoryLabel: "বিভাগ",
+        categoryPlaceholder: "একটি বিভাগ নির্বাচন করুন",
+        categoryLoading: "লোড হচ্ছে...",
+        priceLabel: "মূল্য (₹)",
+        pricePlaceholder: "যেমন, 999",
+        inventoryLabel: "ইনভেন্টরি",
+        inventoryPlaceholder: "যেমন, 10",
+        imagesLabel: "ছবি",
+        cancel: "বাতিল করুন",
+        save: "পণ্য সংরক্ষণ করুন",
+      },
+
+      floatingAssistant: {
+        buttonLabel: "AI",
+        title: "কারিগর সহায়ক",
+        description: "কন্টেন্ট তৈরি করুন, অনুবাদ করুন এবং টিপস পান।",
+        generate: "তৈরি করুন",
+        generateStub: "দোকান বিবরণ তৈরি করুন (স্টাব)",
+        translate: "অনুবাদ করুন",
+        translateStub: "বিবরণ অনুবাদ করুন (স্টাব)",
+      },
+
+      errors: {
+        categoriesLoadFailed: "পণ্য বিভাগ লোড করা যায়নি। অনুগ্রহ করে পেজ রিফ্রেশ করুন।",
+        profileCreationFailed: "আপনার দোকান প্রোফাইল তৈরি করতে ব্যর্থ।",
+        productCreationFailed: "পণ্য \"{title}\" তৈরি করতে ব্যর্থ: {message}",
+        categoriesFetchFailed: "পণ্যের বিভাগ আনতে ব্যর্থ হয়েছে।",
+      },
+    },
   },
 
   ta: {
@@ -3264,6 +3816,7 @@ export const translations = {
       backHome: "வீட்டிற்குத் திரும்பு",
       prev: "முந்தையது",
       next: "அடுத்தது",
+      notAvailable: "கிடைக்கவில்லை",
     },
     categoryList: {
       title: "வகைகள்",
@@ -3977,6 +4530,183 @@ export const translations = {
         storeNotFound: "கடை கிடைக்கவில்லை.",
       },
     },
+    buildStore: {
+      imageUploader: {
+        limitExceeded: "நீங்கள் {count} படங்களை மட்டுமே பதிவேற்ற முடியும். குறைவான கோப்புகளைத் தேர்ந்தெடுக்கவும்.",
+        uploading: "பதிவேற்றப்படுகிறது...",
+        uploadImage: "படத்தைப் பதிவேற்றவும்",
+        uploadImages: "படங்களைப் பதிவேற்றவும்",
+        noImages: "எந்த படமும் பதிவேற்றப்படவில்லை.",
+      },
+
+      productCard: {
+        noImage: "படம் இல்லை",
+        untitled: "தலைப்பு இல்லாதது",
+        inStock: "கையிருப்பில்",
+        edit: "திருத்து",
+        remove: "அகற்று",
+      },
+
+      header: {
+        brandName: "கைவினைஞர் சந்தை",
+        setupProgress: "அமைவு முன்னேற்றம்: {progress}%",
+        save: "சேமி",
+        draftSaved: "வரைவு உள்ளூரில் சேமிக்கப்பட்டது",
+        saveFailed: "சேமிப்பு தோல்வி",
+        help: "உதவி",
+        helpStub: "உதவியைத் திறக்கவும் (AI உதவியாளர்)",
+      },
+
+      hero: {
+        title: "உங்கள் கைவினையை ஆன்லைனில் கொண்டு வாருங்கள் — நிமிடங்களில் உங்கள் கடையை உருவாக்குங்கள்",
+        subtitle: "நாங்கள் உங்களுக்கு படிப்படியாக வழிகாட்டுவோம். பரிந்துரைகளுக்கு எந்த நேரத்திலும் AI உதவியாளரைப் பயன்படுத்தவும்.",
+        startBuilding: "கட்டுமானத்தைத் தொடங்குங்கள்",
+        watchTutorial: "பயிற்சியைப் பார்க்கவும்",
+        tutorialStub: "பயிற்சியைத் திறக்கவும் (ஸ்டப்)",
+        quickTip: "விரைவு குறிப்புகள்: சிறந்த முடிவுகளுக்கு ஒரு தயாரிப்புக்கு 3 புகைப்படங்களைப் பயன்படுத்தவும்",
+      },
+
+      steps: {
+        title: "படிகள்",
+        identity: "1. அடையாளம்",
+        about: "2. பற்றி",
+        products: "3. தயாரிப்புகள்",
+        media: "4. ஊடகம்",
+        theme: "5. தீம்",
+        seo: "6. சந்தைப்படுத்தல்",
+        publish: "7. வெளியிடு",
+        autosave: "தானியங்கி சேமிப்பு இயக்கப்பட்டது • உள்ளூர் வரைவு",
+      },
+
+      common: {
+        next: "அடுத்தது",
+      },
+
+      identity: {
+        title: "அடையாள அமைவு",
+        description: "கடை பெயர், குறிச்சொல் மற்றும் அடிப்படை இடம்",
+        storeNamePlaceholder: "கடை பெயர்",
+        taglinePlaceholder: "குறிச்சொல் (AI பரிந்துரை)",
+        cityPlaceholder: "நகரம்",
+        statePlaceholder: "மாநிலம்",
+      },
+
+      about: {
+        title: "உங்கள் கடையைப் பற்றி",
+        description: "உங்கள் கடையைப் பற்றி சொல்லுங்கள் — AI அதை செம்மைப்படுத்த உதவும்.",
+        placeholder: "இங்கே உங்கள் கடையைப் பற்றி எழுதுங்கள்...",
+        aiSuggest: "AI உடன் பரிந்துரை",
+        aiStub: "AI அம்சம் ஸ்டப்",
+      },
+
+      products: {
+        title: "தயாரிப்பு பட்டியல்",
+        description: "உங்கள் கடையில் விற்க தயாரிப்புகளைச் சேர்க்கவும்.",
+        yourProducts: "உங்கள் தயாரிப்புகள் ({count})",
+        addProduct: "+ தயாரிப்பைச் சேர்",
+        noProducts: "இன்னும் தயாரிப்புகள் இல்லை. தொடங்க 'தயாரிப்பைச் சேர்' என்பதைக் கிளிக் செய்யவும்.",
+      },
+
+      media: {
+        title: "ஊடகம் மற்றும் பிராண்டிங்",
+        description: "உங்கள் கடை பக்கத்திற்கான ஹீரோ படம் மற்றும் சில கேலரி படங்களைப் பதிவேற்றவும்.",
+        heroImageLabel: "ஹீரோ படம் (கடை பேனர்)",
+        galleryImagesLabel: "கேலரி படங்கள்",
+      },
+
+      theme: {
+        title: "தோற்றம்",
+        description: "உங்கள் கைவினையை சிறந்த முறையில் பிரதிநிதித்துவப்படுத்தும் தீமைத் தேர்ந்தெடுக்கவும்.",
+        presetLabel: "தீம் ப்ரீசெட்",
+        presets: {
+          modern: "நவீன",
+          classic: "கிளாசிக்",
+          minimal: "குறைந்தபட்ச",
+          rustic: "பாரம்பரிய",
+        },
+      },
+
+      seo: {
+        title: "சந்தைப்படுத்தல் மற்றும் SEO",
+        description: "வாடிக்கையாளர்கள் தேடுபொறியில் உங்கள் கடையைக் கண்டுபிடிக்க உதவுங்கள்.",
+        metaDescriptionLabel: "மெட்டா விளக்கம்",
+        metaDescriptionPlaceholder: "தேடுபொறிகளுக்கான உங்கள் கடையின் சுருக்கமான விளக்கம்.",
+        keywordsLabel: "முக்கிய வார்த்தைகள்",
+        keywordsPlaceholder: "எ.கா., கைவினை, மண்பாண்டம், இந்திய கைவினை",
+      },
+
+      publish: {
+        title: "மதிப்பாய்வு மற்றும் வெளியீடு",
+        description: "உங்கள் கடை விவரங்களை மதிப்பாய்வு செய்து நேரலையாக வெளியிடுங்கள்!",
+        checklistTitle: "கடை சுகாதார சரிபார்ப்புப் பட்டியல்",
+        checklistStoreName: "கடை பெயர்",
+        checklistLocation: "இடம்",
+        checklistProducts: "குறைந்தது ஒரு தயாரிப்பு",
+        checklistAbout: "உங்கள் கடையைப் பற்றி",
+        publishButton: "கடையை வெளியிடு",
+        publishing: "வெளியிடப்படுகிறது...",
+        validationBasicInfo: "வெளியிடுவதற்கு முன் கடை பெயர், நகரம் மற்றும் மாநிலத்தைச் சேர்க்கவும்.",
+        validationProducts: "வெளியிட குறைந்தது ஒரு தயாரிப்பைச் சேர்க்கவும்.",
+        validationProductDetails: "தயாரிப்பு \"{title}\"-க்கு தலைப்பு, விலை மற்றும் வகை தேவை.",
+        success: "வாழ்த்துகள்! உங்கள் கடை வெற்றிகரமாக வெளியிடப்பட்டது!",
+      },
+
+      preview: {
+        title: "நேரடி கடை முன்னோட்டம்",
+        desktop: "டெஸ்க்டாப்",
+        mobile: "மொபைல்",
+        heroPlaceholder: "ஹீரோ படம் முன்னோட்டம்",
+        storeNamePlaceholder: "உங்கள் கடை பெயர்",
+        taglinePlaceholder: "இங்கே ஒரு சிறிய குறிச்சொல் தோன்றும்",
+        productsPlaceholder: "தயாரிப்புகள் இங்கே தோன்றும்...",
+        heroAlt: "கடை ஹீரோ படத்தின் முன்னோட்டம்",
+      },
+
+      assistant: {
+        title: "கைவினைஞர் உதவியாளர்",
+        description: "விளக்கங்கள், மொழிபெயர்ப்புகள் மற்றும் பலவற்றுடன் உதவி பெறுங்கள்.",
+        autoDescribe: "தானாக-விளக்கம்",
+        autoDescribeStub: "விளக்கங்களை உருவாக்குங்கள் (ஸ்டப்)",
+        translate: "மொழிபெயர்",
+        translateStub: "தமிழில் மொழிபெயர் (ஸ்டப்)",
+      },
+
+      productDialog: {
+        editTitle: "தயாரிப்பைத் திருத்து",
+        addTitle: "தயாரிப்பைச் சேர்",
+        titleLabel: "தயாரிப்பு தலைப்பு",
+        titlePlaceholder: "எ.கா., கையால் வரையப்பட்ட பீங்கான் குவளை",
+        descriptionLabel: "விளக்கம்",
+        descriptionPlaceholder: "உங்கள் தயாரிப்பை விவரிக்கவும்...",
+        categoryLabel: "வகை",
+        categoryPlaceholder: "ஒரு வகையைத் தேர்ந்தெடுக்கவும்",
+        categoryLoading: "ஏற்றப்படுகிறது...",
+        priceLabel: "விலை (₹)",
+        pricePlaceholder: "எ.கா., 999",
+        inventoryLabel: "சரக்கு",
+        inventoryPlaceholder: "எ.கா., 10",
+        imagesLabel: "படங்கள்",
+        cancel: "ரத்துசெய்",
+        save: "தயாரிப்பைச் சேமி",
+      },
+
+      floatingAssistant: {
+        buttonLabel: "AI",
+        title: "கைவினைஞர் உதவியாளர்",
+        description: "உள்ளடக்கத்தை உருவாக்குங்கள், மொழிபெயர்க்கவும் மற்றும் குறிப்புகளைப் பெறுங்கள்.",
+        generate: "உருவாக்கு",
+        generateStub: "கடை விளக்கத்தை உருவாக்கு (ஸ்டப்)",
+        translate: "மொழிபெயர்",
+        translateStub: "விளக்கத்தை மொழிபெயர் (ஸ்டப்)",
+      },
+
+      errors: {
+        categoriesLoadFailed: "தயாரிப்பு வகைகளை ஏற்ற முடியவில்லை. பக்கத்தை புதுப்பிக்கவும்.",
+        profileCreationFailed: "உங்கள் கடை சுயவிவரத்தை உருவாக்க முடியவில்லை.",
+        productCreationFailed: "தயாரிப்பு \"{title}\" உருவாக்க முடியவில்லை: {message}",
+        categoriesFetchFailed: "தயாரிப்பு வகைகளை பெற முடியவில்லை.",
+      },
+    },
   },
 
   te: {
@@ -4245,6 +4975,7 @@ export const translations = {
       backHome: "హోమ్‌కు తిరిగి వెళ్లండి",
       prev: "మునుపటి",
       next: "తదుపరి",
+      notAvailable: "అందుబాటులో లేదు",
     },
     categoryList: {
       title: "వర్గాలు",
@@ -4958,6 +5689,183 @@ export const translations = {
         storeNotFound: "స్టోర్ కనుగొనబడలేదు.",
       },
     },
+    buildStore: {
+      imageUploader: {
+        limitExceeded: "మీరు {count} చిత్రాలను మాత్రమే అప్‌లోడ్ చేయవచ్చు. దయచేసి తక్కువ ఫైల్‌లను ఎంచుకోండి.",
+        uploading: "అప్‌లోడ్ అవుతోంది...",
+        uploadImage: "చిత్రాన్ని అప్‌లోడ్ చేయండి",
+        uploadImages: "చిత్రాలను అప్‌లోడ్ చేయండి",
+        noImages: "చిత్రాలు అప్‌లోడ్ చేయలేదు.",
+      },
+
+      productCard: {
+        noImage: "చిత్రం లేదు",
+        untitled: "శీర్షిక లేదు",
+        inStock: "స్టాక్‌లో ఉంది",
+        edit: "సవరించు",
+        remove: "తొలగించు",
+      },
+
+      header: {
+        brandName: "కళాకారుల మార్కెట్",
+        setupProgress: "సెటప్ పురోగతి: {progress}%",
+        save: "సేవ్ చేయి",
+        draftSaved: "డ్రాఫ్ట్ స్థానికంగా సేవ్ చేయబడింది",
+        saveFailed: "సేవ్ విఫలమైంది",
+        help: "సహాయం",
+        helpStub: "సహాయాన్ని తెరవండి (AI సహాయకుడు)",
+      },
+
+      hero: {
+        title: "మీ చేతిపనిని ఆన్‌లైన్‌లోకి తీసుకురండి — నిమిషాల్లో మీ దుకాణాన్ని నిర్మించండి",
+        subtitle: "మేము మిమ్మల్ని దశల వారీగా మార్గనిర్దేశం చేస్తాము. సూచనల కోసం ఎప్పుడైనా AI సహాయకుడిని ఉపయోగించండి.",
+        startBuilding: "నిర్మాణం ప్రారంభించండి",
+        watchTutorial: "ట్యుటోరియల్ చూడండి",
+        tutorialStub: "ట్యుటోరియల్ తెరవండి (స్టబ్)",
+        quickTip: "శీఘ్ర చిట్కాలు: ఉత్తమ ఫలితాల కోసం ఒక ఉత్పత్తికి 3 ఫోటోలను ఉపయోగించండి",
+      },
+
+      steps: {
+        title: "దశలు",
+        identity: "1. గుర్తింపు",
+        about: "2. గురించి",
+        products: "3. ఉత్పత్తులు",
+        media: "4. మీడియా",
+        theme: "5. థీమ్",
+        seo: "6. మార్కెటింగ్",
+        publish: "7. ప్రచురించు",
+        autosave: "ఆటోసేవ్ ప్రారంభించబడింది • స్థానిక డ్రాఫ్ట్",
+      },
+
+      common: {
+        next: "తదుపరి",
+      },
+
+      identity: {
+        title: "గుర్తింపు సెటప్",
+        description: "దుకాణం పేరు, ట్యాగ్‌లైన్ మరియు ప్రాథమిక స్థానం",
+        storeNamePlaceholder: "దుకాణం పేరు",
+        taglinePlaceholder: "ట్యాగ్‌లైన్ (AI సూచన)",
+        cityPlaceholder: "నగరం",
+        statePlaceholder: "రాష్ట్రం",
+      },
+
+      about: {
+        title: "మీ దుకాణం గురించి",
+        description: "మీ దుకాణం గురించి చెప్పండి — AI దానిని మెరుగుపరచడంలో సహాయం చేస్తుంది.",
+        placeholder: "ఇక్కడ మీ దుకాణం గురించి వ్రాయండి...",
+        aiSuggest: "AI తో సూచించండి",
+        aiStub: "AI ఫీచర్ స్టబ్",
+      },
+
+      products: {
+        title: "ఉత్పత్తి కేటలాగ్",
+        description: "మీ దుకాణంలో విక్రయించడానికి ఉత్పత్తులను జోడించండి.",
+        yourProducts: "మీ ఉత్పత్తులు ({count})",
+        addProduct: "+ ఉత్పత్తిని జోడించు",
+        noProducts: "ఇంకా ఉత్పత్తులు లేవు. ప్రారంభించడానికి 'ఉత్పత్తిని జోడించు' క్లిక్ చేయండి.",
+      },
+
+      media: {
+        title: "మీడియా మరియు బ్రాండింగ్",
+        description: "మీ దుకాణం పేజీ కోసం హీరో చిత్రం మరియు కొన్ని గ్యాలరీ చిత్రాలను అప్‌లోడ్ చేయండి.",
+        heroImageLabel: "హీరో చిత్రం (దుకాణం బ్యానర్)",
+        galleryImagesLabel: "గ్యాలరీ చిత్రాలు",
+      },
+
+      theme: {
+        title: "రూపాన్ని",
+        description: "మీ చేతిపనిని ఉత్తమంగా ప్రాతినిధ్యం వహించే థీమ్‌ను ఎంచుకోండి.",
+        presetLabel: "థీమ్ ప్రీసెట్",
+        presets: {
+          modern: "ఆధునిక",
+          classic: "క్లాసిక్",
+          minimal: "కనిష్ట",
+          rustic: "సాంప్రదాయ",
+        },
+      },
+
+      seo: {
+        title: "మార్కెటింగ్ మరియు SEO",
+        description: "కస్టమర్‌లు శోధన ఇంజిన్‌లో మీ దుకాణాన్ని కనుగొనడంలో సహాయపడండి.",
+        metaDescriptionLabel: "మెటా వివరణ",
+        metaDescriptionPlaceholder: "శోధన ఇంజిన్‌ల కోసం మీ దుకాణం యొక్క సంక్షిప్త వివరణ.",
+        keywordsLabel: "కీవర్డ్‌లు",
+        keywordsPlaceholder: "ఉదా., చేతితో తయారు చేసిన, కుండలు, భారతీయ చేతిపనులు",
+      },
+
+      publish: {
+        title: "సమీక్ష మరియు ప్రచురణ",
+        description: "మీ దుకాణం వివరాలను సమీక్షించండి మరియు లైవ్ కావడానికి ప్రచురించండి!",
+        checklistTitle: "దుకాణం ఆరోగ్య తనిఖీ జాబితా",
+        checklistStoreName: "దుకాణం పేరు",
+        checklistLocation: "స్థానం",
+        checklistProducts: "కనీసం ఒక ఉత్పత్తి",
+        checklistAbout: "మీ దుకాణం గురించి",
+        publishButton: "దుకాణాన్ని ప్రచురించు",
+        publishing: "ప్రచురించబడుతోంది...",
+        validationBasicInfo: "దయచేసి ప్రచురించే ముందు దుకాణం పేరు, నగరం మరియు రాష్ట్రం జోడించండి.",
+        validationProducts: "ప్రచురించడానికి కనీసం ఒక ఉత్పత్తిని జోడించండి.",
+        validationProductDetails: "ఉత్పత్తి \"{title}\"కి శీర్షిక, ధర మరియు వర్గం అవసరం.",
+        success: "అభినందనలు! మీ దుకాణం విజయవంతంగా ప్రచురించబడింది!",
+      },
+
+      preview: {
+        title: "లైవ్ దుకాణం ప్రివ్యూ",
+        desktop: "డెస్క్‌టాప్",
+        mobile: "మొబైల్",
+        heroPlaceholder: "హీరో చిత్రం ప్రివ్యూ",
+        storeNamePlaceholder: "మీ దుకాణం పేరు",
+        taglinePlaceholder: "ఇక్కడ ఒక చిన్న ట్యాగ్‌లైన్ కనిపిస్తుంది",
+        productsPlaceholder: "ఉత్పత్తులు ఇక్కడ కనిపిస్తాయి...",
+        heroAlt: "స్టోర్ హిరో చిత్రం ప్రీవ్యూ",
+      },
+
+      assistant: {
+        title: "కళాకారుల సహాయకుడు",
+        description: "వివరణలు, అనువాదాలు మరియు మరిన్నింటితో సహాయం పొందండి.",
+        autoDescribe: "ఆటో-వివరణ",
+        autoDescribeStub: "వివరణలను రూపొందించు (స్టబ్)",
+        translate: "అనువదించు",
+        translateStub: "తెలుగులోకి అనువదించు (స్టబ్)",
+      },
+
+      productDialog: {
+        editTitle: "ఉత్పత్తిని సవరించు",
+        addTitle: "ఉత్పత్తిని జోడించు",
+        titleLabel: "ఉత్పత్తి శీర్షిక",
+        titlePlaceholder: "ఉదా., చేతితో చిత్రించిన సిరామిక్ మగ్",
+        descriptionLabel: "వివరణ",
+        descriptionPlaceholder: "మీ ఉత్పత్తిని వివరించండి...",
+        categoryLabel: "వర్గం",
+        categoryPlaceholder: "ఒక వర్గాన్ని ఎంచుకోండి",
+        categoryLoading: "లోడ్ అవుతోంది...",
+        priceLabel: "ధర (₹)",
+        pricePlaceholder: "ఉదా., 999",
+        inventoryLabel: "ఇన్వెంటరీ",
+        inventoryPlaceholder: "ఉదా., 10",
+        imagesLabel: "చిత్రాలు",
+        cancel: "రద్దు చేయి",
+        save: "ఉత్పత్తిని సేవ్ చేయి",
+      },
+
+      floatingAssistant: {
+        buttonLabel: "AI",
+        title: "కళాకారుల సహాయకుడు",
+        description: "కంటెంట్‌ను రూపొందించండి, అనువదించండి మరియు చిట్కాలను పొందండి.",
+        generate: "రూపొందించు",
+        generateStub: "దుకాణం వివరణను రూపొందించు (స్టబ్)",
+        translate: "అనువదించు",
+        translateStub: "వివరణను అనువదించు (స్టబ్)",
+      },
+
+      errors: {
+        categoriesLoadFailed: "ఉత్పత్తి వర్గాలను లోడ్ చేయలేకపోయింది. దయచేసి పేజీని రిఫ్రెష్ చేయండి.",
+        profileCreationFailed: "మీ దుకాణం ప్రొఫైల్‌ను సృష్టించడంలో విఫలమైంది.",
+        productCreationFailed: "ఉత్పత్తి \"{title}\" సృష్టించడంలో విఫలమైంది: {message}",
+        categoriesFetchFailed: "ఉత్పత్తి వర్గాలను పొందడంలో విఫలమైంది.",
+      },
+    },
   },
 
   mr: {
@@ -5226,6 +6134,7 @@ export const translations = {
       backHome: "होमला परत जा",
       prev: "मागील",
       next: "पुढील",
+      notAvailable: "उपलब्ध नाही",
     },
     categoryList: {
       title: "श्रेण्या",
@@ -5937,6 +6846,183 @@ export const translations = {
       errors: {
         notFound: "कारागिराचे स्टोअर सापडले नाही.",
         storeNotFound: "स्टोअर सापडले नाही.",
+      },
+    },
+    buildStore: {
+      imageUploader: {
+        limitExceeded: "तुम्ही फक्त {count} प्रतिमा अपलोड करू शकता. कृपया कमी फाइल निवडा.",
+        uploading: "अपलोड होत आहे...",
+        uploadImage: "प्रतिमा अपलोड करा",
+        uploadImages: "प्रतिमा अपलोड करा",
+        noImages: "कोणतीही प्रतिमा अपलोड केलेली नाही.",
+      },
+
+      productCard: {
+        noImage: "प्रतिमा नाही",
+        untitled: "शीर्षकहीन",
+        inStock: "स्टॉकमध्ये",
+        edit: "संपादित करा",
+        remove: "काढा",
+      },
+
+      header: {
+        brandName: "कारागीर बाजार",
+        setupProgress: "सेटअप प्रगती: {progress}%",
+        save: "जतन करा",
+        draftSaved: "मसुदा स्थानिक पातळीवर जतन केला",
+        saveFailed: "जतन अयशस्वी",
+        help: "मदत",
+        helpStub: "मदत उघडा (AI सहाय्यक)",
+      },
+
+      hero: {
+        title: "तुमची कला ऑनलाइन आणा — मिनिटांत तुमचे दुकान तयार करा",
+        subtitle: "आम्ही तुम्हाला टप्प्याटप्प्याने मार्गदर्शन करू. सूचनांसाठी कधीही AI सहाय्यक वापरा.",
+        startBuilding: "बांधकाम सुरू करा",
+        watchTutorial: "ट्यूटोरियल पहा",
+        tutorialStub: "ट्यूटोरियल उघडा (स्टब)",
+        quickTip: "द्रुत टिप्स: सर्वोत्तम परिणामांसाठी प्रति उत्पादन 3 फोटो वापरा",
+      },
+
+      steps: {
+        title: "चरण",
+        identity: "1. ओळख",
+        about: "2. बद्दल",
+        products: "3. उत्पादने",
+        media: "4. मीडिया",
+        theme: "5. थीम",
+        seo: "6. विपणन",
+        publish: "7. प्रकाशित करा",
+        autosave: "ऑटोसेव्ह सक्षम • स्थानिक मसुदा",
+      },
+
+      common: {
+        next: "पुढे",
+      },
+
+      identity: {
+        title: "ओळख सेटअप",
+        description: "दुकानाचे नाव, टॅगलाइन आणि मूळ स्थान",
+        storeNamePlaceholder: "दुकानाचे नाव",
+        taglinePlaceholder: "टॅगलाइन (AI सूचना)",
+        cityPlaceholder: "शहर",
+        statePlaceholder: "राज्य",
+      },
+
+      about: {
+        title: "तुमच्या दुकानाबद्दल",
+        description: "तुमच्या दुकानाबद्दल सांगा — AI ते परिष्कृत करण्यास मदत करेल.",
+        placeholder: "येथे तुमच्या दुकानाबद्दल लिहा...",
+        aiSuggest: "AI सह सूचना घ्या",
+        aiStub: "AI वैशिष्ट्य स्टब",
+      },
+
+      products: {
+        title: "उत्पादन कॅटलॉग",
+        description: "तुमच्या दुकानात विकण्यासाठी उत्पादने जोडा.",
+        yourProducts: "तुमची उत्पादने ({count})",
+        addProduct: "+ उत्पादन जोडा",
+        noProducts: "अद्याप उत्पादने नाहीत. सुरू करण्यासाठी 'उत्पादन जोडा' क्लिक करा.",
+      },
+
+      media: {
+        title: "मीडिया आणि ब्रँडिंग",
+        description: "तुमच्या दुकानाच्या पेजसाठी हिरो प्रतिमा आणि काही गॅलरी प्रतिमा अपलोड करा.",
+        heroImageLabel: "हिरो प्रतिमा (दुकान बॅनर)",
+        galleryImagesLabel: "गॅलरी प्रतिमा",
+      },
+
+      theme: {
+        title: "देखावा",
+        description: "तुमच्या कलेचे सर्वोत्तम प्रतिनिधित्व करणारी थीम निवडा.",
+        presetLabel: "थीम प्रीसेट",
+        presets: {
+          modern: "आधुनिक",
+          classic: "क्लासिक",
+          minimal: "किमान",
+          rustic: "पारंपारिक",
+        },
+      },
+
+      seo: {
+        title: "विपणन आणि SEO",
+        description: "ग्राहकांना शोध इंजिनवर तुमचे दुकान शोधण्यात मदत करा.",
+        metaDescriptionLabel: "मेटा वर्णन",
+        metaDescriptionPlaceholder: "शोध इंजिनसाठी तुमच्या दुकानाचे संक्षिप्त वर्णन.",
+        keywordsLabel: "मुख्यशब्द",
+        keywordsPlaceholder: "उदा., हस्तनिर्मित, मातीची भांडी, भारतीय हस्तकला",
+      },
+
+      publish: {
+        title: "पुनरावलोकन आणि प्रकाशन",
+        description: "तुमच्या दुकानाच्या तपशिलांचे पुनरावलोकन करा आणि लाइव्ह होण्यासाठी प्रकाशित करा!",
+        checklistTitle: "दुकान आरोग्य चेकलिस्ट",
+        checklistStoreName: "दुकानाचे नाव",
+        checklistLocation: "स्थान",
+        checklistProducts: "किमान एक उत्पादन",
+        checklistAbout: "तुमच्या दुकानाबद्दल",
+        publishButton: "दुकान प्रकाशित करा",
+        publishing: "प्रकाशित होत आहे...",
+        validationBasicInfo: "कृपया प्रकाशित करण्यापूर्वी दुकानाचे नाव, शहर आणि राज्य जोडा.",
+        validationProducts: "प्रकाशित करण्यासाठी किमान एक उत्पादन जोडा.",
+        validationProductDetails: "उत्पादन \"{title}\" ला शीर्षक, किंमत आणि श्रेणी आवश्यक आहे.",
+        success: "अभिनंदन! तुमचे दुकान यशस्वीरित्या प्रकाशित झाले आहे!",
+      },
+
+      preview: {
+        title: "लाइव्ह दुकान पूर्वावलोकन",
+        desktop: "डेस्कटॉप",
+        mobile: "मोबाइल",
+        heroPlaceholder: "हिरो प्रतिमा पूर्वावलोकन",
+        storeNamePlaceholder: "तुमच्या दुकानाचे नाव",
+        taglinePlaceholder: "येथे एक लहान टॅगलाइन दिसेल",
+        productsPlaceholder: "उत्पादने येथे दिसतील...",
+        heroAlt: "स्टोअर हिरो प्रतिमेचे पूर्वावलोकन",
+      },
+
+      assistant: {
+        title: "कारागीर सहाय्यक",
+        description: "वर्णन, भाषांतर आणि अधिक मदत मिळवा.",
+        autoDescribe: "स्वयं-वर्णन",
+        autoDescribeStub: "वर्णन तयार करा (स्टब)",
+        translate: "भाषांतर करा",
+        translateStub: "मराठीमध्ये भाषांतर करा (स्टब)",
+      },
+
+      productDialog: {
+        editTitle: "उत्पादन संपादित करा",
+        addTitle: "उत्पादन जोडा",
+        titleLabel: "उत्पादन शीर्षक",
+        titlePlaceholder: "उदा., हाताने रंगवलेले सिरॅमिक मग",
+        descriptionLabel: "वर्णन",
+        descriptionPlaceholder: "तुमच्या उत्पादनाचे वर्णन करा...",
+        categoryLabel: "श्रेणी",
+        categoryPlaceholder: "एक श्रेणी निवडा",
+        categoryLoading: "लोड होत आहे...",
+        priceLabel: "किंमत (₹)",
+        pricePlaceholder: "उदा., 999",
+        inventoryLabel: "इन्व्हेंटरी",
+        inventoryPlaceholder: "उदा., 10",
+        imagesLabel: "प्रतिमा",
+        cancel: "रद्द करा",
+        save: "उत्पादन जतन करा",
+      },
+
+      floatingAssistant: {
+        buttonLabel: "AI",
+        title: "कारागीर सहाय्यक",
+        description: "सामग्री तयार करा, भाषांतर करा आणि टिप्स मिळवा.",
+        generate: "तयार करा",
+        generateStub: "दुकान वर्णन तयार करा (स्टब)",
+        translate: "भाषांतर करा",
+        translateStub: "वर्णन भाषांतर करा (स्टब)",
+      },
+
+      errors: {
+        categoriesLoadFailed: "उत्पादन श्रेण्या लोड करू शकले नाहीत. कृपया पेज रिफ्रेश करा.",
+        profileCreationFailed: "तुमचे दुकान प्रोफाइल तयार करण्यात अयशस्वी.",
+        productCreationFailed: "उत्पादन \"{title}\" तयार करण्यात अयशस्वी: {message}",
+        categoriesFetchFailed: "उत्पादन श्रेणी मिळवण्यात अयशस्वी.",
       },
     },
   },
