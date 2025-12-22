@@ -1215,6 +1215,26 @@ export const translations = {
         categoriesFetchFailed: "Failed to fetch product categories.",
       },
     },
+    orderConfirmation: {
+      fetchFailed: "Could not fetch order details.",
+      error: "Error: {error}",
+
+      thankYou: "Thank you for your order!",
+      successMessage: "Your order has been placed successfully.",
+
+      orderId: "Order ID",
+      orderSummary: "Order Summary",
+      qty: "Qty: {count}",
+
+      shipping: "Shipping Address",
+      phone: "Phone",
+
+      totalAmount: "Total Amount",
+      paidVia: "Paid via {method}",
+
+      backToShop: "Back to Shop",
+      continueShopping: "Continue Shopping",
+    },
   },
 
   hi: {
@@ -2388,6 +2408,26 @@ export const translations = {
         categoriesFetchFailed: "उत्पाद श्रेणियाँ प्राप्त करने में विफल।",
       },
     },
+    orderConfirmation: {
+      fetchFailed: "ऑर्डर विवरण प्राप्त नहीं किया जा सका।",
+      error: "त्रुटि: {error}",
+
+      thankYou: "आपके ऑर्डर के लिए धन्यवाद!",
+      successMessage: "आपका ऑर्डर सफलतापूर्वक दर्ज कर लिया गया है।",
+
+      orderId: "ऑर्डर आईडी",
+      orderSummary: "ऑर्डर सारांश",
+      qty: "मात्रा: {count}",
+
+      shipping: "शिपिंग पता",
+      phone: "फ़ोन",
+
+      totalAmount: "कुल राशि",
+      paidVia: "{method} के माध्यम से भुगतान किया गया",
+
+      backToShop: "दुकान पर वापस जाएँ",
+      continueShopping: "खरीदारी जारी रखें",
+    },
   },
 
   bn: {
@@ -3548,6 +3588,26 @@ export const translations = {
         categoriesFetchFailed: "পণ্যের বিভাগ আনতে ব্যর্থ হয়েছে।",
       },
     },
+    orderConfirmation: {
+      fetchFailed: "অর্ডারের বিস্তারিত তথ্য আনা যায়নি।",
+      error: "ত্রুটি: {error}",
+
+      thankYou: "আপনার অর্ডারের জন্য ধন্যবাদ!",
+      successMessage: "আপনার অর্ডার সফলভাবে সম্পন্ন হয়েছে।",
+
+      orderId: "অর্ডার আইডি",
+      orderSummary: "অর্ডার সারসংক্ষেপ",
+      qty: "পরিমাণ: {count}",
+
+      shipping: "শিপিং ঠিকানা",
+      phone: "ফোন",
+
+      totalAmount: "মোট পরিমাণ",
+      paidVia: "{method} এর মাধ্যমে পরিশোধ করা হয়েছে",
+
+      backToShop: "দোকানে ফিরে যান",
+      continueShopping: "কেনাকাটা চালিয়ে যান",
+    },
   },
 
   ta: {
@@ -4706,6 +4766,26 @@ export const translations = {
         productCreationFailed: "தயாரிப்பு \"{title}\" உருவாக்க முடியவில்லை: {message}",
         categoriesFetchFailed: "தயாரிப்பு வகைகளை பெற முடியவில்லை.",
       },
+    },
+    orderConfirmation: {
+      fetchFailed: "ஆர்டர் விவரங்களை பெற முடியவில்லை.",
+      error: "பிழை: {error}",
+
+      thankYou: "உங்கள் ஆர்டருக்கு நன்றி!",
+      successMessage: "உங்கள் ஆர்டர் வெற்றிகரமாக பதிவு செய்யப்பட்டது.",
+
+      orderId: "ஆர்டர் ஐடி",
+      orderSummary: "ஆர்டர் சுருக்கம்",
+      qty: "அளவு: {count}",
+
+      shipping: "டெலிவரி முகவரி",
+      phone: "தொலைபேசி",
+
+      totalAmount: "மொத்த தொகை",
+      paidVia: "{method} மூலம் செலுத்தப்பட்டது",
+
+      backToShop: "கடைக்கு திரும்பு",
+      continueShopping: "ஷாப்பிங்கை தொடரவும்",
     },
   },
 
@@ -5866,6 +5946,26 @@ export const translations = {
         categoriesFetchFailed: "ఉత్పత్తి వర్గాలను పొందడంలో విఫలమైంది.",
       },
     },
+    orderConfirmation: {
+      fetchFailed: "ఆర్డర్ వివరాలను పొందలేకపోయాము.",
+      error: "లోపం: {error}",
+
+      thankYou: "మీ ఆర్డర్‌కు ధన్యవాదాలు!",
+      successMessage: "మీ ఆర్డర్ విజయవంతంగా పూర్తైంది.",
+
+      orderId: "ఆర్డర్ ఐడి",
+      orderSummary: "ఆర్డర్ సారాంశం",
+      qty: "పరిమాణం: {count}",
+
+      shipping: "డెలివరీ చిరునామా",
+      phone: "ఫోన్",
+
+      totalAmount: "మొత్తం మొత్తం",
+      paidVia: "{method} ద్వారా చెల్లించబడింది",
+
+      backToShop: "షాప్‌కు తిరిగి వెళ్లండి",
+      continueShopping: "షాపింగ్ కొనసాగించండి",
+    },
   },
 
   mr: {
@@ -7024,6 +7124,26 @@ export const translations = {
         productCreationFailed: "उत्पादन \"{title}\" तयार करण्यात अयशस्वी: {message}",
         categoriesFetchFailed: "उत्पादन श्रेणी मिळवण्यात अयशस्वी.",
       },
+    },
+    orderConfirmation: {
+      fetchFailed: "ऑर्डर तपशील मिळवता आला नाही.",
+      error: "त्रुटी: {error}",
+
+      thankYou: "आपल्या ऑर्डरसाठी धन्यवाद!",
+      successMessage: "आपला ऑर्डर यशस्वीपणे नोंदवण्यात आला आहे.",
+
+      orderId: "ऑर्डर आयडी",
+      orderSummary: "ऑर्डर सारांश",
+      qty: "प्रमाण: {count}",
+
+      shipping: "शिपिंग पत्ता",
+      phone: "फोन",
+
+      totalAmount: "एकूण रक्कम",
+      paidVia: "{method} द्वारे पैसे दिले",
+
+      backToShop: "दुकानात परत जा",
+      continueShopping: "खरेदी सुरू ठेवा",
     },
   },
 };

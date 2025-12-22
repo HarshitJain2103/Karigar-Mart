@@ -114,7 +114,7 @@ export default function CheckoutPage() {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: orderData.amount,
         currency: orderData.currency,
-        name: 'LocalArtist',
+        name: 'KarigarMart',
         description: `Payment for ${orderData.productName}`,
         order_id: orderData.id,
         handler: async function (response) {
