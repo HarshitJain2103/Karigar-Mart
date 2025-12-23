@@ -16,11 +16,11 @@ const useAuthStore = create((set, get) => ({
     set({ token: null, user: null });
   },
   setUser: (userData) => set({ user: userData }),
-  
+
   fetchUserProfile: async () => {
-    const token = get().token; 
+    const token = get().token;
     if (!token) {
-      return; 
+      return null;
     }
 
     try {
@@ -35,13 +35,15 @@ const useAuthStore = create((set, get) => ({
       }
 
       const userData = await response.json();
-      set({ user: userData }); 
+      set({ user: userData });
+      return userData;
     } catch (error) {
       console.error('Failed to fetch user profile:', error);
-      get().logout(); 
+      get().logout();
+      return null;
     }
   },
-  setWishlist: (wishlistItems) => set({ wishlist: wishlistItems }),
+  setWishlist: (wishlistItems) => set({ wishlist: Array.isArray(wishlistItems) ? wishlistItems : [] }),
 
   toggleWishlist: async (productId) => {
     const token = get().token;
@@ -52,7 +54,7 @@ const useAuthStore = create((set, get) => ({
 
     const endpoint = getApiUrl(`/api/users/profile/wishlist`);
     const method = isWishlisted ? 'DELETE' : 'POST';
-    
+
     try {
       const response = await fetch(isWishlisted ? `${endpoint}/${productId}` : endpoint, {
         method,
@@ -63,7 +65,7 @@ const useAuthStore = create((set, get) => ({
         body: isWishlisted ? null : JSON.stringify({ productId }),
       });
       if (!response.ok) throw new Error('Failed to update wishlist');
-      
+
       const updatedWishlist = await response.json();
       set({ wishlist: updatedWishlist });
     } catch (error) {

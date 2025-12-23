@@ -8,7 +8,7 @@ const useCartStore = create((set, get) => ({
   subtotal: () => {
     return get().items.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
   },
-  setCart: (cartItems) => set({ items: cartItems }),
+  setCart: (cartItems) => set({ items: Array.isArray(cartItems) ? cartItems : [] }),
 
   addToCart: async (product, quantity) => {
     const token = useAuthStore.getState().token;

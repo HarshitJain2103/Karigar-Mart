@@ -6,7 +6,7 @@ import useVoiceSearch from "./hooks/useVoiceSearch";
 import BuildYourStoreFull from "./pages/BuildYourStore";
 import Home from "./pages/Home";
 import useAuthStore from "./stores/authStore";
-import PrivateRoute from './components/ui/auth/PrivateRoute'; 
+import PrivateRoute from './components/ui/auth/PrivateRoute';
 import Dashboard from "@/pages/Dashboard";
 import ArtisanStorePage from "./pages/ArtisanStorePage";
 import AllArtisansPage from "./pages/AllArtisansPage";
@@ -32,7 +32,7 @@ import ReelsPage from "./pages/ReelsPage";
 
 export default function App() {
   const { query, setQuery, lang, setLang, startVoiceSearch, isListening } = useVoiceSearch();
-  const recognitionRef = useRef(null); 
+  const recognitionRef = useRef(null);
   const token = useAuthStore((state) => state.token);
   const fetchUserProfile = useAuthStore((state) => state.fetchUserProfile);
   const setWishlist = useAuthStore((state) => state.setWishlist);
@@ -40,15 +40,21 @@ export default function App() {
 
   useEffect(() => {
     const fetchInitialData = async () => {
-      await fetchUserProfile();
+      const user = await fetchUserProfile();
+      if (!user) return;
+
       const headers = { Authorization: `Bearer ${token}` };
-      const wishlistPromise = fetch(getApiUrl('/api/users/profile/wishlist'), { headers }).then(res => res.json());
-      const cartPromise = fetch(getApiUrl('/api/users/profile/cart'), { headers }).then(res => res.json());
-      
+      const wishlistPromise = fetch(getApiUrl('/api/users/profile/wishlist'), { headers })
+        .then(async res => res.ok ? await res.json() : [])
+        .catch(() => []);
+      const cartPromise = fetch(getApiUrl('/api/users/profile/cart'), { headers })
+        .then(async res => res.ok ? await res.json() : [])
+        .catch(() => []);
+
       const [wishlistData, cartData] = await Promise.all([wishlistPromise, cartPromise]);
-      
-      if (wishlistData) setWishlist(wishlistData);
-      if (cartData) setCart(cartData);
+
+      setWishlist(wishlistData);
+      setCart(cartData);
     };
 
     if (token) {
@@ -85,13 +91,13 @@ export default function App() {
           <Route path="/auth/callback" element={<AuthCallbackPage />} />
           <Route path="/stories" element={<StoriesPage />} />
           <Route path="/stories/:storyId" element={<StoryDetailPage />} />
-          <Route path="/profile" element={<ProfilePage/>} />
-          <Route path="/reels" element={<ReelsPage/>} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/reels" element={<ReelsPage />} />
 
           {/* --- CUSTOMER & ARTISAN PROTECTED ROUTES --- */}
           <Route element={<PrivateRoute allowedRoles={['CUSTOMER', 'ARTISAN']} />}>
-             <Route path="/orders" element={<MyOrdersPage />} />
-             <Route path="/checkout-cart" element={<CheckoutCartPage />} />
+            <Route path="/orders" element={<MyOrdersPage />} />
+            <Route path="/checkout-cart" element={<CheckoutCartPage />} />
           </Route>
 
           {/* --- ARTISAN ONLY PROTECTED ROUTES (All in one place) --- */}
@@ -104,7 +110,7 @@ export default function App() {
         </Routes>
       </main>
 
-      { location.pathname != '/reels' && <Footer />}
+      {location.pathname != '/reels' && <Footer />}
       <Toaster />
     </div>
   );
