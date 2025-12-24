@@ -83,7 +83,7 @@ export default function ContactPage() {
 
       {/* Top info cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <Card>
+        <Card className="shadow-lg">
           <CardContent className="p-4 flex items-start gap-3">
             <div className="rounded-md bg-primary/10 p-2">
               <Mail className="h-5 w-5 text-primary" />
@@ -97,7 +97,7 @@ export default function ContactPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="shadow-lg">
           <CardContent className="p-4 flex items-start gap-3">
             <div className="rounded-md bg-primary/10 p-2">
               <Phone className="h-5 w-5 text-primary" />
@@ -111,7 +111,7 @@ export default function ContactPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="shadow-lg">
           <CardContent className="p-4 flex items-start gap-3">
             <div className="rounded-md bg-primary/10 p-2">
               <MapPin className="h-5 w-5 text-primary" />

@@ -272,7 +272,7 @@ export default function MyOrdersPage() {
       </div>
 
       {/* Orders list */}
-      <Card>
+      <Card className="shadow-lg">
         <CardContent className="p-0">
           <Accordion type="single" collapsible className="w-full">
             {processed.map((order) => {

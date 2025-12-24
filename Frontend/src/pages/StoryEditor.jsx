@@ -106,7 +106,7 @@ export default function StoryEditor() {
         <p className="text-muted-foreground">{isEditMode ? t('storyEditor.editSubtitle') : t('storyEditor.createSubtitle')}</p>
       </div>
       <form onSubmit={handleSubmit}>
-        <Card>
+        <Card className="shadow-lg">
           <CardContent className="p-6 space-y-6">
             <div className="space-y-2">
               <Label htmlFor="title">{t('storyEditor.titleLabel')}</Label>

@@ -21,7 +21,7 @@ export default function HeroSection({ slides, index, setIndex }) {
   return (
     <section className="relative">
       <div className="mx-auto max-w-7xl px-4">
-        <div className="relative h-[360px] overflow-hidden rounded-3xl bg-muted">
+        <div className="relative h-[360px] overflow-hidden rounded-3xl bg-muted shadow-md md:shadow-xl">
           {slides.map((slide, i) => (
             <motion.div
               key={slide.title}

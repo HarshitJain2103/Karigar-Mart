@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 export default function StoryCard({ story }) {
   return (
     <Link to={`/stories/${story._id}`}>
-      <Card className="overflow-hidden group transition-shadow duration-300 hover:shadow-lg h-full flex flex-col">
+      <Card className="overflow-hidden group transition-shadow duration-300 shadow-lg hover:shadow-xl h-full flex flex-col">
         <div className="aspect-video overflow-hidden bg-gray-100">
           <img 
             src={story.coverImageURL} 

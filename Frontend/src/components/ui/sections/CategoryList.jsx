@@ -19,7 +19,7 @@ export default function CategoryList({ categories }) {
           <Link 
             key={c._id}
             to={`/shop?category=${c._id}`}
-            className="group relative flex flex-col h-full overflow-hidden rounded-lg border shadow-sm text-center transition-shadow hover:shadow-md"
+            className="group relative flex flex-col h-full overflow-hidden rounded-lg border shadow-md text-center transition-shadow hover:shadow-lg"
           >
             <div className="aspect-square w-full overflow-hidden">
               <img 

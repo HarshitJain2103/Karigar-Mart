@@ -95,7 +95,7 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <Card className="overflow-hidden group transition-shadow duration-300 hover:shadow-lg">
+    <Card className="overflow-hidden group transition-shadow duration-300 shadow-lg hover:shadow-xl">
       <div className="relative">
         <Link to={`/products/${product._id}`}>
           <div className="aspect-square w-full overflow-hidden bg-gray-100">

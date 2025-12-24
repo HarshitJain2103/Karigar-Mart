@@ -345,7 +345,7 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
                             <h3 className="text-lg font-bold">{t('reelCard.selectQuantity')}</h3>
                             <button
                                 onClick={() => setShowCheckoutModal(false)}
-                                className="p-1 hover:bg-white/10 rounded"
+                                className="p-2 text-white hover:text-black hover:bg-white rounded-full transition-colors"
                             >
                                 <X className="w-5 h-5" />
                             </button>
@@ -382,13 +382,13 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
                         </div>
 
                         <div className="flex gap-2">
-                            <Button
-                                variant="outline"
-                                className="flex-1"
+                            <button
                                 onClick={() => setShowCheckoutModal(false)}
+                                className="flex-1 bg-white text-black font-semibold py-1.5 rounded-lg hover:bg-gray-200 transition"
                             >
                                 {t('common.cancel')}
-                            </Button>
+                            </button>
+
                             <Button
                                 className="flex-1 bg-blue-600 hover:bg-blue-700"
                                 onClick={handleAddToCart}

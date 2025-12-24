@@ -452,7 +452,7 @@ function SidebarItem({ icon, label, active, onClick }) {
 /* Overview Section */
 function OverviewSection({ user, t }) {
     return (
-        <Card>
+        <Card className="shadow-lg">
             <CardHeader className="border-b bg-white">
                 <CardTitle className="text-2xl">{t('profilePage.overview.title')}</CardTitle>
             </CardHeader>
@@ -501,7 +501,7 @@ function OverviewSection({ user, t }) {
 /* Edit Profile Section */
 function EditProfileSection({ user, isEditing, editForm, setEditForm, setIsEditing, handleSaveProfile, saving, error, t }) {
     return (
-        <Card>
+        <Card className="shadow-lg">
             <CardHeader className="border-b bg-white flex flex-row items-center justify-between">
                 <CardTitle className="text-2xl">{t('profilePage.edit.title')}</CardTitle>
                 {!isEditing ? (
@@ -614,7 +614,7 @@ function EditProfileSection({ user, isEditing, editForm, setEditForm, setIsEditi
 /* Address Section */
 function AddressSection({ user, token, t }) {
     return (
-        <Card>
+        <Card className="shadow-lg">
             <CardHeader className="border-b bg-white flex flex-row items-center justify-between">
                 <CardTitle className="text-2xl">{t('profilePage.address.title')}</CardTitle>
                 {/* Address management can be added later */}
@@ -695,7 +695,7 @@ function OrdersSection({ stats, orders, loading, t }) {
             </div>
 
             {/* Recent Orders */}
-            <Card>
+            <Card className="shadow-lg">
                 <CardHeader className="border-b bg-white">
                     <CardTitle className="text-2xl">{t('profilePage.orders.recent')}</CardTitle>
                 </CardHeader>
@@ -755,7 +755,7 @@ function WishlistSection({ wishlist, loading, token, t }) {
     }
 
     return (
-        <Card>
+        <Card className="shadow-lg">
             <CardHeader className="border-b bg-white">
                 <CardTitle className="text-2xl">{t('profilePage.wishlist.title')}</CardTitle>
                 <p className="text-sm text-gray-500 mt-1">{t('profilePage.wishlist.count', {
@@ -875,7 +875,7 @@ function SecuritySection({ user, token, t }) {
     };
 
     return (
-        <Card>
+        <Card className="shadow-lg">
             <CardHeader className="border-b bg-white">
                 <CardTitle className="text-2xl">{t('profilePage.security.title')}</CardTitle>
             </CardHeader>

@@ -10,7 +10,7 @@ export default function ArtisanCard({ artisan }) {
   const artisanName = `${artisan.userId.firstName} ${artisan.userId.lastName}`;
 
   return (
-    <Card className="overflow-hidden group transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+    <Card className="overflow-hidden group transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1">
       <Link to={`/store/${artisan._id}`} className="block">
         <div className="relative h-48 w-full">
           <img 

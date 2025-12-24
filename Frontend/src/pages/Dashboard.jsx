@@ -202,13 +202,13 @@ export default function Dashboard() {
 
         {/* Stats Cards */}
         <div className="grid gap-4 grid-cols-1 md:grid-cols-3 mb-8">
-          <Card><CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"><CardTitle className="text-sm font-medium">{t('dashboard.totalRevenue')}</CardTitle><DollarSign className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">₹{dashboardData.totalRevenue?.toFixed(2) || '0.00'}</div><p className="text-xs text-muted-foreground">{t('dashboard.revenueDescription')}</p></CardContent></Card>
-          <Card><CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"><CardTitle className="text-sm font-medium">{t('dashboard.totalOrders')}</CardTitle><ShoppingCart className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{dashboardData.totalOrders || 0}</div><p className="text-xs text-muted-foreground">{t('dashboard.ordersDescription')}</p></CardContent></Card>
-          <Card><CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"><CardTitle className="text-sm font-medium">{t('dashboard.productsListed')}</CardTitle><Package className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{products.length}</div><p className="text-xs text-muted-foreground">{t('dashboard.productsListedDescription')}</p></CardContent></Card>
+          <Card className="shadow-lg"><CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"><CardTitle className="text-sm font-medium">{t('dashboard.totalRevenue')}</CardTitle><DollarSign className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">₹{dashboardData.totalRevenue?.toFixed(2) || '0.00'}</div><p className="text-xs text-muted-foreground">{t('dashboard.revenueDescription')}</p></CardContent></Card>
+          <Card className="shadow-lg"><CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"><CardTitle className="text-sm font-medium">{t('dashboard.totalOrders')}</CardTitle><ShoppingCart className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{dashboardData.totalOrders || 0}</div><p className="text-xs text-muted-foreground">{t('dashboard.ordersDescription')}</p></CardContent></Card>
+          <Card className="shadow-lg"><CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"><CardTitle className="text-sm font-medium">{t('dashboard.productsListed')}</CardTitle><Package className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{products.length}</div><p className="text-xs text-muted-foreground">{t('dashboard.productsListedDescription')}</p></CardContent></Card>
         </div>
 
         {/* Stories Card */}
-        <Card className="mb-8">
+        <Card className="mb-8 shadow-lg">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <BookOpen className="h-5 w-5" />
@@ -224,7 +224,7 @@ export default function Dashboard() {
         </Card>
 
         {/* Products Table */}
-        <Card>
+        <Card className="shadow-lg">
           <CardHeader>
             <CardTitle>Your Products</CardTitle>
             <CardDescription>Manage your inventory and product details.</CardDescription>
