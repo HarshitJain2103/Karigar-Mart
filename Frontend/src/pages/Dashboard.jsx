@@ -4,9 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import ProductDialog from '../components/ui/products/ProductDialog';
 import { DollarSign, Package, ShoppingCart, BookOpen, Video, Loader, Wifi, WifiOff } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useVideoSSE } from '../hooks/useVideoSSE';
 import { getApiUrl } from "@/lib/api";
 import Spinner from '@/components/ui/Spinner';
@@ -14,11 +15,12 @@ import { useTranslation } from '@/hooks/useTranslation';
 
 export default function Dashboard() {
   const { t } = useTranslation();
-  const [dashboardData, setDashboardData] = useState(null);
+  const [dashboardData, setDashboardData] = useState({ profile: null, products: [], page: 1, pages: 1, totalProducts: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const token = useAuthStore((state) => state.token);
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isProductDialogOpen, setIsProductDialogOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
@@ -27,7 +29,8 @@ export default function Dashboard() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await fetch(getApiUrl('/api/artisans/dashboard'), {
+      const params = new URLSearchParams(searchParams);
+      const response = await fetch(getApiUrl(`/api/artisans/dashboard?${params.toString()}`), {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       if (!response.ok) throw new Error('Failed to fetch dashboard data.');
@@ -44,9 +47,9 @@ export default function Dashboard() {
     if (token) {
       fetchData();
     }
-  }, [token]);
+  }, [token, searchParams]);
 
-  // ✅ NEW: Real-time video status updates via SSE
+  //Real-time video status updates via SSE
   const handleVideoStatusUpdate = (productId, statusData) => {
     console.log(`[DASHBOARD] Video update for ${productId}:`, statusData);
 
@@ -73,11 +76,18 @@ export default function Dashboard() {
     });
   };
 
-  // ✅ NEW: Connect SSE when products are generating
+  //Connect SSE when products are generating
   const { isConnected, generatingCount } = useVideoSSE(
     dashboardData?.products || [],
     handleVideoStatusUpdate
   );
+
+  const handlePageChange = (newPage) => {
+    setSearchParams(prev => {
+      prev.set('pageNumber', newPage.toString());
+      return prev;
+    });
+  };
 
   const handleAddNewProduct = () => {
     setEditingProduct(null);
@@ -121,6 +131,9 @@ export default function Dashboard() {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       if (!response.ok) throw new Error('Failed to delete product.');
+      if (dashboardData.page > dashboardData.pages && dashboardData.pages > 0) {
+        handlePageChange(dashboardData.pages);
+      }
       setIsAlertOpen(false);
       setProductToDelete(null);
       fetchData();
@@ -161,7 +174,7 @@ export default function Dashboard() {
 
   if (loading) return <div className="flex justify-center items-center h-screen"><Spinner size="lg" /></div>;
   if (error) return <div>Error: {error}</div>;
-  if (!dashboardData) return <div>No data found.</div>;
+  if (!dashboardData || !dashboardData.profile) return <div>No data found.</div>;
 
   const { profile, products } = dashboardData;
 
@@ -204,7 +217,7 @@ export default function Dashboard() {
         <div className="grid gap-4 grid-cols-1 md:grid-cols-3 mb-8">
           <Card className="shadow-lg"><CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"><CardTitle className="text-sm font-medium">{t('dashboard.totalRevenue')}</CardTitle><DollarSign className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">₹{dashboardData.totalRevenue?.toFixed(2) || '0.00'}</div><p className="text-xs text-muted-foreground">{t('dashboard.revenueDescription')}</p></CardContent></Card>
           <Card className="shadow-lg"><CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"><CardTitle className="text-sm font-medium">{t('dashboard.totalOrders')}</CardTitle><ShoppingCart className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{dashboardData.totalOrders || 0}</div><p className="text-xs text-muted-foreground">{t('dashboard.ordersDescription')}</p></CardContent></Card>
-          <Card className="shadow-lg"><CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"><CardTitle className="text-sm font-medium">{t('dashboard.productsListed')}</CardTitle><Package className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{products.length}</div><p className="text-xs text-muted-foreground">{t('dashboard.productsListedDescription')}</p></CardContent></Card>
+          <Card className="shadow-lg"><CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"><CardTitle className="text-sm font-medium">{t('dashboard.productsListed')}</CardTitle><Package className="h-4 w-4 text-muted-foreground" /></CardHeader><CardContent><div className="text-2xl font-bold">{dashboardData.totalProducts || products.length}</div><p className="text-xs text-muted-foreground">{t('dashboard.productsListedDescription')}</p></CardContent></Card>
         </div>
 
         {/* Stories Card */}
@@ -318,6 +331,29 @@ export default function Dashboard() {
             </Table>
           </CardContent>
         </Card>
+
+        {/* Pagination */}
+        {dashboardData.pages > 1 && (
+          <div className="mt-8">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious href="#" onClick={(e) => { e.preventDefault(); if (dashboardData.page > 1) handlePageChange(dashboardData.page - 1); }} />
+                </PaginationItem>
+                {[...Array(dashboardData.pages).keys()].map(p => (
+                  <PaginationItem key={p + 1}>
+                    <PaginationLink href="#" onClick={(e) => { e.preventDefault(); handlePageChange(p + 1); }} isActive={dashboardData.page === p + 1}>
+                      {p + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                <PaginationItem>
+                  <PaginationNext href="#" onClick={(e) => { e.preventDefault(); if (dashboardData.page < dashboardData.pages) handlePageChange(dashboardData.page + 1); }} />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
 
         <ProductDialog
           open={isProductDialogOpen}

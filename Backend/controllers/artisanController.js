@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 
 const createArtisanProfile = async (req, res) => {
   try {
-    const userId = req.user.id; 
+    const userId = req.user.id;
 
     const existingProfile = await ArtisanProfile.findOne({ userId });
     if (existingProfile) {
@@ -16,23 +16,23 @@ const createArtisanProfile = async (req, res) => {
     const {
       storeName,
       tagline,
-      address, 
+      address,
       about,
-      theme, 
+      theme,
       seo,
-      media    
+      media
     } = req.body;
 
     const profile = new ArtisanProfile({
       userId,
       storeName,
       tagline,
-      address, 
+      address,
       about,
       theme,
       seo,
-      media,   
-      status: 'PUBLISHED', 
+      media,
+      status: 'PUBLISHED',
     });
 
     const createdProfile = await profile.save();
@@ -58,17 +58,22 @@ const getArtisanDashboard = async (req, res) => {
       return res.status(404).json({ message: 'Artisan profile not found.' });
     }
 
-    const products = await Product.find({ artisanId: profile._id });
-    
+    const pageSize = 10;
+    const page = Number(req.query.pageNumber) || 1;
+    const products = await Product.find({ artisanId: profile._id })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
+    const totalProducts = await Product.countDocuments({ artisanId: profile._id });
+
     const stats = await Order.aggregate([
       { $match: { isPaid: true } },
       { $unwind: '$orderItems' },
       { $match: { 'orderItems.artisan': new mongoose.Types.ObjectId(profile._id) } },
       {
         $group: {
-          _id: null, 
+          _id: null,
           totalRevenue: { $sum: { $multiply: ['$orderItems.price', '$orderItems.qty'] } },
-          totalOrdersSet: { $addToSet: '$_id' }, 
+          totalOrdersSet: { $addToSet: '$_id' },
         },
       },
     ]);
@@ -79,8 +84,11 @@ const getArtisanDashboard = async (req, res) => {
     res.status(200).json({
       profile,
       products,
-      totalRevenue, 
-      totalOrders,  
+      totalRevenue,
+      totalOrders,
+      page,
+      pages: Math.ceil(totalProducts / pageSize),
+      totalProducts,
     });
   } catch (error) {
     console.error('Error fetching artisan dashboard:', error);
@@ -91,7 +99,7 @@ const getArtisanDashboard = async (req, res) => {
 const getArtisans = async (req, res) => {
   try {
     const profiles = await ArtisanProfile.find({ status: 'PUBLISHED' })
-      .populate('userId', 'firstName lastName avatar'); 
+      .populate('userId', 'firstName lastName avatar');
 
     res.json(profiles);
   } catch (error) {
