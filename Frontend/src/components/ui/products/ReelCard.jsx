@@ -8,14 +8,13 @@ import useCartStore from '@/stores/cartStore';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/useTranslation';
 
-export default function ReelCard({ reel, isActive, autoPlay = true }) {
+export default function ReelCard({ reel, isActive, autoPlay = true, isMuted, onMuteToggle }) {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { toast } = useToast();
     const videoRef = useRef(null);
 
     const [isPlaying, setIsPlaying] = useState(false);
-    const [isMuted, setIsMuted] = useState(true);
     const [liked, setLiked] = useState(false);
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [quantity, setQuantity] = useState(1);
@@ -56,6 +55,21 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
         }
     }, [isActive, autoPlay]);
 
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.muted = isMuted;
+        }
+    }, [isMuted]);
+
+    useEffect(() => {
+        return () => {
+            if (videoRef.current) {
+                videoRef.current.pause();
+                videoRef.current.src = "";
+            }
+        };
+    }, []);
+
     const handlePlayPause = () => {
         if (videoRef.current) {
             if (isPlaying) {
@@ -69,10 +83,10 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
     };
 
     const handleMute = () => {
-        if (videoRef.current) {
-            videoRef.current.muted = !isMuted;
-            setIsMuted(!isMuted);
+        if (isMuted && videoRef.current) {
+            videoRef.current.play().catch(() => {});
         }
+        onMuteToggle();
     };
 
     const handleShare = async () => {
@@ -156,6 +170,8 @@ export default function ReelCard({ reel, isActive, autoPlay = true }) {
                 muted={isMuted}
                 onClick={handlePlayPause}
                 crossOrigin="anonymous"
+                playsInline
+                preload="metadata"
             />
 
             {/* Play overlay */}

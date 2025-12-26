@@ -13,11 +13,19 @@ export default function ReelsPage() {
   const [error, setError] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [autoPlay, setAutoPlay] = useState(true);
+  const [isMuted, setIsMuted] = useState(() => {
+    const saved = localStorage.getItem('reelMuted');
+    return saved !== null ? JSON.parse(saved) : true;
+  });
 
   const containerRef = useRef(null);
   const scrollTimeoutRef = useRef(null);
   const touchStartY = useRef(null);
   const touchEndY = useRef(null);
+
+  useEffect(() => {
+    localStorage.setItem('reelMuted', JSON.stringify(isMuted));
+  }, [isMuted]);
 
   // Fetch reels
   useEffect(() => {
@@ -64,6 +72,7 @@ export default function ReelsPage() {
 
   // Wheel scroll
   const handleWheel = useCallback((e) => {
+    if (!document.hasFocus()) return;
     if (scrollTimeoutRef.current) return;
 
     if (e.deltaY > 0) handleNext();
@@ -131,6 +140,7 @@ export default function ReelsPage() {
       onWheel={handleWheel}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
+      onTouchMove={(e) => e.preventDefault()}
     >
       {/* Reel container */}
       <div
@@ -146,6 +156,8 @@ export default function ReelsPage() {
               reel={reel}
               isActive={idx === currentIndex}
               autoPlay={autoPlay}
+              isMuted={isMuted}
+              onMuteToggle={() => setIsMuted(prev => !prev)}
             />
           </div>
         ))}
