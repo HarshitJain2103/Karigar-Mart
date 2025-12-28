@@ -29,6 +29,7 @@ import CheckoutCartPage from './pages/CheckoutCartPage';
 import ProfilePage from "./pages/ProfilePage";
 import { getApiUrl } from "@/lib/api";
 import ReelsPage from "./pages/ReelsPage";
+import ScrollToTopButton from './components/ui/ScrollToTopButton';
 
 export default function App() {
   const { query, setQuery, lang, setLang, startVoiceSearch, isListening } = useVoiceSearch();
@@ -37,6 +38,15 @@ export default function App() {
   const fetchUserProfile = useAuthStore((state) => state.fetchUserProfile);
   const setWishlist = useAuthStore((state) => state.setWishlist);
   const setCart = useCartStore((state) => state.setCart);
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant",
+    });
+  }, [location.pathname]);
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -61,6 +71,8 @@ export default function App() {
       fetchInitialData();
     }
   }, [token, fetchUserProfile, setWishlist, setCart]);
+
+  const hideFooterRoutes = ['/reels'];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -110,7 +122,9 @@ export default function App() {
         </Routes>
       </main>
 
-      {location.pathname != '/reels' && <Footer />}
+      <ScrollToTopButton />
+
+      {!hideFooterRoutes.includes(location.pathname) && <Footer />}
       <Toaster />
     </div>
   );
