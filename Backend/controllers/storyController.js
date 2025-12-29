@@ -1,10 +1,11 @@
 import asyncHandler from 'express-async-handler';
 import Story from '../models/story.model.js';
 import ArtisanProfile from '../models/artisanProfile.model.js';
+import { refineStory } from '../services/aiTextService.js';
 
 const getPublicStories = asyncHandler(async (req, res) => {
   const stories = await Story.find({ status: 'PUBLISHED' })
-    .populate('artisanId', 'storeName') 
+    .populate('artisanId', 'storeName')
     .sort({ createdAt: -1 });
   res.json(stories);
 });
@@ -22,29 +23,29 @@ const getStoryById = asyncHandler(async (req, res) => {
 });
 
 const getMyStories = asyncHandler(async (req, res) => {
-    const artisanProfile = await ArtisanProfile.findOne({ userId: req.user._id });
-    if (!artisanProfile) {
-        res.status(404);
-        throw new Error('Artisan profile not found');
-    }
-    const stories = await Story.find({ artisanId: artisanProfile._id }).sort({ createdAt: -1 });
-    res.json(stories);
+  const artisanProfile = await ArtisanProfile.findOne({ userId: req.user._id });
+  if (!artisanProfile) {
+    res.status(404);
+    throw new Error('Artisan profile not found');
+  }
+  const stories = await Story.find({ artisanId: artisanProfile._id }).sort({ createdAt: -1 });
+  res.json(stories);
 });
 
 const createStory = asyncHandler(async (req, res) => {
-    const { title, content, coverImageURL } = req.body;
-    const artisanProfile = await ArtisanProfile.findOne({ userId: req.user._id });
+  const { title, content, coverImageURL } = req.body;
+  const artisanProfile = await ArtisanProfile.findOne({ userId: req.user._id });
 
-    const story = new Story({
-        title,
-        content,
-        coverImageURL,
-        artisanId: artisanProfile._id,
-        status: 'PUBLISHED', 
-    });
+  const story = new Story({
+    title,
+    content,
+    coverImageURL,
+    artisanId: artisanProfile._id,
+    status: 'PUBLISHED',
+  });
 
-    const createdStory = await story.save();
-    res.status(201).json(createdStory);
+  const createdStory = await story.save();
+  res.status(201).json(createdStory);
 });
 
 const deleteStory = asyncHandler(async (req, res) => {
@@ -57,10 +58,10 @@ const deleteStory = asyncHandler(async (req, res) => {
   }
 
   if (story.artisanId.toString() !== artisanProfile._id.toString()) {
-    res.status(403); 
+    res.status(403);
     throw new Error('User not authorized to delete this story');
   }
-  
+
   await story.deleteOne();
   res.json({ message: 'Story removed' });
 });
@@ -75,7 +76,7 @@ const getMyStoryById = asyncHandler(async (req, res) => {
   }
 
   if (story.artisanId.toString() !== artisanProfile._id.toString()) {
-    res.status(403); 
+    res.status(403);
     throw new Error('User not authorized to view this story');
   }
 
@@ -93,7 +94,7 @@ const updateStory = asyncHandler(async (req, res) => {
   }
 
   if (story.artisanId.toString() !== artisanProfile._id.toString()) {
-    res.status(403); 
+    res.status(403);
     throw new Error('User not authorized to update this story');
   }
 
@@ -106,4 +107,25 @@ const updateStory = asyncHandler(async (req, res) => {
   res.json(updatedStory);
 });
 
-export { getPublicStories, getStoryById, getMyStories, createStory, deleteStory, getMyStoryById, updateStory };
+const refineStoryContent = asyncHandler(async (req, res) => {
+  console.log('Refine request received', { user: req.user._id, body: req.body });
+  const { title, content } = req.body;
+
+  if (!title || !content) {
+    res.status(400);
+    throw new Error('Title and content are required');
+  }
+
+  if (title.length > 500 || content.length > 10000) {
+    res.status(400);
+    throw new Error('Title or content too long for AI refinement');
+  }
+
+  console.log('Calling AI for title and content');
+  const { title: refinedTitle, content: refinedContent } = await refineStory({ title, content });
+  
+  console.log('AI refinement successful');
+  res.json({ refinedTitle, refinedContent });
+});
+
+export { getPublicStories, getStoryById, getMyStories, createStory, deleteStory, getMyStoryById, updateStory, refineStoryContent };

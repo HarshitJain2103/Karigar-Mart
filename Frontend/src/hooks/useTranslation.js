@@ -5,6 +5,7 @@ export const useTranslation = () => {
   const language = useLanguageStore((state) => state.language);
 
   const t = (path, vars = {}) => {
+    if (!path) return '';
     const keys = path.split('.');
     let value = translations[language] || translations['en'];
 

@@ -947,6 +947,19 @@ export const translations = {
 
       saveChanges: "Save Changes",
       publishStory: "Publish Story",
+
+      refineError: "Please enter both title and content before refining.",
+      refinedTitle: "Story Refined",
+      refinedDesc: "Your story has been refined with AI assistance.",
+
+      previewTitle: "AI Refinement Preview",
+      originalTitle: "Original Title",
+      refinedTitleLabel: "Refined Title",
+      originalContent: "Original Content",
+      refinedContent: "Refined Content",
+      cancel: "Cancel",
+      applyChanges: "Apply Changes",
+      refineWithAI: "Refine with AI",
     },
     artisanStories: {
       // Page header
@@ -2167,6 +2180,18 @@ export const translations = {
 
       saveChanges: "परिवर्तन सहेजें",
       publishStory: "कहानी प्रकाशित करें",
+      refineError: "कृपया परिष्करण से पहले शीर्षक और सामग्री दोनों दर्ज करें।",
+      refinedTitle: "कहानी परिष्कृत की गई",
+      refinedDesc: "आपकी कहानी को AI सहायता से बेहतर बनाया गया है।",
+
+      previewTitle: "AI परिष्करण पूर्वावलोकन",
+      originalTitle: "मूल शीर्षक",
+      refinedTitleLabel: "परिष्कृत शीर्षक",
+      originalContent: "मूल सामग्री",
+      refinedContent: "परिष्कृत सामग्री",
+      cancel: "रद्द करें",
+      applyChanges: "परिवर्तन लागू करें",
+      refineWithAI: "AI से परिष्कृत करें",
     },
     artisanStories: {
       title: "मेरी कहानियाँ",
@@ -3347,6 +3372,18 @@ export const translations = {
 
       saveChanges: "পরিবর্তন সংরক্ষণ করুন",
       publishStory: "গল্প প্রকাশ করুন",
+      refineError: "পরিশোধনের আগে অনুগ্রহ করে শিরোনাম এবং বিষয়বস্তু উভয়ই লিখুন।",
+      refinedTitle: "গল্প পরিশোধিত হয়েছে",
+      refinedDesc: "AI সহায়তায় আপনার গল্প উন্নত করা হয়েছে।",
+
+      previewTitle: "AI পরিশোধন পূর্বরূপ",
+      originalTitle: "মূল শিরোনাম",
+      refinedTitleLabel: "পরিশোধিত শিরোনাম",
+      originalContent: "মূল বিষয়বস্তু",
+      refinedContent: "পরিশোধিত বিষয়বস্তু",
+      cancel: "বাতিল করুন",
+      applyChanges: "পরিবর্তন প্রয়োগ করুন",
+      refineWithAI: "AI দিয়ে পরিশোধন করুন",
     },
     artisanStories: {
       title: "আমার গল্পসমূহ",
@@ -4526,6 +4563,18 @@ export const translations = {
 
       saveChanges: "மாற்றங்களை சேமிக்கவும்",
       publishStory: "கதையை வெளியிடவும்",
+      refineError: "மேம்படுத்துவதற்கு முன் தலைப்பும் உள்ளடக்கமும் இரண்டும் உள்ளிடவும்.",
+      refinedTitle: "கதை மேம்படுத்தப்பட்டது",
+      refinedDesc: "AI உதவியுடன் உங்கள் கதை மேம்படுத்தப்பட்டுள்ளது.",
+
+      previewTitle: "AI மேம்பாட்டு முன்னோட்டம்",
+      originalTitle: "மூல தலைப்பு",
+      refinedTitleLabel: "மேம்படுத்தப்பட்ட தலைப்பு",
+      originalContent: "மூல உள்ளடக்கம்",
+      refinedContent: "மேம்படுத்தப்பட்ட உள்ளடக்கம்",
+      cancel: "ரத்து செய்",
+      applyChanges: "மாற்றங்களை பயன்படுத்தவும்",
+      refineWithAI: "AI மூலம் மேம்படுத்தவும்",
     },
     artisanStories: {
       title: "என் கதைகள்",
@@ -5705,6 +5754,18 @@ export const translations = {
 
       saveChanges: "మార్పులను సేవ్ చేయండి",
       publishStory: "కథను ప్రచురించండి",
+      refineError: "మెరుగుపరచడానికి ముందు శీర్షిక మరియు విషయాన్ని నమోదు చేయండి.",
+      refinedTitle: "కథ మెరుగుపరచబడింది",
+      refinedDesc: "AI సహాయంతో మీ కథను మెరుగుపరిచాము.",
+
+      previewTitle: "AI మెరుగుదల ముందస్తు వీక్షణ",
+      originalTitle: "మూల శీర్షిక",
+      refinedTitleLabel: "మెరుగుపరిచిన శీర్షిక",
+      originalContent: "మూల విషయం",
+      refinedContent: "మెరుగుపరిచిన విషయం",
+      cancel: "రద్దు చేయండి",
+      applyChanges: "మార్పులను అమలు చేయండి",
+      refineWithAI: "AI తో మెరుగుపరచండి",
     },
     artisanStories: {
       title: "నా కథలు",
@@ -6884,6 +6945,18 @@ export const translations = {
 
       saveChanges: "बदल जतन करा",
       publishStory: "कथा प्रकाशित करा",
+      refineError: "परिष्करण करण्यापूर्वी कृपया शीर्षक आणि मजकूर दोन्ही प्रविष्ट करा.",
+      refinedTitle: "कथा परिष्कृत करण्यात आली",
+      refinedDesc: "AI सहाय्याने तुमची कथा सुधारण्यात आली आहे.",
+
+      previewTitle: "AI परिष्करण पूर्वावलोकन",
+      originalTitle: "मूळ शीर्षक",
+      refinedTitleLabel: "परिष्कृत शीर्षक",
+      originalContent: "मूळ मजकूर",
+      refinedContent: "परिष्कृत मजकूर",
+      cancel: "रद्द करा",
+      applyChanges: "बदल लागू करा",
+      refineWithAI: "AI द्वारे परिष्कृत करा",
     },
     artisanStories: {
       title: "माझ्या कथा",
