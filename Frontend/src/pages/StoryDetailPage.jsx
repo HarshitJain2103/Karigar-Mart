@@ -127,7 +127,7 @@ export default function StoryDetailPage() {
   const artisanName = story.artisanId?.storeName || 'Artisan';
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="mx-auto max-w-7xl px-4 py-8">
       {/* Back + breadcrumbs-ish */}
       <div className="mb-3 flex items-center justify-between">
         <Button variant="ghost" size="sm" onClick={() => navigate(-1)} className="gap-2">
@@ -142,7 +142,7 @@ export default function StoryDetailPage() {
       </div>
 
       {/* Hero */}
-      <div className="relative h-[260px] sm:h-[420px] rounded-2xl overflow-hidden border">
+      <div className="relative h-[260px] sm:h-[420px] rounded-2xl overflow-hidden shadow-sm">
         {cover ? (
           <img src={cover} alt={story.title} className="absolute inset-0 h-full w-full object-cover" />
         ) : (

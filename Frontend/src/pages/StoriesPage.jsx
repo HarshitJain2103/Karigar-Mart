@@ -216,7 +216,7 @@ export default function StoriesPage() {
   }
 
   return (
-    <div className="container mx-auto py-12 px-4">
+    <div className="mx-auto max-w-7xl px-4 py-12">
       <div className="mb-4 text-center">
         <h1 className="text-4xl font-bold tracking-tight">{t('storiesPage.title')}</h1>
         <p className="text-lg text-muted-foreground mt-2">{t('storiesPage.subtitle')}</p>
@@ -310,7 +310,7 @@ export default function StoriesPage() {
         <>
           {heroStory && (
             <div className="mb-10 rounded-2xl overflow-hidden relative border">
-              <Link to={`/stories/${heroStory._id}`} className="block mb-10 rounded-2xl overflow-hidden relative border group">
+              <Link to={`/stories/${heroStory._id}`} className="block rounded-2xl overflow-hidden relative group">
                 <div className="relative h-[320px] sm:h-[420px]">
                   {heroStory?.coverImageURL || heroStory?.image ? (
                     <img
