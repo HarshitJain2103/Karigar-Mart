@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import useAuthStore from '@/stores/authStore';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -245,111 +244,89 @@ export default function ArtisanStoryManager() {
             </div>
           ) : (
             <>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>{t('artisanStories.table.story')}</TableHead>
-                    <TableHead>{t('artisanStories.table.status')}</TableHead>
-                    <TableHead>{t('artisanStories.table.created')}</TableHead>
-                    <TableHead className="text-right">{t('artisanStories.table.actions')}</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {visible.map((story) => (
-                    <TableRow key={story._id}>
-                      <TableCell className="max-w-0">
-                        <div className="flex items-center gap-3">
-                          <div className="h-14 w-14 rounded-md overflow-hidden bg-gray-100 border">
-                            {story.coverImageURL ? (
-                              <img
-                                src={story.coverImageURL}
-                                alt={story.title}
-                                className="h-full w-full object-cover"
-                              />
-                            ) : (
-                              <div className="h-full w-full flex items-center justify-center text-muted-foreground">
-                                <ImageOff className="h-5 w-5" />
-                              </div>
-                            )}
-                          </div>
-                          <div className="min-w-0">
-                            <div className="font-medium truncate">{story.title}</div>
-                            <div className="text-xs text-muted-foreground truncate">
-                              ID: {story._id}
-                            </div>
-                          </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                {visible.map((story) => (
+                  <Card key={story._id} className="overflow-hidden">
+                    <div className="aspect-[4/3] overflow-hidden bg-gray-100">
+                      {story.coverImageURL ? (
+                        <img
+                          src={story.coverImageURL}
+                          alt={story.title}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+                          <ImageOff className="h-8 w-8" />
                         </div>
-                      </TableCell>
-                      <TableCell>
+                      )}
+                    </div>
+                    <CardContent className="p-4">
+                      <h3 className="font-semibold text-lg line-clamp-2 mb-2">{story.title}</h3>
+                      <div className="flex items-center justify-between mb-2">
                         <Badge variant={String(story.status).toUpperCase() === 'PUBLISHED' ? 'default' : 'secondary'}>
                           {story.status === 'PUBLISHED' ? t('artisanStories.published') : t('artisanStories.draft')}
                         </Badge>
-                      </TableCell>
-                      <TableCell>{formatDate(story.createdAt)}</TableCell>
-                      <TableCell className="text-right">
-                        <div className="inline-flex items-center gap-2">
-                          <a
-                            href={`/stories/${story._id}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            title={t('artisanStories.actions.view')}
-                          >
-                            <Button variant="ghost" size="sm" className="gap-1">
-                              <ExternalLink className="h-4 w-4" />
-                              {t('artisanStories.actions.view')}
+                        <span className="text-xs text-muted-foreground">{formatDate(story.createdAt)}</span>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        <a
+                          href={`/stories/${story._id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Button variant="outline" size="sm" className="gap-1">
+                            <ExternalLink className="h-4 w-4" />
+                            {t('artisanStories.actions.view')}
+                          </Button>
+                        </a>
+                        <Link to={`/dashboard/stories/edit/${story._id}`}>
+                          <Button variant="outline" size="sm" className="gap-1">
+                            <Edit className="h-4 w-4" />
+                            {t('artisanStories.actions.edit')}
+                          </Button>
+                        </Link>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="gap-1 text-destructive"
+                              disabled={deletingId === story._id}
+                            >
+                              {deletingId === story._id ? (
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                              ) : (
+                                <Trash2 className="h-4 w-4" />
+                              )}
+                              {t('artisanStories.actions.delete')}
                             </Button>
-                          </a>
-                          <Link to={`/dashboard/stories/edit/${story._id}`}>
-                            <Button variant="ghost" size="sm" className="gap-1">
-                              <Edit className="h-4 w-4" />
-                              {t('artisanStories.actions.edit')}
-                            </Button>
-                          </Link>
-
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="gap-1 text-destructive"
-                                disabled={deletingId === story._id}
-                                title={t('artisanStories.actions.delete')}
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>{t('artisanStories.deleteTitle')}</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                {t('artisanStories.deleteDesc', { title: story.title })}
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
+                              <AlertDialogAction
+                                className="bg-destructive hover:bg-destructive/90"
+                                onClick={() => handleDelete(story._id)}
                               >
-                                {deletingId === story._id ? (
-                                  <Loader2 className="h-4 w-4 animate-spin" />
-                                ) : (
-                                  <Trash2 className="h-4 w-4" />
-                                )}
                                 {t('artisanStories.actions.delete')}
-                              </Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle>{t('artisanStories.deleteTitle')}</AlertDialogTitle>
-                                <AlertDialogDescription>
-                                  {t('artisanStories.deleteDesc', { title: story.title })}
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
-                                <AlertDialogAction
-                                  className="bg-destructive hover:bg-destructive/90"
-                                  onClick={() => handleDelete(story._id)}
-                                >
-                                  {t('artisanStories.actions.delete')}
-                                </AlertDialogAction>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
 
               {/* Pagination */}
-              <div className="flex items-center justify-between p-4">
+              <div className="flex items-center justify-between p-4 border-t">
                 <div className="text-sm text-muted-foreground">
                   {t('artisanStories.pagination', {
                     page: currentPage,

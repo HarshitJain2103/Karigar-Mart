@@ -234,7 +234,7 @@ export default function MyOrdersPage() {
           />
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <div className="flex items-center gap-2 rounded-md border px-2 py-1.5 bg-background">
             <Filter className="h-4 w-4 text-muted-foreground" />
             <select
