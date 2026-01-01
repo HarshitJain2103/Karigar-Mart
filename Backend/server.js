@@ -16,6 +16,7 @@ import passport from 'passport';
 import './config/passport-setup.js';
 import authRoutes from './routes/authRoutes.js';
 import storyRoutes from './routes/storyRoutes.js';
+import onboardingRoutes from './routes/onboardingRoutes.js';
 
 dotenv.config();
 connectDB();
@@ -67,6 +68,7 @@ app.use('/api/upload', uploadRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/stories', storyRoutes);
+app.use('/api/onboarding', onboardingRoutes);
 
 cron.schedule('30 2 * * *', () => {
   console.log('-------------------------------------');
