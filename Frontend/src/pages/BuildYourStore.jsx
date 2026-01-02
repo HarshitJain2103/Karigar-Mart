@@ -16,6 +16,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { getApiUrl } from '@/lib/api';
 import { useTranslation } from "@/hooks/useTranslation";
+import OnboardingChat from "@/components/ui/onboarding/OnboardingChat";
 
 const STORAGE_KEY = "karigar.store.v1";
 const defaultDraft = {
@@ -149,6 +150,26 @@ export default function BuildYourStoreFull() {
       return defaultDraft;
     }
   });
+
+  const applyAIUpdates = (updates) => {
+    setDraft((prev) => ({
+      ...prev,
+      ...updates,
+
+      city: updates.address?.city ?? prev.city,
+      state: updates.address?.state ?? prev.state,
+
+      theme: {
+        ...prev.theme,
+        ...updates.theme,
+      },
+
+      seo: {
+        ...prev.seo,
+        ...updates.seo,
+      },
+    }));
+  };
 
   const [step, setStep] = useState("identity");
   const [showProductDialog, setShowProductDialog] = useState(false);
@@ -649,13 +670,11 @@ export default function BuildYourStoreFull() {
         <SheetTrigger asChild>
           <Button className="fixed bottom-6 right-6 shadow-lg rounded-full h-14 w-14 font-semibold">{t('buildStore.floatingAssistant.buttonLabel')}</Button>
         </SheetTrigger>
-        <SheetContent side="right" className="w-96 p-6">
-          <h3 className="text-lg font-semibold">{t('buildStore.floatingAssistant.title')}</h3>
-          <div className="text-sm text-muted-foreground mt-2">{t('buildStore.floatingAssistant.description')}</div>
-          <div className="flex gap-2 mt-4">
-            <Button onClick={() => alert(t('buildStore.floatingAssistant.generateStub'))}>{t('buildStore.floatingAssistant.generate')}</Button>
-            <Button variant="ghost" onClick={() => alert(t('buildStore.floatingAssistant.translateStub'))}>{t('buildStore.floatingAssistant.translate')}</Button>
-          </div>
+        <SheetContent side="right" className="w-[420px] p-0">
+          <OnboardingChat
+            draft={draft}
+            onApplyUpdates={applyAIUpdates}
+          />
         </SheetContent>
       </Sheet>
     </div>

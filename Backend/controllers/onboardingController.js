@@ -1,5 +1,15 @@
 import { processOnboardingMessage } from '../services/onboardingAIService.js';
 
+const normalizeDraft = (draft = {}) => {
+  return {
+    ...draft,
+    address: {
+      city: draft.address?.city || draft.city || "",
+      state: draft.address?.state || draft.state || "",
+    },
+  };
+};
+
 const onboardingChat = async (req, res) => {
   try {
     
@@ -23,9 +33,10 @@ const onboardingChat = async (req, res) => {
       });
     }
 
+    const normalizedDraft = normalizeDraft(req.body.draft);
     const result = await processOnboardingMessage({
       message: message.trim(),
-      draft: draft || {},
+      draft: normalizedDraft || {},
       language: language || 'en',
     });
 
