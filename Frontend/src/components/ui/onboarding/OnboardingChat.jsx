@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Mic, MicOff, Send, Loader2 } from "lucide-react";
+import { Mic, MicOff, Send, Loader2, RefreshCw } from "lucide-react";
 import useVoiceSearch from "@/hooks/useVoiceSearch";
 import { getApiUrl } from "@/lib/api";
 import useAuthStore from "@/stores/authStore";
@@ -106,13 +106,26 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
     };
 
     return (
-        <div className="flex h-full flex-col">
+        <div className="flex h-[100dvh] max-h-[100dvh] flex-col">
             
-            <div className="border-b p-3">
-                <h3 className="text-sm font-semibold">AI Store Assistant</h3>
-                <p className="text-xs text-muted-foreground">
-                    Answer naturally — I’ll fill the form for you
-                </p>
+            <div className="border-b p-3 flex items-center gap-2">
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                        setMessages(defaultMessages);
+                        localStorage.setItem(chatKey, JSON.stringify(defaultMessages));
+                    }}
+                    title="Refresh Chat"
+                >
+                    <RefreshCw className="h-4 w-4" />
+                </Button>
+                <div>
+                    <h3 className="text-sm font-semibold">AI Store Assistant</h3>
+                    <p className="text-xs text-muted-foreground">
+                        Answer naturally — I’ll fill the form for you
+                    </p>
+                </div>
             </div>
 
             
@@ -143,7 +156,7 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
             </div>
 
             
-            <div className="border-t p-3">
+            <div className="border-t p-3 pb-[env(safe-area-inset-bottom)]">
                 <div className="flex gap-2">
                     <Input
                         value={input}
