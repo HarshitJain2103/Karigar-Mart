@@ -1,10 +1,12 @@
 import { GoogleGenAI } from '@google/genai';
+import AIUsage from '../models/aiUsage.model.js';
 
 const ai = new GoogleGenAI({
   apiKey: process.env.GOOGLE_GENAI_API_KEY2,
 });
 
 const AI_TIMEOUT_MS = 30000;
+const DAILY_AI_LIMIT = 12;
 
 const ALLOWED_THEME_PRESETS = ['modern', 'classic', 'minimalist', 'rustic'];
 
@@ -93,10 +95,30 @@ const sanitizeUpdates = (updates = {}) => {
 };
 
 export const processOnboardingMessage = async ({
+  userId,
   message,
   draft = {},
   language = 'en',
 }) => {
+  const today = new Date().toISOString().slice(0, 10);
+
+  const usage = await AIUsage.findOneAndUpdate(
+    { userId, feature: 'ONBOARDING', date: today },
+    { $inc: { count: 1 } },
+    { new: true, upsert: true }
+  );
+
+  if (usage.count > DAILY_AI_LIMIT) {
+    return {
+      response:
+        "You've reached today's AI limit. Please try again tomorrow.",
+      updates: {},
+      nextStep: inferNextStep(draft),
+      missingRequiredFields: getMissingFields(draft),
+      isProfileComplete: false,
+      requiresManualActions: [],
+    };
+  }
 
   const prompt = `
 You are an onboarding assistant helping an artisan set up their online store.

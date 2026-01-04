@@ -35,6 +35,7 @@ const onboardingChat = async (req, res) => {
 
     const normalizedDraft = normalizeDraft(req.body.draft);
     const result = await processOnboardingMessage({
+      userId,
       message: message.trim(),
       draft: normalizedDraft || {},
       language: language || 'en',

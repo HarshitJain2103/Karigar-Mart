@@ -32,6 +32,7 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
     });
     const [input, setInput] = useState("");
     const [loading, setLoading] = useState(false);
+    const [isQuotaExhausted, setIsQuotaExhausted] = useState(false);
 
     const scrollRef = useRef(null);
 
@@ -39,6 +40,11 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
     useEffect(() => {
         localStorage.setItem(chatKey, JSON.stringify(messages));
     }, [messages, chatKey]);
+
+    useEffect(() => {
+        const exhausted = messages.some(m => m.role === "ai" && m.content.includes("You've reached today's AI limit"));
+        setIsQuotaExhausted(exhausted);
+    }, [messages]);
 
     const { startVoiceSearch, isListening } = useVoiceSearch();
 
@@ -52,7 +58,7 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
     }, [messages, loading]);
 
     const sendMessage = async (text) => {
-        if (!text.trim() || loading) return;
+        if (!text.trim() || loading || isQuotaExhausted) return;
 
         setMessages((prev) => [...prev, { role: "user", content: text }]);
         setInput("");
@@ -115,6 +121,7 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
                     onClick={() => {
                         setMessages(defaultMessages);
                         localStorage.setItem(chatKey, JSON.stringify(defaultMessages));
+                        setIsQuotaExhausted(false);
                     }}
                     title="Refresh Chat"
                 >
@@ -165,14 +172,14 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
                             if (e.key === "Enter") sendMessage(input);
                         }}
                         placeholder="Type or speak…"
-                        disabled={loading}
+                        disabled={loading || isQuotaExhausted}
                     />
 
                     <Button
                         variant={isListening ? "destructive" : "outline"}
                         size="icon"
                         onClick={handleVoice}
-                        disabled={loading}
+                        disabled={loading || isQuotaExhausted}
                     >
                         {isListening ? <MicOff /> : <Mic />}
                     </Button>
@@ -180,11 +187,16 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
                     <Button
                         size="icon"
                         onClick={() => sendMessage(input)}
-                        disabled={loading || !input.trim()}
+                        disabled={loading || !input.trim() || isQuotaExhausted}
                     >
                         <Send />
                     </Button>
                 </div>
+                {isQuotaExhausted && (
+                    <p className="text-xs text-muted-foreground mt-2">
+                        Your AI quota will refresh at 00:00 UTC.
+                    </p>
+                )}
             </div>
         </div>
     );
