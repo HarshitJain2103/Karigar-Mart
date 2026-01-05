@@ -37,8 +37,8 @@ const productSchema = new mongoose.Schema({
     ]
   },
   marketingVideo: {
-    url: { type: String, default: null },  
-    baseVideoUrl: { type: String, default: null },  
+    url: { type: String, default: null },
+    baseVideoUrl: { type: String, default: null },
     prompt: { type: String, default: null },
     generatedAt: { type: Date, default: null },
     duration: { type: Number, default: 8 },
@@ -47,6 +47,10 @@ const productSchema = new mongoose.Schema({
     audioUrl: { type: String, default: null },
     audioScript: { type: String, default: null },
     hasAudio: { type: Boolean, default: false }
+  },
+  videoGenerationCount: {
+    type: Number,
+    default: 0,
   },
   videoStatus: {
     type: String,

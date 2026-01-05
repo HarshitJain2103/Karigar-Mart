@@ -127,6 +127,19 @@ async function generateVideoInBackground(product, imageUrl, artisanId) {
   try {
     console.log(`[VIDEO] Starting for product: ${product._id}`);
 
+    const updated = await Product.findOneAndUpdate(
+      { _id: product._id, videoGenerationCount: { $lt: 2 } },
+      { $inc: { videoGenerationCount: 1 } },
+      { new: true }
+    );
+
+    if (!updated) {
+      console.warn(`[VIDEO] Limit reached for ${product._id}`);
+      return;
+    }
+
+    product = updated;
+
     // Populate category for better prompts
     await product.populate('categoryId', 'name');
 
@@ -202,6 +215,12 @@ const regenerateProductVideo = async (req, res) => {
     if (!product.imageURLs || product.imageURLs.length === 0) {
       return res.status(400).json({
         message: 'Product needs at least one image'
+      });
+    }
+
+    if (product.videoGenerationCount >= 2) {
+      return res.status(400).json({
+        message: 'Video generation limit reached for this product. You can only generate videos twice per product.'
       });
     }
 

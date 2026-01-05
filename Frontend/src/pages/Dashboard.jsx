@@ -12,9 +12,11 @@ import { useVideoSSE } from '../hooks/useVideoSSE';
 import { getApiUrl } from "@/lib/api";
 import Spinner from '@/components/ui/Spinner';
 import { useTranslation } from '@/hooks/useTranslation';
+import { useToast } from "@/hooks/use-toast";
 
 export default function Dashboard() {
   const { t } = useTranslation();
+  const { toast } = useToast();
   const [dashboardData, setDashboardData] = useState({ profile: null, products: [], page: 1, pages: 1, totalProducts: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -168,7 +170,10 @@ export default function Dashboard() {
       }
     } catch (error) {
       console.error('Video regeneration error:', error);
-      alert('Failed to regenerate video: ' + error.message);
+      toast({
+        title: "Failed to regenerate video",
+        description: error.message,
+      });
     }
   };
 
@@ -279,14 +284,25 @@ export default function Dashboard() {
                             <Video className="w-4 h-4" />
                             {t('dashboard.viewVideo')}
                           </a>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleRegenerateVideo(product._id)}
-                            className="text-xs h-6 px-2"
+                          <span
+                            title={
+                              product.videoGenerationCount >= 2
+                                ? "You have already generated a video twice for this product."
+                                : ""
+                            }
+                            className={`inline-block ${product.videoGenerationCount >= 2 ? "cursor-not-allowed" : ""
+                              }`}
                           >
-                            {t('dashboard.regenerate')}
-                          </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              disabled={product.videoGenerationCount >= 2}
+                              onClick={() => handleRegenerateVideo(product._id)}
+                              className="text-xs h-6 px-2"
+                            >
+                              {t('dashboard.regenerate')}
+                            </Button>
+                          </span>
                         </div>
                       )}
                       {product.videoStatus === 'generating' && (
