@@ -41,11 +41,6 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
         localStorage.setItem(chatKey, JSON.stringify(messages));
     }, [messages, chatKey]);
 
-    useEffect(() => {
-        const exhausted = messages.some(m => m.role === "ai" && m.content.includes("You've reached today's AI limit"));
-        setIsQuotaExhausted(exhausted);
-    }, [messages]);
-
     const { startVoiceSearch, isListening } = useVoiceSearch();
 
     useEffect(() => {
@@ -78,8 +73,6 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
                 }),
             });
 
-            if (!res.ok) throw new Error("AI request failed");
-
             const data = await res.json();
 
             setMessages((prev) => [
@@ -87,9 +80,19 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
                 { role: "ai", content: data.response },
             ]);
 
+            if (
+                typeof data.response === "string" &&
+                data.response.includes("You've reached today's AI limit")
+            ) {
+                setIsQuotaExhausted(true);
+            } else {
+                setIsQuotaExhausted(false);
+            }
+
             if (data.updates && Object.keys(data.updates).length > 0) {
                 onApplyUpdates(data.updates);
             }
+
         } catch (err) {
             console.error(err);
             setMessages((prev) => [
@@ -113,7 +116,7 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
 
     return (
         <div className="flex h-[100dvh] max-h-[100dvh] flex-col">
-            
+
             <div className="border-b p-3 flex items-center gap-2">
                 <Button
                     variant="ghost"
@@ -135,7 +138,7 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
                 </div>
             </div>
 
-            
+
             <div
                 ref={scrollRef}
                 className="flex-1 overflow-y-auto p-3"
@@ -145,8 +148,8 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
                         <div
                             key={i}
                             className={`max-w-[80%] rounded-lg px-3 py-2 text-sm ${m.role === "user"
-                                    ? "ml-auto bg-primary text-primary-foreground"
-                                    : "bg-muted"
+                                ? "ml-auto bg-primary text-primary-foreground"
+                                : "bg-muted"
                                 }`}
                         >
                             {m.content}
@@ -162,7 +165,7 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
                 </div>
             </div>
 
-            
+
             <div className="border-t p-3 pb-[env(safe-area-inset-bottom)]">
                 <div className="flex gap-2">
                     <Input
