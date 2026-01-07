@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mic, MicOff, Send, Loader2, RefreshCw } from "lucide-react";
@@ -6,21 +6,22 @@ import useVoiceSearch from "@/hooks/useVoiceSearch";
 import { getApiUrl } from "@/lib/api";
 import useAuthStore from "@/stores/authStore";
 import useLanguageStore from "@/stores/languageStore";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export default function OnboardingChat({ draft, onApplyUpdates }) {
+    const { t } = useTranslation();
     const token = useAuthStore((s) => s.token);
     const user = useAuthStore((s) => s.user);
     const language = useLanguageStore((s) => s.language || "en");
 
-    const chatKey = `onboarding_chat_${user?.id || 'guest'}`;
+    const chatKey = `onboarding_chat_${user?.id || 'guest'}_${language}`;
 
-    const defaultMessages = [
+    const defaultMessages = useMemo(() => ([
         {
             role: "ai",
-            content:
-                "Hi! I’ll help you set up your store. You can type or speak naturally.",
+            content: t('onboardingChat.welcome'),
         },
-    ];
+    ]), [t]);
 
     const [messages, setMessages] = useState(() => {
         try {
@@ -42,6 +43,12 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
     }, [messages, chatKey]);
 
     const { startVoiceSearch, isListening } = useVoiceSearch();
+
+    useEffect(() => {
+        setMessages(defaultMessages);
+        localStorage.setItem(chatKey, JSON.stringify(defaultMessages));
+        setIsQuotaExhausted(false);
+    }, [language]);
 
     useEffect(() => {
         if (scrollRef.current) {
@@ -75,18 +82,32 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
 
             const data = await res.json();
 
-            setMessages((prev) => [
-                ...prev,
-                { role: "ai", content: data.response },
-            ]);
+            if (data.response) {
+                setMessages((prev) => [
+                    ...prev,
+                    { role: "ai", content: data.response },
+                ]);
+            }
 
-            if (
-                typeof data.response === "string" &&
-                data.response.includes("You've reached today's AI limit")
-            ) {
+            if (data.responseKey === "AI_LIMIT_REACHED") {
                 setIsQuotaExhausted(true);
-            } else {
-                setIsQuotaExhausted(false);
+                setMessages((prev) => [
+                    ...prev,
+                    {
+                        role: "ai",
+                        content: t('onboardingChat.aiLimitReached'),
+                    },
+                ]);
+            }
+
+            if (data.responseKey === "AI_GENERIC_ERROR") {
+                setMessages((prev) => [
+                    ...prev,
+                    {
+                        role: "ai",
+                        content: t('onboardingChat.somethingWentWrong'),
+                    },
+                ]);
             }
 
             if (data.updates && Object.keys(data.updates).length > 0) {
@@ -99,8 +120,7 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
                 ...prev,
                 {
                     role: "ai",
-                    content:
-                        "Sorry, something went wrong. Please try again in a moment.",
+                    content: t('onboardingChat.somethingWentWrong'),
                 },
             ]);
         } finally {
@@ -126,14 +146,14 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
                         localStorage.setItem(chatKey, JSON.stringify(defaultMessages));
                         setIsQuotaExhausted(false);
                     }}
-                    title="Refresh Chat"
+                    title={t('onboardingChat.refreshChat')}
                 >
                     <RefreshCw className="h-4 w-4" />
                 </Button>
                 <div>
-                    <h3 className="text-sm font-semibold">AI Store Assistant</h3>
+                    <h3 className="text-sm font-semibold">{t('onboardingChat.title')}</h3>
                     <p className="text-xs text-muted-foreground">
-                        Answer naturally — I’ll fill the form for you
+                        {t('onboardingChat.subTitle')}
                     </p>
                 </div>
             </div>
@@ -159,7 +179,7 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
                     {loading && (
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
                             <Loader2 className="h-4 w-4 animate-spin" />
-                            Thinking…
+                            {t('onboardingChat.thinking')}
                         </div>
                     )}
                 </div>
@@ -174,7 +194,7 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
                         onKeyDown={(e) => {
                             if (e.key === "Enter") sendMessage(input);
                         }}
-                        placeholder="Type or speak…"
+                        placeholder={t('onboardingChat.placeHolder')}
                         disabled={loading || isQuotaExhausted}
                     />
 
@@ -197,7 +217,7 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
                 </div>
                 {isQuotaExhausted && (
                     <p className="text-xs text-muted-foreground mt-2">
-                        Your AI quota will refresh at 00:00 UTC.
+                        {t('onboardingChat.quotaRefresh')}
                     </p>
                 )}
             </div>

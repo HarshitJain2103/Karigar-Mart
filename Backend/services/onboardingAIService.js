@@ -110,8 +110,8 @@ export const processOnboardingMessage = async ({
 
   if (usage.count > DAILY_AI_LIMIT) {
     return {
-      response:
-        "You've reached today's AI limit. Please try again tomorrow.",
+      responseKey: "AI_LIMIT_REACHED",
+      response: null,
       updates: {},
       nextStep: inferNextStep(draft),
       missingRequiredFields: getMissingFields(draft),
@@ -229,8 +229,8 @@ Return JSON in this exact format:
     const nextStep = inferNextStep(draft);
 
     return {
-      response:
-        'Sorry, I had trouble understanding that. Could you please try again? (Credits exhausted)',
+      responseKey: "AI_GENERIC_ERROR",
+      response: null,
       updates: {},
       nextStep,
       missingRequiredFields,

@@ -1248,6 +1248,18 @@ export const translations = {
       backToShop: "Back to Shop",
       continueShopping: "Continue Shopping",
     },
+    onboardingChat: {
+
+      welcome: "Hi! I’ll help you set up your store. You can type or speak naturally.",
+      title: "AI Store Assistant",
+      subTitle: "Answer naturally — I’ll fill the form for you",
+      refreshChat: "Refresh chat",
+      placeHolder: "Type or speak…",
+      thinking: "Thinking…",
+      aiLimitReached: "You've reached today's AI limit. Please try again tomorrow.",
+      quotaRefresh: "Your AI quota will refresh at 00:00 UTC.",
+      somethingWentWrong: "Sorry, something went wrong. Please try again.",
+    },
   },
 
   hi: {
@@ -2453,6 +2465,17 @@ export const translations = {
       backToShop: "दुकान पर वापस जाएँ",
       continueShopping: "खरीदारी जारी रखें",
     },
+    onboardingChat: {
+      welcome: "नमस्ते! मैं आपकी दुकान सेट अप करने में मदद करूंगा। आप टाइप कर सकते हैं या बोल सकते हैं।",
+      title: "AI स्टोर असिस्टेंट",
+      subTitle: "स्वाभाविक रूप से जवाब दें — मैं आपके लिए फ़ॉर्म भर दूंगा",
+      refreshChat: "चैट रीफ़्रेश करें",
+      placeHolder: "टाइप करें या बोलें…",
+      thinking: "सोच रहा हूँ…",
+      aiLimitReached: "आपने आज की AI सीमा पूरी कर ली है। कृपया कल फिर प्रयास करें।",
+      quotaRefresh: "आपकी AI सीमा 00:00 UTC पर रीफ़्रेश हो जाएगी।",
+      somethingWentWrong: "माफ़ कीजिए, कुछ गड़बड़ हो गई। कृपया दोबारा प्रयास करें।",
+    },
   },
 
   bn: {
@@ -3645,6 +3668,17 @@ export const translations = {
       backToShop: "দোকানে ফিরে যান",
       continueShopping: "কেনাকাটা চালিয়ে যান",
     },
+    onboardingChat: {
+      welcome: "হ্যালো! আমি আপনার দোকান সেট আপ করতে সাহায্য করব। আপনি টাইপ করতে বা কথা বলতে পারেন।",
+      title: "AI স্টোর অ্যাসিস্ট্যান্ট",
+      subTitle: "স্বাভাবিকভাবে উত্তর দিন — আমি আপনার জন্য ফর্ম পূরণ করব",
+      refreshChat: "চ্যাট রিফ্রেশ করুন",
+      placeHolder: "টাইপ করুন বা বলুন…",
+      thinking: "ভাবছি…",
+      aiLimitReached: "আজকের AI সীমা শেষ হয়ে গেছে। অনুগ্রহ করে আগামীকাল আবার চেষ্টা করুন।",
+      quotaRefresh: "আপনার AI সীমা 00:00 UTC-এ রিফ্রেশ হবে।",
+      somethingWentWrong: "দুঃখিত, কিছু ভুল হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।",
+    },
   },
 
   ta: {
@@ -4835,6 +4869,17 @@ export const translations = {
 
       backToShop: "கடைக்கு திரும்பு",
       continueShopping: "ஷாப்பிங்கை தொடரவும்",
+    },
+    onboardingChat: {
+      welcome: "வணக்கம்! உங்கள் கடையை அமைக்க நான் உதவுவேன். நீங்கள் தட்டச்சு செய்யலாம் அல்லது பேசலாம்.",
+      title: "AI கடை உதவியாளர்",
+      subTitle: "இயல்பாக பதிலளியுங்கள் — நான் உங்களுக்காக படிவத்தை நிரப்புவேன்",
+      refreshChat: "அரட்டையை புதுப்பிக்கவும்",
+      placeHolder: "தட்டச்சு செய்யவும் அல்லது பேசவும்…",
+      thinking: "யோசிக்கிறேன்…",
+      aiLimitReached: "இன்றைய AI வரம்பை நீங்கள் எட்டிவிட்டீர்கள். நாளை மீண்டும் முயற்சிக்கவும்.",
+      quotaRefresh: "உங்கள் AI வரம்பு 00:00 UTC-க்கு புதுப்பிக்கப்படும்.",
+      somethingWentWrong: "மன்னிக்கவும், ஏதோ தவறு நடந்துள்ளது. மீண்டும் முயற்சிக்கவும்.",
     },
   },
 
@@ -6027,6 +6072,17 @@ export const translations = {
       backToShop: "షాప్‌కు తిరిగి వెళ్లండి",
       continueShopping: "షాపింగ్ కొనసాగించండి",
     },
+    onboardingChat: {
+      welcome: "హాయ్! మీ స్టోర్‌ను సెట్ చేయడంలో నేను సహాయం చేస్తాను. మీరు టైప్ చేయవచ్చు లేదా మాట్లాడవచ్చు.",
+      title: "AI స్టోర్ అసిస్టెంట్",
+      subTitle: "సహజంగా సమాధానం ఇవ్వండి — మీ కోసం ఫారమ్‌ను నేను నింపుతాను",
+      refreshChat: "చాట్ రిఫ్రెష్ చేయండి",
+      placeHolder: "టైప్ చేయండి లేదా మాట్లాడండి…",
+      thinking: "ఆలోచిస్తున్నాను…",
+      aiLimitReached: "ఈ రోజు మీ AI పరిమితి పూర్తయింది. దయచేసి రేపు మళ్లీ ప్రయత్నించండి.",
+      quotaRefresh: "మీ AI పరిమితి 00:00 UTC వద్ద రిఫ్రెష్ అవుతుంది.",
+      somethingWentWrong: "క్షమించండి, ఏదో తప్పు జరిగింది. దయచేసి మళ్లీ ప్రయత్నించండి.",
+    },
   },
 
   mr: {
@@ -7217,6 +7273,17 @@ export const translations = {
 
       backToShop: "दुकानात परत जा",
       continueShopping: "खरेदी सुरू ठेवा",
+    },
+    onboardingChat: {
+      welcome: "नमस्कार! मी तुमची दुकान सेट अप करण्यात मदत करेन. तुम्ही टाइप करू शकता किंवा बोलू शकता.",
+      title: "AI स्टोअर सहाय्यक",
+      subTitle: "स्वाभाविकपणे उत्तर द्या — मी तुमच्यासाठी फॉर्म भरतो",
+      refreshChat: "चॅट रीफ्रेश करा",
+      placeHolder: "टाइप करा किंवा बोला…",
+      thinking: "विचार करत आहे…",
+      aiLimitReached: "आजची AI मर्यादा पूर्ण झाली आहे. कृपया उद्या पुन्हा प्रयत्न करा.",
+      quotaRefresh: "तुमची AI मर्यादा 00:00 UTC ला रीफ्रेश होईल.",
+      somethingWentWrong: "माफ करा, काहीतरी चूक झाली. कृपया पुन्हा प्रयत्न करा.",
     },
   },
 };
