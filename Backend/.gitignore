@@ -6,6 +6,7 @@ node_modules/
 .env.local
 .env.*.local
 .env.production
+planar-maxim-475312-m9-a04126e50095.json
 
 # Logs
 logs

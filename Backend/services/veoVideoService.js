@@ -29,50 +29,24 @@ class VeoVideoService {
 
     decryptServiceAccount() {
         try {
-            // CHANGED: Check for base64 env variable first (Vercel)
-            if (process.env.SERVICE_ACCOUNT_B64) {
-                console.log("[VEO] Loading service account from environment variable (Vercel)");
-                const encryptedBuffer = Buffer.from(process.env.SERVICE_ACCOUNT_B64, 'base64');
-                const iv = encryptedBuffer.slice(0, 16);
-                const ciphertext = encryptedBuffer.slice(16);
-
-                const password = process.env.ENCRYPT_PASSWORD;
-                if (!password) {
-                    throw new Error("ENCRYPT_PASSWORD not set in .env");
-                }
-
-                const key = crypto.scryptSync(password, "salt", 32);
-                const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
-                const decrypted = Buffer.concat([decipher.update(ciphertext), decipher.final()]);
-
-                return JSON.parse(decrypted.toString("utf-8"));
+            // 1. YOUR NEW LOGIC: Check for your plain Base64 string first
+            if (process.env.NEW_GCP_SERVICE_ACCOUNT_B64) {
+                console.log("[VEO] Loading your NEW service account from Base64 string");
+                const decodedJson = Buffer.from(process.env.NEW_GCP_SERVICE_ACCOUNT_B64, 'base64').toString('utf-8');
+                return JSON.parse(decodedJson);
             }
 
-            // FALLBACK: Check for file (local development)
-            const encPath = path.join(process.cwd(), "service-account.json.enc");
-            if (!fs.existsSync(encPath)) {
-                throw new Error(`Service account file not found at ${encPath} and SERVICE_ACCOUNT_B64 env var not set`);
+            const localPath = path.join(process.cwd(), "planar-maxim-475312-m9-a04126e50095.json");
+            if (fs.existsSync(localPath)) {
+                console.log("[VEO] Loading service account from local JSON file");
+                return JSON.parse(fs.readFileSync(localPath, 'utf8'));
             }
 
-            console.log("[VEO] Loading service account from file (local development)");
-            const password = process.env.ENCRYPT_PASSWORD;
-            if (!password) {
-                throw new Error("ENCRYPT_PASSWORD not set in .env");
-            }
-
-            const encryptedData = fs.readFileSync(encPath);
-            const iv = encryptedData.slice(0, 16);
-            const ciphertext = encryptedData.slice(16);
-
-            const key = crypto.scryptSync(password, "salt", 32);
-            const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
-            const decrypted = Buffer.concat([decipher.update(ciphertext), decipher.final()]);
-
-            return JSON.parse(decrypted.toString("utf-8"));
+            throw new Error("No valid service account found (check NEW_GCP_SERVICE_ACCOUNT_B64 or local JSON file)");
 
         } catch (error) {
-            console.error("[VEO] Failed to decrypt service account:", error.message);
-            throw new Error("Service account decryption failed. Check ENCRYPT_PASSWORD, SERVICE_ACCOUNT_B64, and file path.");
+            console.error("[VEO] Failed to load service account:", error.message);
+            throw new Error("Service account loading failed.");
         }
     }
 
@@ -138,7 +112,7 @@ Return ONLY the final prompt text.
         `;
 
             const { GoogleGenAI } = await import("@google/genai");
-            const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_GENAI_API_KEY });
+            const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_GENAI_API_KEY1 });
 
             const response = await ai.models.generateContent({
                 model: "gemini-2.5-flash",
@@ -176,7 +150,7 @@ Return ONLY the final prompt text.
 
         try {
             const { GoogleGenAI } = await import("@google/genai");
-            const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_GENAI_API_KEY });
+            const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_GENAI_API_KEY1 });
 
             const response = await ai.models.generateContent({
                 model: "gemini-2.5-flash",
@@ -235,7 +209,7 @@ Return ONLY the final script text, no quotes, no extra formatting.
 `;
 
             const { GoogleGenAI } = await import("@google/genai");
-            const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_GENAI_API_KEY });
+            const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_GENAI_API_KEY1 });
 
             const response = await ai.models.generateContent({
                 model: "gemini-2.5-flash",
@@ -261,10 +235,6 @@ Return ONLY the final script text, no quotes, no extra formatting.
         }
     }
 
-    /**
-     * Call ElevenLabs TTS and return a Buffer containing the audio (MP3)
-     * NOTE: does NOT write to disk. Caller should pass the Buffer to the uploader.
-     */
     async generateAudioWithElevenLabs(scriptText, productId, timestamp) {
         if (!this.ELEVENLABS_API_KEY) {
             console.warn("[ELEVENLABS] API key not configured, skipping audio generation");
@@ -323,18 +293,12 @@ Return ONLY the final script text, no quotes, no extra formatting.
         }
     }
 
-    /**
-     * Upload audio to Cloudinary.
-     * - If `audio` is a Buffer, upload via upload_stream (no filesystem)
-     * - If `audio` is a file path, fallback to uploader.upload
-     */
     async uploadAudioToCloudinary(audio, productTitle, productId, artisanId, timestamp) {
         try {
             const folder = `karigar-mart/artisans/${artisanId}/product-audio`;
             const sanitizedTitle = this.sanitizeForPublicId(productTitle);
             const publicId = `${sanitizedTitle}-${productId}-${timestamp}`;
 
-            // If caller passed a Buffer -> use upload_stream
             if (Buffer.isBuffer(audio)) {
                 const options = {
                     resource_type: "video",
@@ -359,7 +323,6 @@ Return ONLY the final script text, no quotes, no extra formatting.
                 return result.secure_url;
             }
 
-            // Else assume file path (legacy flow)
             if (typeof audio === 'string' && fs.existsSync(audio)) {
                 const result = await cloudinary.uploader.upload(audio, {
                     resource_type: "video",
@@ -438,7 +401,6 @@ Return ONLY the final script text, no quotes, no extra formatting.
             const timestamp = Date.now();
             const GCS_OUTPUT_URI = `gs://${this.GCS_BUCKET_NAME}/localartist-temp/${timestamp}/`;
 
-            // STEP 1: Generate audio (in-memory)
             let audioUrl = null;
             let audioScript = null;
 
@@ -467,7 +429,7 @@ Return ONLY the final script text, no quotes, no extra formatting.
                 }
             }
 
-            // STEP 2: Generate video from Veo
+            //Generate video from Veo
             console.log(`[VEO] Fetching image from Cloudinary...`);
             const imageResponse = await fetch(imageUrl);
             if (!imageResponse.ok) throw new Error(`Image fetch failed: ${imageResponse.statusText}`);
@@ -527,12 +489,12 @@ Return ONLY the final script text, no quotes, no extra formatting.
             const operationName = startData.name;
             console.log(`[VEO] Video generation started (60-90 seconds)...`);
 
-            // STEP 3: Poll for video completion
+            //Poll for video completion
             gcsUri = await this.pollForResult(operationName, token);
             const gcsUrl = gcsUri.replace('gs://', 'https://storage.googleapis.com/');
             console.log(`[VEO] ✅ Video generated in GCS`);
 
-            // STEP 4: Upload base video to Cloudinary
+            //Upload base video to Cloudinary
             console.log(`[VEO] Uploading video to Cloudinary...`);
             const cloudinaryVideoUrl = await this.uploadVideoToCloudinary(
                 gcsUrl,
@@ -543,7 +505,7 @@ Return ONLY the final script text, no quotes, no extra formatting.
             );
             console.log(`[VEO] ✅ Base video uploaded: ${cloudinaryVideoUrl}`);
 
-            // STEP 5: Generate transformation URL with audio overlay
+            //Generate transformation URL with audio overlay
             let playbackUrl = cloudinaryVideoUrl;
 
             if (audioUrl && includeAudio) {
@@ -572,7 +534,7 @@ Return ONLY the final script text, no quotes, no extra formatting.
                 }
             }
 
-            // STEP 6: Clean up GCS
+            //Clean up GCS
             try {
                 await this.deleteFromGCS(gcsUri, token);
                 console.log(`[VEO] ✅ Cleaned up GCS temp file`);
