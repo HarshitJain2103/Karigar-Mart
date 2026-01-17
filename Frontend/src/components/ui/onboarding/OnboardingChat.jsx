@@ -7,6 +7,7 @@ import { getApiUrl } from "@/lib/api";
 import useAuthStore from "@/stores/authStore";
 import useLanguageStore from "@/stores/languageStore";
 import { useTranslation } from "@/hooks/useTranslation";
+import useVoiceOnboarding from "@/hooks/useVoiceOnboarding";
 
 export default function OnboardingChat({ draft, onApplyUpdates }) {
     const { t } = useTranslation();
@@ -42,7 +43,19 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
         localStorage.setItem(chatKey, JSON.stringify(messages));
     }, [messages, chatKey]);
 
-    const { startVoiceSearch, isListening } = useVoiceSearch();
+    const {
+        displayText,
+        aiText,
+        setDisplayText,
+        setAiText,
+        startVoice,
+        isListening,
+    } = useVoiceOnboarding();
+
+    useEffect(() => {
+        if (displayText) setInput(displayText);
+    }, [displayText]);
+
 
     useEffect(() => {
         setMessages(defaultMessages);
@@ -129,9 +142,23 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
     };
 
     const handleVoice = () => {
-        startVoiceSearch((spokenText) => {
-            sendMessage(spokenText);
-        });
+        startVoice();
+    };
+
+    const handleSend = () => {
+        const textToSend =
+            displayText?.trim() ||
+            input.trim();
+
+        if (!textToSend) return;
+
+        if (textToSend === t('onboardingChat.helpButton')) return;
+
+        sendMessage(textToSend);
+
+        setInput("");
+        setAiText("");
+        setDisplayText("");
     };
 
     return (
@@ -190,9 +217,11 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
                 <div className="flex gap-2">
                     <Input
                         value={input}
-                        onChange={(e) => setInput(e.target.value)}
+                        onChange={(e) => {
+                            setInput(e.target.value);
+                        }}
                         onKeyDown={(e) => {
-                            if (e.key === "Enter") sendMessage(input);
+                            if (e.key === "Enter") handleSend();
                         }}
                         placeholder={t('onboardingChat.placeHolder')}
                         disabled={loading || isQuotaExhausted}
@@ -209,7 +238,7 @@ export default function OnboardingChat({ draft, onApplyUpdates }) {
 
                     <Button
                         size="icon"
-                        onClick={() => sendMessage(input)}
+                        onClick={handleSend}
                         disabled={loading || !input.trim() || isQuotaExhausted}
                     >
                         <Send />
