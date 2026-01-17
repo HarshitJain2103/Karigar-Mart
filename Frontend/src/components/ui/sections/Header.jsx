@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import useAuthStore from '@/stores/authStore';
 import { ShoppingCart, Heart, User, Globe, Search, Mic, Store, Languages, Menu, PlaySquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -16,7 +16,7 @@ import { DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useTranslation } from '@/hooks/useTranslation';
 import useLanguageStore from '@/stores/languageStore';
 
-export default function Header({ query, setQuery, setLang, startVoiceSearch, isListening }) {
+export default function Header({ displayQuery, setDisplayQuery, searchQuery, setSearchQuery, startVoiceSearch, isListening }) {
   const { toast } = useToast();
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
@@ -27,6 +27,14 @@ export default function Header({ query, setQuery, setLang, startVoiceSearch, isL
   const { t, language } = useTranslation();
   const { setLanguage } = useLanguageStore();
   const resetCart = useCartStore((state) => state.resetCart);
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    const keywordFromUrl = searchParams.get("keyword") || "";
+    setSearchQuery(keywordFromUrl);
+    setDisplayQuery((prev) => prev || keywordFromUrl);
+  }, [searchParams]);
+
 
   const handleLogout = () => {
     resetCart();
@@ -39,13 +47,10 @@ export default function Header({ query, setQuery, setLang, startVoiceSearch, isL
   };
 
   const handleSearchSubmit = (e) => {
-    e.preventDefault(); // This stops the page from doing a full reload
-    if (query.trim()) {
-      // Navigate to the shop page with the search term as a query parameter
-      // We use 'keyword' to match the name your backend API is expecting
-      navigate(`/shop?keyword=${query}`);
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/shop?keyword=${encodeURIComponent(searchQuery)}`);
     } else {
-      // If the search is empty, just go to the main shop page
       navigate('/shop');
     }
   };
@@ -128,11 +133,16 @@ export default function Header({ query, setQuery, setLang, startVoiceSearch, isL
               <div className="flex w-full items-center gap-2 rounded-full border px-3 py-1.5 shadow-sm">
                 <Search className="h-4 w-4 text-muted-foreground" />
                 <Input
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
+                  value={displayQuery}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setDisplayQuery(value);
+                    setSearchQuery(value);
+                  }}
                   placeholder={t('header.searchPlaceholder')}
                   className="border-0 focus-visible:ring-0"
                 />
+
                 <Button type="button" variant="ghost" size="icon" onClick={() => startVoiceSearch(handleVoiceSearchSubmit)} aria-label="Voice search">
                   <Mic className={`h-4 w-4 transition-colors ${isListening ? 'text-red-500 animate-pulse' : 'text-muted-foreground'}`} />
                 </Button>

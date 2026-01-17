@@ -32,7 +32,14 @@ import ReelsPage from "./pages/ReelsPage";
 import ScrollToTopButton from './components/ui/ScrollToTopButton';
 
 export default function App() {
-  const { query, setQuery, lang, setLang, startVoiceSearch, isListening } = useVoiceSearch();
+  const {
+    displayQuery,
+    setDisplayQuery,
+    searchQuery,
+    setSearchQuery,
+    startVoiceSearch,
+    isListening,
+  } = useVoiceSearch();
   const recognitionRef = useRef(null);
   const token = useAuthStore((state) => state.token);
   const fetchUserProfile = useAuthStore((state) => state.fetchUserProfile);
@@ -77,10 +84,10 @@ export default function App() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Header
-        query={query}
-        setQuery={setQuery}
-        lang={lang}
-        setLang={setLang}
+        displayQuery={displayQuery}
+        setDisplayQuery={setDisplayQuery}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
         startVoiceSearch={startVoiceSearch}
         isListening={isListening}
       />
