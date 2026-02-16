@@ -71,7 +71,7 @@ export default function Header({ displayQuery, setDisplayQuery, searchQuery, set
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b-2 border-primary/20 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex items-center gap-3 py-3">
           {/* Mobile menu */}
@@ -118,19 +118,40 @@ export default function Header({ displayQuery, setDisplayQuery, searchQuery, set
           </div>
 
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 mr-4"><Store className="h-6 w-6" /><span className="font-semibold">Karigar Mart</span></Link>
+          <Link to="/" className="flex items-center gap-2 mr-4">
+  <svg width="32" height="32" viewBox="0 0 32 32" className="text-primary">
+    <circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="2" fill="none" />
+    {[0, 60, 120, 180, 240, 300].map((a) => (
+      <ellipse
+        key={a}
+        cx="16"
+        cy="6"
+        rx="4"
+        ry="8"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        fill="none"
+        transform={`rotate(${a} 16 16)`}
+      />
+    ))}
+    <circle cx="16" cy="16" r="4" fill="currentColor" />
+  </svg>
+  <span className="font-heading text-xl font-bold text-foreground">
+    Karigar <span className="text-primary">Mart</span>
+  </span>
+</Link>
 
           {/* Secondary Nav (Desktop) */}
           <nav className="hidden items-center justify-center gap-6 text-sm lg:flex">
             {navItems.map((item) => (
-              <Link key={item.name} to={item.path} className="text-muted-foreground hover:text-foreground">{item.name}</Link>
+              <Link key={item.name} to={item.path} className="font-body text-sm font-medium text-muted-foreground transition-colors hover:text-primary">{item.name}</Link>
             ))}
           </nav>
 
           {/* Search Bar */}
           <div className="hidden flex-1 items-center justify-center lg:flex px-8">
             <form onSubmit={handleSearchSubmit} className="w-full max-w-2xl">
-              <div className="flex w-full items-center gap-2 rounded-full border px-3 py-1.5 shadow-sm">
+              <div className="flex w-full items-center gap-2 rounded-full border border-primary/20 px-4 py-2 shadow-sm focus-within:ring-1 focus-within:ring-primary/40">
                 <Search className="h-4 w-4 text-muted-foreground" />
                 <Input
                   value={displayQuery}
@@ -143,7 +164,7 @@ export default function Header({ displayQuery, setDisplayQuery, searchQuery, set
                   className="border-0 focus-visible:ring-0"
                 />
 
-                <Button type="button" variant="ghost" size="icon" onClick={() => startVoiceSearch(handleVoiceSearchSubmit)} aria-label="Voice search">
+                <Button type="button" variant="ghost" size="icon"  className="hover:bg-primary/10 hover:text-primary" onClick={() => startVoiceSearch(handleVoiceSearchSubmit)} aria-label="Voice search">
                   <Mic className={`h-4 w-4 transition-colors ${isListening ? 'text-red-500 animate-pulse' : 'text-muted-foreground'}`} />
                 </Button>
               </div>
